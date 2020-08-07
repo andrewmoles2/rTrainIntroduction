@@ -1,0 +1,124 @@
+---
+title: "R Workshop 1 - Welcome to R!"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+
+output: 
+  html_document: 
+    highlight: espresso
+    theme: readable
+---
+# What will this workshop cover?
+
+The goal of this session is to get to start using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
+
+*  Introduction to RStudio
+*  Using r as a calculator
+*  Numerical variables
+*  Assigning variables
+*  Vectors
+
+# Information on how the session is run
+
+We will be doing paired programming, to work together:
+
+*  One shares the screen and the other requests remote control.
+*  Take turns on who types for each exercise.
+*  At the end save the script/markdown document and share it with your teammate in the chat.
+
+What to do when getting stuck:
+
+1)  Ask your team members
+2)  Search online:
+  *  The answer box on the top of Google's results page 
+  *  stackoverflow.com (for task-specific solutions)
+  *  https://www.r-bloggers.com/ (topic based tutorials)
+3)  Ask the trainer if you struggle to find a solution
+
+Handing in answers - Submit to...
+
+# Why R 
+
+R is a popular language, as shown in the TIOBE index. 
+```{r echo=FALSE, fig.cap="TIOBE Index for August 2020"}
+knitr::include_graphics("tiobe-index.png")
+```
+
+*  Excellent at handling data
+*  Very good for statistics
+*  Open source
+*  Can do almost anything in R due to community written 'packages'
+*  Makes pretty and complex data visualisations (see below)
+
+```{r, echo=FALSE, fig.cap="Credit: Christian Burkhart @ChBurkhart"}
+knitr::include_graphics("examplePlot_cBurkhart.jpeg")
+```
+
+***
+
+# Introduction to RStudio
+
+RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background. 
+```{r echo=FALSE}
+knitr::include_graphics("rstudioEnv.png")
+```
+
+When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
+```{r echo=FALSE, scripts}
+knitr::include_graphics("scripts.png")
+```
+
+# Starting the session
+
+**can I sent or share files with students?** 
+
+Open the workshop1.rmd file 
+
+*show picture here with text on code chunks and text, using the file I have made*
+
+***
+
+# Using R as a calculator
+
+We can use R to do simple or advanced calculations for us. 
+
+```{r}
+2 + 2
+10 / 5
+0.25 - 0.04
+```
+
+```{r}
+7 * 6
+```
+
+```{r echo=FALSE}
+knitr::include_graphics("Hitchhikers-Guide-to-the-Galaxy-Diagram-of-Everything-Shirt.jpg")
+```
+
+```{r}
+5 / (2^2)
+(16 - 4) + (1 * 9)
+```
+
+## Exercises 1
+
+Use R to work out the following arithmetic:
+
+1)  44 * 26
+2)  Find the BMI calculation online, use R to work out a BMI 
+
+```{r}
+# BMI
+92/(1.94^2)
+```
+
+## Exercises 2
+
+Another simple calculation
+
+# Recommended links
+
+Recommended for more information on the RStudio environment: https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/
