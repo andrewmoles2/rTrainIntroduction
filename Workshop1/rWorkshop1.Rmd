@@ -4,7 +4,6 @@ author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-
 output: 
   html_document: 
     highlight: espresso
@@ -42,7 +41,8 @@ Handing in answers - Submit to teams assignment page (*link here*)
 
 R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020. 
 ```{r echo=FALSE}
-knitr::include_graphics("tiobe-index.png")
+knitr::include_graphics("Images/tiobe-index.png")
+
 ```
 
 It has lots of strengths:
@@ -55,7 +55,7 @@ It has lots of strengths:
 
 
 ```{r, echo=FALSE, fig.cap="Credit: Christian Burkhart @ChBurkhart"}
-knitr::include_graphics("examplePlot_cBurkhart.jpeg")
+knitr::include_graphics("Images/examplePlot_cBurkhart.jpeg")
 ```
 
 ***
@@ -64,12 +64,12 @@ knitr::include_graphics("examplePlot_cBurkhart.jpeg")
 
 RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background. 
 ```{r echo=FALSE}
-knitr::include_graphics("rstudioEnv.png")
+knitr::include_graphics("Images/rstudioEnv.png")
 ```
 
 When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
 ```{r echo=FALSE, scripts}
-knitr::include_graphics("scripts.png")
+knitr::include_graphics("Images/scripts.png")
 ```
 
 **RStudio demonstration using R Markdown notebooks**
@@ -93,7 +93,7 @@ We can use R to do simple or advanced calculations for us.
 ```
 
 ```{r echo=FALSE}
-knitr::include_graphics("Hitchhikers-Guide-to-the-Galaxy-Diagram-of-Everything-Shirt.jpg")
+knitr::include_graphics("Images/Hitchhikers-Guide-to-the-Galaxy-Diagram-of-Everything-Shirt.jpg")
 ```
 
 ```{r}
