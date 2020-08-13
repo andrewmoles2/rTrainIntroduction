@@ -450,7 +450,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 1 - Welcome to R!</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">12 August, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">13 August, 2020</h4>
 
 </div>
 
@@ -484,7 +484,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">12 August, 2020</h4>
 <li><a href="https://www.r-bloggers.com/" class="uri">https://www.r-bloggers.com/</a> (topic based tutorials)</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
-<li>Ask the trainer if you struggle to find a solution</li>
+<li>Don’t struggle too long looking online, ask the trainer if you can’t find a solution!</li>
 </ol>
 <p>Handing in answers - Submit to teams assignment page (<em>link here</em>)</p>
 </div>
@@ -544,6 +544,25 @@ Credit: Christian Burkhart <span class="citation">@ChBurkhart</span>
 </div>
 <div id="assigning-variables" class="section level1">
 <h1>Assigning variables</h1>
+<p><em>What is a variable</em></p>
+<p>Variables can be assigned…</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>height &lt;-<span class="st"> </span><span class="dv">155</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>height</span></code></pre></div>
+<pre><code>## [1] 155</code></pre>
+<p>When calling a variable, be careful to type it exactly. Try calling the height variable, but spell it incorrectly. You should get an error with something like <em>Error: object ‘hieght’ not found</em></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>hieght</span></code></pre></div>
+<p>We can do calculations on these variables, just as we did before. We first assign the variables, then use them in the calculation.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># test scores</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>Score1 &lt;-<span class="st"> </span><span class="dv">42</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>Score2 &lt;-<span class="st"> </span><span class="dv">92</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>Score3 &lt;-<span class="st"> </span><span class="dv">68</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># score calculation</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>AveScore &lt;-<span class="st"> </span>(Score1<span class="op">+</span>Score2<span class="op">+</span>Score3)<span class="op">/</span><span class="dv">3</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># print average score</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>AveScore</span></code></pre></div>
+<pre><code>## [1] 67.33333</code></pre>
+<p>You will have noticed the hashtags (#) with text in the above example. These are called comments. In later R sessions we will use a lot of comments to tell us (and others) what each line or section of code is doing.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># this is a comment</span></span></code></pre></div>
 <div id="exercise-1-assigning-variables" class="section level2">
 <h2>Exercise 1 (Assigning variables)</h2>
 <p>Use R to work out a BMI by assigning them to the variables of weight and height.</p>
@@ -551,7 +570,7 @@ Credit: Christian Burkhart <span class="citation">@ChBurkhart</span>
 <li>weight of 90kg</li>
 <li>height of 1.97m</li>
 </ul>
-<p>Then do the calculation using the variables.</p>
+<p>Then do the calculation using the variables. Be sure to add comments on what each line of code is doing like my example above.</p>
 </div>
 <div id="exercise-2-assigning-variables" class="section level2">
 <h2>Exercise 2 (Assigning variables)</h2>

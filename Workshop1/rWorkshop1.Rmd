@@ -33,7 +33,7 @@ What to do when getting stuck:
   *  The answer box on the top of Google's results page 
   *  stackoverflow.com (for task-specific solutions)
   *  https://www.r-bloggers.com/ (topic based tutorials)
-3)  Ask the trainer if you struggle to find a solution
+3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 Handing in answers - Submit to teams assignment page (*link here*)
 
@@ -42,7 +42,6 @@ Handing in answers - Submit to teams assignment page (*link here*)
 R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020. 
 ```{r echo=FALSE}
 knitr::include_graphics("Images/tiobe-index.png")
-
 ```
 
 It has lots of strengths:
@@ -114,6 +113,39 @@ Use R to work out the following arithmetic:
 
 # Assigning variables
 
+*What is a variable*
+
+Variables can be assigned...
+```{r}
+height <- 155
+height
+```
+
+When calling a variable, be careful to type it exactly. Try calling the height variable, but spell it incorrectly. You should get an error with something like *Error: object 'hieght' not found*
+
+```{r eval=FALSE}
+hieght
+```
+
+We can do calculations on these variables, just as we did before. We first assign the variables, then use them in the calculation. 
+
+```{r}
+# test scores
+Score1 <- 42
+Score2 <- 92
+Score3 <- 68
+# score calculation
+AveScore <- (Score1+Score2+Score3)/3
+# print average score
+AveScore
+```
+
+You will have noticed the hashtags (#) with text in the above example. These are called comments. In later R sessions we will use a lot of comments to tell us (and others) what each line or section of code is doing.
+
+```{r}
+# this is a comment
+```
+
 ## Exercise 1 (Assigning variables)
 
 Use R to work out a BMI by assigning them to the variables of weight and height.
@@ -121,7 +153,7 @@ Use R to work out a BMI by assigning them to the variables of weight and height.
 *  weight of 90kg
 *  height of 1.97m
 
-Then do the calculation using the variables.
+Then do the calculation using the variables. Be sure to add comments on what each line of code is doing like my example above.
 
 ```{r eval=FALSE, include=FALSE}
 # BMI
