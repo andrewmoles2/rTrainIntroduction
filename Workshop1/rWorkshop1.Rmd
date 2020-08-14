@@ -6,8 +6,8 @@ author:
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document: 
-    highlight: espresso
     theme: readable
+    highlight: pygments
 ---
 # What will this workshop cover?
 
@@ -20,7 +20,7 @@ The goal of this session is to get to started using RStudio, learn how to use va
 
 # Information on how the session is run
 
-We will be doing paired programming, to work together:
+We will be working in pairs:
 
 *  One shares the screen and the other requests remote control.
 *  Take turns on who types for each exercise.
@@ -35,7 +35,7 @@ What to do when getting stuck:
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
-Handing in answers - Submit to teams assignment page (*link here*)
+Handing in answers:- Submit to teams assignment page
 
 # Why R 
 
@@ -53,7 +53,6 @@ It has lots of strengths:
 
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/examplePlot_cBurkhart.jpeg?raw=true)
 
-
 ***
 
 # Introduction to RStudio
@@ -66,25 +65,17 @@ When you load RStudio the syntax editor will not be open. Try and open one just 
 
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/scripts.png?raw=true)
 
-
 # Using R markdown
 
 For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/RMarkdown.png?raw=true)
 
-
-Few screen shots of how to use R Markdown - loading document - set up (installing) - code chunks and text - knitting to html. 
+To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac). 
 
 # Starting the session
 
 Open the workshop1.rmd file I have sent and save it. 
-
-In order to run this file you will need to run the following lines of code:
-
-install.packages("rmarkdown")  
-library(rmarkdown)  
-
-These install packages that allow you to make markdown files in R. A package is a bundle of commands that can be loaded into R to provide extra functionality. We will cover more on packages in later sessions, using them to make figures or manipulate data.
 
 As we will be doing paired programming, each of you should have the file open and take turns to share the screen for each task/exercise. Whoever is screen sharing should copy and paste the code into the chat so that other has it to add to their own document. 
 
@@ -92,33 +83,27 @@ As we will be doing paired programming, each of you should have the file open an
 
 # Using R as a calculator
 
-We can use R to do simple or advanced calculations for us. 
+We can use R to do simple or advanced calculations for us. Remember to run the code press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
 ```{r}
 7 * 6
-```
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/Hitchhikers-Guide-to-the-Galaxy-Diagram-of-Everything-Shirt.jpg?raw=true)
-```{r}
 5 / (2^2)
 (16 - 4) + (1 * 9)
 ```
-
 
 ## Exercise (R as calculator) 
 
 Use R to work out the following arithmetic:
 
-1)  44 times 26
-2)  9.6 divided by 1.6
-3)  12 + 4 squared
-4)  4 * 9 divided by 5 plus 6
-5)  22 divided by 36 times 100
+1)  $44 * 26$
+2)  $9.6/1.6$
+3)  $(12+4)^2$
+4)  $(4*9)/(5+6)$
+5)  $(22/36) * 100$
 
 ```{r}
 # type your code here
 ```
-
 
 ***
 ***
@@ -136,11 +121,18 @@ We can then print the output of the variable by typing in its name.
 height
 ```
 
-When calling a variable, be careful to type it exactly (you can also copy it or use code completion to help). Try calling the height variable, but spell it incorrectly. You should get an error with something like *Error: object 'hieght' not found*
+## Task
 
-```{r eval=FALSE}
-hieght
+When calling a variable, be careful to type it exactly (you can also copy it or use code completion to help). 
+
+Try calling the height variable, but spell it incorrectly. You should get an error with something like *Error: object 'hieght' not found*
+
+```{r}
+# type incorrect height call here
 ```
+
+
+## Example
 
 We can do calculations on these variables, just as we did before. We first assign the variables, then use them in the calculation. 
 
@@ -161,25 +153,31 @@ You will have noticed the hashtags (#) with text in the above example. These are
 # this is a comment
 ```
 
-## Reassigning variables
+# Reassigning variables
 
-You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance.
+You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance. Be sure to run the code.
 
 ```{r}
+# create variables
 BankBalance <- 100
 PayCheck <- 250
-
+# add old bank balance and pay check, assigning result to bank balance
 BankBalance <- BankBalance + PayCheck
-
+# print bank balance
 BankBalance
 ```
 
 ## Task
 
-Try and add another pay check to the bank balance variable.
+Try and add another pay check of £50 to the bank balance variable.
+
+1)  Make a variable called PayCheck2 with a value of 50
+2)  Assign BankBalance, and calculate BankBalance + PayCheck2
+3)  Print the outcome
 
 ```{r}
 # Reassigning variables task
+
 ```
 
 
@@ -226,7 +224,11 @@ overall_grade <- (course1 + course2)/3
 overall_grade
 ```
 
-## Individual coding challenge
+# Workshop survey
+
+It would be very helpful to us to get your feedback. Please can you complete this short survey:
+
+# Individual (take home) coding challenge
 
 A take home coding task for you, which if you submit to Teams we will mark and give you feedback.
 
