@@ -103,7 +103,7 @@ We can use R to do simple or advanced calculations for us.
 7 * 6
 ```
 
-![](Images/Hitchhikers-Guide-to-the-Galaxy-Diagram-of-Everything-Shirt.jpg)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/Hitchhikers-Guide-to-the-Galaxy-Diagram-of-Everything-Shirt.jpg?raw=true)
 ```{r}
 5 / (2^2)
 (16 - 4) + (1 * 9)
