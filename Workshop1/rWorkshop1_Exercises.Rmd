@@ -143,11 +143,13 @@ overall_grade
 
 # Workshop survey
 
-It would be very helpful to us to get your feedback. Please can you complete this short survey:
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+
 
 # Individual (take home) coding challenge
 
-A take home coding task for you, which if you submit to Teams we will mark and give you feedback. If you have not finished other exercises we can mark those as well. 
+A take home coding task for you, which if you submit to Teams we will mark and give you feedback.
 
 Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal and Genevieve.
 
@@ -155,6 +157,7 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 *  Amal has a Bufala (£9), and Birra Moretti (£4.50).
 *  Genevieve has a Portobello Mushroom & Truffle (£10), and water to drink.
 *  Genevieve and Amal also share a Nutella Pizza ring for dessert (£5.5). 
+
 
 1)  Make a variable for each friend that is the sum of their order (e.g. Roger would be 11 + 2)
 2)  Make a variable for the shared food
@@ -167,6 +170,21 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 # individual coding challenge
 ```
 
-# Submitting coding challenge to teams
+# Submitting work to teams
 
-*Take info from Python1 workshop*
+**Join the LSE-DSL-ClassTeams-Demo**  
+
+1)  Open the Teams app
+2)  Click Teams button on the left side of the app
+3)  Click Join or create a team at the bottom of your teams list
+4)  Go to Join a team with a code (the second tile)
+5)  Paste the code 6rax2tk in the Enter code box, and click Join.
+
+**Submit the jupyter notebook on Teams**  
+
+1)  Open the Teams app
+2)  Click Teams button on the left side of the app
+3)  Open the LSE-DSL-ClassTeams-Demo Team
+4)  Select the Python 1 - Numerical Variables channel
+5)  Click on View assignment in the Python 1 - Numerical Variables assignment in the Posts tab
+6)  Upload your Jupyter notebook

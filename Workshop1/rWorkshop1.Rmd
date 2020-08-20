@@ -35,7 +35,7 @@ What to do when getting stuck:
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
-Handing in answers:- Submit to teams assignment page
+**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 1 workshop.
 
 # Why R 
 
@@ -226,7 +226,9 @@ overall_grade
 
 # Workshop survey
 
-It would be very helpful to us to get your feedback. Please can you complete this short survey:
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+
 
 # Individual (take home) coding challenge
 
@@ -255,7 +257,22 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 
 # Submitting work to teams
 
-*Take info from Python1 workshop*
+**Join the LSE-DSL-ClassTeams-Demo**  
+
+1)  Open the Teams app
+2)  Click Teams button on the left side of the app
+3)  Click Join or create a team at the bottom of your teams list
+4)  Go to Join a team with a code (the second tile)
+5)  Paste the code 6rax2tk in the Enter code box, and click Join.
+
+**Submit the jupyter notebook on Teams**  
+
+1)  Open the Teams app
+2)  Click Teams button on the left side of the app
+3)  Open the LSE-DSL-ClassTeams-Demo Team
+4)  Select the Python 1 - Numerical Variables channel
+5)  Click on View assignment in the Python 1 - Numerical Variables assignment in the Posts tab
+6)  Upload your Jupyter notebook
 
 # Recommended links
 Recommended for more information on the RStudio environment: https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/  
