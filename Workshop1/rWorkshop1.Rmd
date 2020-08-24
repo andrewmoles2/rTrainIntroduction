@@ -23,9 +23,9 @@ The goal of this session is to get to started using RStudio, learn how to use va
 
 We will be working in pairs:
 
-*  One shares the screen and the other requests remote control.
+*  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
-*  At the end save the script/markdown document and share it with your teammate in the chat.
+*  Whoever was typing, share your code in the chat with your teammate. 
 
 What to do when getting stuck:
 

@@ -1,0 +1,37 @@
+---
+title: "R Workshop 2 - Variables and Strings"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+---
+
+# What will this workshop cover?
+
+The goal of this session is to get to started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
+
+
+# Information on how the session is run
+
+We will be working in pairs:
+
+*  Take turns sharing the screen.
+*  Take turns on who types for each exercise.
+*  Whoever was typing, share your code in the chat with your teammate. 
+
+What to do when getting stuck:
+
+1)  Ask your team members
+2)  Search online:
+  *  The answer box on the top of Google's results page 
+  *  stackoverflow.com (for task-specific solutions)
+  *  https://www.r-bloggers.com/ (topic based tutorials)
+3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
+
+**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 1 workshop.
+
