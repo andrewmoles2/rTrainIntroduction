@@ -1,125 +1,73 @@
 ---
 title: "R Workshop 1 - Welcome to R!"
-author:
-   - name: Andrew Moles
-     affiliation: Learning Developer, Digital Skills Lab
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: "Your name here"
+date: "24 August, 2020"
 output: 
   html_document: 
-    theme: readable
-    highlight: pygments
     keep_md: yes
 ---
-# What will this workshop cover?
-
-The goal of this session is to get to started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
-
-*  Introduction to RStudio
-*  Using r as a calculator
-*  Assigning variables
-*  Numerical variables
-
-# Information on how the session is run
-
-We will be working in pairs:
-
-*  One shares the screen and the other requests remote control.
-*  Take turns on who types for each exercise.
-*  At the end save the script/markdown document and share it with your teammate in the chat.
-
-What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-  *  The answer box on the top of Google's results page 
-  *  stackoverflow.com (for task-specific solutions)
-  *  https://www.r-bloggers.com/ (topic based tutorials)
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
-**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 1 workshop.
-
-# Why R 
-
-R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020. 
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/tiobe-index.png?raw=true)
-
-It has lots of strengths:
-
-*  Excellent at handling data
-*  Very good for statistics
-*  Open source
-*  You can do almost anything in R due to community written 'packages'
-*  Makes pretty and complex data visualisations (see below)
-
-![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp.gif?raw=true)
-
-***
-
-# Introduction to RStudio
-
-RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background. 
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/rstudioEnv.png?raw=true)
-
-When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/scripts.png?raw=true)
-
-# Using R markdown
-
-For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/RMarkdown.png?raw=true)
-
-To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac). 
-
-# Starting the session
-
-Open the workshop1.rmd file I have sent and save it. 
-
-As we will be doing paired programming, each of you should have the file open and take turns to share the screen for each task/exercise. Whoever is screen sharing should copy and paste the code into the chat so that other has it to add to their own document. 
-
-***
 
 # Using R as a calculator
 
 We can use R to do simple or advanced calculations for us. Remember to run the code press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
-```{r}
+
+```r
 7 * 6
+```
+
+```
+## [1] 42
+```
+
+```r
 5 / (2^2)
+```
+
+```
+## [1] 1.25
+```
+
+```r
 (16 - 4) + (1 * 9)
+```
+
+```
+## [1] 21
 ```
 
 ## Exercise (R as calculator) 
 
 Use R to work out the following arithmetic:
 
-1)  $44 * 26$
-2)  $9.6/1.6$
-3)  $(12+4)^2$
-4)  $(4*9)/(5+6)$
-5)  $(22/36) * 100$
+1)  44 * 26
+2)  9.6/1.6
+3)  (12+4)^2
+4)  (4*9)/(5+6)
+5)  (22/36) * 100
 
-```{r}
+
+```r
 # type your code here
 ```
-
-***
-***
 
 # Assigning variables
 
 A variable is a named storage of information. In our case today we are storing numbers. 
 
 We can assign variables by using <-. You should see the variable appear to your right in the global enviroment once you've run this command. 
-```{r}
+
+```r
 height <- 155
 ```
 We can then print the output of the variable by typing in its name. 
-```{r}
+
+```r
 height
+```
+
+```
+## [1] 155
 ```
 
 ## Task
@@ -128,16 +76,17 @@ When calling a variable, be careful to type it exactly (you can also copy it or 
 
 Try calling the height variable, but spell it incorrectly. You should get an error with something like *Error: object 'hieght' not found*
 
-```{r}
+
+```r
 # type incorrect height call here
 ```
-
 
 ## Example
 
 We can do calculations on these variables, just as we did before. We first assign the variables, then use them in the calculation. 
 
-```{r}
+
+```r
 # test scores
 Score1 <- 42
 Score2 <- 92
@@ -148,9 +97,14 @@ AveScore <- (Score1+Score2+Score3)/3
 AveScore
 ```
 
+```
+## [1] 67.33333
+```
+
 You will have noticed the hashtags (#) with text in the above example. These are called comments. In later R sessions we will use a lot of comments to tell us (and others) what each line or section of code is doing.
 
-```{r}
+
+```r
 # this is a comment
 ```
 
@@ -158,7 +112,8 @@ You will have noticed the hashtags (#) with text in the above example. These are
 
 You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance. Be sure to run the code.
 
-```{r}
+
+```r
 # create variables
 BankBalance <- 100
 PayCheck <- 250
@@ -166,6 +121,10 @@ PayCheck <- 250
 BankBalance <- BankBalance + PayCheck
 # print bank balance
 BankBalance
+```
+
+```
+## [1] 350
 ```
 
 ## Task
@@ -176,14 +135,11 @@ Try and add another pay check of £50 to the bank balance variable.
 2)  Assign BankBalance, and calculate BankBalance + PayCheck2
 3)  Print the outcome
 
-```{r}
-# Reassigning variables task
 
+```r
+# Reassigning variables task
 ```
 
-
-***
-***
 
 ## Exercise 1 (Assigning variables)
 
@@ -194,9 +150,9 @@ Use R to work out a body mass index (BMI) of someone who is 79kg, and 1.77m tall
 3)  Print the outcome
 4)  Add comments on what each line of code is doing
 
-```{r}
-# Exercise: BMI calculation
 
+```r
+# Exercise: BMI calculation
 ```
 
 ## Exercise 2 (Assigning variables)
@@ -207,7 +163,8 @@ Debug the code below that is finding the weighted average of a students coursewo
 *  syntax error
 *  naming error
 
-```{r eval=FALSE}
+
+```r
 # Exercise: weighted average debugging
 exam1 <- 52
 coursework1 <- 82
@@ -242,8 +199,6 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 *  Genevieve has a Portobello Mushroom & Truffle (£10), and water to drink.
 *  Genevieve and Amal also share a Nutella Pizza ring for dessert (£5.5). 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/pizzaP.jpg?raw=true)
-
 
 1)  Make a variable for each friend that is the sum of their order (e.g. Roger would be 11 + 2)
 2)  Make a variable for the shared food
@@ -252,7 +207,8 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 5)  Comment your code
 6)  Print the total bill and what each friend owes
 
-```{r}
+
+```r
 # individual coding challenge
 ```
 
@@ -274,7 +230,3 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 4)  Select the R 1 - Numerical Variables channel
 5)  Click on View assignment in the R 1 - Numerical Variables assignment in the Posts tab
 6)  Upload your R notebook
-
-# Recommended links
-Recommended for more information on the RStudio environment: https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/  
-Recommended for more information on using R Markdown: https://rmarkdown.rstudio.com/lesson-1.html 

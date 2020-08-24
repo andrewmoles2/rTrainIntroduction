@@ -2,7 +2,9 @@
 title: "R Workshop 1 - Welcome to R!"
 author: "Your name here"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 # Using R as a calculator

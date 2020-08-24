@@ -3,7 +3,7 @@ title: "R Workshop 1 - Welcome to R!"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "24 August, 2020"
 output: 
   html_document: 
     theme: readable
@@ -86,10 +86,29 @@ As we will be doing paired programming, each of you should have the file open an
 
 We can use R to do simple or advanced calculations for us. Remember to run the code press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
-```{r}
+
+```r
 7 * 6
+```
+
+```
+## [1] 42
+```
+
+```r
 5 / (2^2)
+```
+
+```
+## [1] 1.25
+```
+
+```r
 (16 - 4) + (1 * 9)
+```
+
+```
+## [1] 21
 ```
 
 ## Exercise (R as calculator) 
@@ -102,7 +121,8 @@ Use R to work out the following arithmetic:
 4)  $(4*9)/(5+6)$
 5)  $(22/36) * 100$
 
-```{r}
+
+```r
 # type your code here
 ```
 
@@ -114,12 +134,18 @@ Use R to work out the following arithmetic:
 A variable is a named storage of information. In our case today we are storing numbers. 
 
 We can assign variables by using <-. You should see the variable appear to your right in the global enviroment once you've run this command. 
-```{r}
+
+```r
 height <- 155
 ```
 We can then print the output of the variable by typing in its name. 
-```{r}
+
+```r
 height
+```
+
+```
+## [1] 155
 ```
 
 ## Task
@@ -128,7 +154,8 @@ When calling a variable, be careful to type it exactly (you can also copy it or 
 
 Try calling the height variable, but spell it incorrectly. You should get an error with something like *Error: object 'hieght' not found*
 
-```{r}
+
+```r
 # type incorrect height call here
 ```
 
@@ -137,7 +164,8 @@ Try calling the height variable, but spell it incorrectly. You should get an err
 
 We can do calculations on these variables, just as we did before. We first assign the variables, then use them in the calculation. 
 
-```{r}
+
+```r
 # test scores
 Score1 <- 42
 Score2 <- 92
@@ -148,9 +176,14 @@ AveScore <- (Score1+Score2+Score3)/3
 AveScore
 ```
 
+```
+## [1] 67.33333
+```
+
 You will have noticed the hashtags (#) with text in the above example. These are called comments. In later R sessions we will use a lot of comments to tell us (and others) what each line or section of code is doing.
 
-```{r}
+
+```r
 # this is a comment
 ```
 
@@ -158,7 +191,8 @@ You will have noticed the hashtags (#) with text in the above example. These are
 
 You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance. Be sure to run the code.
 
-```{r}
+
+```r
 # create variables
 BankBalance <- 100
 PayCheck <- 250
@@ -166,6 +200,10 @@ PayCheck <- 250
 BankBalance <- BankBalance + PayCheck
 # print bank balance
 BankBalance
+```
+
+```
+## [1] 350
 ```
 
 ## Task
@@ -176,9 +214,9 @@ Try and add another pay check of £50 to the bank balance variable.
 2)  Assign BankBalance, and calculate BankBalance + PayCheck2
 3)  Print the outcome
 
-```{r}
-# Reassigning variables task
 
+```r
+# Reassigning variables task
 ```
 
 
@@ -194,9 +232,9 @@ Use R to work out a body mass index (BMI) of someone who is 79kg, and 1.77m tall
 3)  Print the outcome
 4)  Add comments on what each line of code is doing
 
-```{r}
-# Exercise: BMI calculation
 
+```r
+# Exercise: BMI calculation
 ```
 
 ## Exercise 2 (Assigning variables)
@@ -207,7 +245,8 @@ Debug the code below that is finding the weighted average of a students coursewo
 *  syntax error
 *  naming error
 
-```{r eval=FALSE}
+
+```r
 # Exercise: weighted average debugging
 exam1 <- 52
 coursework1 <- 82
@@ -252,7 +291,8 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 5)  Comment your code
 6)  Print the total bill and what each friend owes
 
-```{r}
+
+```r
 # individual coding challenge
 ```
 
