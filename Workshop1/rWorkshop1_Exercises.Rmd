@@ -180,11 +180,11 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 4)  Go to Join a team with a code (the second tile)
 5)  Paste the code 6rax2tk in the Enter code box, and click Join.
 
-**Submit the jupyter notebook on Teams**  
+**Submit the R notebook on Teams**  
 
 1)  Open the Teams app
 2)  Click Teams button on the left side of the app
 3)  Open the LSE-DSL-ClassTeams-Demo Team
-4)  Select the Python 1 - Numerical Variables channel
+4)  Select the R 1 - Numerical Variables channel
 5)  Click on View assignment in the R 1 - Numerical Variables assignment in the Posts tab
-6)  Upload your Jupyter notebook
+6)  Upload your R notebook
