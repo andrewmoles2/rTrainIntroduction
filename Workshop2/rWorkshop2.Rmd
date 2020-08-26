@@ -61,12 +61,12 @@ x <- 30
 vect2 <- c(vect1, 22, 7, x)
 vect2
 ```
-Another way of making a vector is using the colon (:), which can be done without the c function. We can tell R to select numbers from x to y, or 5 through to 10 in our example.
+Another way of making a vector is using the colon (:), which can be done without the c function. We can tell R to select a sequence of integers from x to y, or 5 through to 10 in our example.
 ```{r}
 vect3 <- 5:10
 vect3
 ```
-We can also do some basic calculations on vectors.
+We can also do some basic calculations on vectors. These occur elementwise (one element at a time).
 ```{r}
 vect3/5
 ```
