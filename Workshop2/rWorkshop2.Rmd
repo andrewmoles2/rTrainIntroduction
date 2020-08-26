@@ -46,7 +46,7 @@ What to do when getting stuck:
 
 # Vectors
 
-A vector is collection of information stored in a variable...This allows us to store multiple arguments in one vector.
+A vector is a set of information contained together in a specific order. 
 
 To make a vector you combine variables using the **c** function (more on functions later); also known as concatenation. To call the **c** function we use brackets () with the numbers we want separated by a comma.  
 
@@ -74,14 +74,144 @@ As you can see this divides all elements in the vector by 5.
 
 ## Vector exercise 1
 
-1)  Make a vector called x from 8 through to 14
+1)  Make a vector called x with integers from 8 through to 14
 2)  Add 5 to your x vector (be sure to save as result back to x)
 3)  Make a vector called y with variables 34, 55, 13, 71, 98, 43 and 25 
 4)  Take 12 from your y vector (be sure to save as result back to x)
 5)  Times x vector by y
 
+***
 
-## Vector exercise 2
+# Functions: what are they and how to use them
+
+A function is code organised together to perform a specific task. The function will take in an input, perform a task, then return an output. They are the backbone of R, which comes built in with a wide array of functions.  
+
+The **function(input)** format the fundamental way to call and use a function in R. **function** is the name of the function we are using, **input** is the argument or data we are passing to the function. 
+
+For example:
+```{r}
+# running times (mins)
+runTimes <- c(31, 50, 15, 19, 23, 34, 9)
+# mean running time
+meanRun <- mean(runTimes)
+meanRun
+# tidy up result
+meanRun <- round(meanRun, digits = 2)
+# print nice result
+paste0("Your mean running time is: ", meanRun, " minutes")
+```
+Here we are using the functions `c`, `round`, `mean`, and `paste0`. We will be using these in our exercises today. 
+
+## Functions exercise
+
+We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.
+
+1)  Make a variable called steps using the seq function that increases steps from 1000 to 12000 by increments of 1000
+2)  Workout how many steps we have done in total from this exercise plan
+3)  Workout out the median amount of steps we have done on this exercise plan
+4)  Comment your code
+
+```{r}
+# enter your code here
+```
+
+```{r eval=FALSE, include=FALSE}
+# Our steps this week
+steps <- seq(1000, 12000, by = 1000)
+steps
+# total steps
+sum(steps)
+# median steps
+median(steps)
+```
+
+# Indexing vectors
+
+Indexing is a technical term for accessing elements of a vector. 
+
+To index in R you use the square brackets [] after you type the name of the vector to index from. You then put the elements you want to index in the square brackets.
+
+Some examples:
+```{r}
+someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
+# indexing the 6th element
+someNumbers[6]
+```
+Indexing elements 1 to 4
+```{r}
+someNumbers[1:4]
+```
+Dropping elements 5 to 7
+```{r}
+someNumbers[-5:-7]
+```
+Indexing 1, 5, and 8
+```{r}
+someNumbers[c(1,5,8)]
+```
+If you try and index outside of the vectors range you get an NA. A way of checking is using the `length` function. Our vector has 8 elements, but we tried to call a 9th. 
+```{r}
+someNumbers[9]
+length(someNumbers)
+```
+
+## Indexing exercise
+You decided to track your total monthly expenditures for the year to find out more about your monthly spending. Such as spending per quarter, biggest spending month, and lowest spending month.
+
+1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506
+2)  Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.
+3)  Repeat for quarters 2, 3, and 4.
+4)  Workout the average spending for each quarter. Which had the biggest spending?
+5)  Using the `which.max()` and `which.min()` functions, find out which months had the highest and lowest spending.
+6)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector. 
+
+```{r}
+# enter your code here
+```
+
+
+```{r eval=FALSE, include=FALSE}
+myExpenses <- c(976, 579, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 631, 1506)
+
+Q1 <- myExpenses[1:3]
+Q2 <- myExpenses[4:6]
+Q3 <- myExpenses[7:9]
+Q4 <- myExpenses[10:12]
+
+mean(Q1)
+mean(Q2)
+mean(Q3)
+mean(Q4)
+
+which.max(myExpenses)
+which.min(myExpenses)
+
+highLow <- myExpenses[c(which.max(myExpenses), which.min(myExpenses))]
+
+```
+
+
+# Strings
+
+# String manipulation
+
+## Exercise
+
+Using random sampling (sample) and number generation to make vectors, to then make calculations
+
+```{r}
+runif(10, min = 0, max = 30)
+distrib <- c(1:50)
+sample(distrib, 25)
+```
+
+Get them to look up rep and seq functions (homework?)
+```{r}
+rep(1:2, 5)
+seq(1, 20, by = 2)
+```
+
+## Vector exercise 3
 If you attended the first R workshop you might remember we calculated a students weighted average grade. Convert this to incorporate 10 students instead of just the one. 
 
 1)  Assign exam1 grades as 52, 62, 55, 82, 48, 65, 68, 62, 65 and 65
@@ -108,63 +238,3 @@ course2 <- (exam2 * ex_weight) + (coursework2 * cw_weight)
 overall_grade <- (course1 + course2)/2
 overall_grade
 ```
-
-***
-
-# Functions: what are they and how to use them
-
-Functions are....
-
-The *function(value1, value2)* format the fundamental way to call and use a function in R.
-
-Introduce mean and sum, rep and seq. 
-
-For example, in the last workshop we manually calculated an average grade.
-```{r}
-grade1 <- 61
-grade2 <- 73
-?c
-OverallGrade <- (grade1+grade2)/2
-OverallGrade
-```
-
-The *(grade1+grade2)/2* part can be wrapped in a function which we can repeatedly use. Lucky for us, R comes with lots of functions built in.
-```{r}
-grade1 <- 61
-grade2 <- 73
-
-OverallGrade <- mean(grade1, grade2)
-OverallGrade
-```
-
-## Vector exercise 2
-
- For example, our average steps for the week.
-```{r}
-# Our steps this week
-steps <- c(6000, 1200, 1500, 5000, 9000, 15000, 5500)
-
-sum(steps)/7
-
-# calculate weekly average
-WeekAveSteps <- steps/7
-mean(steps)
-WeekAveSteps
-```
-
-## Exercise
-
-Using random sampling (sample) and number generation to make vectors, to then make calculations
-
-```{r}
-runif(10, min = 0, max = 30)
-distrib <- c(1:50)
-sample(distrib, 25)
-```
-
-Get them to look up rep and seq functions (homework?)
-```{r}
-rep(1:2, 5)
-seq(1, 20, by = 2)
-```
-

@@ -451,7 +451,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 2 - Vectors and Strings</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">24 August, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">26 August, 2020</h4>
 
 </div>
 
@@ -494,7 +494,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">24 August, 2020</h4>
 </div>
 <div id="vectors" class="section level1">
 <h1>Vectors</h1>
-<p>A vector is collection of information stored in a variable…This allows us to store multiple arguments in one vector.</p>
+<p>A vector is a set of information contained together in a specific order.</p>
 <p>To make a vector you combine variables using the <strong>c</strong> function (more on functions later); also known as concatenation. To call the <strong>c</strong> function we use brackets () with the numbers we want separated by a comma.</p>
 <p>The first way of making a vector is to add the arguments (numbers) you want.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>vect1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">19</span>,<span class="dv">4</span>,<span class="dv">9</span>)</span>
@@ -505,26 +505,114 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">24 August, 2020</h4>
 <span id="cb3-2"><a href="#cb3-2"></a>vect2 &lt;-<span class="st"> </span><span class="kw">c</span>(vect1, <span class="dv">22</span>, <span class="dv">7</span>, x)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>vect2</span></code></pre></div>
 <pre><code>## [1]  1  6 19  4  9 22  7 30</code></pre>
-<p>Another way of making a vector is using the colon (:), which can be done without the c function. We can tell R to select numbers from x to y, or 5 through to 10 in our example.</p>
+<p>Another way of making a vector is using the colon (:), which can be done without the c function. We can tell R to select a sequence of integers from x to y, or 5 through to 10 in our example.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>vect3 &lt;-<span class="st"> </span><span class="dv">5</span><span class="op">:</span><span class="dv">10</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>vect3</span></code></pre></div>
 <pre><code>## [1]  5  6  7  8  9 10</code></pre>
-<p>We can also do some basic calculations on vectors.</p>
+<p>We can also do some basic calculations on vectors. These occur elementwise (one element at a time).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>vect3<span class="op">/</span><span class="dv">5</span></span></code></pre></div>
 <pre><code>## [1] 1.0 1.2 1.4 1.6 1.8 2.0</code></pre>
 <p>As you can see this divides all elements in the vector by 5.</p>
 <div id="vector-exercise-1" class="section level2">
 <h2>Vector exercise 1</h2>
 <ol style="list-style-type: decimal">
-<li>Make a vector called x from 8 through to 14</li>
+<li>Make a vector called x with integers from 8 through to 14</li>
 <li>Add 5 to your x vector (be sure to save as result back to x)</li>
 <li>Make a vector called y with variables 34, 55, 13, 71, 98, 43 and 25</li>
 <li>Take 12 from your y vector (be sure to save as result back to x)</li>
 <li>Times x vector by y</li>
 </ol>
+<hr />
 </div>
-<div id="vector-exercise-2" class="section level2">
-<h2>Vector exercise 2</h2>
+</div>
+<div id="functions-what-are-they-and-how-to-use-them" class="section level1">
+<h1>Functions: what are they and how to use them</h1>
+<p>A function is code organised together to perform a specific task. The function will take in an input, perform a task, then return an output. They are the backbone of R, which comes built in with a wide array of functions.</p>
+<p>The <strong>function(input)</strong> format the fundamental way to call and use a function in R. <strong>function</strong> is the name of the function we are using, <strong>input</strong> is the argument or data we are passing to the function.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># running times (mins)</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>runTimes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">31</span>, <span class="dv">50</span>, <span class="dv">15</span>, <span class="dv">19</span>, <span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">9</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># mean running time</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>meanRun &lt;-<span class="st"> </span><span class="kw">mean</span>(runTimes)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>meanRun</span></code></pre></div>
+<pre><code>## [1] 25.85714</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># tidy up result</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>meanRun &lt;-<span class="st"> </span><span class="kw">round</span>(meanRun, <span class="dt">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># print nice result</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">paste0</span>(<span class="st">&quot;Your mean running time is: &quot;</span>, meanRun, <span class="st">&quot; minutes&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Your mean running time is: 25.86 minutes&quot;</code></pre>
+<p>Here we are using the functions <code>c</code>, <code>round</code>, <code>mean</code>, and <code>paste0</code>. We will be using these in our exercises today.</p>
+<div id="functions-exercise" class="section level2">
+<h2>Functions exercise</h2>
+<p>We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.</p>
+<ol style="list-style-type: decimal">
+<li>Make a variable called steps using the seq function that increases steps from 1000 to 12000 by increments of 1000</li>
+<li>Workout how many steps we have done in total from this exercise plan</li>
+<li>Workout out the median amount of steps we have done on this exercise plan</li>
+<li>Comment your code</li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># enter your code here</span></span></code></pre></div>
+</div>
+</div>
+<div id="indexing-vectors" class="section level1">
+<h1>Indexing vectors</h1>
+<p>Indexing is a technical term for accessing elements of a vector.</p>
+<p>To index in R you use the square brackets [] after you type the name of the vector to index from. You then put the elements you want to index in the square brackets.</p>
+<p>Some examples:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>someNumbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># indexing the 6th element</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>someNumbers[<span class="dv">6</span>]</span></code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<p>Indexing elements 1 to 4</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>someNumbers[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span></code></pre></div>
+<pre><code>## [1]  4 26 11 15</code></pre>
+<p>Dropping elements 5 to 7</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>someNumbers[<span class="op">-</span><span class="dv">5</span><span class="op">:-</span><span class="dv">7</span>]</span></code></pre></div>
+<pre><code>## [1]  4 26 11 15  1</code></pre>
+<p>Indexing 1, 5, and 8</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>someNumbers[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">8</span>)]</span></code></pre></div>
+<pre><code>## [1]  4 18  1</code></pre>
+<p>If you try and index outside of the vectors range you get an NA. A way of checking is using the <code>length</code> function. Our vector has 8 elements, but we tried to call a 9th.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>someNumbers[<span class="dv">9</span>]</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">length</span>(someNumbers)</span></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<div id="indexing-exercise" class="section level2">
+<h2>Indexing exercise</h2>
+<p>You decided to track your total monthly expenditures for the year to find out more about your monthly spending. Such as spending per quarter, biggest spending month, and lowest spending month.</p>
+<ol style="list-style-type: decimal">
+<li>Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506</li>
+<li>Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.</li>
+<li>Repeat for quarters 2, 3, and 4.</li>
+<li>Workout the average spending for each quarter. Which had the biggest spending?</li>
+<li>Using the <code>which.max()</code> and <code>which.min()</code> functions, find out which months had the highest and lowest spending.</li>
+<li>Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector.</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># enter your code here</span></span></code></pre></div>
+</div>
+</div>
+<div id="strings" class="section level1">
+<h1>Strings</h1>
+</div>
+<div id="string-manipulation" class="section level1">
+<h1>String manipulation</h1>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<p>Using random sampling (sample) and number generation to make vectors, to then make calculations</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">runif</span>(<span class="dv">10</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">30</span>)</span></code></pre></div>
+<pre><code>##  [1]  9.818510 18.709852 19.962914  6.182038 19.009324  4.086289  9.452294
+##  [8] 26.936797 22.515414 22.354843</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>distrib &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">sample</span>(distrib, <span class="dv">25</span>)</span></code></pre></div>
+<pre><code>##  [1] 20 25  2 47 12  1 19 46  7  8 41  9 44 49 11  4 40 33 22 34  5 42 48 13 32</code></pre>
+<p>Get them to look up rep and seq functions (homework?)</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##  [1] 1 2 1 2 1 2 1 2 1 2</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dt">by =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##  [1]  1  3  5  7  9 11 13 15 17 19</code></pre>
+</div>
+<div id="vector-exercise-3" class="section level2">
+<h2>Vector exercise 3</h2>
 <p>If you attended the first R workshop you might remember we calculated a students weighted average grade. Convert this to incorporate 10 students instead of just the one.</p>
 <ol style="list-style-type: decimal">
 <li>Assign exam1 grades as 52, 62, 55, 82, 48, 65, 68, 62, 65 and 65</li>
@@ -537,71 +625,20 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">24 August, 2020</h4>
 <li>Print your result</li>
 <li>Add comments</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>exam1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">52</span>, <span class="dv">62</span>, <span class="dv">55</span>, <span class="dv">82</span>, <span class="dv">48</span>, <span class="dv">65</span>, <span class="dv">68</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">65</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>coursework1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">72</span>, <span class="dv">72</span>, <span class="dv">85</span>, <span class="dv">52</span>, <span class="dv">78</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">52</span>, <span class="dv">55</span>, <span class="dv">68</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>exam2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">62</span>, <span class="dv">72</span>, <span class="dv">58</span>, <span class="dv">52</span>, <span class="dv">68</span>, <span class="dv">75</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">62</span>, <span class="dv">88</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>coursework2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">72</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">62</span>, <span class="dv">78</span>, <span class="dv">45</span>, <span class="dv">78</span>, <span class="dv">65</span>, <span class="dv">55</span>, <span class="dv">75</span>)</span>
-<span id="cb9-5"><a href="#cb9-5"></a></span>
-<span id="cb9-6"><a href="#cb9-6"></a>cw_weight &lt;-<span class="st"> </span><span class="fl">0.4</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a>ex_weight &lt;-<span class="st"> </span><span class="fl">0.6</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a></span>
-<span id="cb9-9"><a href="#cb9-9"></a>course1 &lt;-<span class="st"> </span>(exam1 <span class="op">*</span><span class="st"> </span>ex_weight) <span class="op">+</span><span class="st"> </span>(coursework1 <span class="op">*</span><span class="st"> </span>cw_weight)</span>
-<span id="cb9-10"><a href="#cb9-10"></a>course2 &lt;-<span class="st"> </span>(exam2 <span class="op">*</span><span class="st"> </span>ex_weight) <span class="op">+</span><span class="st"> </span>(coursework2 <span class="op">*</span><span class="st"> </span>cw_weight)</span>
-<span id="cb9-11"><a href="#cb9-11"></a></span>
-<span id="cb9-12"><a href="#cb9-12"></a>overall_grade &lt;-<span class="st"> </span>(course1 <span class="op">+</span><span class="st"> </span>course2)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>overall_grade</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>exam1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">52</span>, <span class="dv">62</span>, <span class="dv">55</span>, <span class="dv">82</span>, <span class="dv">48</span>, <span class="dv">65</span>, <span class="dv">68</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">65</span>)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>coursework1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">72</span>, <span class="dv">72</span>, <span class="dv">85</span>, <span class="dv">52</span>, <span class="dv">78</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">52</span>, <span class="dv">55</span>, <span class="dv">68</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a>exam2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">62</span>, <span class="dv">72</span>, <span class="dv">58</span>, <span class="dv">52</span>, <span class="dv">68</span>, <span class="dv">75</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">62</span>, <span class="dv">88</span>)</span>
+<span id="cb35-4"><a href="#cb35-4"></a>coursework2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">72</span>, <span class="dv">62</span>, <span class="dv">65</span>, <span class="dv">62</span>, <span class="dv">78</span>, <span class="dv">45</span>, <span class="dv">78</span>, <span class="dv">65</span>, <span class="dv">55</span>, <span class="dv">75</span>)</span>
+<span id="cb35-5"><a href="#cb35-5"></a></span>
+<span id="cb35-6"><a href="#cb35-6"></a>cw_weight &lt;-<span class="st"> </span><span class="fl">0.4</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>ex_weight &lt;-<span class="st"> </span><span class="fl">0.6</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a>course1 &lt;-<span class="st"> </span>(exam1 <span class="op">*</span><span class="st"> </span>ex_weight) <span class="op">+</span><span class="st"> </span>(coursework1 <span class="op">*</span><span class="st"> </span>cw_weight)</span>
+<span id="cb35-10"><a href="#cb35-10"></a>course2 &lt;-<span class="st"> </span>(exam2 <span class="op">*</span><span class="st"> </span>ex_weight) <span class="op">+</span><span class="st"> </span>(coursework2 <span class="op">*</span><span class="st"> </span>cw_weight)</span>
+<span id="cb35-11"><a href="#cb35-11"></a></span>
+<span id="cb35-12"><a href="#cb35-12"></a>overall_grade &lt;-<span class="st"> </span>(course1 <span class="op">+</span><span class="st"> </span>course2)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb35-13"><a href="#cb35-13"></a>overall_grade</span></code></pre></div>
 <pre><code>##  [1] 63.0 67.0 63.9 63.0 66.0 63.4 67.6 61.5 60.1 74.5</code></pre>
-<hr />
-</div>
-</div>
-<div id="functions-what-are-they-and-how-to-use-them" class="section level1">
-<h1>Functions: what are they and how to use them</h1>
-<p>Functions are….</p>
-<p>The <em>function(value1, value2)</em> format the fundamental way to call and use a function in R.</p>
-<p>Introduce mean and sum</p>
-<p>For example, in the last workshop we manually calculated an average grade.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>grade1 &lt;-<span class="st"> </span><span class="dv">61</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>grade2 &lt;-<span class="st"> </span><span class="dv">73</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>?c</span>
-<span id="cb11-4"><a href="#cb11-4"></a>OverallGrade &lt;-<span class="st"> </span>(grade1<span class="op">+</span>grade2)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>OverallGrade</span></code></pre></div>
-<pre><code>## [1] 67</code></pre>
-<p>The <em>(grade1+grade2)/2</em> part can be wrapped in a function which we can repeatedly use. Lucky for us, R comes with lots of functions built in.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>grade1 &lt;-<span class="st"> </span><span class="dv">61</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>grade2 &lt;-<span class="st"> </span><span class="dv">73</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a></span>
-<span id="cb13-4"><a href="#cb13-4"></a>OverallGrade &lt;-<span class="st"> </span><span class="kw">mean</span>(grade1, grade2)</span>
-<span id="cb13-5"><a href="#cb13-5"></a>OverallGrade</span></code></pre></div>
-<pre><code>## [1] 61</code></pre>
-<div id="vector-exercise-2-1" class="section level2">
-<h2>Vector exercise 2</h2>
-<p>For example, our average steps for the week.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Our steps this week</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>steps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6000</span>, <span class="dv">1200</span>, <span class="dv">1500</span>, <span class="dv">5000</span>, <span class="dv">9000</span>, <span class="dv">15000</span>, <span class="dv">5500</span>)</span>
-<span id="cb15-3"><a href="#cb15-3"></a></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="kw">sum</span>(steps)<span class="op">/</span><span class="dv">7</span></span></code></pre></div>
-<pre><code>## [1] 6171.429</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># calculate weekly average</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>WeekAveSteps &lt;-<span class="st"> </span>steps<span class="op">/</span><span class="dv">7</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">mean</span>(steps)</span></code></pre></div>
-<pre><code>## [1] 6171.429</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>WeekAveSteps</span></code></pre></div>
-<pre><code>## [1]  857.1429  171.4286  214.2857  714.2857 1285.7143 2142.8571  785.7143</code></pre>
-</div>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>Using random sampling (sample) and number generation to make vectors, to then make calculations</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">runif</span>(<span class="dv">10</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">30</span>)</span></code></pre></div>
-<pre><code>##  [1] 28.112560  3.234434 11.422847  7.176187 26.504383 21.317686 26.578802
-##  [8] 11.695271 21.562490 25.074103</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>distrib &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>)</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">sample</span>(distrib, <span class="dv">25</span>)</span></code></pre></div>
-<pre><code>##  [1] 47 30 42  4 12 16  5  8 44 38 14 22 35 36 40 19  6 37 39  1  3 45 49 29 24</code></pre>
-<p>Get them to look up rep and seq functions (homework?)</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##  [1] 1 2 1 2 1 2 1 2 1 2</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dt">by =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##  [1]  1  3  5  7  9 11 13 15 17 19</code></pre>
 </div>
 </div>
 

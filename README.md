@@ -6,6 +6,5 @@ Workshop 1: RStudio introduction and numeric variables
 
 Workshop 2: Vectors and Strings
 
-
 ![](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
 Artwork by @allison_horst
