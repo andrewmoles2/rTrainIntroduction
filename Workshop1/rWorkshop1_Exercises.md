@@ -1,7 +1,7 @@
 ---
 title: "R Workshop 1 - Welcome to R!"
 author: "Your name here"
-date: "24 August, 2020"
+date: "27 August, 2020"
 output: 
   html_document: 
     keep_md: yes
@@ -45,6 +45,7 @@ Use R to work out the following arithmetic:
 3)  (12+4)^2
 4)  (4*9)/(5+6)
 5)  (22/36) * 100
+6)  Remainder of 55/2
 
 
 ```r

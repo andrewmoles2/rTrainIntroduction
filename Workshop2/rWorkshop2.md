@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors and Strings"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "26 August, 2020"
+date: "27 August, 2020"
 output: 
   html_document: 
     theme: readable
@@ -138,7 +138,7 @@ Here we are using the functions `c`, `round`, `mean`, and `paste0`. We will be u
 
 We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.
 
-1)  Make a variable called steps using the seq function that increases steps from 1000 to 12000 by increments of 1000
+1)  Make a variable called steps using the `seq` function that increases steps from 1000 to 12000 by increments of 1000
 2)  Workout how many steps we have done in total from this exercise plan
 3)  Workout out the median amount of steps we have done on this exercise plan
 4)  Comment your code
@@ -152,7 +152,9 @@ We are on a walking exercise plan, where we increase our step count by a thousan
 
 # Indexing vectors
 
-Indexing is a technical term for accessing elements of a vector. 
+Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, you are the index picking what book, or books, you want to read.
+
+![Designed by macrovector / Freepik](images/6714.jpg){width=30%}
 
 To index in R you use the square brackets [] after you type the name of the vector to index from. You then put the elements you want to index in the square brackets.
 
@@ -194,7 +196,7 @@ someNumbers[c(1,5,8)]
 ```
 ## [1]  4 18  1
 ```
-If you try and index outside of the vectors range you get an NA. A way of checking is using the `length` function. Our vector has 8 elements, but we tried to call a 9th. 
+If you try and index outside of the vectors range you get an NA. A way of checking is using the `length` function. Our vector has 8 elements, but we tried to call a 9th.
 
 ```r
 someNumbers[9]
@@ -211,15 +213,35 @@ length(someNumbers)
 ```
 ## [1] 8
 ```
+Using indexing you can change the value of an item, or items, in a vector.
+
+```r
+someNumbers[8] <- 50
+someNumbers
+```
+
+```
+## [1]  4 26 11 15 18  9  3 50
+```
+
+```r
+someNumbers[1:3] <- c(19, 20, 21)
+someNumbers
+```
+
+```
+## [1] 19 20 21 15 18  9  3 50
+```
 
 ## Indexing exercise
 You decided to track your total monthly expenditures for the year to find out more about your monthly spending. Such as spending per quarter, biggest spending month, and lowest spending month.
 
-1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506
-2)  Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.
-3)  Repeat for quarters 2, 3, and 4.
-4)  Workout the average spending for each quarter. Which had the biggest spending?
-5)  Using the `which.max()` and `which.min()` functions, find out which months had the highest and lowest spending.
+1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506. First item is January, second is February etc.
+2)  You realise the spending for some of the months is wrong. January should be 921, August should be 1419, and November should be 703. Use indexing to change the values in myExpenses so they are correct.  
+3)  Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.
+4)  Repeat for quarters 2, 3, and 4.
+5)  Workout the average spending for each quarter. Which had the biggest spending?
+6)  Using the `which.max()` and `which.min()` functions, find out which months had the highest and lowest spending.
 6)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector. 
 
 
@@ -230,8 +252,46 @@ You decided to track your total monthly expenditures for the year to find out mo
 
 
 
-
 # Strings
+So far we have only been working with numbers and integers. Strings are text based data. 
+
+![](images/22895-NUNWT2.jpg){width=50%}
+
+R calls strings characters. You can find out what what type data your variable/vector  
+
+```r
+name <- 'Claudia'
+age <- 42
+class(name)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(age)
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+# vector of places people are from
+places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
+# counting how many people from each place
+table(places)
+```
+
+```
+## places
+## Hampshire      Kent    London    Surrey 
+##         2         1         5         3
+```
+
+
 
 # String manipulation
 
@@ -245,8 +305,8 @@ runif(10, min = 0, max = 30)
 ```
 
 ```
-##  [1]  9.818510 18.709852 19.962914  6.182038 19.009324  4.086289  9.452294
-##  [8] 26.936797 22.515414 22.354843
+##  [1] 28.388635 19.417827 17.947200 10.803364 21.515738 29.240419  6.985630
+##  [8] 15.487846  2.067749 15.486720
 ```
 
 ```r
@@ -255,7 +315,7 @@ sample(distrib, 25)
 ```
 
 ```
-##  [1] 20 25  2 47 12  1 19 46  7  8 41  9 44 49 11  4 40 33 22 34  5 42 48 13 32
+##  [1] 36  2  4  9  8 50 24 16 49 19 27 41 31 44 48 10 42 32 35  7 14 12 46 18 39
 ```
 
 Get them to look up rep and seq functions (homework?)
