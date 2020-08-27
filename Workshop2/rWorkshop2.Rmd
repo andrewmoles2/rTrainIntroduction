@@ -203,46 +203,109 @@ highLow <- myExpenses[c(which.max(myExpenses), which.min(myExpenses))]
 ```
 
 # Strings
-So far we have only been working with numbers and integers. Strings are text based data. 
+So far we have only been working with numbers and integers. Strings are text based data which R calls characters. 
 
 ![](images/22895-NUNWT2.jpg){width=50%}
+ 
+To code a string you need to use quotation marks. You can use either single or double, depending on your preference. When printing the result, R will always use double quotation marks.
+```{r}
+instrument <- "Violin"
+trees <- c('Oak', 'Willow', 'Redwood')
+trees
+```
+You have to be careful not to run functions on strings that need numerical data.
 
-R calls strings characters. You can find out what what type data your variable/vector  
+## Exercise
+Using the notNumbers variable defined here:
+```{r}
+notNumbers <- c('2', '4', '8')
+```
+1)  Use the mean function on that variable
+2)  Why did it not work?
+3)  Can you find a function to change the notNumbers vector to be numeric? Try "searching character to numeric r".
+4)  Once you've changed notNumbers to numeric, run mean on it again
+
+## Is this a string or a number?
+You can find out what type data your variable/vector is using the `class` function.
 ```{r}
 name <- 'Claudia'
-age <- 42
 class(name)
+age <- 42
 class(age)
 ```
 
+## String exercise
+
+1)  Make a vector called orangeVeg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
+2)  From orangeVeg select everything but carrot using indexing
+3)  From orangeVeg select just Pumpkin and Butternut Squash
+
+# Basic string manipulation
+R comes with several useful functions for manipulating strings, these include `paste`, `paste0`, `grep`, `gsub`. `paste` and `paste0` are for creating strings, and `grep` and `gsub` for are string matching and replacement. 
+
+Some examples of paste:
 ```{r}
-# vector of places people are from
+trees <- c('Oak', 'Willow', 'Redwood')
+paste(trees, collapse = ", ")
+paste("Hi", "there", sep = ", ")
+```
+```{r}
+pizzaEaten <- 4
+paste0("This week I ate ", pizzaEaten, " pizzas...")
+```
+As you can see paste can make new strings from existing strings. 
+
+## Paste exercise
+
+1)  Make a vector with the following flowers: sunflower, poppy, dahlia
+2)  Use `paste` to make this string: "sunflower, poppy, dahlia"
+3)  Make a variable called daysRaining with the value 360
+4)  Using `paste0` make the following sentence that used the daysRaining variable: "It has been raining for 360 days this year"
+
+## grep
+We use `grep` for string matching. We give it the string or part of string we are looking for, and it will return where in the vector these strings are.
+```{r}
 places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
-# counting how many people from each place
-table(places)
+places
+grep("London", places)
+
+```
+It is very useful for indexing strings.
+```{r}
+places[grep("Lon", places)]
 ```
 
-
-
-# String manipulation
+## gsub
+With `gsub` we give the function the patten we are looking to replace, what to replace it with, and the variable or vector to work on.
+```{r}
+Names <- c("Andrew", "Andrea", "Angela")
+gsub("An" ,"" , Names)
+```
+Here we are removing the An from the names in the Names vector. 
 
 ## Exercise
+For this exercise I have given you the code but it is in the wrong order. You need to re-arrange the code so it runs correctly. Comment on what each line of code is doing. 
 
-Using random sampling (sample) and number generation to make vectors, to then make calculations
+The end result you are aiming for is: **"These 4 pokemon have 'ar' in their names: Charmander, Charmeleon, Charizard, Wartortle"**
 
-```{r}
-runif(10, min = 0, max = 30)
-distrib <- c(1:50)
-sample(distrib, 25)
+```{r eval=FALSE}
+pokemon <- gsub("[0-9]", "", pokemon)
+
+paste0("These ",arPokes_num, " pokemon have 'ar' in their names: ", arPokes)
+
+arPokes_num <- sum(length(arPokes))
+
+arPokes <- pokemon[grepl("ar", pokemon)]
+
+pokemon <- c("Bulbasaur001", "Ivysaur002", "Venusaur003",
+             "Charmander004", "Charmeleon005", "Charizard006",
+             "Squirtle007", "Wartortle008", "Blastoise009")
+
+arPokes <- paste(arPokes, collapse = ", ")
 ```
 
-Get them to look up rep and seq functions (homework?)
-```{r}
-rep(1:2, 5)
-seq(1, 20, by = 2)
-```
+# Individual coding challenge
 
-## Vector exercise 3
 If you attended the first R workshop you might remember we calculated a students weighted average grade. Convert this to incorporate 10 students instead of just the one. 
 
 1)  Assign exam1 grades as 52, 62, 55, 82, 48, 65, 68, 62, 65 and 65
@@ -268,4 +331,12 @@ course2 <- (exam2 * ex_weight) + (coursework2 * cw_weight)
 
 overall_grade <- (course1 + course2)/2
 overall_grade
+```
+
+
+```{r}
+# vector of places people are from
+places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
+# counting how many people from each place
+table(places)
 ```
