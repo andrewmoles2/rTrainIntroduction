@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors and Strings"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "27 August, 2020"
+date: "02 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -21,7 +21,6 @@ In this workshop, the aim is to cover some basics of using variables and vectors
 *  Strings
 *  String manipulation with Paste, gsub and grep
 
-**Note to self: move packages to next workshop, just cover how to use functions here. Also move lists back and cover basic vector indexing (which can be more in depth later with data frames)**
 
 # Information on how the session is run
 
@@ -40,7 +39,7 @@ What to do when getting stuck:
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
-**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 1 workshop.
+**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 2 workshop.
 
 ***
 
@@ -345,7 +344,7 @@ As you can see paste can make new strings from existing strings.
 1)  Make a vector with the following flowers: sunflower, poppy, dahlia
 2)  Use `paste` to make this string: "sunflower, poppy, dahlia"
 3)  Make a variable called daysRaining with the value 360
-4)  Using `paste0` make the following sentence that used the daysRaining variable: "It has been raining for 360 days this year"
+4)  Using `paste0` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
 
 ## grep
 We use `grep` for string matching. We give it the string or part of string we are looking for, and it will return where in the vector these strings are.
@@ -391,7 +390,7 @@ gsub("An" ,"" , Names)
 Here we are removing the An from the names in the Names vector. 
 
 ## Exercise
-For this exercise I have given you the code but it is in the wrong order. You need to re-arrange the code to it runs correctly. Comment on what each line of code is doing. 
+For this exercise I have given you the code but it is in the wrong order. You need to re-arrange the code so it runs correctly. Comment on what each line of code is doing. 
 
 The end result you are aiming for is: **"These 4 pokemon have 'ar' in their names: Charmander, Charmeleon, Charizard, Wartortle"**
 

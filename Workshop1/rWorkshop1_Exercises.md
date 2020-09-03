@@ -1,7 +1,7 @@
 ---
 title: "R Workshop 1 - Welcome to R!"
 author: "Your name here"
-date: "27 August, 2020"
+date: "03 September, 2020"
 output: 
   html_document: 
     keep_md: yes
@@ -181,6 +181,43 @@ course2 <- (exam2 * ex_weight) + (coursework2 * cw_weight)
 overall_grade <- (course1 + course2)/3
 
 overall_grade
+```
+
+# Exercise 3 (Salary calculation)
+
+Robin and Charlie are a married couple, one gets paid an hourly rate, the other has an annual salary. They want to workout how much annual salary they have combined before tax. Out of interest Charlie also wants to know what her hourly rate is before tax. 
+
+They used simple calculations using the following formulas:  
+
+(number hours worked per week x hourly rate) x number of weeks worked = annual salary
+(annual salary ÷ number of weeks in a year) ÷ hours worked per week = hourly rate
+
+Re-arrange the code so the calculations run. You should have both the combined salary and Charlies hourly rate calculations printed. 
+
+
+```r
+# weeks in year
+weeksYear <- 52
+
+# Charlies hourly rate
+Charlie_HourlyRate <- (Charlie_annualSary / weeksYear)/Charlie_hoursPerWeek
+Charlie_HourlyRate
+
+# salaries
+Robin_HourlyRate <- 16.5
+Charlie_annualSary <- 31800
+
+# Combined salaries
+CombinedSalaries <- Robin_annualSalary + Charlie_annualSary
+CombinedSalaries
+
+# Robins annual salary
+Robin_annualSalary <- (Robin_hoursPerWeek * Robin_HourlyRate) * Robin_weeksWorking
+
+# hours worked
+Robin_hoursPerWeek <- 25
+Robin_weeksWorking <- 48
+Charlie_hoursPerWeek <- 35
 ```
 
 # Workshop survey
