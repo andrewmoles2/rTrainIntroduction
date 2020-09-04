@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors and Strings"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "02 September, 2020"
+date: "04 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -18,9 +18,6 @@ In this workshop, the aim is to cover some basics of using variables and vectors
 *  Vectors
 *  Introduction to functions
 *  Indexing
-*  Strings
-*  String manipulation with Paste, gsub and grep
-
 
 # Information on how the session is run
 
@@ -124,14 +121,13 @@ meanRun
 ```r
 # tidy up result
 meanRun <- round(meanRun, digits = 2)
-# print nice result
-paste0("Your mean running time is: ", meanRun, " minutes")
+meanRun
 ```
 
 ```
-## [1] "Your mean running time is: 25.86 minutes"
+## [1] 25.86
 ```
-Here we are using the functions `c`, `round`, `mean`, and `paste0`. We will be using these in our exercises today. 
+Here we are using the functions `c` to concatenate, `round` rounds to specific decimal places, and `mean` calculates the mean.
 
 ## Functions exercise
 
@@ -195,26 +191,29 @@ someNumbers[c(1,5,8)]
 ```
 ## [1]  4 18  1
 ```
-If you try and index outside of the vectors range you get an NA. A way of checking is using the `length` function. Our vector has 8 elements, but we tried to call a 9th.
+
+## Indexing exercise 1
+You've been keeping track of how much coffee you drink each day for a two week period. We want to split this into week 1 and 2. Using the code below follow the following steps:
+
+1)  Find out the mean for weekOne and WeekTwo vectors.
+2)  `mean` doesn't work for weekTwo. There are two ways to fix this; one using indexing and the other adding an argument to mean. Work out both and add them to the code. Hint: ?`mean` gives you a help page in R. 
+3)  Calling incorrect indexes can happen. To check the length of vector try running the `lenght` function on the coffee vector.
+
 
 ```r
-someNumbers[9]
+# vector with n coffee per day for two weeks
+coffee <- c(3, 5, 4, 2, 3, 1, 1, 6, 2, 3, 2, 4, 2, 1)
+
+# weeks
+weekOne <- coffee[1:7]
+weekTwo <- coffee[8:15]
 ```
 
-```
-## [1] NA
-```
-
-```r
-length(someNumbers)
-```
-
-```
-## [1] 8
-```
-Using indexing you can change the value of an item, or items, in a vector.
+# Using indexing to change values
+Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using using similar principles in later sessions.
 
 ```r
+# Change one item
 someNumbers[8] <- 50
 someNumbers
 ```
@@ -224,6 +223,7 @@ someNumbers
 ```
 
 ```r
+# Change multiple
 someNumbers[1:3] <- c(19, 20, 21)
 someNumbers
 ```
@@ -232,15 +232,15 @@ someNumbers
 ## [1] 19 20 21 15 18  9  3 50
 ```
 
-## Indexing exercise
+## Indexing exercise 2
 You decided to track your total monthly expenditures for the year to find out more about your monthly spending. Such as spending per quarter, biggest spending month, and lowest spending month.
 
-1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506. First item is January, second is February etc.
+1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506. Each item represents each month, first is January spending, second is February spending etc.
 2)  You realise the spending for some of the months is wrong. January should be 921, August should be 1419, and November should be 703. Use indexing to change the values in myExpenses so they are correct.  
 3)  Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.
 4)  Repeat for quarters 2, 3, and 4.
 5)  Workout the average spending for each quarter. Which had the biggest spending?
-6)  Using the `which.max()` and `which.min()` functions, find out which months had the highest and lowest spending.
+6)  Using the `which.max()` and `which.min()` functions, find out which months had the highest and lowest spending. Assign the result of each to a variable (minSpend, maxSpend).
 6)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector. 
 
 
@@ -251,211 +251,72 @@ You decided to track your total monthly expenditures for the year to find out mo
 
 
 
-# Strings
-So far we have only been working with numbers and integers. Strings are text based data which R calls characters. 
+# Workshop survey
 
-![](images/22895-NUNWT2.jpg){width=50%}
- 
-To code a string you need to use quotation marks. You can use either single or double, depending on your preference. When printing the result, R will always use double quotation marks.
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-```r
-instrument <- "Violin"
-trees <- c('Oak', 'Willow', 'Redwood')
-trees
-```
-
-```
-## [1] "Oak"     "Willow"  "Redwood"
-```
-You have to be careful not to run functions on strings that need numerical data.
-
-## Exercise
-Using the notNumbers variable defined here:
-
-```r
-notNumbers <- c('2', '4', '8')
-```
-1)  Use the mean function on that variable
-2)  Why did it not work?
-3)  Can you find a function to change the notNumbers vector to be numeric? Try "searching character to numeric r".
-4)  Once you've changed notNumbers to numeric, run mean on it again
-
-## Is this a string or a number?
-You can find out what type data your variable/vector is using the `class` function.
-
-```r
-name <- 'Claudia'
-class(name)
-```
-
-```
-## [1] "character"
-```
-
-```r
-age <- 42
-class(age)
-```
-
-```
-## [1] "numeric"
-```
-
-## String exercise
-
-1)  Make a vector called orangeVeg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
-2)  From orangeVeg select everything but carrot using indexing
-3)  From orangeVeg select just Pumpkin and Butternut Squash
-
-# Basic string manipulation
-R comes with several useful functions for manipulating strings, these include `paste`, `paste0`, `grep`, `gsub`. `paste` and `paste0` are for creating strings, and `grep` and `gsub` for are string matching and replacement. 
-
-Some examples of paste:
-
-```r
-trees <- c('Oak', 'Willow', 'Redwood')
-paste(trees, collapse = ", ")
-```
-
-```
-## [1] "Oak, Willow, Redwood"
-```
-
-```r
-paste("Hi", "there", sep = ", ")
-```
-
-```
-## [1] "Hi, there"
-```
-
-```r
-pizzaEaten <- 4
-paste0("This week I ate ", pizzaEaten, " pizzas...")
-```
-
-```
-## [1] "This week I ate 4 pizzas..."
-```
-As you can see paste can make new strings from existing strings. 
-
-## Paste exercise
-
-1)  Make a vector with the following flowers: sunflower, poppy, dahlia
-2)  Use `paste` to make this string: "sunflower, poppy, dahlia"
-3)  Make a variable called daysRaining with the value 360
-4)  Using `paste0` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
-
-## grep
-We use `grep` for string matching. We give it the string or part of string we are looking for, and it will return where in the vector these strings are.
-
-```r
-places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
-places
-```
-
-```
-##  [1] "Hampshire" "Hampshire" "London"    "London"    "London"    "London"   
-##  [7] "London"    "Kent"      "Surrey"    "Surrey"    "Surrey"
-```
-
-```r
-grep("London", places)
-```
-
-```
-## [1] 3 4 5 6 7
-```
-It is very useful for indexing strings.
-
-```r
-places[grep("Lon", places)]
-```
-
-```
-## [1] "London" "London" "London" "London" "London"
-```
-
-## gsub
-With `gsub` we give the function the patten we are looking to replace, what to replace it with, and the variable or vector to work on.
-
-```r
-Names <- c("Andrew", "Andrea", "Angela")
-gsub("An" ,"" , Names)
-```
-
-```
-## [1] "drew" "drea" "gela"
-```
-Here we are removing the An from the names in the Names vector. 
-
-## Exercise
-For this exercise I have given you the code but it is in the wrong order. You need to re-arrange the code so it runs correctly. Comment on what each line of code is doing. 
-
-The end result you are aiming for is: **"These 4 pokemon have 'ar' in their names: Charmander, Charmeleon, Charizard, Wartortle"**
-
-
-```r
-pokemon <- gsub("[0-9]", "", pokemon)
-
-paste0("These ",arPokes_num, " pokemon have 'ar' in their names: ", arPokes)
-
-arPokes_num <- sum(length(arPokes))
-
-arPokes <- pokemon[grepl("ar", pokemon)]
-
-pokemon <- c("Bulbasaur001", "Ivysaur002", "Venusaur003",
-             "Charmander004", "Charmeleon005", "Charizard006",
-             "Squirtle007", "Wartortle008", "Blastoise009")
-
-arPokes <- paste(arPokes, collapse = ", ")
-```
+https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7
 
 # Individual coding challenge
 
-If you attended the first R workshop you might remember we calculated a students weighted average grade. Convert this to incorporate 10 students instead of just the one. 
-
-1)  Assign exam1 grades as 52, 62, 55, 82, 48, 65, 68, 62, 65 and 65
-2)  Assign coursework1 grades as 72, 72, 85, 52, 78, 62, 65, 52, 55 and 68
-3)  Assign exam2 grades as 62, 72, 58, 52, 68, 75, 62, 65, 62 and 88
-4)  Assign coursework2 grades as 72, 62, 65, 62, 78, 45, 78, 65, 55 and 75
-5)  Make cw_weight 0.4 and ex_weight 0.6
-6)  Calculate the weighted average of course 1, assigning the result to course1. Do the same for course2
-7)  Calculate the average grade of both courses, and assign to overall_grade
-8)  Print your result
-9)  Add comments
-
-```r
-exam1 <- c(52, 62, 55, 82, 48, 65, 68, 62, 65, 65)
-coursework1 <- c(72, 72, 85, 52, 78, 62, 65, 52, 55, 68)
-exam2 <- c(62, 72, 58, 52, 68, 75, 62, 65, 62, 88)
-coursework2 <- c(72, 62, 65, 62, 78, 45, 78, 65, 55, 75)
-
-cw_weight <- 0.4
-ex_weight <- 0.6
-
-course1 <- (exam1 * ex_weight) + (coursework1 * cw_weight)
-course2 <- (exam2 * ex_weight) + (coursework2 * cw_weight)
-
-overall_grade <- (course1 + course2)/2
-overall_grade
-```
-
-```
-##  [1] 63.0 67.0 63.9 63.0 66.0 63.4 67.6 61.5 60.1 74.5
-```
-
+For this individual coding challenge we will be looking at Lional Messi's season appearances and goals from 2004-2020. The code below has been jumbled up and will not run. Your challenge is to re-order it so it runs correctly. It should print out summary statistics for season goal ratio and age band goal ratios, as well as which year was his most and least prolific, and how many years that took him. 
 
 
 ```r
-# vector of places people are from
-places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
-# counting how many people from each place
-table(places)
+# print career ratio
+careerGoalRatio
+
+# which season had the worst goal ratio
+season[which.max(goalRatio)]
+
+# combine age band ratios to a vector
+ageGoalRatio <- c(round(mean(teenageGoalRatio), digits = 2), 
+              round(mean(twentiesGoalRatio), digits = 2),
+              round(mean(thirtiesGoalRatio), digits = 2))
+
+# add in appearance, goal and season data
+appearances <- c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44)
+goals <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
+season <- c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
+            2013,2014,2015,2016,2017,2018,2019)
+
+# which season had the best goal ratio
+season[which.min(goalRatio)]
+
+# goal ratio per age band (teenager, 20's, 30's)
+teenageGoalRatio <- goalRatio[1:3]
+twentiesGoalRatio <- goalRatio[4:13]
+thirtiesGoalRatio <- goalRatio[14:16]
+
+# summary results
+summary(goalRatio)
+summary(ageGoalRatio)
+
+# how many years playing to reach best goal ratio
+season[which.min(goalRatio)] - season[1]
+
+# work out appearance to goal ratio per season and total career ratio
+goalRatio <- round(appearances/goals, digits = 2)
+careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
 ```
 
-```
-## places
-## Hampshire      Kent    London    Surrey 
-##         2         1         5         3
-```
+
+
+# Submitting work to teams
+
+**Join the LSE-DSL-ClassTeams-Demo**  
+
+1)  Open the Teams app
+2)  Click Teams button on the left side of the app
+3)  Click Join or create a team at the bottom of your teams list
+4)  Go to Join a team with a code (the second tile)
+5)  Paste the code 6rax2tk in the Enter code box, and click Join.
+
+**Submit the R notebook on Teams**  
+
+1)  Open the Teams app
+2)  Click Teams button on the left side of the app
+3)  Open the LSE-DSL-ClassTeams-Demo Team
+4)  Select the R 2 - Numerical Variables channel
+5)  Click on View assignment in the R 2 - Numerical Variables assignment in the Posts tab
+6)  Upload your R notebook
