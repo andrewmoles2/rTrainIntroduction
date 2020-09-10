@@ -259,8 +259,6 @@ goalRatio <- round(appearances/goals, digits = 2)
 careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
 ```
 
-
-
 # Submitting work to teams
 
 **Join the LSE-DSL-ClassTeams-Demo**  
