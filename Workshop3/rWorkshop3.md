@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 September, 2020"
+date: "15 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -41,7 +41,7 @@ What to do when getting stuck:
 **To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 3 workshop.
 
 # Strings
-So far we have only been working with numbers and integers. Strings are text based data which R calls characters. 
+So far in our previous sessions we have only been working with numbers and integers. Strings are text based data which R calls characters. 
 
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/22895-NUNWT2.jpg?raw=true){width=50%}
  
@@ -49,12 +49,12 @@ To code a string you need to use quotation marks. You can use either single or d
 
 ```r
 instrument <- "Violin"
-trees <- c('Oak', 'Willow', 'Redwood')
-trees
+instruments <- c('Violin', 'Cello', 'Viola')
+instruments
 ```
 
 ```
-## [1] "Oak"     "Willow"  "Redwood"
+## [1] "Violin" "Cello"  "Viola"
 ```
 You have to be careful not to run functions on strings that need numerical data.
 

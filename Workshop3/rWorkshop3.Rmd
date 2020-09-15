@@ -48,8 +48,8 @@ So far in our previous sessions we have only been working with numbers and integ
 To code a string you need to use quotation marks. You can use either single or double, depending on your preference. When printing the result, R will always use double quotation marks.
 ```{r}
 instrument <- "Violin"
-trees <- c('Oak', 'Willow', 'Redwood')
-trees
+instruments <- c('Violin', 'Cello', 'Viola')
+instruments
 ```
 You have to be careful not to run functions on strings that need numerical data.
 

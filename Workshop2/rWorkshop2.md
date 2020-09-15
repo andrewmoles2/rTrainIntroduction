@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors and Strings"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 September, 2020"
+date: "15 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -110,8 +110,8 @@ For example:
 # running times (mins)
 runTimes <- c(31, 50, 15, 19, 23, 34, 9)
 # mean running time
-meanRun <- mean(runTimes)
-meanRun
+aveRun <- mean(runTimes)
+aveRun
 ```
 
 ```
@@ -120,8 +120,8 @@ meanRun
 
 ```r
 # tidy up result
-meanRun <- round(meanRun, digits = 2)
-meanRun
+aveRun <- round(aveRun, digits = 2)
+aveRun
 ```
 
 ```
@@ -133,7 +133,7 @@ Here we are using the functions `c` to concatenate, `round` rounds to specific d
 
 We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.
 
-1)  Make a variable called steps using the `seq` function that increases steps from 1000 to 12000 by increments of 1000
+1)  Make a variable called steps using the `seq` function that increases steps from 1000 to 12000 by increments of 500
 2)  Workout how many steps we have done in total from this exercise plan
 3)  Workout out the median amount of steps we have done on this exercise plan
 4)  Comment your code
@@ -197,7 +197,7 @@ You've been keeping track of how much coffee you drink each day for a two week p
 
 1)  Find out the mean for weekOne and WeekTwo vectors.
 2)  `mean` doesn't work for weekTwo. There are two ways to fix this; one using indexing and the other adding an argument to mean. Work out both and add them to the code. Hint: ?`mean` gives you a help page in R. 
-3)  Calling incorrect indexes can happen. To check the length of vector try running the `lenght` function on the coffee vector.
+3)  Calling incorrect indexes can happen. To check the length of vector try running the `length` function on the coffee vector.
 
 
 ```r
@@ -249,6 +249,23 @@ You decided to track your total monthly expenditures for the year to find out mo
 ```
 
 
+## Functions exercise 2
+You decide to calculate your commuting times over a weekly period. You decide to see if you can workout, based off your weekly commute, how much commuting you will do on average this month.
+
+1)  Replicate the commute variable four times using `rep()` and assign to a variable called commute_est.
+2)  Calculate the mean of commute_est and assign to a variable called aveCommute.
+3)  Round the value of aveCommute to two decimal places using `round()` and assign to aveCommute.
+4)  You miss timed your Tuesday commute, it should be 37 instead of 33. To make replacement easier use `sort()` on commute_est, and assign to a variable called commute_sort.
+5)  Replace the 33 values with 37 using indexing in the variable commute_sort.
+6)  Re-calculate and round aveCommute as per instructions two and 3.
+7)  Test out the following functions on the commute_sort variable: `unique()` and `table()`.
+
+
+```r
+commute <- c(40, 33, 40, 52, 36, 39)
+
+# enter your code here
+```
 
 
 # Workshop survey
@@ -259,7 +276,9 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7
 
 # Individual coding challenge
 
-For this individual coding challenge we will be looking at Lional Messi's season appearances and goals from 2004-2020. The code below has been jumbled up and will not run. Your challenge is to re-order it so it runs correctly. It should print out summary statistics for season goal ratio and age band goal ratios, as well as which year was his most and least prolific, and how many years that took him. 
+For this individual coding challenge we will be looking at Lional Messi's season appearances and goals from 2004-2020. 
+
+The code below has been jumbled up and will not run. Your challenge is to re-order it so it runs correctly. It should print out summary statistics for season goal ratio and age band goal ratios, as well as which year was his most and least prolific, and how many years that took him. 
 
 
 ```r
@@ -299,8 +318,6 @@ season[which.min(goalRatio)] - season[1]
 goalRatio <- round(appearances/goals, digits = 2)
 careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
 ```
-
-
 
 # Submitting work to teams
 
