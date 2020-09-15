@@ -13,7 +13,7 @@ output:
 
 # What will this workshop cover?
 
-In this workshop, the aim is to cover some basics of using variables and vectors in R, as well as a start on using strings. We will be covering:
+In this workshop, the aim is to cover some basics of using variables and vectors in R. We will be covering:
 
 *  Vectors
 *  Introduction to functions
@@ -26,6 +26,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
+*  If possible have your camara on when doing the paired work.
 
 What to do when getting stuck:
 
@@ -44,9 +45,11 @@ What to do when getting stuck:
 
 A vector is a set of information contained together in a specific order. 
 
-To make a vector you combine variables using the **c** function (more on functions later); also known as concatenation. To call the **c** function we use brackets () with the numbers we want separated by a comma.  
+To make a vector you combine variables using the `c()` function (more on functions later); also known as concatenation. To call the `c()` function we use brackets () with the numbers we want separated by a comma.  
 
-The first way of making a vector is to add the arguments (numbers) you want.
+The first way of making a vector is to add the arguments you want, numbers in this case.
+
+Run this code chunk to test it out. 
 ```{r}
 vect1 <- c(1,6,19,4,9)
 vect1
@@ -95,13 +98,13 @@ aveRun
 aveRun <- round(aveRun, digits = 2)
 aveRun
 ```
-Here we are using the functions `c` to concatenate, `round` rounds to specific decimal places, and `mean` calculates the mean.
+Here we are using the functions `c()` to concatenate, `round()` rounds to specific decimal places, and `mean()` calculates the mean.
 
 ## Functions exercise
 
 We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.
 
-1)  Make a variable called steps using the `seq` function that increases steps from 1000 to 12000 by increments of 500
+1)  Make a variable called steps using the `seq()` function that increases steps from 1000 to 12000 by increments of 500
 2)  Workout how many steps we have done in total from this exercise plan
 3)  Workout out the median amount of steps we have done on this exercise plan
 4)  Comment your code
@@ -110,21 +113,11 @@ We are on a walking exercise plan, where we increase our step count by a thousan
 # enter your code here
 ```
 
-```{r eval=FALSE, include=FALSE}
-# Our steps this week
-steps <- seq(1000, 12000, by = 500)
-steps
-# total steps
-sum(steps)
-# median steps
-median(steps)
-```
-
 # Indexing vectors
 
 Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, you are the index picking what book, or books, you want to read.
 
-![Designed by macrovector / Freepik](images/6714.jpg){width=30%}
+![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/6714.jpg?raw=true){width=30%}
 
 To index in R you use the square brackets [] after you type the name of the vector to index from. You then put the elements you want to index in the square brackets.
 
@@ -151,8 +144,8 @@ someNumbers[c(1,5,8)]
 You've been keeping track of how much coffee you drink each day for a two week period. We want to split this into week 1 and 2. Using the code below follow the following steps:
 
 1)  Find out the mean for weekOne and WeekTwo vectors.
-2)  `mean` doesn't work for weekTwo. There are two ways to fix this; one using indexing and the other adding an argument to mean. Work out both and add them to the code. Hint: ?`mean` gives you a help page in R. 
-3)  Calling incorrect indexes can happen. To check the length of vector try running the `length` function on the coffee vector.
+2)  `mean` doesn't work for weekTwo. There are two ways to fix this; one using indexing and the other adding an argument to mean. Work out both and add them to the code. Hint: `?mean()` gives you a help page in R. 
+3)  Calling incorrect indexes can happen. To check the length of vector try running the `length()` function on the coffee vector.
 
 ```{r}
 # vector with n coffee per day for two weeks
@@ -164,8 +157,9 @@ weekTwo <- coffee[8:15]
 ```
 
 # Using indexing to change values
-Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using using similar principles in later sessions.
+Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using similar principles in later sessions.
 ```{r}
+someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
 # Change one item
 someNumbers[8] <- 50
 someNumbers
@@ -188,7 +182,6 @@ You decided to track your total monthly expenditures for the year to find out mo
 ```{r}
 # enter your code here
 ```
-
 
 ## Functions exercise 2
 You decide to calculate your commuting times over a weekly period. You decide to see if you can workout, based off your weekly commute, how much commuting you will do on average this month.

@@ -13,7 +13,7 @@ output:
 
 # What will this workshop cover?
 
-In this workshop, the aim is to cover some basics of using variables and vectors in R, as well as a start on using strings. We will be covering:
+In this workshop, the aim is to cover some basics of using variables and vectors in R. We will be covering:
 
 *  Vectors
 *  Introduction to functions
@@ -26,6 +26,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
+*  If possible have your camara on when doing the paired work.
 
 What to do when getting stuck:
 
@@ -44,9 +45,11 @@ What to do when getting stuck:
 
 A vector is a set of information contained together in a specific order. 
 
-To make a vector you combine variables using the **c** function (more on functions later); also known as concatenation. To call the **c** function we use brackets () with the numbers we want separated by a comma.  
+To make a vector you combine variables using the `c()` function (more on functions later); also known as concatenation. To call the `c()` function we use brackets () with the numbers we want separated by a comma.  
 
-The first way of making a vector is to add the arguments (numbers) you want.
+The first way of making a vector is to add the arguments you want, numbers in this case.
+
+Run this code chunk to test it out. 
 
 ```r
 vect1 <- c(1,6,19,4,9)
@@ -127,13 +130,13 @@ aveRun
 ```
 ## [1] 25.86
 ```
-Here we are using the functions `c` to concatenate, `round` rounds to specific decimal places, and `mean` calculates the mean.
+Here we are using the functions `c()` to concatenate, `round()` rounds to specific decimal places, and `mean()` calculates the mean.
 
 ## Functions exercise
 
 We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.
 
-1)  Make a variable called steps using the `seq` function that increases steps from 1000 to 12000 by increments of 500
+1)  Make a variable called steps using the `seq()` function that increases steps from 1000 to 12000 by increments of 500
 2)  Workout how many steps we have done in total from this exercise plan
 3)  Workout out the median amount of steps we have done on this exercise plan
 4)  Comment your code
@@ -143,13 +146,11 @@ We are on a walking exercise plan, where we increase our step count by a thousan
 # enter your code here
 ```
 
-
-
 # Indexing vectors
 
 Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, you are the index picking what book, or books, you want to read.
 
-![Designed by macrovector / Freepik](images/6714.jpg){width=30%}
+![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/6714.jpg?raw=true){width=30%}
 
 To index in R you use the square brackets [] after you type the name of the vector to index from. You then put the elements you want to index in the square brackets.
 
