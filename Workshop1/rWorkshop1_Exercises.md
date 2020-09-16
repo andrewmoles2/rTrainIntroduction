@@ -1,7 +1,7 @@
 ---
 title: "R Workshop 1 - Welcome to R!"
 author: "Your name here"
-date: "10 September, 2020"
+date: "16 September, 2020"
 output: 
   html_document: 
     keep_md: yes
@@ -228,7 +228,7 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 
 # Individual (take home) coding challenge
 
-A take home coding task for you, which if you submit to Teams we will mark and give you feedback.
+A take home coding task for you.
 
 Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal and Genevieve.
 
@@ -250,21 +250,3 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 # individual coding challenge
 ```
 
-# Submitting work to teams
-
-**Join the LSE-DSL-ClassTeams-Demo**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Click Join or create a team at the bottom of your teams list
-4)  Go to Join a team with a code (the second tile)
-5)  Paste the code 6rax2tk in the Enter code box, and click Join.
-
-**Submit the R notebook on Teams**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Open the LSE-DSL-ClassTeams-Demo Team
-4)  Select the R 1 - Numerical Variables channel
-5)  Click on View assignment in the R 1 - Numerical Variables assignment in the Posts tab
-6)  Upload your R notebook

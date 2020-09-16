@@ -26,7 +26,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
-*  If possible have your camara on when doing the paired work.
+*  If possible have your camera on when doing the paired work.
 
 What to do when getting stuck:
 
@@ -36,8 +36,6 @@ What to do when getting stuck:
   *  stackoverflow.com (for task-specific solutions)
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
-**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 2 workshop.
 
 ***
 
@@ -251,22 +249,3 @@ season[which.min(goalRatio)] - season[1]
 goalRatio <- round(appearances/goals, digits = 2)
 careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
 ```
-
-# Submitting work to teams
-
-**Join the LSE-DSL-ClassTeams-Demo**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Click Join or create a team at the bottom of your teams list
-4)  Go to Join a team with a code (the second tile)
-5)  Paste the code 6rax2tk in the Enter code box, and click Join.
-
-**Submit the R notebook on Teams**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Open the LSE-DSL-ClassTeams-Demo Team
-4)  Select the R 2 - Numerical Variables channel
-5)  Click on View assignment in the R 2 - Numerical Variables assignment in the Posts tab
-6)  Upload your R notebook

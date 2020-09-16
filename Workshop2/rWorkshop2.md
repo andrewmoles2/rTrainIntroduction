@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors and Strings"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "15 September, 2020"
+date: "16 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -26,7 +26,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
-*  If possible have your camara on when doing the paired work.
+*  If possible have your camera on when doing the paired work.
 
 What to do when getting stuck:
 
@@ -36,8 +36,6 @@ What to do when getting stuck:
   *  stackoverflow.com (for task-specific solutions)
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
-**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 2 workshop.
 
 ***
 
@@ -197,8 +195,8 @@ someNumbers[c(1,5,8)]
 You've been keeping track of how much coffee you drink each day for a two week period. We want to split this into week 1 and 2. Using the code below follow the following steps:
 
 1)  Find out the mean for weekOne and WeekTwo vectors.
-2)  `mean` doesn't work for weekTwo. There are two ways to fix this; one using indexing and the other adding an argument to mean. Work out both and add them to the code. Hint: ?`mean` gives you a help page in R. 
-3)  Calling incorrect indexes can happen. To check the length of vector try running the `length` function on the coffee vector.
+2)  `mean` doesn't work for weekTwo. There are two ways to fix this; one using indexing and the other adding an argument to mean. Work out both and add them to the code. Hint: `?mean()` gives you a help page in R. 
+3)  Calling incorrect indexes can happen. To check the length of vector try running the `length()` function on the coffee vector.
 
 
 ```r
@@ -211,9 +209,10 @@ weekTwo <- coffee[8:15]
 ```
 
 # Using indexing to change values
-Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using using similar principles in later sessions.
+Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using similar principles in later sessions.
 
 ```r
+someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
 # Change one item
 someNumbers[8] <- 50
 someNumbers
@@ -248,7 +247,6 @@ You decided to track your total monthly expenditures for the year to find out mo
 ```r
 # enter your code here
 ```
-
 
 ## Functions exercise 2
 You decide to calculate your commuting times over a weekly period. You decide to see if you can workout, based off your weekly commute, how much commuting you will do on average this month.
@@ -319,22 +317,3 @@ season[which.min(goalRatio)] - season[1]
 goalRatio <- round(appearances/goals, digits = 2)
 careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
 ```
-
-# Submitting work to teams
-
-**Join the LSE-DSL-ClassTeams-Demo**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Click Join or create a team at the bottom of your teams list
-4)  Go to Join a team with a code (the second tile)
-5)  Paste the code 6rax2tk in the Enter code box, and click Join.
-
-**Submit the R notebook on Teams**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Open the LSE-DSL-ClassTeams-Demo Team
-4)  Select the R 2 - Numerical Variables channel
-5)  Click on View assignment in the R 2 - Numerical Variables assignment in the Posts tab
-6)  Upload your R notebook

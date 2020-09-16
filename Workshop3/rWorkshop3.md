@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "15 September, 2020"
+date: "16 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -28,7 +28,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
-*  If possible have your camara on when doing the paired work.
+*  If possible have your camera on when doing the paired work.
 
 What to do when getting stuck:
 
@@ -38,8 +38,6 @@ What to do when getting stuck:
   *  stackoverflow.com (for task-specific solutions)
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
-**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 3 workshop.
 
 # Strings
 So far in our previous sessions we have only been working with numbers and integers. Strings are text based data which R calls characters. 

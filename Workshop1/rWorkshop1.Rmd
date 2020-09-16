@@ -36,7 +36,6 @@ What to do when getting stuck:
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
-**To get feedback**: hand in your R markdown exercise file in the assignment on the Teams channel for the R 1 workshop.
 
 # Why R 
 
@@ -268,7 +267,7 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 
 # Individual (take home) coding challenge
 
-A take home coding task for you, which if you submit to Teams we will mark and give you feedback.
+A take home coding task for you.
 
 Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal and Genevieve.
 
@@ -291,24 +290,6 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 # individual coding challenge
 ```
 
-# Submitting work to teams
-
-**Join the LSE-DSL-ClassTeams-Demo**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Click Join or create a team at the bottom of your teams list
-4)  Go to Join a team with a code (the second tile)
-5)  Paste the code 6rax2tk in the Enter code box, and click Join.
-
-**Submit the R notebook on Teams**  
-
-1)  Open the Teams app
-2)  Click Teams button on the left side of the app
-3)  Open the LSE-DSL-ClassTeams-Demo Team
-4)  Select the R 1 - Numerical Variables channel
-5)  Click on View assignment in the R 1 - Numerical Variables assignment in the Posts tab
-6)  Upload your R notebook
 
 # Recommended links
 Recommended for more information on the RStudio environment: https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/  
