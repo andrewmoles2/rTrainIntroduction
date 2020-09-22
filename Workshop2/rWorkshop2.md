@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors and Strings"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "16 September, 2020"
+date: "22 September, 2020"
 output: 
   html_document: 
     theme: readable

@@ -26,6 +26,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
+*  If possible have your camera on when doing the paired work.
 
 What to do when getting stuck:
 

@@ -3,7 +3,7 @@ title: "R Workshop 1 - Welcome to R!"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "16 September, 2020"
+date: "22 September, 2020"
 output: 
   html_document: 
     theme: readable
@@ -26,6 +26,7 @@ We will be working in pairs:
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
+*  If possible have your camera on when doing the paired work.
 
 What to do when getting stuck:
 
