@@ -4,7 +4,7 @@ Series of short introduction to R training courses, built for online delivery wi
 
 Workshop 1: RStudio introduction and numeric variables  
 
-Workshop 2: Vectors and Indexing
+Workshop 2: Vectors, functions, and indexing
 
 Workshop 3: Strings, factors, and type conversion
 

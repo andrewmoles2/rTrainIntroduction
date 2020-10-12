@@ -1,5 +1,5 @@
 ---
-title: "R Workshop 2 - Vectors and Strings"
+title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
