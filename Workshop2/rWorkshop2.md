@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "12 October, 2020"
+date: "13 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -21,14 +21,22 @@ In this workshop, the aim is to cover some basics of using variables and vectors
 
 # Information on how the session is run
 
-We will be working in pairs:
+One hour exercise based session with tutor support. You will be given example code for a problem, then given a related exercise to complete.
+
+## Why this style?
+
+*  Online training is tiring so keeping the sessions to one hour
+*  No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
+*  Trainer support to guide through process of learning
+
+## We will be working in pairs:
 
 *  Take turns sharing the screen.
 *  Take turns on who types for each exercise.
 *  Whoever was typing, share your code in the chat with your teammate. 
 *  If possible have your camera on when doing the paired work.
 
-What to do when getting stuck:
+## What to do when getting stuck:
 
 1)  Ask your team members
 2)  Search online:
@@ -36,6 +44,7 @@ What to do when getting stuck:
   *  stackoverflow.com (for task-specific solutions)
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
+
 
 ***
 
