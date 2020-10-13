@@ -211,7 +211,7 @@ Here we are removing the An from the names in the Names vector.
 ## gsub exercise
 Using the same IDs variable we are going to use gsub to replace the *ID* from each string and replace it with *patientID*. You should end up with IDs that looks like *patientID_3*. 
 
-1)  Using gsub replace ID with patientID, assign the results to a varaible called patientID.
+1)  Using gsub replace ID with patientID, assign the results to a variable called patientID.
 2)  Print your new patientID variable.
 3)  Comment your code.
 
@@ -243,11 +243,129 @@ pokemon <- c("Bulbasaur001", "Ivysaur002", "Venusaur003",
 
 arPokes <- paste(arPokes, collapse = ", ")
 ```
-
+***
 
 # Introduction to factors
 
+Factors in R are a way to represent and work with categorical data. Categorical data has fixed values, for example, the months of the year (January, February etc.). Factors allow you to do analysis with strings by categorising them (more on this later). 
 
+The are a few different ways to make a factor in R, the primary function to do this is `factor()`. 
+
+```r
+veg <- c("carrot", "potato", "squash", "squash", "potato", "onion")
+veg <- factor(veg)
+veg
+```
+
+```
+## [1] carrot potato squash squash potato onion 
+## Levels: carrot onion potato squash
+```
+We created the vector then made it into a factor. We can also just add the values straight into `factor()`. 
+
+```r
+veg <- factor(c("carrot", "potato", "squash", "squash", "potato", "onion"))
+veg
+```
+
+```
+## [1] carrot potato squash squash potato onion 
+## Levels: carrot onion potato squash
+```
+
+To interpret the output, the first line shows all the variables in the veg vector, the second line (*levels:*) gives you the categories. In this case we have four: carrot, onion, potato, squash; these are known as levels. 
+
+Why make strings into factors? Other than being easier to work with, factors help you to avoid typos (will give error) and can be sorted in helpful and meaningful ways.
+
+## Exercise
+
+Have a go at making factors yourself. Using the following variables - apple, pear, grape, apple, banana, grape - make them into a factor using both methods used above.
+
+
+```r
+# your code here
+```
+
+# Ordering factors
+
+Sometimes the ordering of the factor levels matter. For example, if you had a question on how often someone eats ice cream with the possible answers of *Almost always, Often, Sometimes, Seldom, and Never*, the order is important. This order reflects how the output will be printed or arranged in a figure. 
+
+Run the below example. Can you see that the order is wrong? 
+
+```r
+iceCream <- factor(c('Almost always', 'Often', 'Never', 'Sometimes', 
+                     'Seldom','Almost always','Often', 'Never'))
+iceCream
+```
+
+```
+## [1] Almost always Often         Never         Sometimes     Seldom       
+## [6] Almost always Often         Never        
+## Levels: Almost always Never Often Seldom Sometimes
+```
+There are a few ways of fixing this, the simplest of which include using the `levels` argument in the `factor()` function. 
+
+Using our example above we add the levels argument after the variables (`factor(variables, levels = )`).
+
+```r
+iceCream <- factor(c('Almost always', 'Often', 'Never', 'Sometimes', 
+                     'Seldom','Almost always','Often', 'Never'), 
+                   levels = c('Almost always', 'Often', 'Sometimes', 
+                              'Seldom','Never'))
+
+iceCream
+```
+
+```
+## [1] Almost always Often         Never         Sometimes     Seldom       
+## [6] Almost always Often         Never        
+## Levels: Almost always Often Sometimes Seldom Never
+```
+
+We can also add the levels after after the factor has been created, by reassigning it and adding the levels argument.
+
+```r
+iceCream <- factor(iceCream, levels = c('Almost always', 'Often', 
+                                        'Sometimes', 'Seldom','Never'))
+```
+
+Finally, you can pre-define the levels in a vector before adding them as levels. 
+
+```r
+qlevels <- c('Almost always','Often','Sometimes','Seldom','Never')
+
+iceCream <- factor(iceCream, levels = qlevels)
+
+iceCream
+```
+
+```
+## [1] Almost always Often         Never         Sometimes     Seldom       
+## [6] Almost always Often         Never        
+## Levels: Almost always Often Sometimes Seldom Never
+```
+
+## Factor exercise
+
+
+
+# Tabulation using factors
+
+Using the `table()` function we can do simple tabulations of factors. 
+
+
+```r
+table(iceCream, exclude = "Sometimes")
+```
+
+```
+## iceCream
+## Almost always         Often        Seldom         Never 
+##             2             2             1             2
+```
+
+
+## Tabulation exercise
 
 # Type conversions
 
@@ -278,3 +396,6 @@ mean(someData)
 ## [1] 4.8
 ```
 
+## Type conversion exercise
+
+# Individual take home challenge 
