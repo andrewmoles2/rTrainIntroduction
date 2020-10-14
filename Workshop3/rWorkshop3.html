@@ -451,7 +451,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 3 - Strings, factors, and type conversion</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">13 October, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">14 October, 2020</h4>
 
 </div>
 
@@ -481,9 +481,9 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">13 October, 2020</h4>
 <div id="we-will-be-working-in-pairs" class="section level2">
 <h2>We will be working in pairs:</h2>
 <ul>
-<li>Take turns sharing the screen.</li>
+<li>One shares the screen and the other requests remote control.</li>
 <li>Take turns on who types for each exercise.</li>
-<li>Whoever was typing, share your code in the chat with your teammate.</li>
+<li>Share markdown file at end of session via chat</li>
 <li>If possible have your camera on when doing the paired work.</li>
 </ul>
 </div>
@@ -667,14 +667,13 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">13 October, 2020</h4>
 <pre><code>## [1] Almost always Often         Never         Sometimes     Seldom       
 ## [6] Almost always Often         Never        
 ## Levels: Almost always Never Often Seldom Sometimes</code></pre>
-<p>There are a few ways of fixing this, the simplest of which include using the <code>levels</code> argument in the <code>factor()</code> function.</p>
+<p>Factors by default are ordered alphabetically. There are a few ways of changing this, the simplest of which is to include the <code>levels</code> argument in the <code>factor()</code> function.</p>
 <p>Using our example above we add the levels argument after the variables (<code>factor(variables, levels = )</code>).</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>iceCream &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;Almost always&#39;</span>, <span class="st">&#39;Often&#39;</span>, <span class="st">&#39;Never&#39;</span>, <span class="st">&#39;Sometimes&#39;</span>, </span>
 <span id="cb33-2"><a href="#cb33-2"></a>                     <span class="st">&#39;Seldom&#39;</span>,<span class="st">&#39;Almost always&#39;</span>,<span class="st">&#39;Often&#39;</span>, <span class="st">&#39;Never&#39;</span>), </span>
 <span id="cb33-3"><a href="#cb33-3"></a>                   <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;Almost always&#39;</span>, <span class="st">&#39;Often&#39;</span>, <span class="st">&#39;Sometimes&#39;</span>, </span>
 <span id="cb33-4"><a href="#cb33-4"></a>                              <span class="st">&#39;Seldom&#39;</span>,<span class="st">&#39;Never&#39;</span>))</span>
-<span id="cb33-5"><a href="#cb33-5"></a></span>
-<span id="cb33-6"><a href="#cb33-6"></a>iceCream</span></code></pre></div>
+<span id="cb33-5"><a href="#cb33-5"></a>iceCream</span></code></pre></div>
 <pre><code>## [1] Almost always Often         Never         Sometimes     Seldom       
 ## [6] Almost always Often         Never        
 ## Levels: Almost always Often Sometimes Seldom Never</code></pre>
@@ -684,23 +683,46 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">13 October, 2020</h4>
 <p>Finally, you can pre-define the levels in a vector before adding them as levels.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>qlevels &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Almost always&#39;</span>,<span class="st">&#39;Often&#39;</span>,<span class="st">&#39;Sometimes&#39;</span>,<span class="st">&#39;Seldom&#39;</span>,<span class="st">&#39;Never&#39;</span>)</span>
 <span id="cb36-2"><a href="#cb36-2"></a></span>
-<span id="cb36-3"><a href="#cb36-3"></a>iceCream &lt;-<span class="st"> </span><span class="kw">factor</span>(iceCream, <span class="dt">levels =</span> qlevels)</span>
-<span id="cb36-4"><a href="#cb36-4"></a></span>
-<span id="cb36-5"><a href="#cb36-5"></a>iceCream</span></code></pre></div>
+<span id="cb36-3"><a href="#cb36-3"></a>iceCream &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;Almost always&#39;</span>, <span class="st">&#39;Often&#39;</span>, <span class="st">&#39;Never&#39;</span>, <span class="st">&#39;Sometimes&#39;</span>, </span>
+<span id="cb36-4"><a href="#cb36-4"></a>                     <span class="st">&#39;Seldom&#39;</span>,<span class="st">&#39;Almost always&#39;</span>,<span class="st">&#39;Often&#39;</span>, <span class="st">&#39;Never&#39;</span>), </span>
+<span id="cb36-5"><a href="#cb36-5"></a>                   <span class="dt">levels =</span> qlevels)</span>
+<span id="cb36-6"><a href="#cb36-6"></a>iceCream</span></code></pre></div>
 <pre><code>## [1] Almost always Often         Never         Sometimes     Seldom       
 ## [6] Almost always Often         Never        
 ## Levels: Almost always Often Sometimes Seldom Never</code></pre>
+<div id="factor-task" class="section level2">
+<h2>Factor task</h2>
+<ol style="list-style-type: decimal">
+<li>Make the sizes vector below into a factor, making sure to put the sizes in the following order: low, medium, high.</li>
+<li>Print the newly factorised sizes vector to see the outcome</li>
+</ol>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;high&#39;</span>, <span class="st">&#39;low&#39;</span>, <span class="st">&#39;medium&#39;</span>, <span class="st">&#39;low&#39;</span>, <span class="st">&#39;high&#39;</span>)</span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="co"># your code here</span></span></code></pre></div>
+</div>
 <div id="factor-exercise" class="section level2">
 <h2>Factor exercise</h2>
 </div>
 </div>
 <div id="tabulation-using-factors" class="section level1">
 <h1>Tabulation using factors</h1>
-<p>Using the <code>table()</code> function we can do simple tabulations of factors.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">table</span>(iceCream, <span class="dt">exclude =</span> <span class="st">&quot;Sometimes&quot;</span>)</span></code></pre></div>
+<p>It can be helpful to know how many occurrences (counts) of each category you have in a factor. You can do this using the <code>table()</code> function, which allows us to do simple tabulations.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># colours vector</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>cols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;green&#39;</span>,</span>
+<span id="cb39-3"><a href="#cb39-3"></a>          <span class="st">&#39;blue&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;green&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>)</span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="co"># tabulation of colours vector</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="kw">table</span>(cols)</span></code></pre></div>
+<pre><code>## cols
+##  blue green   red 
+##     3     3     6</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw">table</span>(iceCream, <span class="dt">exclude =</span> <span class="st">&quot;Sometimes&quot;</span>)<span class="op">/</span><span class="kw">length</span>(iceCream)</span></code></pre></div>
 <pre><code>## iceCream
 ## Almost always         Often        Seldom         Never 
-##             2             2             1             2</code></pre>
+##         0.250         0.250         0.125         0.250</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="kw">table</span>(veg)</span></code></pre></div>
+<pre><code>## veg
+## carrot  onion potato squash 
+##      1      1      2      2</code></pre>
 <div id="tabulation-exercise" class="section level2">
 <h2>Tabulation exercise</h2>
 </div>
@@ -709,17 +731,22 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">13 October, 2020</h4>
 <h1>Type conversions</h1>
 <p>In the workshops so far we have covered several types of data including strings, numeric, integer, and factors. Sometimes when working with data it is necessary to convert the type of data so you can work with it in a different way.</p>
 <p>A simple example is a number being coded as a string. In order to do calculations on that data you need to convert it.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>someData &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;2&#39;</span>,<span class="st">&#39;5&#39;</span>,<span class="st">&#39;2&#39;</span>,<span class="st">&#39;6&#39;</span>,<span class="st">&#39;9&#39;</span>)</span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">mean</span>(someData)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>someData &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;2&#39;</span>,<span class="st">&#39;5&#39;</span>,<span class="st">&#39;2&#39;</span>,<span class="st">&#39;6&#39;</span>,<span class="st">&#39;9&#39;</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="kw">mean</span>(someData)</span></code></pre></div>
 <pre><code>## Warning in mean.default(someData): argument is not numeric or logical: returning
 ## NA</code></pre>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>someData &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(someData)</span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="kw">mean</span>(someData)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>someData &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(someData)</span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="kw">mean</span>(someData)</span></code></pre></div>
 <pre><code>## [1] 4.8</code></pre>
 <div id="type-conversion-exercise" class="section level2">
 <h2>Type conversion exercise</h2>
 </div>
+</div>
+<div id="final-task---please-give-us-your-feedback" class="section level1">
+<h1>Final task - Please give us your feedback!</h1>
+<p>This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!</p>
+<p><a href="https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&amp;topic=R&amp;cohort=MT20" class="uri">https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&amp;topic=R&amp;cohort=MT20</a></p>
 </div>
 <div id="individual-take-home-challenge" class="section level1">
 <h1>Individual take home challenge</h1>

@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "13 October, 2020"
+date: "14 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -31,9 +31,9 @@ One hour exercise based session with tutor support. You will be given example co
 
 ## We will be working in pairs:
 
-*  Take turns sharing the screen.
+*  One shares the screen and the other requests remote control.
 *  Take turns on who types for each exercise.
-*  Whoever was typing, share your code in the chat with your teammate. 
+*  Share markdown file at end of session via chat
 *  If possible have your camera on when doing the paired work.
 
 ## What to do when getting stuck:
@@ -155,7 +155,7 @@ We are on a walking exercise plan, where we increase our step count by a thousan
 
 # Indexing vectors
 
-Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, you are the index picking what book, or books, you want to read.
+Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, the index determines the book, or books you pick from the shelf.
 
 ![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/6714.jpg?raw=true){width=30%}
 
@@ -276,7 +276,7 @@ commute <- c(40, 33, 40, 52, 36, 39)
 ```
 
 
-# Workshop survey
+# Final task - Please give us your feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 

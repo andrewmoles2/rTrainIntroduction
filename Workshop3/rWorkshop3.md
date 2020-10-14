@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "13 October, 2020"
+date: "14 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -33,9 +33,9 @@ One hour exercise based session with tutor support. You will be given example co
 
 ## We will be working in pairs:
 
-*  Take turns sharing the screen.
+*  One shares the screen and the other requests remote control.
 *  Take turns on who types for each exercise.
-*  Whoever was typing, share your code in the chat with your teammate. 
+*  Share markdown file at end of session via chat
 *  If possible have your camera on when doing the paired work.
 
 ## What to do when getting stuck:
@@ -303,7 +303,7 @@ iceCream
 ## [6] Almost always Often         Never        
 ## Levels: Almost always Never Often Seldom Sometimes
 ```
-There are a few ways of fixing this, the simplest of which include using the `levels` argument in the `factor()` function. 
+Factors by default are ordered alphabetically. There are a few ways of changing this, the simplest of which is to include the `levels` argument in the `factor()` function. 
 
 Using our example above we add the levels argument after the variables (`factor(variables, levels = )`).
 
@@ -312,7 +312,6 @@ iceCream <- factor(c('Almost always', 'Often', 'Never', 'Sometimes',
                      'Seldom','Almost always','Often', 'Never'), 
                    levels = c('Almost always', 'Often', 'Sometimes', 
                               'Seldom','Never'))
-
 iceCream
 ```
 
@@ -334,8 +333,9 @@ Finally, you can pre-define the levels in a vector before adding them as levels.
 ```r
 qlevels <- c('Almost always','Often','Sometimes','Seldom','Never')
 
-iceCream <- factor(iceCream, levels = qlevels)
-
+iceCream <- factor(c('Almost always', 'Often', 'Never', 'Sometimes', 
+                     'Seldom','Almost always','Often', 'Never'), 
+                   levels = qlevels)
 iceCream
 ```
 
@@ -345,23 +345,59 @@ iceCream
 ## Levels: Almost always Often Sometimes Seldom Never
 ```
 
+## Factor task
+
+1)  Make the sizes vector below into a factor, making sure to put the sizes in the following order: low, medium, high. 
+2)  Print the newly factorised sizes vector to see the outcome
+
+```r
+sizes <- c('high', 'low', 'medium', 'low', 'high')
+
+# your code here
+```
+
 ## Factor exercise
 
 
 
 # Tabulation using factors
 
-Using the `table()` function we can do simple tabulations of factors. 
+It can be helpful to know how many occurrences (counts) of each category you have in a factor. You can do this using the `table()` function, which allows us to do simple tabulations. 
 
 
 ```r
-table(iceCream, exclude = "Sometimes")
+# colours vector
+cols <- c('red','blue','red','green','red','green',
+          'blue','red','green','red','red','blue')
+# tabulation of colours vector
+table(cols)
+```
+
+```
+## cols
+##  blue green   red 
+##     3     3     6
+```
+
+
+```r
+table(iceCream, exclude = "Sometimes")/length(iceCream)
 ```
 
 ```
 ## iceCream
 ## Almost always         Often        Seldom         Never 
-##             2             2             1             2
+##         0.250         0.250         0.125         0.250
+```
+
+```r
+table(veg)
+```
+
+```
+## veg
+## carrot  onion potato squash 
+##      1      1      2      2
 ```
 
 
@@ -398,4 +434,12 @@ mean(someData)
 
 ## Type conversion exercise
 
+# Final task - Please give us your feedback!
+
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=R&cohort=MT20
+
 # Individual take home challenge 
+
+
