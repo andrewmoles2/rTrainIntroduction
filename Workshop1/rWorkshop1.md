@@ -3,7 +3,7 @@ title: "R Workshop 1 - Welcome to R!"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "14 October, 2020"
+date: "15 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -81,12 +81,6 @@ For these workshops we will be using R Markdown. It allows you to have text (wit
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/RMarkdown.png?raw=true)
 
 To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac). 
-
-# Starting the session
-
-Open the workshop1.rmd file I have sent and save it. 
-
-As we will be doing paired programming, each of you should have the file open and take turns to share the screen for each task/exercise. Whoever is screen sharing should copy and paste the code into the chat so that other has it to add to their own document. 
 
 ***
 

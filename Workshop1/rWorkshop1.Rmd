@@ -82,12 +82,6 @@ For these workshops we will be using R Markdown. It allows you to have text (wit
 
 To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac). 
 
-# Starting the session
-
-Open the workshop1.rmd file I have sent and save it. 
-
-As we will be doing paired programming, each of you should have the file open and take turns to share the screen for each task/exercise. Whoever is screen sharing should copy and paste the code into the chat so that other has it to add to their own document. 
-
 ***
 
 # Using R as a calculator
