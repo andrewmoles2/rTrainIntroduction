@@ -156,11 +156,11 @@ You will have noticed the hashtags (#) with text in the above example. These are
 ```{r}
 # this is a comment
 ```
-
 # Reassigning variables
 
-You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance. Be sure to run the code.
+You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance. 
 
+*Run this code to test it out:*
 ```{r}
 # create variables
 BankBalance <- 100
@@ -179,10 +179,12 @@ Try and add another pay check of £50 to the bank balance variable.
 2)  Assign BankBalance, and calculate BankBalance + PayCheck2
 3)  Print the outcome
 
+*hint: if this doesn't work run the code chunk above*
 ```{r}
 # Reassigning variables task
 
 ```
+
 
 ***
 
