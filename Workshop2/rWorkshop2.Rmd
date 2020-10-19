@@ -209,7 +209,7 @@ commute <- c(40, 33, 40, 52, 36, 39)
 ```
 
 
-# Final task - Please give us your feedback!
+# Final task - Please give us your individual feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
