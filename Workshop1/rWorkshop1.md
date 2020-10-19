@@ -3,7 +3,7 @@ title: "R Workshop 1 - Welcome to R!"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "15 October, 2020"
+date: "19 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -304,7 +304,7 @@ Robin_weeksWorking <- 48
 Charlie_hoursPerWeek <- 35
 ```
 
-# Final task - Please give us your feedback!
+# Final task - Please give us your individual feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
