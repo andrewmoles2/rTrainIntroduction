@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "19 October, 2020"
+date: "20 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -280,7 +280,7 @@ commute <- c(40, 33, 40, 52, 36, 39)
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7
+https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D046-R2VFI&topic=R&cohort=MT20
 
 # Individual coding challenge
 

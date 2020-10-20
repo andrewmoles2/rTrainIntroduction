@@ -334,7 +334,6 @@ This is the first time that we are exploring a remote learning format for our wo
 
 https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=R&cohort=MT20
 
-
 # Individual take home challenge 
 In this debugging challenge get the code below to run. The code calculates your week wine consumption. When it runs it will print out the following statement "This week I drank on average 1.71 glasses of wine, 5 red and 2 white". *Hint: test out each line of code one by one to pick up the errors*
 
