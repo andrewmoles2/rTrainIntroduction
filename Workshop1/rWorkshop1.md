@@ -3,7 +3,7 @@ title: "R Workshop 1 - Welcome to R!"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "19 October, 2020"
+date: "21 October, 2020"
 output: 
   html_document: 
     theme: readable

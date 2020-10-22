@@ -107,6 +107,7 @@ Use R to work out the following arithmetic:
 
 ```{r}
 # type your code here
+
 ```
 
 ***
