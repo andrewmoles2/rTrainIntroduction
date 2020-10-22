@@ -1,5 +1,5 @@
 ---
-title: "R Workshop 4 - Data Frames"
+title: "R Workshop 4 - Data Frames and libraries"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
@@ -15,6 +15,7 @@ output:
 
 In this workshop, the aim is to cover strings and sting manipulation, introduce factors, and type conversion. We will be covering:
 
+*  Introduction to packages and libraries
 *  Loading in data
 *  Getting information on data frame
 *  Indexing data frames
@@ -49,6 +50,8 @@ One hour exercise based session with tutor support. You will be given example co
 ***
 
 # What is a data frame
+
+![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true){width=40%}
 
 # Loading in data
 

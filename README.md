@@ -1,14 +1,22 @@
 # rTrainIntroduction
 
-Series of short introduction to R training courses, built for online delivery with binder and RStudio.
+Series of short introduction to R training courses, built for online delivery using RStudio and R Markdown.
 
-Workshop 1: RStudio introduction and numeric variables  
+**Workshop 1: RStudio introduction and numeric variables**
 
-Workshop 2: Vectors, functions, and indexing
+![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true){width=40%}
 
-Workshop 3: Strings, factors, and type conversion
+**Workshop 2: Vectors, functions, and indexing**
 
-Workshop 4: Data frames
+![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/6714.jpg?raw=true){width=25%}
 
-![](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
-Artwork by @allison_horst
+**Workshop 3: Strings, factors, and type conversion**
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/22895-NUNWT2.jpg?raw=true){width=35%}
+
+**Workshop 4: Data Frames and libraries**
+
+![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true){width=45%}
+
+
+
