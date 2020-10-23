@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "19 October, 2020"
+date: "23 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -431,8 +431,7 @@ Type conversion can be helpful with questionnaire data. In this example you've t
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=R&cohort=MT20
-
+https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D048-R3SFTC&topic=R&cohort=MT20
 
 # Individual take home challenge 
 In this debugging challenge get the code below to run. The code calculates your week wine consumption. When it runs it will print out the following statement "This week I drank on average 1.71 glasses of wine, 5 red and 2 white". *Hint: test out each line of code one by one to pick up the errors*
