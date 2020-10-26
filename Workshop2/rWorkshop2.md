@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "20 October, 2020"
+date: "26 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -103,8 +103,14 @@ As you can see this divides all elements in the vector by 5.
 1)  Make a vector called x with integers from 8 through to 14
 2)  Add 5 to your x vector (be sure to save as result back to x)
 3)  Make a vector called y with variables 34, 55, 13, 71, 98, 43 and 25 
-4)  Take 12 from your y vector (be sure to save as result back to x)
+4)  Take 12 from your y vector (be sure to save as result back to y)
 5)  Times x vector by y
+
+
+```r
+# your code here
+```
+
 
 ***
 
@@ -150,7 +156,7 @@ We are on a walking exercise plan, where we increase our step count by a thousan
 
 
 ```r
-# enter your code here
+# your code here
 ```
 
 # Indexing vectors
@@ -161,7 +167,7 @@ Indexing is a technical term for accessing elements of a vector. Think of it lik
 
 To index in R you use the square brackets [] after you type the name of the vector to index from. You then put the elements you want to index in the square brackets.
 
-Some examples:
+Run the example code chunks to see the results:
 
 ```r
 someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
@@ -220,6 +226,8 @@ weekTwo <- coffee[8:15]
 # Using indexing to change values
 Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using similar principles in later sessions.
 
+Run the code below to see the example:
+
 ```r
 someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
 # Change one item
@@ -242,7 +250,7 @@ someNumbers
 ```
 
 ## Indexing exercise 2
-You decided to track your total monthly expenditures for the year to find out more about your monthly spending. Such as spending per quarter, biggest spending month, and lowest spending month.
+You decided to track your total monthly expenditures for the year to find out more about your monthly spending. You're interested in your spending per quarter, biggest spending month, and lowest spending month.
 
 1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506. Each item represents each month, first is January spending, second is February spending etc.
 2)  You realise the spending for some of the months is wrong. January should be 921, August should be 1419, and November should be 703. Use indexing to change the values in myExpenses so they are correct.  
@@ -265,13 +273,12 @@ You decide to calculate your commuting times over a weekly period. You decide to
 3)  Round the value of aveCommute to two decimal places using `round()` and assign to aveCommute.
 4)  You miss timed your Tuesday commute, it should be 37 instead of 33. To make replacement easier use `sort()` on commute_est, and assign to a variable called commute_sort.
 5)  Replace the 33 values with 37 using indexing in the variable commute_sort.
-6)  Re-calculate and round aveCommute as per instructions two and 3.
-7)  Test out the following functions on the commute_sort variable: `unique()` and `table()`.
+6)  Re-calculate and round aveCommute as per instructions two and three.
+7)  Test out the following functions on the commute_sort variable: `unique()` and `sort(commute, decreasing = TRUE)`.
 
 
 ```r
 commute <- c(40, 33, 40, 52, 36, 39)
-
 # enter your code here
 ```
 
