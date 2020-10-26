@@ -258,7 +258,7 @@ You decided to track your total monthly expenditures for the year to find out mo
 4)  Repeat for quarters 2, 3, and 4.
 5)  Workout the average spending for each quarter. Which had the biggest spending?
 6)  Using the `which.max()` and `which.min()` functions, find out which months had the highest and lowest spending. Assign the result of each to a variable (minSpend, maxSpend).
-6)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector. 
+7)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector. 
 
 
 ```r
