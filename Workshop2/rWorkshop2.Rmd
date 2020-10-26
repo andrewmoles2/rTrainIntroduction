@@ -212,7 +212,7 @@ You decide to calculate your commuting times over a weekly period. You decide to
 7)  Test out the following functions on the commute_sort variable: `unique()` and `sort(commute, decreasing = TRUE)`.
 
 ```{r}
-commute <- c(40, 33, 40, 52, 36, 39)
+commute <- c(41, 33, 44, 52, 36, 39)
 # enter your code here
 
 ```

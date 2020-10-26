@@ -278,7 +278,7 @@ You decide to calculate your commuting times over a weekly period. You decide to
 
 
 ```r
-commute <- c(40, 33, 40, 52, 36, 39)
+commute <- c(41, 33, 44, 52, 36, 39)
 # enter your code here
 ```
 
