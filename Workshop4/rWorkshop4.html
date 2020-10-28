@@ -451,7 +451,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 4 - Data Frames and libraries</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">27 October, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">28 October, 2020</h4>
 
 </div>
 
@@ -461,6 +461,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">27 October, 2020</h4>
 <p>In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:</p>
 <ul>
 <li>Introduction to packages</li>
+<li>Manually making data frames</li>
 <li>Loading in data</li>
 <li>Getting information on data frames</li>
 <li>Indexing data frames</li>
@@ -562,28 +563,34 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">27 October, 2020</h4>
 <h1>Making a data frame manually</h1>
 <p>Before we start loading in data, lets have a look how to make data frames manually. This will help you understand the make up of data frames.</p>
 <p>To make a data frame we use the <code>data.frame()</code> function. The easiest way to do this is to make a vector and add that vector into the data frame. Run both examples below and review the output.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
-<span id="cb5-2"><a href="#cb5-2"></a>int1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>num1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">3</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a>fac1 &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>))</span>
-<span id="cb5-5"><a href="#cb5-5"></a></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">data.frame</span>(str1, int1, num1, fac1)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># vectors for various data types</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
+<span id="cb5-3"><a href="#cb5-3"></a>int1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>num1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">3</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>fac1 &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>))</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># adding them into a data frame</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>exampleDat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(str1, int1, num1, fac1)</span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># print the result</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>exampleDat</span></code></pre></div>
 <pre><code>##       str1 int1 num1 fac1
 ## 1 person_1    1    4  yes
 ## 2 person_2    2    7  yes
 ## 3 person_3    3    2   no
 ## 4 person_4    4    9  yes
 ## 5 person_5    5    3   no</code></pre>
-<p>Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: <code>data.frame(column name = vector)</code>. See the example below.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
-<span id="cb7-2"><a href="#cb7-2"></a>int1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
-<span id="cb7-3"><a href="#cb7-3"></a>num1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">3</span>)</span>
-<span id="cb7-4"><a href="#cb7-4"></a>fac1 &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>))</span>
-<span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="kw">data.frame</span>(<span class="dt">string =</span> str1, </span>
-<span id="cb7-7"><a href="#cb7-7"></a>           <span class="dt">integer =</span> int1, </span>
-<span id="cb7-8"><a href="#cb7-8"></a>           <span class="dt">number =</span> num1, </span>
-<span id="cb7-9"><a href="#cb7-9"></a>           <span class="dt">factor =</span> fac1)</span></code></pre></div>
+<p>Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: <code>data.frame(column name = vector)</code>. Run the example below.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># vectors for various data types</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
+<span id="cb7-3"><a href="#cb7-3"></a>int1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>num1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">3</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>fac1 &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>))</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># adding them into a data frame</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>exampleDat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">string =</span> str1, </span>
+<span id="cb7-8"><a href="#cb7-8"></a>              <span class="dt">integer =</span> int1, </span>
+<span id="cb7-9"><a href="#cb7-9"></a>              <span class="dt">number =</span> num1, </span>
+<span id="cb7-10"><a href="#cb7-10"></a>              <span class="dt">factor =</span> fac1)</span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># print the result</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>exampleDat</span></code></pre></div>
 <pre><code>##     string integer number factor
 ## 1 person_1       1      4    yes
 ## 2 person_2       2      7    yes
@@ -592,24 +599,97 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">27 October, 2020</h4>
 ## 5 person_5       5      3     no</code></pre>
 <div id="manual-data-frame-task" class="section level2">
 <h2>Manual data frame task</h2>
-<p>Lets use the data from the coding challenge in R2 looking at Lionel Messi’s career. We’ve got vectors with his goals, club, goals, and appearances.</p>
-<p>Using these vectors make a data frame called <code>messi_career</code>. The column names for app and year will have to change to Appearances and Season.</p>
-<p>You should end up with a data frame that has the column names Appearances, Goals, Season, and club.</p>
+<p>Lets use the data from the coding challenge in R2 looking at Lionel Messi’s career. We’ve got vectors with his goals, club, appearances, and year (season).</p>
+<p>Using these vectors make a data frame called <code>messi_career</code>. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Vectors with data on Messi&#39;s career</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a>app &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">25</span>,<span class="dv">36</span>,<span class="dv">40</span>,<span class="dv">51</span>,<span class="dv">53</span>,<span class="dv">55</span>,<span class="dv">60</span>,<span class="dv">50</span>,<span class="dv">46</span>,<span class="dv">57</span>,<span class="dv">49</span>,<span class="dv">52</span>,<span class="dv">54</span>,<span class="dv">50</span>,<span class="dv">44</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>goal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">17</span>,<span class="dv">16</span>,<span class="dv">38</span>,<span class="dv">47</span>,<span class="dv">53</span>,<span class="dv">73</span>,<span class="dv">60</span>,<span class="dv">41</span>,<span class="dv">58</span>,<span class="dv">41</span>,<span class="dv">54</span>,<span class="dv">45</span>,<span class="dv">51</span>,<span class="dv">31</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>Goals &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">17</span>,<span class="dv">16</span>,<span class="dv">38</span>,<span class="dv">47</span>,<span class="dv">53</span>,<span class="dv">73</span>,<span class="dv">60</span>,<span class="dv">41</span>,<span class="dv">58</span>,<span class="dv">41</span>,<span class="dv">54</span>,<span class="dv">45</span>,<span class="dv">51</span>,<span class="dv">31</span>)</span>
 <span id="cb9-4"><a href="#cb9-4"></a>year &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2004</span>,<span class="dv">2005</span>,<span class="dv">2006</span>,<span class="dv">2007</span>,<span class="dv">2008</span>,<span class="dv">2009</span>,<span class="dv">2010</span>,<span class="dv">2011</span>,<span class="dv">2012</span>,</span>
 <span id="cb9-5"><a href="#cb9-5"></a>            <span class="dv">2013</span>,<span class="dv">2014</span>,<span class="dv">2015</span>,<span class="dv">2016</span>,<span class="dv">2017</span>,<span class="dv">2018</span>,<span class="dv">2019</span>)</span>
 <span id="cb9-6"><a href="#cb9-6"></a>Club &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;FC Barcelona&quot;</span>, <span class="kw">length</span>(app))</span>
 <span id="cb9-7"><a href="#cb9-7"></a></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
+<div id="adding-columns-to-the-data-frame" class="section level2">
+<h2>Adding columns to the data frame</h2>
+<p>When working with data frames you will need to add columns and rows to them in the process of working with the data. There are multiple ways of adding data to a data frame. We will cover the most common for both adding columns and rows.</p>
+<p>There are two common ways to add a column to a data frame, these involve using the <code>cbind()</code> function or using the <code>$</code>.</p>
+<p>Lets look at the first way using <code>cbind()</code>. <em>It is important to note that the dimensions have to match when using <code>cbind()</code> and <code>rbind()</code>, so if your data frame has 5 rows, the vector you are binding needs to have 5 rows.</em></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># make an integer</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>integer2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># bind to the data</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>exampleDat &lt;-<span class="st"> </span><span class="kw">cbind</span>(exampleDat, integer2)</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># print result</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>exampleDat</span></code></pre></div>
+<pre><code>##     string integer number factor integer2
+## 1 person_1       1      4    yes        5
+## 2 person_2       2      7    yes        4
+## 3 person_3       3      2     no        3
+## 4 person_4       4      9    yes        2
+## 5 person_5       5      3     no        1</code></pre>
+<p>The second way, and easiest, is to use the <code>$</code>. The dollar sign is a way of indexing columns in a data frame (more on data frame indexing later). We can use this feature to add columns. For example, see the code chunk below for how to index the string column in exampleDat.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>exampleDat<span class="op">$</span>string</span></code></pre></div>
+<pre><code>## [1] &quot;person_1&quot; &quot;person_2&quot; &quot;person_3&quot; &quot;person_4&quot; &quot;person_5&quot;</code></pre>
+<p>To add a new column, after the $ we name the column we want to add, in this example string 2, then assign the data we want to it. Run the example below to test this out.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>exampleDat<span class="op">$</span>string2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Control&quot;</span>,<span class="dv">2</span>), <span class="kw">rep</span>(<span class="st">&quot;Experiment&quot;</span>, <span class="dv">3</span>))</span>
+<span id="cb14-2"><a href="#cb14-2"></a>exampleDat</span></code></pre></div>
+<pre><code>##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment</code></pre>
+</div>
+<div id="adding-columns-exercise" class="section level2">
+<h2>Adding columns exercise</h2>
+<p>Using the data frame you created in the previous task (messi_career):</p>
+<ol style="list-style-type: decimal">
+<li>Make a vector called Age, with integers from 17 to 32. <em>hint: use the <code>seq()</code> function</em></li>
+<li>Using the <code>cbind()</code> method shown above, add the Age vector to the messi_career data frame you created in the previous task.</li>
+<li>Now we are going to add Messi’s Champions League goals using the $ sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.</li>
+<li>Print out the result. You should see both the new columns of data you just added.</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># your code here</span></span></code></pre></div>
+</div>
+<div id="adding-rows-to-a-data-frame" class="section level2">
+<h2>Adding rows to a data frame</h2>
+<p>To add a row to a data frame you use the <code>rbind()</code> function. First, you make a data frame with the data you want to add, then you use <code>rbind()</code> to add this onto the data frame. Again, the number of columns (and names of the columns) has to match those of the data frame you are joining to.</p>
+<p>Run the example below to test this out:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># new row infomation</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>newRow &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">string =</span> <span class="st">&quot;person_6&quot;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>                     <span class="dt">integer =</span> <span class="dv">6</span>,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>                     <span class="dt">number =</span> <span class="dv">5</span>,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>                     <span class="dt">factor =</span> <span class="kw">factor</span>(<span class="st">&quot;yes&quot;</span>),</span>
+<span id="cb17-6"><a href="#cb17-6"></a>                     <span class="dt">integer2 =</span> <span class="dv">0</span>,</span>
+<span id="cb17-7"><a href="#cb17-7"></a>                     <span class="dt">string2 =</span> <span class="st">&quot;Control&quot;</span>)</span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="co"># binding new row to example data</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>exampleDat &lt;-<span class="st"> </span><span class="kw">rbind</span>(exampleDat, newRow)</span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="co"># print result</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>exampleDat</span></code></pre></div>
+<pre><code>##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment
+## 6 person_6       6      5    yes        0    Control</code></pre>
+</div>
+<div id="adding-rows-exercise" class="section level2">
+<h2>Adding rows exercise</h2>
+<p>For this exercise we will use the same messi_career data frame, adding this years data.</p>
+<ol style="list-style-type: decimal">
+<li>Make a data frame called thisYear (or similar) and add the following data: Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 1. <em>hint: Make sure the column names match up</em></li>
+<li>Now, using <code>rbind()</code> add the new row of data to your messi_career data frame.</li>
+<li>Print the result, you should now see your new row of data!</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># your code here</span></span></code></pre></div>
+</div>
 </div>
 <div id="loading-in-data" class="section level1">
 <h1>Loading in data</h1>
 <p>When loading data it is important to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd.</p>
 <p>If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">list.files</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">list.files</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;images&quot;          &quot;rWorkshop4.html&quot; &quot;rWorkshop4.md&quot;   &quot;rWorkshop4.Rmd&quot;</code></pre>
 <p>We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R.</p>
 <p><strong>hint: an RStudio shortcut to find files is to press tab when the cursor is in the speech marks (&quot;&quot;)</strong></p>

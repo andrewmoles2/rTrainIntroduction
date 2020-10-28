@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames and libraries"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "27 October, 2020"
+date: "28 October, 2020"
 output: 
   html_document: 
     theme: readable
@@ -16,6 +16,7 @@ output:
 In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:
 
 *  Introduction to packages
+*  Manually making data frames
 *  Loading in data
 *  Getting information on data frames
 *  Indexing data frames
@@ -55,7 +56,7 @@ Packages are collections of functions, code, and sample data put together by the
 
 To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network). 
 
-![](images/CRAN.png){width=30%}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4/images/CRAN.png?raw=true){width=30%}
 
 There are two ways of doing this, using code (recommended and easiest) or using the menus (Tools > Install Packages). 
 
@@ -131,12 +132,15 @@ To make a data frame we use the `data.frame()` function. The easiest way to do t
 
 
 ```r
+# vectors for various data types
 str1 <- paste0("person_", seq(1:5))
 int1 <- seq(1, 5)
 num1 <- c(4,7,2,9,3)
 fac1 <- factor(c("yes","yes","no","yes","no"))
-
-data.frame(str1, int1, num1, fac1)
+# adding them into a data frame
+exampleDat <- data.frame(str1, int1, num1, fac1)
+# print the result
+exampleDat
 ```
 
 ```
@@ -148,19 +152,22 @@ data.frame(str1, int1, num1, fac1)
 ## 5 person_5    5    3   no
 ```
 
-Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: `data.frame(column name = vector)`. See the example below. 
+Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: `data.frame(column name = vector)`. Run the example below. 
 
 
 ```r
+# vectors for various data types
 str1 <- paste0("person_", seq(1:5))
 int1 <- seq(1, 5)
 num1 <- c(4,7,2,9,3)
 fac1 <- factor(c("yes","yes","no","yes","no"))
-
-data.frame(string = str1, 
-           integer = int1, 
-           number = num1, 
-           factor = fac1)
+# adding them into a data frame
+exampleDat <- data.frame(string = str1, 
+              integer = int1, 
+              number = num1, 
+              factor = fac1)
+# print the result
+exampleDat
 ```
 
 ```
@@ -174,21 +181,131 @@ data.frame(string = str1,
 
 ## Manual data frame task
 
-Lets use the data from the coding challenge in R2 looking at Lionel Messi's career. We've got vectors with his goals, club, goals, and appearances. 
+Lets use the data from the coding challenge in R2 looking at Lionel Messi's career. We've got vectors with his goals, club, appearances, and year (season). 
 
-Using these vectors make a data frame called `messi_career`. The column names for app and year will have to change to Appearances and Season.
-
-You should end up with a data frame that has the column names Appearances, Goals, Season, and club.
+Using these vectors make a data frame called `messi_career`. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.
 
 
 ```r
 # Vectors with data on Messi's career
 app <- c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44)
-goal <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
+Goals <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
 year <- c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
             2013,2014,2015,2016,2017,2018,2019)
 Club <- rep("FC Barcelona", length(app))
 
+# your code here
+```
+
+## Adding columns to the data frame
+
+When working with data frames you will need to add columns and rows to them in the process of working with the data. There are multiple ways of adding data to a data frame. We will cover the most common for both adding columns and rows. 
+
+There are two common ways to add a column to a data frame, these involve using the `cbind()` function or using the `$`. 
+
+Lets look at the first way using `cbind()`. *It is important to note that the dimensions have to match when using `cbind()` and `rbind()`, so if your data frame has 5 rows, the vector you are binding needs to have 5 rows.*
+
+
+```r
+# make an integer
+integer2 <- seq(5,1)
+# bind to the data
+exampleDat <- cbind(exampleDat, integer2)
+# print result
+exampleDat
+```
+
+```
+##     string integer number factor integer2
+## 1 person_1       1      4    yes        5
+## 2 person_2       2      7    yes        4
+## 3 person_3       3      2     no        3
+## 4 person_4       4      9    yes        2
+## 5 person_5       5      3     no        1
+```
+
+The second way, and easiest, is to use the `$`. The dollar sign is a way of indexing columns in a data frame (more on data frame indexing later). We can use this feature to add columns. For example, see the code chunk below for how to index the string column in exampleDat. 
+
+
+```r
+exampleDat$string
+```
+
+```
+## [1] "person_1" "person_2" "person_3" "person_4" "person_5"
+```
+
+To add a new column, after the $ we name the column we want to add, in this example string 2, then assign the data we want to it. Run the example below to test this out. 
+
+
+```r
+exampleDat$string2 <- c(rep("Control",2), rep("Experiment", 3))
+exampleDat
+```
+
+```
+##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment
+```
+
+## Adding columns exercise
+
+Using the data frame you created in the previous task (messi_career): 
+
+1)  Make a vector called Age, with integers from 17 to 32. *hint: use the `seq()` function*
+2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
+3)  Now we are going to add Messi's Champions League goals using the $ sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
+4)  Print out the result. You should see both the new columns of data you just added.
+
+
+```r
+# your code here
+```
+
+## Adding rows to a data frame
+
+To add a row to a data frame you use the `rbind()` function. First, you make a data frame with the data you want to add, then you use `rbind()` to add this onto the data frame. Again, the number of columns (and names of the columns) has to match those of the data frame you are joining to. 
+
+Run the example below to test this out:
+
+```r
+# new row infomation
+newRow <- data.frame(string = "person_6",
+                     integer = 6,
+                     number = 5,
+                     factor = factor("yes"),
+                     integer2 = 0,
+                     string2 = "Control")
+# binding new row to example data
+exampleDat <- rbind(exampleDat, newRow)
+# print result
+exampleDat
+```
+
+```
+##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment
+## 6 person_6       6      5    yes        0    Control
+```
+## Adding rows exercise
+
+For this exercise we will use the same messi_career data frame, adding this years data. 
+
+1)  Make a data frame called thisYear (or similar) and add the following data:
+Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 1. *hint: Make sure the column names match up*
+2)  Now, using `rbind()` add the new row of data to your messi_career data frame. 
+3)  Print the result, you should now see your new row of data! 
+
+
+```r
 # your code here
 ```
 
@@ -209,7 +326,6 @@ list.files()
 We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
 
 **hint: an RStudio shortcut to find files is to press tab when the cursor is in the speech marks ("")**
-
 
 
 # Final task - Please give us your individual feedback!
