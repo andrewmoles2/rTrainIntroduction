@@ -1,9 +1,9 @@
 ---
-title: "R Workshop 4 - Data Frames and libraries"
+title: "R Workshop 4 - Data Frames part 1"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "02 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -13,14 +13,13 @@ output:
 
 # What will this workshop cover?
 
-In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:
+In this workshop, the aim is to introduce you to data frames. We will be covering:
 
-*  Introduction to packages
 *  Manually making data frames
-*  Loading in data
 *  Getting information on data frames
 *  Indexing data frames
 *  Adjusting row and column names
+*  Adding rows and columns to data frames
 
 # Information on how the session is run
 
@@ -50,47 +49,6 @@ One hour exercise based session with tutor support. You will be given example co
 
 ***
 
-# Introduction to packages
-
-Packages are collections of functions, code, and sample data put together by the R community. Packages are one of the main benefits of R. As R is open source there can be lots of contributors who have made functions to do complex tasks, such as data cleaning, or specific types of data analysis.
-
-To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network). 
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4/images/CRAN.png?raw=true){width=30%}
-
-There are two ways of doing this, using code (recommended and easiest) or using the menus (Tools > Install Packages). 
-
-Using code involves using the install packages function, which looks like: `install.packages("package name")`. To install the package you would type something like:`install.packages("readr")`.
-
-## Installing packages task
-
-Try installing the following packages: `data.table`, `readr`, `readxl` using the `install.packages()` function. 
-
-```{r}
-# your code here
-```
-
-Once installed, you will not need to do this again unless you install a newer version of R. 
-
-## Loading packages
-
-Now you have installed the packages, you need to load them so you can use them. Each time you load R you will need to re-load the packages you want to use. 
-
-To load a package you need to use the `library()` function. For example, if I wanted to load the `readr` package I would type `library(readr)`.
-
-## Loading packages task
-
-Using `library()` load in the packages you just installed: `data.table`, `readr`, `readxl`.
-
-```{r}
-# your code here
-```
-
-If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readxl, readr, and data.table. 
-```{r}
-sessionInfo()
-```
-
 # What is a data frame
 
 A data frame is a programming object similar to a table. Data frames are commonplace in data science and are needed for most types of analysis. Generally each row contains individual entries (or observations) and each column corresponds to a feature or characteristic of that entry.
@@ -105,7 +63,8 @@ Before we start loading in data, lets have a look how to make data frames manual
 
 To make a data frame we use the `data.frame()` function. The easiest way to do this is to make a vector and add that vector into the data frame. Run both examples below and review the output. 
 
-```{r}
+
+```r
 # vectors for various data types
 str1 <- paste0("person_", seq(1:5))
 int1 <- seq(1, 5)
@@ -117,9 +76,19 @@ exampleDat <- data.frame(str1, int1, num1, fac1)
 exampleDat
 ```
 
+```
+##       str1 int1 num1 fac1
+## 1 person_1    1    4  yes
+## 2 person_2    2    7  yes
+## 3 person_3    3    2   no
+## 4 person_4    4    9  yes
+## 5 person_5    5    3   no
+```
+
 Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: `data.frame(column name = vector)`. Run the example below. 
 
-```{r}
+
+```r
 # vectors for various data types
 str1 <- paste0("person_", seq(1:5))
 int1 <- seq(1, 5)
@@ -134,13 +103,23 @@ exampleDat <- data.frame(string = str1,
 exampleDat
 ```
 
+```
+##     string integer number factor
+## 1 person_1       1      4    yes
+## 2 person_2       2      7    yes
+## 3 person_3       3      2     no
+## 4 person_4       4      9    yes
+## 5 person_5       5      3     no
+```
+
 ## Manual data frame task
 
 Lets use the data from the coding challenge in R2 looking at Lionel Messi's career. We've got vectors with his goals, club, appearances, and year (season). 
 
 Using these vectors make a data frame called `messi_career`. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.
 
-```{r}
+
+```r
 # Vectors with data on Messi's career
 app <- c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44)
 Goals <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
@@ -149,7 +128,6 @@ year <- c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
 Club <- rep("FC Barcelona", length(app))
 
 # your code here
-
 ```
 
 ## Adding columns to the data frame
@@ -160,7 +138,8 @@ There are two common ways to add a column to a data frame, these involve using t
 
 Lets look at the first way using `cbind()`. *It is important to note that the dimensions have to match when using `cbind()` and `rbind()`, so if your data frame has 5 rows, the vector you are binding needs to have 5 rows.*
 
-```{r}
+
+```r
 # make an integer
 integer2 <- seq(5,1)
 # bind to the data
@@ -169,17 +148,41 @@ exampleDat <- cbind(exampleDat, integer2)
 exampleDat
 ```
 
+```
+##     string integer number factor integer2
+## 1 person_1       1      4    yes        5
+## 2 person_2       2      7    yes        4
+## 3 person_3       3      2     no        3
+## 4 person_4       4      9    yes        2
+## 5 person_5       5      3     no        1
+```
+
 The second way, and easiest, is to use the `$`. The dollar sign is a way of indexing columns in a data frame (more on data frame indexing later). We can use this feature to add columns. For example, see the code chunk below for how to index the string column in exampleDat. 
 
-```{r}
+
+```r
 exampleDat$string
+```
+
+```
+## [1] "person_1" "person_2" "person_3" "person_4" "person_5"
 ```
 
 To add a new column, after the $ we name the column we want to add, in this example string 2, then assign the data we want to it. Run the example below to test this out. 
 
-```{r}
+
+```r
 exampleDat$string2 <- c(rep("Control",2), rep("Experiment", 3))
 exampleDat
+```
+
+```
+##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment
 ```
 
 ## Adding columns exercise
@@ -191,9 +194,9 @@ Using the data frame you created in the previous task (messi_career):
 3)  Now we are going to add Messi's Champions League goals using the $ sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
 4)  Print out the result. You should see both the new columns of data you just added.
 
-```{r}
-# your code here
 
+```r
+# your code here
 ```
 
 ## Adding rows to a data frame
@@ -201,7 +204,8 @@ Using the data frame you created in the previous task (messi_career):
 To add a row to a data frame you use the `rbind()` function. First, you make a data frame with the data you want to add, then you use `rbind()` to add this onto the data frame. Again, the number of columns (and names of the columns) has to match those of the data frame you are joining to. 
 
 Run the example below to test this out:
-```{r}
+
+```r
 # new row infomation
 newRow <- data.frame(string = "person_6",
                      integer = 6,
@@ -214,6 +218,17 @@ exampleDat <- rbind(exampleDat, newRow)
 # print result
 exampleDat
 ```
+
+```
+##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment
+## 6 person_6       6      5    yes        0    Control
+```
+
 ## Adding rows exercise
 
 For this exercise we will use the same messi_career data frame, adding this years data. 
@@ -223,25 +238,9 @@ Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions l
 2)  Now, using `rbind()` add the new row of data to your messi_career data frame. 
 3)  Print the result, you should now see your new row of data! 
 
-```{r}
+
+```r
 # your code here
-
-```
-
-# Loading in data
-
-When loading data it is important to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd. 
-
-If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory:
-```{r}
-list.files()
-```
-
-We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
-
-**hint: an RStudio shortcut to find files is to press tab when the cursor is in the speech marks ("")**
-```{r}
-
 ```
 
 # Final task - Please give us your individual feedback!
