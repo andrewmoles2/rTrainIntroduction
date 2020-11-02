@@ -8,8 +8,9 @@ Workshop 2: Vectors, functions, and indexing
 
 Workshop 3: Strings, factors, and type conversion
 
-Workshop 4: Data Frames and packages
+Workshop 4a: Data Frames part 1
 
+Workshop 4b: Data Frames part 2, with packages
 
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
 

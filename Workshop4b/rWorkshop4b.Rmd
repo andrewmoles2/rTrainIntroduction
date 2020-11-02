@@ -54,7 +54,7 @@ Packages are collections of functions, code, and sample data put together by the
 
 To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network). 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4/images/CRAN.png?raw=true){width=30%}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4a/images/CRAN.png?raw=true){width=30%}
 
 There are two ways of doing this, using code (recommended and easiest) or using the menus (Tools > Install Packages). 
 

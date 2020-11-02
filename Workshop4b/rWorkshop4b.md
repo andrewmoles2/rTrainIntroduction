@@ -54,7 +54,7 @@ Packages are collections of functions, code, and sample data put together by the
 
 To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network). 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4/images/CRAN.png?raw=true){width=30%}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4a/images/CRAN.png?raw=true){width=30%}
 
 There are two ways of doing this, using code (recommended and easiest) or using the menus (Tools > Install Packages). 
 
@@ -128,7 +128,7 @@ list.files()
 
 ```
 ## [1] "pokemonGen1.csv"  "pokemonGen1.xlsx" "pokemonGen2.csv"  "pokemonGen2.xlsx"
-## [5] "rWorkshop4b.Rmd"
+## [5] "rWorkshop4b.html" "rWorkshop4b.md"   "rWorkshop4b.Rmd"
 ```
 
 We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 

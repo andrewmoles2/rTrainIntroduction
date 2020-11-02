@@ -16,10 +16,10 @@ output:
 In this workshop, the aim is to introduce you to data frames. We will be covering:
 
 *  Manually making data frames
+*  Adding rows and columns to data frames
 *  Getting information on data frames
 *  Indexing data frames
 *  Adjusting row and column names
-*  Adding rows and columns to data frames
 
 # Information on how the session is run
 
@@ -242,6 +242,96 @@ Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions l
 ```r
 # your code here
 ```
+
+# Getting information on a data frame
+
+There are several ways to get information on your data frame. The simplest way is to simply click on the data frame in your global environment, this will bring up a viewer plane in a tab. When you have larger datasets however this is not the best way to view your data.
+
+There are several attributes you will want to find out from your data frame. These include the dimensions (amount of rows and columns), the structure (what data does each column hold), summary information (means, interquartile range etc.), and a visual snapshot of your data. 
+
+To demonstrate of these functions we will use exampleDat. Run all the code chunks below to test out the functions. 
+
+To understand the dimensions of our data frame we use `dim()`, it returns the rows then columns. We can also use `nrow()` and `ncol()`.
+
+```r
+dim(exampleDat)
+```
+
+```
+## [1] 6 6
+```
+
+To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few five rows, and the tail function gives you the last few rows. As the example data is so small we don't see a difference here. 
+
+
+```r
+head(exampleDat)
+```
+
+```
+##     string integer number factor integer2    string2
+## 1 person_1       1      4    yes        5    Control
+## 2 person_2       2      7    yes        4    Control
+## 3 person_3       3      2     no        3 Experiment
+## 4 person_4       4      9    yes        2 Experiment
+## 5 person_5       5      3     no        1 Experiment
+## 6 person_6       6      5    yes        0    Control
+```
+
+To find the structure of our data we use the `str()` command. This function gives us information on the column name, what data type that column is, and some of the data in that column. 
+
+
+```r
+str(exampleDat)
+```
+
+```
+## 'data.frame':	6 obs. of  6 variables:
+##  $ string  : chr  "person_1" "person_2" "person_3" "person_4" ...
+##  $ integer : num  1 2 3 4 5 6
+##  $ number  : num  4 7 2 9 3 5
+##  $ factor  : Factor w/ 2 levels "no","yes": 2 2 1 2 1 2
+##  $ integer2: num  5 4 3 2 1 0
+##  $ string2 : chr  "Control" "Control" "Experiment" "Experiment" ...
+```
+
+Finally, to get some basic descriptive statistics we can use `summary()`. 
+
+
+```r
+summary(exampleDat)
+```
+
+```
+##     string             integer         number     factor     integer2   
+##  Length:6           Min.   :1.00   Min.   :2.00   no :2   Min.   :0.00  
+##  Class :character   1st Qu.:2.25   1st Qu.:3.25   yes:4   1st Qu.:1.25  
+##  Mode  :character   Median :3.50   Median :4.50           Median :2.50  
+##                     Mean   :3.50   Mean   :5.00           Mean   :2.50  
+##                     3rd Qu.:4.75   3rd Qu.:6.50           3rd Qu.:3.75  
+##                     Max.   :6.00   Max.   :9.00           Max.   :5.00  
+##    string2         
+##  Length:6          
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## 
+```
+
+## Getting information task
+
+Use the following commands on the messi_career you have been using in your tasks: `dim()`, `head()`, `tail()`, `summary()`, `str()`, and `View()`. 
+
+# Indexing data frames
+
+If you remember from indexing vectors we use the square brackets in R to do indexing. 
+
+`data[row index, column index]`, so `data[1,5]` would mean we are indexing the first row and the fifth column. 
+
+# Adjusting row and column names
+
+`names()`, `rownames()`, and `colnames()`. 
 
 # Final task - Please give us your individual feedback!
 
