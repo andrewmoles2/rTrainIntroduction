@@ -451,7 +451,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 4 - Data Frames part 1</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">02 November, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4>
 
 </div>
 
@@ -464,7 +464,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">02 November, 2020</h4
 <li>Adding rows and columns to data frames</li>
 <li>Getting information on data frames</li>
 <li>Indexing data frames</li>
-<li>Adjusting row and column names</li>
+<li>Adjusting column names</li>
 </ul>
 </div>
 <div id="information-on-how-the-session-is-run" class="section level1">
@@ -683,17 +683,51 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">02 November, 2020</h4
 ## </code></pre>
 <div id="getting-information-task" class="section level2">
 <h2>Getting information task</h2>
-<p>Use the following commands on the messi_career you have been using in your tasks: <code>dim()</code>, <code>head()</code>, <code>tail()</code>, <code>summary()</code>, <code>str()</code>, and <code>View()</code>.</p>
+<p>Use the following commands on the messi_career you have been using in your tasks: <code>dim()</code>, <code>nrow()</code>, <code>ncol()</code>, <code>head()</code>, <code>tail()</code>, <code>summary()</code>, <code>str()</code>, and <code>View()</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="indexing-data-frames" class="section level1">
 <h1>Indexing data frames</h1>
-<p>If you remember from indexing vectors we use the square brackets in R to do indexing.</p>
-<p><code>data[row index, column index]</code>, so <code>data[1,5]</code> would mean we are indexing the first row and the fifth column.</p>
+<p>If you remember from R2 we use the square brackets in R to do indexing. The exact same principle applies to data frames, we can index multiple elements and drop elements.</p>
+<p>Data frames have two dimensions in rows and columns, so we need to give indexes for both. The syntax is <code>data[row index, column index]</code>, so <code>data[1,5]</code> would mean we are indexing the first row and the fifth column.</p>
+<p>If you wanted to select all columns or all rows you can leave the column or row index blank. Run the examples below:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>exampleDat[<span class="dv">3</span>,]</span></code></pre></div>
+<pre><code>##     string integer number factor integer2    string2
+## 3 person_3       3      2     no        3 Experiment</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>exampleDat[,<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##   factor integer2
+## 1    yes        5
+## 2    yes        4
+## 3     no        3
+## 4    yes        2
+## 5     no        1
+## 6    yes        0</code></pre>
+<div id="indexing-data-frames-task" class="section level2">
+<h2>Indexing data frames task</h2>
+<p>Make some new data for task - involves dropping a column, creating a subset of the first 20 rows, then running the summary statistics on the new data frame.</p>
 </div>
-<div id="adjusting-row-and-column-names" class="section level1">
-<h1>Adjusting row and column names</h1>
-<p><code>names()</code>, <code>rownames()</code>, and <code>colnames()</code>.</p>
+</div>
+<div id="adjusting-column-names" class="section level1">
+<h1>Adjusting column names</h1>
+<p>To just look at the column names for your data frame there are two functions you can use: <code>names()</code> and <code>colnames()</code>. As <code>names()</code> is shorter and easier to type this is the better option. To run <code>names()</code> simply give it your data frame as shown below.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
+<pre><code>## [1] &quot;string&quot;   &quot;integer&quot;  &quot;number&quot;   &quot;factor&quot;   &quot;integer2&quot; &quot;string2&quot;</code></pre>
+<p>For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># using number index</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">names</span>(exampleDat[<span class="dv">2</span>]) &lt;-<span class="st"> &quot;integer1&quot;</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
+<pre><code>## [1] &quot;string&quot;   &quot;integer&quot;  &quot;number&quot;   &quot;factor&quot;   &quot;integer2&quot; &quot;string2&quot;</code></pre>
+<p>The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to <code>string</code>.</p>
+<p>In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># recommended using logic</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="kw">names</span>(exampleDat[<span class="kw">names</span>(exampleDat) <span class="op">==</span><span class="st"> &quot;string&quot;</span>]) &lt;-<span class="st"> &quot;string1&quot;</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
+<pre><code>## [1] &quot;string&quot;   &quot;integer&quot;  &quot;number&quot;   &quot;factor&quot;   &quot;integer2&quot; &quot;string2&quot;</code></pre>
+<div id="column-names-task" class="section level2">
+<h2>Column names task</h2>
+<p><em>re-ordering task</em> otherwise hard for them to code the names statement. Use a bit of other stuff too.</p>
+</div>
 </div>
 <div id="final-task---please-give-us-your-individual-feedback" class="section level1">
 <h1>Final task - Please give us your individual feedback!</h1>
@@ -702,6 +736,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">02 November, 2020</h4
 </div>
 <div id="individual-take-home-challenge" class="section level1">
 <h1>Individual take home challenge</h1>
+<p>Debugging challenge - give them a data frame, some indexing, workout some means etc.</p>
 </div>
 
 
