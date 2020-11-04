@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "23 October, 2020"
+date: "04 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -16,10 +16,10 @@ output:
 In this workshop, the aim is to cover strings and sting manipulation, introduce factors, and type conversion. We will be covering:
 
 *  String variables
-*  String manipulation with Paste, gsub and grep
 *  Introduction to factors (represent categorical data, ordered/un-ordered, levels)
-*  Tabulation using factors
 *  Converting types of data (strings, factors, integers, and numeric)
+*  String manipulation with Paste
+*  Tabulation using factors
 
 # Information on how the session is run
 
@@ -57,6 +57,14 @@ To code a string you need to use quotation marks. You can use either single or d
 
 ```r
 instrument <- "Violin"
+instrument
+```
+
+```
+## [1] "Violin"
+```
+
+```r
 instruments <- c('Violin', 'Cello', 'Viola')
 instruments
 ```
@@ -97,158 +105,32 @@ class(age)
 # your code here
 ```
 
-
-# Basic string manipulation
-R comes with several useful functions for manipulating strings, these include `paste()`, `paste0()`, `grep()`, `gsub()`. `paste()` and `paste0()` are for creating strings, and `grep()` and `gsub()` for are string matching and replacement. 
-
-Some examples of paste:
-
-```r
-trees <- c('Oak', 'Willow', 'Redwood')
-paste(trees, collapse = ", ")
-```
-
-```
-## [1] "Oak, Willow, Redwood"
-```
-
-```r
-paste("Hi", "there", sep = ", ")
-```
-
-```
-## [1] "Hi, there"
-```
-
-```r
-pizzaEaten <- 4
-paste0("This week I ate ", pizzaEaten, " pizzas...")
-```
-
-```
-## [1] "This week I ate 4 pizzas..."
-```
-As you can see paste can make new strings from existing strings, and format them into a readable format. 
-
-## Paste exercise
-
-1)  Make a vector with the following flowers: sunflower, poppy, dahlia
-2)  Use `paste` to make this string: "sunflower, poppy, dahlia"
-3)  Make a variable called daysRaining with the value 360
-4)  Using `paste0` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
-
-# String manipulation with grep and gsub
-It is often useful to be able to pattern match or replace values in strings. In R there are two very useful functions for this: `grep()` and `gsub()`. 
-
-## String matching with grep
-We use `grep()` for string matching. We give it the string or part of string we are looking for, and it will return the indexes in the vector for the selected string/s.
-
-```r
-places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
-grep("London", places)
-```
-
-```
-## [1] 3 4 5 6 7
-```
-It is very useful for indexing strings.
-
-```r
-places[grep("Lon", places)]
-```
-
-```
-## [1] "London" "London" "London" "London" "London"
-```
-
-## grep exercise
-We have some patient IDs. We want to just pull out Id's 1, and 10 to 19. So you should get *"ID_1"  "ID_10" "ID_11" "ID_12" "ID_13" "ID_14" "ID_15" "ID_16" "ID_17" "ID_18" "ID_19"*
-
-1)  Using `grep()`, index the ID variable to pull out the requested ID's and assign it to new variable called newID.
-2)  Print your newID variable.
-3)  Comment your code.
-
-```r
-ID <- paste0("ID_", seq(1:50))
-
-# your code here
-```
-
-## String replacement with gsub
-With `gsub()` we give the function the pattern we are looking to replace, what to replace it with, and the variable or vector to work on.
-
-```r
-Names <- c("Andrew", "Andrea", "Angela")
-gsub("An" ,"" , Names)
-```
-
-```
-## [1] "drew" "drea" "gela"
-```
-Here we are removing the An from the names in the Names vector. 
-
-## gsub exercise
-Using the same IDs variable we are going to use gsub to replace the *ID* from each string and replace it with *patientID*. You should end up with IDs that looks like *patientID_3*. 
-
-1)  Using gsub replace ID with patientID, assign the results to a variable called patientID.
-2)  Print your new patientID variable.
-3)  Comment your code.
-
-```r
-ID <- paste0("ID_", seq(1:50))
-
-# your code here
-```
-
-
-## String manipulation exercise
-For this exercise I have given you the code but it is in the wrong order. You need to re-arrange the code so it runs correctly. Comment on what each line of code is doing. 
-
-The end result you are aiming for is: **"These 4 pokemon have 'ar' in their names: Charmander, Charmeleon, Charizard, Wartortle"**
-
-```r
-pokemon <- gsub("[0-9]", "", pokemon)
-
-paste0("These ",arPokes_num, " pokemon have 'ar' in their names: ", arPokes)
-
-arPokes_num <- sum(length(arPokes))
-
-arPokes <- pokemon[grepl("ar", pokemon)]
-
-pokemon <- c("Bulbasaur001", "Ivysaur002", "Venusaur003",
-             "Charmander004", "Charmeleon005", "Charizard006",
-             "Squirtle007", "Wartortle008", "Blastoise009")
-
-arPokes <- paste(arPokes, collapse = ", ")
-```
-***
-
 # Introduction to factors
 
 Factors in R are a way to represent and work with categorical data. Categorical data has fixed values, for example, the months of the year (January, February etc.). Factors allow you to do analysis with strings by categorising them (more on this on later). 
 
-The are a few different ways to make a factor in R, the primary function to do this is `factor()`. 
+There are a few different ways to make a factor in R, the primary function to do this is `factor()`. 
 
 ```r
-veg <- c("carrot", "potato", "squash", "squash", "potato", "onion")
+veg <- c("carrot", "potato", "squash", "squash", "potato", "carrot")
 veg <- factor(veg)
 veg
 ```
 
 ```
-## [1] carrot potato squash squash potato onion 
-## Levels: carrot onion potato squash
+## [1] carrot potato squash squash potato carrot
+## Levels: carrot potato squash
 ```
 We created the vector then made it into a factor. We can also just add the values straight into `factor()`. 
 
 ```r
-veg <- factor(c("carrot", "potato", "squash", "squash", "potato", "onion"))
+veg <- factor(c("carrot", "potato", "squash", "squash", "potato", "carrot"))
 veg
 ```
 
 ```
-## [1] carrot potato squash squash potato onion 
-## Levels: carrot onion potato squash
+## [1] carrot potato squash squash potato carrot
+## Levels: carrot potato squash
 ```
 
 To interpret the output, the first line shows all the variables in the veg vector, the second line (*levels:*) gives you the categories. In this case we have four: carrot, onion, potato, squash. 
@@ -338,61 +220,29 @@ sizes <- c('high', 'low', 'medium', 'low', 'high')
 # your code here
 ```
 
-# Tabulation using factors
-
-It can be helpful to know how many occurrences (counts) of each category you have in a factor. You can do this using the `table()` function, which allows us to do simple tabulations. 
-
-```r
-# colours vector
-cols <- c('red','blue','red','green','red','green',
-          'blue','pink','green','red','red','blue')
-# tabulation of colours vector
-table(cols)
-```
-
-```
-## cols
-##  blue green  pink   red 
-##     3     3     1     5
-```
-
-The `table()` function allows us to do calculations such as percentages. We have used the `length()` function to tell R how much to divide by as opposed to adding the number of variables in cols (12). This is good practice as the data used can change. 
-
-```r
-# colours vector
-cols <- c('red','blue','red','green','red','green',
-          'blue','pink','green','red','red','blue')
-# found out the percentages rather than counts
-table(cols)/length(cols)*100
-```
-
-```
-## cols
-##      blue     green      pink       red 
-## 25.000000 25.000000  8.333333 41.666667
-```
-
-## Tabulation exercise
-
-1)  Make the StringsOrchestra variable, defined below, into a factor. 
-2)  Using `table()` work out the percentage each instrument makes up of this orchestra. See above example for help. 
-3)  Combine the `table()` and `grep()` function to select just the Violins, save as a vector called violin. *hint: table(data[grep()])*
-4)  calculate the sum of violin and print the result. 
-
-
-```r
-StringsOrchestra <- c(rep('first Violin',12),
-                      rep('second Violin',10),
-                      rep('Viola',8),
-                      rep('Cello',6),
-                      rep('Double bass',4))
-
-# your code here
-```
-
 # Type conversions
 
 In the workshops so far we have covered several types of data including strings, numeric, integer, and factors. Sometimes when working with data it is necessary to convert the type of data so you can work with it in a different way. 
+
+For example, here we will convert numbers to characters using the `as.character()` function. The most common type conversion functions are: `as.numeric()`, `as.integer()`, `as.factor()`, `as.character()`. 
+
+```r
+days <- c(1,2,3,4,5,6,7)
+days
+```
+
+```
+## [1] 1 2 3 4 5 6 7
+```
+
+```r
+days <- as.character(days)
+days
+```
+
+```
+## [1] "1" "2" "3" "4" "5" "6" "7"
+```
 
 A simple example of why type conversion is useful is when a number is accidentally coded as a string. In order to do calculations on that data you need to convert it.
 
@@ -401,7 +251,7 @@ Using the notNumbers variable defined below:
 
 1)  Use the mean function on the `notNumbers` variable
 2)  Why did it not work?
-3)  Can you find a function to change the notNumbers vector to be numeric? Try "searching character to numeric r" in Google.
+3)  Which function do you need to change the notNumbers vector to be numeric?
 4)  Once you've changed notNumbers to numeric, run mean on it again
 
 ```r
@@ -427,6 +277,136 @@ Type conversion can be helpful with questionnaire data. In this example you've t
 # your code here
 ```
 
+
+# Basic string manipulation
+R comes with several useful functions for manipulating strings, these include `paste()`, `paste0()`, `grep()`, `gsub()`. `paste()` and `paste0()` are for creating strings, and `grep()` and `gsub()` for are string matching and replacement. Today we will just look at `paste()`, `paste0()`. 
+
+The paste functions are useful for producing nice outputs for reports or an analysis. They concatenate strings and variables to make outputs more readable. 
+
+Some examples of paste with and without sep or collapse:
+
+```r
+paste("Hi", "there")
+```
+
+```
+## [1] "Hi there"
+```
+
+```r
+paste("Hi", "there", sep = ", ")
+```
+
+```
+## [1] "Hi, there"
+```
+
+```r
+trees <- c('Oak', 'Willow', 'Redwood')
+paste(trees)
+```
+
+```
+## [1] "Oak"     "Willow"  "Redwood"
+```
+
+```r
+paste(trees, collapse = " and ")
+```
+
+```
+## [1] "Oak and Willow and Redwood"
+```
+
+What do sep and collapse do? They tell paste how to separate the elements. Collapse is used when you give paste a vector, sep is for when you have single values (variables). You have to provide the symbols used to separate the elements, such as a comma. 
+
+You can't change the sep value for `paste0`, but collapse can be changed.  
+
+```r
+pizzaEaten <- 4
+paste0("This week I ate ", pizzaEaten, " pizzas...")
+```
+
+```
+## [1] "This week I ate 4 pizzas..."
+```
+
+```r
+paste0(trees, collapse = " & ")
+```
+
+```
+## [1] "Oak & Willow & Redwood"
+```
+As you can see paste can make new strings from existing strings, and format them into a readable format. 
+
+## Paste exercise
+
+1)  Make a vector with the following flowers: sunflower, poppy, dahlia
+2)  Use `paste` to make this string: "sunflower, poppy, dahlia"
+3)  Make a variable called daysRaining with the value 360
+4)  Using `paste0` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
+
+# Tabulation using factors
+
+It can be helpful to know how many occurrences (counts) of each category you have in a factor. You can do this using the `table()` function, which allows us to do simple tabulations. 
+
+```r
+# colours vector
+cols <- c('red','blue','red','green','red','green',
+          'blue','pink','green','red','red','blue')
+# tabulation of colours vector
+table(cols)
+```
+
+```
+## cols
+##  blue green  pink   red 
+##     3     3     1     5
+```
+
+The `table()` function allows us to do calculations such as percentages. We have used the `length()` function to tell R how much to divide by as opposed to adding the number of variables in cols (12). This is good practice as the data used can change. We can also use the `prop.table()` function as shown below. 
+
+```r
+# colours vector
+cols <- c('red','blue','red','green','red','green',
+          'blue','pink','green','red','red','blue')
+# found out the percentages rather than counts
+table(cols)/length(cols)*100
+```
+
+```
+## cols
+##      blue     green      pink       red 
+## 25.000000 25.000000  8.333333 41.666667
+```
+
+```r
+# found out the percentages using prop.table
+prop.table(table(cols))*100
+```
+
+```
+## cols
+##      blue     green      pink       red 
+## 25.000000 25.000000  8.333333 41.666667
+```
+
+## Tabulation exercise
+
+1)  Make the StringsOrchestra variable, defined below, into a factor. 
+2)  Using `table()` work out the percentage each instrument makes up of this orchestra. Test this out with both the examples used above. 
+
+```r
+StringsOrchestra <- c(rep('first Violin',12),
+                      rep('second Violin',10),
+                      rep('Viola',8),
+                      rep('Cello',6),
+                      rep('Double bass',4))
+
+# your code here
+```
+
 # Final task - Please give us your individual feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
@@ -434,24 +414,24 @@ This is the first time that we are exploring a remote learning format for our wo
 https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D048-R3SFTC&topic=R&cohort=MT20
 
 # Individual take home challenge 
-In this debugging challenge get the code below to run. The code calculates your week wine consumption. When it runs it will print out the following statement "This week I drank on average 1.71 glasses of wine, 5 red and 2 white". *Hint: test out each line of code one by one to pick up the errors*
+In this challenge get the code below to run, it has been jumbled up so needs to be re-ordered. The code calculates your week wine consumption. When it runs it will print out the following statement "This week I drank on average 1.71 glasses of wine, 5 red and 2 white". 
 
-As an addition to the debugging you can add another week of wine consumption to the variables `typeWine` and `amountWine`, then run the code again. 
 
 ```r
-# type of wine drunk
-typeWine <- factor(('red', 'red', 'red', 'white', 'white', 'red', 'red'))
-# total of small glasses you drank
-amountWine <- c(1, 1, 2, 1, 3, 1, 3)
+# sum how much red and white wine where drunk
+red <- sum(table(typeWine[grep('red',typeWine)]))
+white <- sum(table(typeWine[grep('white',typeWine)]))
 
 # calculate the average wine, rounding the result to two decimal places
-meanWine <- round(mean(amountwine), digits = 4) 
+meanWine <- round(mean(amountWine), digits = 2) 
 
-# sum how much red and white wine where drunk
-red <- sum(table(typeWine[grep('Red',typeWine)]))
-white <- sum(table(grep('white',typeWine)))
+# type of wine drunk
+typeWine <- factor(c('red', 'red', 'red', 'white', 'white', 'red', 'red'))
 
 # print a nice result of your weekly wine consumption
-paste0("This week I drank on average , meanWine", " glasses of wine, ", red, " red and ", white, " white")
-```
+paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " red and ", white, " white")
+# total of small glasses you drank
 
+amountWine <- c(1, 1, 2, 1, 3, 1, 3)
+```
+*Note: here we have used the grep function so you can see how it can be used. It is searching the type wine variable for either the string 'red' or 'white'*

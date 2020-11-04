@@ -1,0 +1,74 @@
+---
+title: "Extras"
+author: "Andrew Moles"
+date: "04/11/2020"
+output: html_document
+---
+
+# String manipulation with grep and gsub
+It is often useful to be able to pattern match or replace values in strings. In R there are two very useful functions for this: `grep()` and `gsub()`. 
+
+## String matching with grep
+We use `grep()` for string matching. We give it the string or part of string we are looking for, and it will return the indexes in the vector for the selected string/s.
+```{r}
+places <- c(rep("Hampshire", 2), rep("London", 5), rep("Kent", 1), rep("Surrey", 3))
+grep("London", places)
+```
+It is very useful for indexing strings.
+```{r}
+places[grep("London", places)]
+```
+
+## grep exercise
+We have some patient IDs. We want to just pull out Id's 1, and 10 to 19. So you should get *"ID_1"  "ID_10" "ID_11" "ID_12" "ID_13" "ID_14" "ID_15" "ID_16" "ID_17" "ID_18" "ID_19"*
+
+1)  Using `grep()`, index the ID variable to pull out the requested ID's and assign it to new variable called newID.
+2)  Print your newID variable.
+3)  Comment your code.
+```{r}
+ID <- paste0("ID_", seq(1:50))
+
+# your code here
+
+```
+
+## String replacement with gsub
+With `gsub()` we give the function the pattern we are looking to replace, what to replace it with, and the variable or vector to work on.
+```{r}
+Names <- c("Andrew", "Andrea", "Angela")
+gsub("An" ,"" , Names)
+```
+Here we are removing the An from the names in the Names vector. 
+
+## gsub exercise
+Using the same IDs variable we are going to use gsub to replace the *ID* from each string and replace it with *patientID*. You should end up with IDs that looks like *patientID_3*. 
+
+1)  Using gsub replace ID with patientID, assign the results to a variable called patientID.
+2)  Print your new patientID variable.
+3)  Comment your code.
+```{r}
+ID <- paste0("ID_", seq(1:50))
+
+# your code here
+
+```
+
+## String manipulation exercise
+For this exercise I have given you the code but it is in the wrong order. You need to re-arrange the code so it runs correctly. Comment on what each line of code is doing. 
+
+The end result you are aiming for is: **"These 4 pokemon have 'ar' in their names: Charmander, Charmeleon, Charizard, Wartortle"**
+```{r eval=FALSE}
+pokemon <- gsub("[0-9]", "", pokemon)
+
+paste0("These ",arPokes_num, " pokemon have 'ar' in their names: ", arPokes)
+
+arPokes_num <- sum(length(arPokes))
+
+arPokes <- pokemon[grepl("ar", pokemon)]
+
+pokemon <- c("Bulbasaur001", "Ivysaur002", "Venusaur003",
+             "Charmander004", "Charmeleon005", "Charizard006",
+             "Squirtle007", "Wartortle008", "Blastoise009")
+
+arPokes <- paste(arPokes, collapse = ", ")
+```
