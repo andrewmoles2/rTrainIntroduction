@@ -451,7 +451,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 4 - Data Frames part 1</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">06 November, 2020</h4>
 
 </div>
 
@@ -515,8 +515,8 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 </div>
 <div id="making-a-data-frame-manually" class="section level1">
 <h1>Making a data frame manually</h1>
-<p>Before we start loading in data, lets have a look how to make data frames manually. This will help you understand the make up of data frames.</p>
-<p>To make a data frame we use the <code>data.frame()</code> function. The easiest way to do this is to make a vector and add that vector into the data frame. Run both examples below and review the output.</p>
+<p>First, lets have a look how to make data frames manually. This will help you understand the make up of data frames and struture of data frames.</p>
+<p>To make a data frame we use the <code>data.frame()</code> function. The easiest way to do this is to make a vector and add that vector into the data frame. Run the example below and review the output.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># vectors for various data types</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
 <span id="cb1-3"><a href="#cb1-3"></a>int1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
@@ -532,7 +532,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 ## 3 person_3    3    2   no
 ## 4 person_4    4    9  yes
 ## 5 person_5    5    3   no</code></pre>
-<p>Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: <code>data.frame(column name = vector)</code>. Run the example below.</p>
+<p>Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals, then your data like: <code>data.frame(column name = vector)</code>. Run the example below.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># vectors for various data types</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
 <span id="cb3-3"><a href="#cb3-3"></a>int1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
@@ -596,7 +596,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 </div>
 <div id="adding-columns-exercise" class="section level2">
 <h2>Adding columns exercise</h2>
-<p>Using the data frame you created in the previous task (messi_career):</p>
+<p>Using the data frame you created in the previous task (<code>messi_career</code>):</p>
 <ol style="list-style-type: decimal">
 <li>Make a vector called Age, with integers from 17 to 32. <em>hint: use the <code>seq()</code> function</em></li>
 <li>Using the <code>cbind()</code> method shown above, add the Age vector to the messi_career data frame you created in the previous task.</li>
@@ -630,7 +630,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 </div>
 <div id="adding-rows-exercise" class="section level2">
 <h2>Adding rows exercise</h2>
-<p>For this exercise we will use the same messi_career data frame, adding this years data.</p>
+<p>For this exercise we will use the same <code>messi_career</code> data frame, adding this years data.</p>
 <ol style="list-style-type: decimal">
 <li>Make a data frame called thisYear (or similar) and add the following data: Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 1. <em>hint: Make sure the column names match up</em></li>
 <li>Now, using <code>rbind()</code> add the new row of data to your messi_career data frame.</li>
@@ -644,10 +644,10 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 <p>There are several ways to get information on your data frame. The simplest way is to simply click on the data frame in your global environment, this will bring up a viewer plane in a tab. When you have larger datasets however this is not the best way to view your data.</p>
 <p>There are several attributes you will want to find out from your data frame. These include the dimensions (amount of rows and columns), the structure (what data does each column hold), summary information (means, interquartile range etc.), and a visual snapshot of your data.</p>
 <p>To demonstrate of these functions we will use exampleDat. Run all the code chunks below to test out the functions.</p>
-<p>To understand the dimensions of our data frame we use <code>dim()</code>, it returns the rows then columns. We can also use <code>nrow()</code> and <code>ncol()</code>.</p>
+<p>To understand the dimensions of our data frame we use <code>dim()</code>, it returns the rows then columns. We can also use <code>nrow()</code> and <code>ncol()</code>. For exampleDat we get an output of 6 6 which means 6 rows and 6 columns.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">dim</span>(exampleDat)</span></code></pre></div>
 <pre><code>## [1] 6 6</code></pre>
-<p>To get a visual snapshot of our data we can use the <code>head()</code> or <code>tail()</code> functions. The head function gives you the few five rows, and the tail function gives you the last few rows. As the example data is so small we don’t see a difference here.</p>
+<p>To get a visual snapshot of our data we can use the <code>head()</code> or <code>tail()</code> functions. The head function gives you the few rows, and the tail function gives you the last few rows. As the example data is so small we won’t see a difference between the functions.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">head</span>(exampleDat)</span></code></pre></div>
 <pre><code>##     string integer number factor integer2    string2
 ## 1 person_1       1      4    yes        5    Control
@@ -683,7 +683,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 ## </code></pre>
 <div id="getting-information-task" class="section level2">
 <h2>Getting information task</h2>
-<p>Use the following commands on the messi_career you have been using in your tasks: <code>dim()</code>, <code>nrow()</code>, <code>ncol()</code>, <code>head()</code>, <code>tail()</code>, <code>summary()</code>, <code>str()</code>, and <code>View()</code>.</p>
+<p>Use the following commands on the <code>messi_career</code> you have been using in your tasks: <code>dim()</code>, <code>nrow()</code>, <code>ncol()</code>, <code>head()</code>, <code>tail()</code>, <code>summary()</code>, <code>str()</code>, and <code>View()</code>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Your code here</span></span></code></pre></div>
 </div>
 </div>
@@ -703,30 +703,101 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 ## 4    yes        2
 ## 5     no        1
 ## 6    yes        0</code></pre>
+<p>You can see we get the 3rd row of data for the first example. For the second example we get all rows and columns 4 to 5.</p>
+<p>We can also index the the names of the columns, below are are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>exampleDat[, <span class="kw">c</span>(<span class="st">&quot;factor&quot;</span>, <span class="st">&quot;string2&quot;</span>)]</span></code></pre></div>
+<pre><code>##   factor    string2
+## 1    yes    Control
+## 2    yes    Control
+## 3     no Experiment
+## 4    yes Experiment
+## 5     no Experiment
+## 6    yes    Control</code></pre>
+<div id="subsetting-data-frames-with-indexing" class="section level2">
+<h2>Subsetting data frames with indexing</h2>
+<p>We can use these ideas to <em>subset</em> our data frame. Subsetting is simply selecting a portion of your data to work with. Lets say from our exampleDat data frame we wanted to just use the first three rows and columns integer, number, and integer2. See the example below for how to do this.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>exampleDat2 &lt;-<span class="st"> </span>exampleDat[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">c</span>(<span class="st">&quot;integer&quot;</span>,<span class="st">&quot;number&quot;</span>,<span class="st">&quot;integer2&quot;</span>)]</span>
+<span id="cb31-2"><a href="#cb31-2"></a>exampleDat2</span></code></pre></div>
+<pre><code>##   integer number integer2
+## 1       1      4        5
+## 2       2      7        4
+## 3       3      2        3</code></pre>
+<p>Another method of indexing is using a function, such as <code>which.min()</code> or <code>which.max()</code> to index rows. In the below example, we use <code>which.min()</code> to find the row with the minimum in the number column, we also selected all columns.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>exampleDat3 &lt;-<span class="st"> </span>exampleDat[<span class="kw">which.min</span>(exampleDat<span class="op">$</span>number), ]</span>
+<span id="cb33-2"><a href="#cb33-2"></a>exampleDat3</span></code></pre></div>
+<pre><code>##     string integer number factor integer2    string2
+## 3 person_3       3      2     no        3 Experiment</code></pre>
+</div>
+<div id="doing-calculations-with-indexing" class="section level2">
+<h2>Doing calculations with indexing</h2>
+<p>We can bring together adding a new column with indexing. See the example below, we make a new column called calculation and assign the value of the calculation we are doing using indexing; which is the column <em>integer</em> divided by the column <em>number</em>. We can also do indexing with calculations by using the <code>$</code> as shown below.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># add new column and add calculation to it</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>exampleDat<span class="op">$</span>calculation &lt;-<span class="st"> </span>exampleDat[,<span class="st">&quot;integer&quot;</span>]<span class="op">/</span>exampleDat[,<span class="st">&quot;number&quot;</span>] </span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="co"># add second column using different indexing technique</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>exampleDat<span class="op">$</span>calculation2 &lt;-<span class="st"> </span>(exampleDat<span class="op">$</span>integer<span class="op">*</span>exampleDat<span class="op">$</span>integer2)<span class="op">/</span><span class="kw">nrow</span>(exampleDat)</span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="co"># print result</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>exampleDat</span></code></pre></div>
+<pre><code>##     string integer number factor integer2    string2 calculation calculation2
+## 1 person_1       1      4    yes        5    Control   0.2500000    0.8333333
+## 2 person_2       2      7    yes        4    Control   0.2857143    1.3333333
+## 3 person_3       3      2     no        3 Experiment   1.5000000    1.5000000
+## 4 person_4       4      9    yes        2 Experiment   0.4444444    1.3333333
+## 5 person_5       5      3     no        1 Experiment   1.6666667    0.8333333
+## 6 person_6       6      5    yes        0    Control   1.2000000    0.0000000</code></pre>
+</div>
 <div id="indexing-data-frames-task" class="section level2">
 <h2>Indexing data frames task</h2>
-<p>Make some new data for task - involves dropping a column, creating a subset of the first 20 rows, then running the summary statistics on the new data frame.</p>
+<p>Do some calculations for columns using indexing - Then subset down to keep all rows but remove some columns like club - paste a nice result from that using max - e.g. messi’s best goal ratio was x in y season</p>
+<p>We will index the <code>messi_career</code> data we have using to do some calculations, subset, and print a nice result. The final printed result should be: <em>Messi’s best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League.</em>.</p>
+<ol style="list-style-type: decimal">
+<li>Make a new column called goalRatio and, using indexing, divide Goals by Appearances.</li>
+<li>Make another new column called propChampGoal and, using indexing, divide champLeagueGoal by Goals and times by 100.</li>
+<li>Subset the messi_career data. Call the subsetted data messi_careerSub, and keep all rows and the following columns: Season, Age, goalRatio and propChampGoal.</li>
+<li>Using your new messi_careerSub data frame, use <code>which.max()</code> to find the row with the best goal ratio. Store this in a data frame called bestGR. <em>hint: see which.min() example</em>.</li>
+<li>Use <code>paste()</code> or <code>paste0</code> to print the result: Messi’s best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League. <em>hint: use indexing on the bestGR data frame, e.g. paste(“text”, round(bestGR[,3],2), “more text”)</em>.</li>
+</ol>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="adjusting-column-names" class="section level1">
 <h1>Adjusting column names</h1>
 <p>To just look at the column names for your data frame there are two functions you can use: <code>names()</code> and <code>colnames()</code>. As <code>names()</code> is shorter and easier to type this is the better option. To run <code>names()</code> simply give it your data frame as shown below.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
-<pre><code>## [1] &quot;string&quot;   &quot;integer&quot;  &quot;number&quot;   &quot;factor&quot;   &quot;integer2&quot; &quot;string2&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
+<pre><code>## [1] &quot;string&quot;       &quot;integer&quot;      &quot;number&quot;       &quot;factor&quot;       &quot;integer2&quot;    
+## [6] &quot;string2&quot;      &quot;calculation&quot;  &quot;calculation2&quot;</code></pre>
 <p>For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># using number index</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">names</span>(exampleDat[<span class="dv">2</span>]) &lt;-<span class="st"> &quot;integer1&quot;</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
-<pre><code>## [1] &quot;string&quot;   &quot;integer&quot;  &quot;number&quot;   &quot;factor&quot;   &quot;integer2&quot; &quot;string2&quot;</code></pre>
-<p>The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to <code>string</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># using number index</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">names</span>(exampleDat[<span class="dv">2</span>]) &lt;-<span class="st"> &quot;integer1&quot;</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
+<pre><code>## [1] &quot;string&quot;       &quot;integer&quot;      &quot;number&quot;       &quot;factor&quot;       &quot;integer2&quot;    
+## [6] &quot;string2&quot;      &quot;calculation&quot;  &quot;calculation2&quot;</code></pre>
+<p>The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to <code>string</code>. It will search for the exact match so is case sensitive.</p>
 <p>In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># recommended using logic</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="kw">names</span>(exampleDat[<span class="kw">names</span>(exampleDat) <span class="op">==</span><span class="st"> &quot;string&quot;</span>]) &lt;-<span class="st"> &quot;string1&quot;</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
-<pre><code>## [1] &quot;string&quot;   &quot;integer&quot;  &quot;number&quot;   &quot;factor&quot;   &quot;integer2&quot; &quot;string2&quot;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># recommended using logic</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">names</span>(exampleDat[<span class="kw">names</span>(exampleDat) <span class="op">==</span><span class="st"> &quot;string&quot;</span>]) &lt;-<span class="st"> &quot;string1&quot;</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
+<pre><code>## [1] &quot;string&quot;       &quot;integer&quot;      &quot;number&quot;       &quot;factor&quot;       &quot;integer2&quot;    
+## [6] &quot;string2&quot;      &quot;calculation&quot;  &quot;calculation2&quot;</code></pre>
 <div id="column-names-task" class="section level2">
 <h2>Column names task</h2>
-<p><em>re-ordering task</em> otherwise hard for them to code the names statement. Use a bit of other stuff too.</p>
+<p>We’ve been recording our running times and distances and have put them in a data frame. However, the column names we have used are not very informative. Using the examples above change the column names as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Change runTime to runTime_mins</li>
+<li>Change Len to distance_km</li>
+<li>Change speed to minsPerKm<br />
+<strong>Fun extras: a visualisation taster</strong></li>
+<li>Run the code to make a scatterplot of distance and running time: <code>plot(data$distance_km, data$runTime_mins)</code></li>
+<li>Run the code to make a bar plot of week and minsPerKm: <code>plot(data$week, data$minsPerKm)</code></li>
+</ol>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># running data frame</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">runTime =</span> <span class="kw">sample</span>(<span class="dv">20</span><span class="op">:</span><span class="dv">40</span>, <span class="dv">10</span>),</span>
+<span id="cb44-3"><a href="#cb44-3"></a>                   <span class="dt">Len =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">10</span>),</span>
+<span id="cb44-4"><a href="#cb44-4"></a>                   <span class="dt">week =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;weekOne&quot;</span>,<span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;weekTwo&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;weekThree&quot;</span>, <span class="dv">3</span>))))</span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="co"># work out your minutes per kilometer</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a>data<span class="op">$</span>speed &lt;-<span class="st"> </span>data<span class="op">$</span>runTime<span class="op">/</span>data<span class="op">$</span>Len</span>
+<span id="cb44-7"><a href="#cb44-7"></a></span>
+<span id="cb44-8"><a href="#cb44-8"></a><span class="co"># your code here</span></span></code></pre></div>
+<p><em>Note: The <code>sample()</code> function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.</em></p>
 </div>
 </div>
 <div id="final-task---please-give-us-your-individual-feedback" class="section level1">
@@ -736,7 +807,24 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">03 November, 2020</h4
 </div>
 <div id="individual-take-home-challenge" class="section level1">
 <h1>Individual take home challenge</h1>
-<p>Debugging challenge - give them a data frame, some indexing, workout some means etc.</p>
+<p>For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: <em>Dobby the house elf is very Devoteted and has a power to evil ratio of 0.67</em>. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Some Harry Potter characters</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>HP_Characters &lt;-<span class="st"> </span><span class="kw">dataframe</span>(</span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;Harry Potter&quot;</span>, <span class="st">&quot;Luna Lovegood&quot;</span>, <span class="st">&quot;Nymphadora Tonks&quot;</span>, </span>
+<span id="cb45-4"><a href="#cb45-4"></a>           <span class="st">&quot;Hermione Granger&quot;</span>, <span class="st">&quot;Severus Snape&quot;</span>, <span class="st">&quot;Cedric Diggory&quot;</span>,</span>
+<span id="cb45-5"><a href="#cb45-5"></a>           <span class="st">&quot;Dobby the house elf&quot;</span>),</span>
+<span id="cb45-6"><a href="#cb45-6"></a>  <span class="dt">Trait =</span> (<span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Wise&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, <span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Cunning&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, </span>
+<span id="cb45-7"><a href="#cb45-7"></a>            <span class="st">&quot;Devoteted&quot;</span>))</span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="co"># Give them a score out of 10 for power</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>HP_Char<span class="op">$</span>Power &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb45-10"><a href="#cb45-10"></a><span class="co"># Give them a score out of 10 for Evilness</span></span>
+<span id="cb45-11"><a href="#cb45-11"></a>HP_Characters<span class="op">$</span>Evilness &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb45-12"><a href="#cb45-12"></a><span class="co"># Give them a power to evil ratio</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a>HP_Characters<span class="op">$</span>PowEvilRatio &lt;-<span class="st"> </span>HP_Characters<span class="op">$</span>Pow<span class="op">/</span>HP_Characters<span class="op">$</span>Evil</span>
+<span id="cb45-14"><a href="#cb45-14"></a></span>
+<span id="cb45-15"><a href="#cb45-15"></a><span class="co"># print the result for Dobby</span></span>
+<span id="cb45-16"><a href="#cb45-16"></a><span class="kw">paste</span>(HP_Characters[<span class="dv">1</span>,<span class="dv">1</span>], <span class="st">&quot;is very&quot;</span>, HP_Characters[<span class="dv">7</span>,<span class="dv">2</span>], </span>
+<span id="cb45-17"><a href="#cb45-17"></a>      <span class="st">&quot;and has a power to evil ratio of&quot;</span>, <span class="kw">round</span>(HP_Characters[<span class="dv">7</span>,<span class="dv">5</span>],<span class="dv">2</span>), <span class="dt">sep =</span> <span class="st">&quot;# &quot;</span>)</span></code></pre></div>
 </div>
 
 

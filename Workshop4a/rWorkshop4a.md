@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 1"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 November, 2020"
+date: "06 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -59,9 +59,9 @@ Fundamentally, a data frame can contain a mix of different data types (e.g. colu
 
 # Making a data frame manually
 
-Before we start loading in data, lets have a look how to make data frames manually. This will help you understand the make up of data frames. 
+First, lets have a look how to make data frames manually. This will help you understand the make up of data frames and struture of data frames. 
 
-To make a data frame we use the `data.frame()` function. The easiest way to do this is to make a vector and add that vector into the data frame. Run both examples below and review the output. 
+To make a data frame we use the `data.frame()` function. The easiest way to do this is to make a vector and add that vector into the data frame. Run the example below and review the output. 
 
 
 ```r
@@ -85,7 +85,7 @@ exampleDat
 ## 5 person_5    5    3   no
 ```
 
-Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals then your data like: `data.frame(column name = vector)`. Run the example below. 
+Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals, then your data like: `data.frame(column name = vector)`. Run the example below. 
 
 
 ```r
@@ -187,7 +187,7 @@ exampleDat
 
 ## Adding columns exercise
 
-Using the data frame you created in the previous task (messi_career): 
+Using the data frame you created in the previous task (`messi_career`): 
 
 1)  Make a vector called Age, with integers from 17 to 32. *hint: use the `seq()` function*
 2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
@@ -231,7 +231,7 @@ exampleDat
 
 ## Adding rows exercise
 
-For this exercise we will use the same messi_career data frame, adding this years data. 
+For this exercise we will use the same `messi_career` data frame, adding this years data. 
 
 1)  Make a data frame called thisYear (or similar) and add the following data:
 Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 1. *hint: Make sure the column names match up*
@@ -251,7 +251,7 @@ There are several attributes you will want to find out from your data frame. The
 
 To demonstrate of these functions we will use exampleDat. Run all the code chunks below to test out the functions. 
 
-To understand the dimensions of our data frame we use `dim()`, it returns the rows then columns. We can also use `nrow()` and `ncol()`.
+To understand the dimensions of our data frame we use `dim()`, it returns the rows then columns. We can also use `nrow()` and `ncol()`. For exampleDat we get an output of 6 6 which means 6 rows and 6 columns. 
 
 ```r
 dim(exampleDat)
@@ -261,7 +261,7 @@ dim(exampleDat)
 ## [1] 6 6
 ```
 
-To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few five rows, and the tail function gives you the last few rows. As the example data is so small we don't see a difference here. 
+To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.  
 
 
 ```r
@@ -321,7 +321,7 @@ summary(exampleDat)
 
 ## Getting information task
 
-Use the following commands on the messi_career you have been using in your tasks: `dim()`, `nrow()`, `ncol()`, `head()`, `tail()`, `summary()`, `str()`, and `View()`. 
+Use the following commands on the `messi_career` you have been using in your tasks: `dim()`, `nrow()`, `ncol()`, `head()`, `tail()`, `summary()`, `str()`, and `View()`. 
 
 
 ```r
@@ -358,9 +358,92 @@ exampleDat[,4:5]
 ## 5     no        1
 ## 6    yes        0
 ```
+You can see we get the 3rd row of data for the first example. For the second example we get all rows and columns 4 to 5. 
+
+We can also index the the names of the columns, below are are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive. 
+
+```r
+exampleDat[, c("factor", "string2")]
+```
+
+```
+##   factor    string2
+## 1    yes    Control
+## 2    yes    Control
+## 3     no Experiment
+## 4    yes Experiment
+## 5     no Experiment
+## 6    yes    Control
+```
+
+## Subsetting data frames with indexing
+
+We can use these ideas to *subset* our data frame. Subsetting is simply selecting a portion of your data to work with. Lets say from our exampleDat data frame we wanted to just use the first three rows and columns integer, number, and integer2. See the example below for how to do this. 
+
+```r
+exampleDat2 <- exampleDat[1:3, c("integer","number","integer2")]
+exampleDat2
+```
+
+```
+##   integer number integer2
+## 1       1      4        5
+## 2       2      7        4
+## 3       3      2        3
+```
+Another method of indexing is using a function, such as `which.min()` or `which.max()` to index rows. In the below example, we use `which.min()` to find the row with the minimum in the number column, we also selected all columns. 
+
+```r
+exampleDat3 <- exampleDat[which.min(exampleDat$number), ]
+exampleDat3
+```
+
+```
+##     string integer number factor integer2    string2
+## 3 person_3       3      2     no        3 Experiment
+```
+
+
+## Doing calculations with indexing
+
+We can bring together adding a new column with indexing. See the example below, we make a new column called calculation and assign the value of the calculation we are doing using indexing; which is the column *integer* divided by the column *number*. We can also do indexing with calculations by using the `$` as shown below. 
+
+
+```r
+# add new column and add calculation to it
+exampleDat$calculation <- exampleDat[,"integer"]/exampleDat[,"number"] 
+# add second column using different indexing technique
+exampleDat$calculation2 <- (exampleDat$integer*exampleDat$integer2)/nrow(exampleDat)
+# print result
+exampleDat
+```
+
+```
+##     string integer number factor integer2    string2 calculation calculation2
+## 1 person_1       1      4    yes        5    Control   0.2500000    0.8333333
+## 2 person_2       2      7    yes        4    Control   0.2857143    1.3333333
+## 3 person_3       3      2     no        3 Experiment   1.5000000    1.5000000
+## 4 person_4       4      9    yes        2 Experiment   0.4444444    1.3333333
+## 5 person_5       5      3     no        1 Experiment   1.6666667    0.8333333
+## 6 person_6       6      5    yes        0    Control   1.2000000    0.0000000
+```
+
 ## Indexing data frames task
 
-Make some new data for task - involves dropping a column, creating a subset of the first 20 rows, then running the summary statistics on the new data frame. 
+Do some calculations for columns using indexing - Then subset down to keep all rows but remove some columns like club - paste a nice result from that using max - e.g. messi's best goal ratio was x in y season
+
+We will index the `messi_career` data we have using to do some calculations, subset, and print a nice result. The final printed result should be: *Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League.*. 
+
+1)  Make a new column called goalRatio and, using indexing, divide Goals by Appearances. 
+2)  Make another new column called propChampGoal and, using indexing, divide champLeagueGoal by Goals and times by 100. 
+3)  Subset the messi_career data. Call the subsetted data messi_careerSub, and keep all rows and the following columns: Season, Age, goalRatio and propChampGoal.
+4)  Using your new messi_careerSub data frame, use `which.max()` to find the row with the best goal ratio. Store this in a data frame called bestGR. *hint: see which.min() example*. 
+5)  Use `paste()` or `paste0` to print the result: Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League. *hint: use indexing on the bestGR data frame, e.g. paste("text", round(bestGR[,3],2), "more text")*.
+
+
+```r
+# your code here
+```
 
 # Adjusting column names
 
@@ -372,7 +455,8 @@ names(exampleDat)
 ```
 
 ```
-## [1] "string"   "integer"  "number"   "factor"   "integer2" "string2"
+## [1] "string"       "integer"      "number"       "factor"       "integer2"    
+## [6] "string2"      "calculation"  "calculation2"
 ```
 
 For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.
@@ -385,10 +469,11 @@ names(exampleDat)
 ```
 
 ```
-## [1] "string"   "integer"  "number"   "factor"   "integer2" "string2"
+## [1] "string"       "integer"      "number"       "factor"       "integer2"    
+## [6] "string2"      "calculation"  "calculation2"
 ```
 
-The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to `string`. 
+The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to `string`. It will search for the exact match so is case sensitive. 
 
 In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out: 
 
@@ -399,12 +484,32 @@ names(exampleDat)
 ```
 
 ```
-## [1] "string"   "integer"  "number"   "factor"   "integer2" "string2"
+## [1] "string"       "integer"      "number"       "factor"       "integer2"    
+## [6] "string2"      "calculation"  "calculation2"
 ```
 
 ## Column names task
 
-*re-ordering task* otherwise hard for them to code the names statement. Use a bit of other stuff too. 
+We've been recording our running times and distances and have put them in a data frame. However, the column names we have used are not very informative. Using the examples above change the column names as follows:
+
+1)  Change runTime to runTime_mins
+2)  Change Len to distance_km
+3)  Change speed to minsPerKm  
+**Fun extras: a visualisation taster**
+4)  Run the code to make a scatterplot of distance and running time: `plot(data$distance_km, data$runTime_mins)`
+5)  Run the code to make a bar plot of week and minsPerKm: `plot(data$week, data$minsPerKm)`
+
+```r
+# running data frame
+data <- data.frame(runTime = sample(20:40, 10),
+                   Len = sample(1:10, 10),
+                   week = as.factor(c(rep("weekOne",3), rep("weekTwo", 4), rep("weekThree", 3))))
+# work out your minutes per kilometer
+data$speed <- data$runTime/data$Len
+
+# your code here
+```
+*Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*
 
 # Final task - Please give us your individual feedback!
 
@@ -414,4 +519,26 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 
 # Individual take home challenge 
 
-Debugging challenge - give them a data frame, some indexing, workout some means etc. 
+For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: *Dobby the house elf is very Devoteted and has a power to evil ratio of 0.67*. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.
+
+
+```r
+# Some Harry Potter characters
+HP_Characters <- dataframe(
+  Name = c("Harry Potter", "Luna Lovegood", "Nymphadora Tonks", 
+           "Hermione Granger", "Severus Snape", "Cedric Diggory",
+           "Dobby the house elf"),
+  Trait = ("Brave", "Wise", "Loyal", "Brave", "Cunning", "Loyal", 
+            "Devoteted"))
+# Give them a score out of 10 for power
+HP_Char$Power <- sample(1:10, 7)
+# Give them a score out of 10 for Evilness
+HP_Characters$Evilness <- sample(1:10, 7)
+# Give them a power to evil ratio
+HP_Characters$PowEvilRatio <- HP_Characters$Pow/HP_Characters$Evil
+
+# print the result for Dobby
+paste(HP_Characters[1,1], "is very", HP_Characters[7,2], 
+      "and has a power to evil ratio of", round(HP_Characters[7,5],2), sep = "# ")
+```
+
