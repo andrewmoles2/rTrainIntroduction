@@ -116,4 +116,8 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 # Individual take home challenge 
 
 
+```{r}
+
+```
+
 

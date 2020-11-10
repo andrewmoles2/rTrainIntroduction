@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 2"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "02 November, 2020"
+date: "09 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -143,6 +143,9 @@ This is the first time that we are exploring a remote learning format for our wo
 https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=R&cohort=MT20
 
 # Individual take home challenge 
+
+$dS_t = μ(S_t)dt + σ(S_t)dW_t$
+
 
 
 

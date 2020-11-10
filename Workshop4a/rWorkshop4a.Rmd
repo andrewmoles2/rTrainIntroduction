@@ -342,7 +342,7 @@ data$speed <- data$runTime/data$Len
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=R&cohort=MT20
+https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D0550R4aDF1&topic=R&cohort=MT20
 
 # Individual take home challenge 
 
