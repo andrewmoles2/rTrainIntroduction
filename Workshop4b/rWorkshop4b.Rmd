@@ -107,6 +107,20 @@ We are going to load in a .csv file and a .xlsx file, two of the most common fil
 
 ```
 
+## Loading data task
+
+# Row binding data frames
+
+# Row binding task
+
+# Data frame task 
+
+Subset part of the data frame (first 50 rows or something)
+
+Make a new column like average power
+
+
+
 # Final task - Please give us your individual feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!

@@ -320,10 +320,8 @@ We've been recording our running times and distances and have put them in a data
 
 1)  Change runTime to runTime_mins
 2)  Change Len to distance_km
-3)  Change speed to minsPerKm  
-**Fun extras: a visualisation taster**
-4)  Run the code to make a scatterplot of distance and running time: `plot(data$distance_km, data$runTime_mins)`
-5)  Run the code to make a bar plot of week and minsPerKm: `plot(data$week, data$minsPerKm)`
+3)  Change speed to minsPerKm
+4)  What function would we use to get the mean, max, min etc. on the dataset? Run that now to review your data. 
 ```{r}
 # running data frame
 data <- data.frame(runTime = sample(20:40, 10),
@@ -333,7 +331,7 @@ data <- data.frame(runTime = sample(20:40, 10),
 data$speed <- data$runTime/data$Len
 
 # your code here
-
+summary(data)
 
 ```
 *Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*
