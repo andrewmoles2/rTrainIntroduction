@@ -331,7 +331,7 @@ data <- data.frame(runTime = sample(20:40, 10),
 data$speed <- data$runTime/data$Len
 
 # your code here
-summary(data)
+
 
 ```
 *Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*

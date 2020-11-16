@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 1"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2020"
+date: "16 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -494,10 +494,8 @@ We've been recording our running times and distances and have put them in a data
 
 1)  Change runTime to runTime_mins
 2)  Change Len to distance_km
-3)  Change speed to minsPerKm  
-**Fun extras: a visualisation taster**
-4)  Run the code to make a scatterplot of distance and running time: `plot(data$distance_km, data$runTime_mins)`
-5)  Run the code to make a bar plot of week and minsPerKm: `plot(data$week, data$minsPerKm)`
+3)  Change speed to minsPerKm
+4)  What function would we use to get the mean, max, min etc. on the dataset? Run that now to review your data. 
 
 ```r
 # running data frame
