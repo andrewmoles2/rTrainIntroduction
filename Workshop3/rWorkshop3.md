@@ -19,7 +19,6 @@ In this workshop, the aim is to cover strings and sting manipulation, introduce 
 *  Introduction to factors (represent categorical data, ordered/un-ordered, levels)
 *  Converting types of data (strings, factors, integers, and numeric)
 *  String manipulation with Paste
-*  Tabulation using factors
 
 # Information on how the session is run
 
