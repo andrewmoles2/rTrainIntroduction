@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "26 October, 2020"
+date: "23 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -44,7 +44,6 @@ One hour exercise based session with tutor support. You will be given example co
   *  stackoverflow.com (for task-specific solutions)
   *  https://www.r-bloggers.com/ (topic based tutorials)
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
 
 ***
 
@@ -110,9 +109,6 @@ As you can see this divides all elements in the vector by 5.
 ```r
 # your code here
 ```
-
-
-***
 
 # Functions: what are they and how to use them
 
@@ -265,7 +261,14 @@ You decided to track your total monthly expenditures for the year to find out mo
 # enter your code here
 ```
 
-## Functions exercise 2
+# Final task - Please give us your individual feedback!
+
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D046-R2VFI&topic=R&cohort=MT20
+
+## Individual coding challenge 1
+
 You decide to calculate your commuting times over a weekly period. You decide to see if you can workout, based off your weekly commute, how much commuting you will do on average this month.
 
 1)  Replicate the commute variable four times using `rep()` and assign to a variable called commute_est.
@@ -282,14 +285,7 @@ commute <- c(41, 33, 44, 52, 36, 39)
 # enter your code here
 ```
 
-
-# Final task - Please give us your individual feedback!
-
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
-
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D046-R2VFI&topic=R&cohort=MT20
-
-# Individual coding challenge
+# Individual coding challenge 2
 
 For this individual coding challenge we will be looking at Lional Messi's season appearances and goals from 2004-2020. 
 
@@ -333,3 +329,4 @@ season[which.min(goalRatio)] - season[1]
 goalRatio <- round(appearances/goals, digits = 2)
 careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
 ```
+

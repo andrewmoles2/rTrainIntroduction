@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 2"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "09 November, 2020"
+date: "17 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -136,6 +136,20 @@ We are going to load in a .csv file and a .xlsx file, two of the most common fil
 **hint: an RStudio shortcut to find files is to press tab when the cursor is in the speech marks ("")**
 
 
+## Loading data task
+
+# Row binding data frames
+
+# Row binding task
+
+# Data frame task 
+
+Subset part of the data frame (first 50 rows or something)
+
+Make a new column like average power
+
+
+
 # Final task - Please give us your individual feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
@@ -144,7 +158,6 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 
 # Individual take home challenge 
 
-$dS_t = μ(S_t)dt + σ(S_t)dW_t$
 
 
 

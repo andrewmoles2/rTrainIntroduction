@@ -72,3 +72,46 @@ pokemon <- c("Bulbasaur001", "Ivysaur002", "Venusaur003",
 
 arPokes <- paste(arPokes, collapse = ", ")
 ```
+
+
+# Tabulation using factors
+
+It can be helpful to know how many occurrences (counts) of each category you have in a factor. You can do this using the `table()` function, which allows us to do simple tabulations. 
+```{r}
+# colours vector
+cols <- c('red','blue','red','green','red','green',
+          'blue','pink','green','red','red','blue')
+# tabulation of colours vector
+table(cols)
+```
+
+The `table()` function allows us to do calculations such as percentages. We have used the `length()` function to tell R how much to divide by as opposed to adding the number of variables in cols (12). This is good practice as the data used can change. We can also use the `prop.table()` function as shown below. 
+```{r}
+# colours vector
+cols <- c('red','blue','red','green','red','green',
+          'blue','pink','green','red','red','blue')
+# found out the percentages rather than counts
+table(cols)/length(cols)*100
+# found out the percentages using prop.table
+prop.table(table(cols))*100
+```
+
+***
+***
+
+## Tabulation exercise
+
+1)  Make the StringsOrchestra variable, defined below, into a factor. 
+2)  Using `table()` work out the percentage each instrument makes up of this orchestra. Test this out with both the examples used above. 
+```{r}
+StringsOrchestra <- c(rep('first Violin',12),
+                      rep('second Violin',10),
+                      rep('Viola',8),
+                      rep('Cello',6),
+                      rep('Double bass',4))
+
+# your code here
+
+```
+
+

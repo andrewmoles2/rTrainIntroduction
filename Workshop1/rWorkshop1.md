@@ -3,7 +3,7 @@ title: "R Workshop 1 - Welcome to R!"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 October, 2020"
+date: "23 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -117,12 +117,12 @@ We can use R to do simple or advanced calculations for us. Remember to run the c
 
 Use R to work out the following arithmetic:
 
-1)  $44 * 26$
-2)  $9.6/1.6$
-3)  $(12+4)^2$
-4)  $(4*9)/(5+6)$
-5)  $(22/36) * 100$
-6)  Remainder of $55 / 2$
+1)  44 * 26
+2)  9.6/1.6
+3)  (12+4)^2
+4)  (4*9)/(5+6)
+5)  (22/36) * 100
+6)  The remainder of 55 / 2 (hint: look up r's modulus operator)
 
 
 ```r

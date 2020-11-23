@@ -98,12 +98,12 @@ We can use R to do simple or advanced calculations for us. Remember to run the c
 
 Use R to work out the following arithmetic:
 
-1)  $44 * 26$
-2)  $9.6/1.6$
-3)  $(12+4)^2$
-4)  $(4*9)/(5+6)$
-5)  $(22/36) * 100$
-6)  Remainder of $55 / 2$
+1)  44 * 26
+2)  9.6/1.6
+3)  (12+4)^2
+4)  (4*9)/(5+6)
+5)  (22/36) * 100
+6)  The remainder of 55 / 2 (hint: look up r's modulus operator)
 
 ```{r}
 # type your code here
