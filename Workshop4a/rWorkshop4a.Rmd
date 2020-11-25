@@ -11,6 +11,10 @@ output:
     keep_md: yes
 ---
 
+# Objective of workshop
+
+To create data frames, and be able to manage them by indexing and adding data.
+
 # What will this workshop cover?
 
 In this workshop, the aim is to introduce you to data frames. We will be covering:
@@ -19,7 +23,6 @@ In this workshop, the aim is to introduce you to data frames. We will be coverin
 *  Adding rows and columns to data frames
 *  Getting information on data frames
 *  Indexing data frames
-*  Adjusting column names
 
 # Information on how the session is run
 
@@ -31,12 +34,10 @@ One hour exercise based session with tutor support. You will be given example co
 *  No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
 *  Trainer support to guide through process of learning
 
-## We will be working in pairs:
+## We will be working together in breakout rooms:
 
-*  One shares the screen and the other requests remote control.
-*  Take turns on who types for each exercise.
-*  Share markdown file at end of session via chat
-*  If possible have your camera on when doing the paired work.
+*  Option to work together on worksheet or to work individually
+*  If possible have your camera on and introduce yourself to each other
 
 ## What to do when getting stuck:
 
@@ -95,7 +96,6 @@ exampleDat
 ## Manual data frame task
 
 Lets use the data from the coding challenge in R2 looking at Lionel Messi's career. We've got vectors with his goals, club, appearances, and year (season). 
-
 Using these vectors make a data frame called `messi_career`. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.
 
 ```{r}
@@ -274,8 +274,6 @@ exampleDat
 
 ## Indexing data frames task
 
-Do some calculations for columns using indexing - Then subset down to keep all rows but remove some columns like club - paste a nice result from that using max - e.g. messi's best goal ratio was x in y season
-
 We will index the `messi_career` data we have using to do some calculations, subset, and print a nice result. The final printed result should be: *Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League.*. 
 
 1)  Make a new column called goalRatio and, using indexing, divide Goals by Appearances. 
@@ -288,53 +286,6 @@ We will index the `messi_career` data we have using to do some calculations, sub
 # your code here
 
 ```
-
-# Adjusting column names
-
-To just look at the column names for your data frame there are two functions you can use: `names()` and `colnames()`. As `names()` is shorter and easier to type this is the better option. To run `names()` simply give it your data frame as shown below.
-
-```{r}
-names(exampleDat)
-```
-
-For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.
-
-```{r}
-# using number index
-names(exampleDat[2]) <- "integer1"
-names(exampleDat)
-```
-
-The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to `string`. It will search for the exact match so is case sensitive. 
-
-In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out: 
-```{r}
-# recommended using logic
-names(exampleDat[names(exampleDat) == "string"]) <- "string1"
-names(exampleDat)
-```
-
-## Column names task
-
-We've been recording our running times and distances and have put them in a data frame. However, the column names we have used are not very informative. Using the examples above change the column names as follows:
-
-1)  Change runTime to runTime_mins
-2)  Change Len to distance_km
-3)  Change speed to minsPerKm
-4)  What function would we use to get the mean, max, min etc. on the dataset? Run that now to review your data. 
-```{r}
-# running data frame
-data <- data.frame(runTime = sample(20:40, 10),
-                   Len = sample(1:10, 10),
-                   week = as.factor(c(rep("weekOne",3), rep("weekTwo", 4), rep("weekThree", 3))))
-# work out your minutes per kilometer
-data$speed <- data$runTime/data$Len
-
-# your code here
-
-
-```
-*Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*
 
 # Final task - Please give us your individual feedback!
 

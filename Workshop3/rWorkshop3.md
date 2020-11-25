@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "23 November, 2020"
+date: "25 November, 2020"
 output: 
   html_document: 
     theme: readable
@@ -270,6 +270,7 @@ The paste functions are useful for producing nice outputs for reports or an anal
 Some examples of paste with and without sep or collapse:
 
 ```r
+# Using sep
 paste("Hi", "there")
 ```
 
@@ -286,6 +287,7 @@ paste("Hi", "there", sep = ", ")
 ```
 
 ```r
+# using collapse
 trees <- c('Oak', 'Willow', 'Redwood')
 paste(trees)
 ```
@@ -327,9 +329,15 @@ As you can see paste can make new strings from existing strings, and format them
 ## Paste exercise
 
 1)  Make a vector with the following flowers: sunflower, poppy, dahlia
-2)  Use `paste` to make this string: "sunflower, poppy, dahlia"
+2)  Use `paste0` or `paste` to make this string: "sunflower, poppy, dahlia"
 3)  Make a variable called daysRaining with the value 360
-4)  Using `paste0` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
+4)  Using `paste0` or `paste` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
+
+
+```r
+# your code here
+```
+
 
 # Final task - Please give us your individual feedback!
 
@@ -340,13 +348,13 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D048-R3SFTC&topi
 
 ## Individual take home challenge 1
 
-Type conversion can be helpful with questionnaire data. In this example you've taken a questionnaire how much you agree to certain topics with the following scale: Strongly Disagree, Disagree, Undecided, Agree, Strongly Agree.
+Type conversion can be helpful with questionnaire data. In this example you've taken a questionnaire how much you agree to certain topics with the following scale: Disagree, Undecided, Agree.
 
-1)  Make a vector called *survey* with the following amount of responses: Strongly Agree * 3, Undecided * 1, Disagree * 2, Strongly Disagree * 1, Agree * 5. hint: use the `rep()` function.
-2)  Make the survey vector into a factor, with the order levels strongly disagree to strongly disagree. You should get *Levels: strongly disagree disagree undecided agree strongly agree*.
-3)  Convert the survey factor to an integer. Now your factor levels will have values; 1 for strongly disagree to 5 for strongly agree. 
+1)  Make a vector called `survey` with the following amount of responses: agree * 5, undecided * 3, disagree * 2. hint: use the `rep()` function.
+2)  Make the survey vector into a factor, with the order levels disagree to agree. You should get *Levels: disagree undecided agree*.
+3)  Convert the survey factor to an integer. Now your factor levels will have values; 1 for disagree to 3 for agree. 
 4)  Make a variable called aveSurvey and calculate the mean response.
-5)  Using `paste()` or `paste0()` print the following statement using your aveSurvey variable: "My average agreement was 3.58 out of 5". hint: use `round()` to tidy up the aveSurvey result.
+5)  Using `paste()` or `paste0()` print the following statement using your aveSurvey variable: "My average agreement was  2.3 out of 3". 
 
 
 ```r

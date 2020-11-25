@@ -216,6 +216,54 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -451,11 +499,15 @@ summary {
 <h1 class="title toc-ignore">R Workshop 4 - Data Frames part 1</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">25 November, 2020</h4>
 
 </div>
 
 
+<div id="objective-of-workshop" class="section level1">
+<h1>Objective of workshop</h1>
+<p>To create data frames, and be able to manage them by indexing and adding data.</p>
+</div>
 <div id="what-will-this-workshop-cover" class="section level1">
 <h1>What will this workshop cover?</h1>
 <p>In this workshop, the aim is to introduce you to data frames. We will be covering:</p>
@@ -464,7 +516,6 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 <li>Adding rows and columns to data frames</li>
 <li>Getting information on data frames</li>
 <li>Indexing data frames</li>
-<li>Adjusting column names</li>
 </ul>
 </div>
 <div id="information-on-how-the-session-is-run" class="section level1">
@@ -478,13 +529,11 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 <li>Trainer support to guide through process of learning</li>
 </ul>
 </div>
-<div id="we-will-be-working-in-pairs" class="section level2">
-<h2>We will be working in pairs:</h2>
+<div id="we-will-be-working-together-in-breakout-rooms" class="section level2">
+<h2>We will be working together in breakout rooms:</h2>
 <ul>
-<li>One shares the screen and the other requests remote control.</li>
-<li>Take turns on who types for each exercise.</li>
-<li>Share markdown file at end of session via chat</li>
-<li>If possible have your camera on when doing the paired work.</li>
+<li>Option to work together on worksheet or to work individually</li>
+<li>If possible have your camera on and introduce yourself to each other</li>
 </ul>
 </div>
 <div id="what-to-do-when-getting-stuck" class="section level2">
@@ -553,8 +602,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 ## 5 person_5       5      3     no</code></pre>
 <div id="manual-data-frame-task" class="section level2">
 <h2>Manual data frame task</h2>
-<p>Lets use the data from the coding challenge in R2 looking at Lionel Messi’s career. We’ve got vectors with his goals, club, appearances, and year (season).</p>
-<p>Using these vectors make a data frame called <code>messi_career</code>. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.</p>
+<p>Lets use the data from the coding challenge in R2 looking at Lionel Messi’s career. We’ve got vectors with his goals, club, appearances, and year (season). Using these vectors make a data frame called <code>messi_career</code>. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Vectors with data on Messi&#39;s career</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>app &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">25</span>,<span class="dv">36</span>,<span class="dv">40</span>,<span class="dv">51</span>,<span class="dv">53</span>,<span class="dv">55</span>,<span class="dv">60</span>,<span class="dv">50</span>,<span class="dv">46</span>,<span class="dv">57</span>,<span class="dv">49</span>,<span class="dv">52</span>,<span class="dv">54</span>,<span class="dv">50</span>,<span class="dv">44</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>Goals &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">17</span>,<span class="dv">16</span>,<span class="dv">38</span>,<span class="dv">47</span>,<span class="dv">53</span>,<span class="dv">73</span>,<span class="dv">60</span>,<span class="dv">41</span>,<span class="dv">58</span>,<span class="dv">41</span>,<span class="dv">54</span>,<span class="dv">45</span>,<span class="dv">51</span>,<span class="dv">31</span>)</span>
@@ -747,7 +795,6 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 </div>
 <div id="indexing-data-frames-task" class="section level2">
 <h2>Indexing data frames task</h2>
-<p>Do some calculations for columns using indexing - Then subset down to keep all rows but remove some columns like club - paste a nice result from that using max - e.g. messi’s best goal ratio was x in y season</p>
 <p>We will index the <code>messi_career</code> data we have using to do some calculations, subset, and print a nice result. The final printed result should be: <em>Messi’s best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League.</em>.</p>
 <ol style="list-style-type: decimal">
 <li>Make a new column called goalRatio and, using indexing, divide Goals by Appearances.</li>
@@ -759,45 +806,6 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
-<div id="adjusting-column-names" class="section level1">
-<h1>Adjusting column names</h1>
-<p>To just look at the column names for your data frame there are two functions you can use: <code>names()</code> and <code>colnames()</code>. As <code>names()</code> is shorter and easier to type this is the better option. To run <code>names()</code> simply give it your data frame as shown below.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
-<pre><code>## [1] &quot;string&quot;       &quot;integer&quot;      &quot;number&quot;       &quot;factor&quot;       &quot;integer2&quot;    
-## [6] &quot;string2&quot;      &quot;calculation&quot;  &quot;calculation2&quot;</code></pre>
-<p>For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># using number index</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">names</span>(exampleDat[<span class="dv">2</span>]) &lt;-<span class="st"> &quot;integer1&quot;</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
-<pre><code>## [1] &quot;string&quot;       &quot;integer&quot;      &quot;number&quot;       &quot;factor&quot;       &quot;integer2&quot;    
-## [6] &quot;string2&quot;      &quot;calculation&quot;  &quot;calculation2&quot;</code></pre>
-<p>The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to <code>string</code>. It will search for the exact match so is case sensitive.</p>
-<p>In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># recommended using logic</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">names</span>(exampleDat[<span class="kw">names</span>(exampleDat) <span class="op">==</span><span class="st"> &quot;string&quot;</span>]) &lt;-<span class="st"> &quot;string1&quot;</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a><span class="kw">names</span>(exampleDat)</span></code></pre></div>
-<pre><code>## [1] &quot;string&quot;       &quot;integer&quot;      &quot;number&quot;       &quot;factor&quot;       &quot;integer2&quot;    
-## [6] &quot;string2&quot;      &quot;calculation&quot;  &quot;calculation2&quot;</code></pre>
-<div id="column-names-task" class="section level2">
-<h2>Column names task</h2>
-<p>We’ve been recording our running times and distances and have put them in a data frame. However, the column names we have used are not very informative. Using the examples above change the column names as follows:</p>
-<ol style="list-style-type: decimal">
-<li>Change runTime to runTime_mins</li>
-<li>Change Len to distance_km</li>
-<li>Change speed to minsPerKm</li>
-<li>What function would we use to get the mean, max, min etc. on the dataset? Run that now to review your data.</li>
-</ol>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># running data frame</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">runTime =</span> <span class="kw">sample</span>(<span class="dv">20</span><span class="op">:</span><span class="dv">40</span>, <span class="dv">10</span>),</span>
-<span id="cb44-3"><a href="#cb44-3"></a>                   <span class="dt">Len =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">10</span>),</span>
-<span id="cb44-4"><a href="#cb44-4"></a>                   <span class="dt">week =</span> <span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;weekOne&quot;</span>,<span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;weekTwo&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;weekThree&quot;</span>, <span class="dv">3</span>))))</span>
-<span id="cb44-5"><a href="#cb44-5"></a><span class="co"># work out your minutes per kilometer</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>data<span class="op">$</span>speed &lt;-<span class="st"> </span>data<span class="op">$</span>runTime<span class="op">/</span>data<span class="op">$</span>Len</span>
-<span id="cb44-7"><a href="#cb44-7"></a></span>
-<span id="cb44-8"><a href="#cb44-8"></a><span class="co"># your code here</span></span></code></pre></div>
-<p><em>Note: The <code>sample()</code> function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.</em></p>
-</div>
-</div>
 <div id="final-task---please-give-us-your-individual-feedback" class="section level1">
 <h1>Final task - Please give us your individual feedback!</h1>
 <p>This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!</p>
@@ -806,23 +814,23 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 <div id="individual-take-home-challenge" class="section level1">
 <h1>Individual take home challenge</h1>
 <p>For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: <em>Dobby the house elf is very Devoteted and has a power to evil ratio of 0.67</em>. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Some Harry Potter characters</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a>HP_Characters &lt;-<span class="st"> </span><span class="kw">dataframe</span>(</span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;Harry Potter&quot;</span>, <span class="st">&quot;Luna Lovegood&quot;</span>, <span class="st">&quot;Nymphadora Tonks&quot;</span>, </span>
-<span id="cb45-4"><a href="#cb45-4"></a>           <span class="st">&quot;Hermione Granger&quot;</span>, <span class="st">&quot;Severus Snape&quot;</span>, <span class="st">&quot;Cedric Diggory&quot;</span>,</span>
-<span id="cb45-5"><a href="#cb45-5"></a>           <span class="st">&quot;Dobby the house elf&quot;</span>),</span>
-<span id="cb45-6"><a href="#cb45-6"></a>  <span class="dt">Trait =</span> (<span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Wise&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, <span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Cunning&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, </span>
-<span id="cb45-7"><a href="#cb45-7"></a>            <span class="st">&quot;Devoteted&quot;</span>))</span>
-<span id="cb45-8"><a href="#cb45-8"></a><span class="co"># Give them a score out of 10 for power</span></span>
-<span id="cb45-9"><a href="#cb45-9"></a>HP_Char<span class="op">$</span>Power &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
-<span id="cb45-10"><a href="#cb45-10"></a><span class="co"># Give them a score out of 10 for Evilness</span></span>
-<span id="cb45-11"><a href="#cb45-11"></a>HP_Characters<span class="op">$</span>Evilness &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
-<span id="cb45-12"><a href="#cb45-12"></a><span class="co"># Give them a power to evil ratio</span></span>
-<span id="cb45-13"><a href="#cb45-13"></a>HP_Characters<span class="op">$</span>PowEvilRatio &lt;-<span class="st"> </span>HP_Characters<span class="op">$</span>Pow<span class="op">/</span>HP_Characters<span class="op">$</span>Evil</span>
-<span id="cb45-14"><a href="#cb45-14"></a></span>
-<span id="cb45-15"><a href="#cb45-15"></a><span class="co"># print the result for Dobby</span></span>
-<span id="cb45-16"><a href="#cb45-16"></a><span class="kw">paste</span>(HP_Characters[<span class="dv">1</span>,<span class="dv">1</span>], <span class="st">&quot;is very&quot;</span>, HP_Characters[<span class="dv">7</span>,<span class="dv">2</span>], </span>
-<span id="cb45-17"><a href="#cb45-17"></a>      <span class="st">&quot;and has a power to evil ratio of&quot;</span>, <span class="kw">round</span>(HP_Characters[<span class="dv">7</span>,<span class="dv">5</span>],<span class="dv">2</span>), <span class="dt">sep =</span> <span class="st">&quot;# &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Some Harry Potter characters</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>HP_Characters &lt;-<span class="st"> </span><span class="kw">dataframe</span>(</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;Harry Potter&quot;</span>, <span class="st">&quot;Luna Lovegood&quot;</span>, <span class="st">&quot;Nymphadora Tonks&quot;</span>, </span>
+<span id="cb38-4"><a href="#cb38-4"></a>           <span class="st">&quot;Hermione Granger&quot;</span>, <span class="st">&quot;Severus Snape&quot;</span>, <span class="st">&quot;Cedric Diggory&quot;</span>,</span>
+<span id="cb38-5"><a href="#cb38-5"></a>           <span class="st">&quot;Dobby the house elf&quot;</span>),</span>
+<span id="cb38-6"><a href="#cb38-6"></a>  <span class="dt">Trait =</span> (<span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Wise&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, <span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Cunning&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, </span>
+<span id="cb38-7"><a href="#cb38-7"></a>            <span class="st">&quot;Devoteted&quot;</span>))</span>
+<span id="cb38-8"><a href="#cb38-8"></a><span class="co"># Give them a score out of 10 for power</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a>HP_Char<span class="op">$</span>Power &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb38-10"><a href="#cb38-10"></a><span class="co"># Give them a score out of 10 for Evilness</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a>HP_Characters<span class="op">$</span>Evilness &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb38-12"><a href="#cb38-12"></a><span class="co"># Give them a power to evil ratio</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a>HP_Characters<span class="op">$</span>PowEvilRatio &lt;-<span class="st"> </span>HP_Characters<span class="op">$</span>Pow<span class="op">/</span>HP_Characters<span class="op">$</span>Evil</span>
+<span id="cb38-14"><a href="#cb38-14"></a></span>
+<span id="cb38-15"><a href="#cb38-15"></a><span class="co"># print the result for Dobby</span></span>
+<span id="cb38-16"><a href="#cb38-16"></a><span class="kw">paste</span>(HP_Characters[<span class="dv">1</span>,<span class="dv">1</span>], <span class="st">&quot;is very&quot;</span>, HP_Characters[<span class="dv">7</span>,<span class="dv">2</span>], </span>
+<span id="cb38-17"><a href="#cb38-17"></a>      <span class="st">&quot;and has a power to evil ratio of&quot;</span>, <span class="kw">round</span>(HP_Characters[<span class="dv">7</span>,<span class="dv">5</span>],<span class="dv">2</span>), <span class="dt">sep =</span> <span class="st">&quot;# &quot;</span>)</span></code></pre></div>
 </div>
 
 
@@ -834,7 +842,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">16 November, 2020</h4
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

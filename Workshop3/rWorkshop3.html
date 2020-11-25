@@ -499,7 +499,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 3 - Strings, factors, and type conversion</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">23 November, 2020</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">25 November, 2020</h4>
 
 </div>
 
@@ -679,12 +679,14 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">23 November, 2020</h4
 <h1>Basic string manipulation</h1>
 <p>R comes with several useful functions for manipulating strings, today we will just look at <code>paste()</code>, <code>paste0()</code>.</p>
 <p>The paste functions are useful for producing nice outputs for reports or an analysis. They concatenate strings and variables to make outputs more readable. Some examples of paste with and without sep or collapse:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">paste</span>(<span class="st">&quot;Hi&quot;</span>, <span class="st">&quot;there&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Using sep</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">paste</span>(<span class="st">&quot;Hi&quot;</span>, <span class="st">&quot;there&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hi there&quot;</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">paste</span>(<span class="st">&quot;Hi&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hi, there&quot;</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>trees &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Oak&#39;</span>, <span class="st">&#39;Willow&#39;</span>, <span class="st">&#39;Redwood&#39;</span>)</span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="kw">paste</span>(trees)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># using collapse</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>trees &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Oak&#39;</span>, <span class="st">&#39;Willow&#39;</span>, <span class="st">&#39;Redwood&#39;</span>)</span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="kw">paste</span>(trees)</span></code></pre></div>
 <pre><code>## [1] &quot;Oak&quot;     &quot;Willow&quot;  &quot;Redwood&quot;</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">paste</span>(trees, <span class="dt">collapse =</span> <span class="st">&quot; and &quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Oak and Willow and Redwood&quot;</code></pre>
@@ -700,10 +702,11 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">23 November, 2020</h4
 <h2>Paste exercise</h2>
 <ol style="list-style-type: decimal">
 <li>Make a vector with the following flowers: sunflower, poppy, dahlia</li>
-<li>Use <code>paste</code> to make this string: “sunflower, poppy, dahlia”</li>
+<li>Use <code>paste0</code> or <code>paste</code> to make this string: “sunflower, poppy, dahlia”</li>
 <li>Make a variable called daysRaining with the value 360</li>
-<li>Using <code>paste0</code> make the following sentence that uses the daysRaining variable: “It has been raining for 360 days this year”</li>
+<li>Using <code>paste0</code> or <code>paste</code> make the following sentence that uses the daysRaining variable: “It has been raining for 360 days this year”</li>
 </ol>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="final-task---please-give-us-your-individual-feedback" class="section level1">
@@ -712,35 +715,35 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">23 November, 2020</h4
 <p><a href="https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D048-R3SFTC&amp;topic=R&amp;cohort=MT20" class="uri">https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D048-R3SFTC&amp;topic=R&amp;cohort=MT20</a></p>
 <div id="individual-take-home-challenge-1" class="section level2">
 <h2>Individual take home challenge 1</h2>
-<p>Type conversion can be helpful with questionnaire data. In this example you’ve taken a questionnaire how much you agree to certain topics with the following scale: Strongly Disagree, Disagree, Undecided, Agree, Strongly Agree.</p>
+<p>Type conversion can be helpful with questionnaire data. In this example you’ve taken a questionnaire how much you agree to certain topics with the following scale: Disagree, Undecided, Agree.</p>
 <ol style="list-style-type: decimal">
-<li>Make a vector called <em>survey</em> with the following amount of responses: Strongly Agree * 3, Undecided * 1, Disagree * 2, Strongly Disagree * 1, Agree * 5. hint: use the <code>rep()</code> function.</li>
-<li>Make the survey vector into a factor, with the order levels strongly disagree to strongly disagree. You should get <em>Levels: strongly disagree disagree undecided agree strongly agree</em>.</li>
-<li>Convert the survey factor to an integer. Now your factor levels will have values; 1 for strongly disagree to 5 for strongly agree.</li>
+<li>Make a vector called <code>survey</code> with the following amount of responses: agree * 5, undecided * 3, disagree * 2. hint: use the <code>rep()</code> function.</li>
+<li>Make the survey vector into a factor, with the order levels disagree to agree. You should get <em>Levels: disagree undecided agree</em>.</li>
+<li>Convert the survey factor to an integer. Now your factor levels will have values; 1 for disagree to 3 for agree.</li>
 <li>Make a variable called aveSurvey and calculate the mean response.</li>
-<li>Using <code>paste()</code> or <code>paste0()</code> print the following statement using your aveSurvey variable: “My average agreement was 3.58 out of 5”. hint: use <code>round()</code> to tidy up the aveSurvey result.</li>
+<li>Using <code>paste()</code> or <code>paste0()</code> print the following statement using your aveSurvey variable: “My average agreement was 2.3 out of 3”.</li>
 </ol>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="individual-take-home-challenge-2" class="section level1">
 <h1>Individual take home challenge 2</h1>
 <p>In this challenge get the code below to run, it has been jumbled up so needs to be re-ordered. The code calculates your week wine consumption. When it runs it will print out the following statement <em>“This week I drank on average 1.71 glasses of wine, 5 red and 2 white”</em>.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># sum how much red and white wine where drunk</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>red &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">table</span>(typeWine[<span class="kw">grep</span>(<span class="st">&#39;red&#39;</span>,typeWine)]))</span>
-<span id="cb42-3"><a href="#cb42-3"></a>white &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">table</span>(typeWine[<span class="kw">grep</span>(<span class="st">&#39;white&#39;</span>,typeWine)]))</span>
-<span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a><span class="co"># calculate the average wine, rounding the result to two decimal places</span></span>
-<span id="cb42-6"><a href="#cb42-6"></a>meanWine &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(amountWine), <span class="dt">digits =</span> <span class="dv">2</span>) </span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a><span class="co"># type of wine drunk</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a>typeWine &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;red&#39;</span>))</span>
-<span id="cb42-10"><a href="#cb42-10"></a></span>
-<span id="cb42-11"><a href="#cb42-11"></a><span class="co"># print a nice result of your weekly wine consumption</span></span>
-<span id="cb42-12"><a href="#cb42-12"></a><span class="kw">paste0</span>(<span class="st">&quot;This week I drank on average &quot;</span>, meanWine, <span class="st">&quot; glasses of wine, &quot;</span>, red, <span class="st">&quot; red and &quot;</span>, white, <span class="st">&quot; white&quot;</span>)</span>
-<span id="cb42-13"><a href="#cb42-13"></a><span class="co"># total of small glasses you drank</span></span>
-<span id="cb42-14"><a href="#cb42-14"></a></span>
-<span id="cb42-15"><a href="#cb42-15"></a>amountWine &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># sum how much red and white wine where drunk</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>red &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">table</span>(typeWine[<span class="kw">grep</span>(<span class="st">&#39;red&#39;</span>,typeWine)]))</span>
+<span id="cb43-3"><a href="#cb43-3"></a>white &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">table</span>(typeWine[<span class="kw">grep</span>(<span class="st">&#39;white&#39;</span>,typeWine)]))</span>
+<span id="cb43-4"><a href="#cb43-4"></a></span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="co"># calculate the average wine, rounding the result to two decimal places</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a>meanWine &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(amountWine), <span class="dt">digits =</span> <span class="dv">2</span>) </span>
+<span id="cb43-7"><a href="#cb43-7"></a></span>
+<span id="cb43-8"><a href="#cb43-8"></a><span class="co"># type of wine drunk</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a>typeWine &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;red&#39;</span>))</span>
+<span id="cb43-10"><a href="#cb43-10"></a></span>
+<span id="cb43-11"><a href="#cb43-11"></a><span class="co"># print a nice result of your weekly wine consumption</span></span>
+<span id="cb43-12"><a href="#cb43-12"></a><span class="kw">paste0</span>(<span class="st">&quot;This week I drank on average &quot;</span>, meanWine, <span class="st">&quot; glasses of wine, &quot;</span>, red, <span class="st">&quot; red and &quot;</span>, white, <span class="st">&quot; white&quot;</span>)</span>
+<span id="cb43-13"><a href="#cb43-13"></a><span class="co"># total of small glasses you drank</span></span>
+<span id="cb43-14"><a href="#cb43-14"></a></span>
+<span id="cb43-15"><a href="#cb43-15"></a>amountWine &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
 <p><em>Note:</em> here we have used the <code>grep()</code> and <code>table()</code> functions so you can see how they can be used. They will be covered in later sessions. <code>grep()</code> is searching the type wine variable for either the string ‘red’ or ‘white’. <code>table()</code> does a count on the number of each level of a factor; test out table() on the typeWine variable to see what it does.</p>
 </div>
 
