@@ -16,10 +16,9 @@ output:
 In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:
 
 *  Introduction to packages
+*  Introduction to directories and projects
 *  Loading in data
-*  Row binding two data frames
-*  Adjusting column names
-*  Using knowledge from first session 4a
+*  Exporting data
 
 # Information on how the session is run
 
@@ -33,10 +32,8 @@ One hour exercise based session with tutor support. You will be given example co
 
 ## We will be working in pairs:
 
-*  One shares the screen and the other requests remote control.
-*  Take turns on who types for each exercise.
-*  Share markdown file at end of session via chat
-*  If possible have your camera on when doing the paired work.
+*  Option to work together on worksheet or to work individually
+*  If possible have your camera on and introduce yourself to each other
 
 ## What to do when getting stuck:
 
@@ -51,7 +48,7 @@ One hour exercise based session with tutor support. You will be given example co
 
 # Introduction to packages
 
-Packages are collections of functions, code, and sample data put together by the R community. Packages are one of the main benefits of R. As R is open source there can be lots of contributors who have made functions to do complex tasks, such as data cleaning, or specific types of data analysis.
+Packages are collections of functions, code, and sample data put together by the R community. Packages are one of the main benefits of R. As R is open source there can be lots of contributors who have made functions to do complex tasks, such as data cleaning, specific types of data analysis, or exciting data visualisation.
 
 To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network). 
 
@@ -61,44 +58,82 @@ There are two ways of doing this, using code (recommended and easiest) or using 
 
 Using code involves using the install packages function, which looks like: `install.packages("package name")`. To install the package you would type something like:`install.packages("readr")`.
 
+Once installed, you will not need to do this again unless you install a newer version of R. 
+
 ## Installing packages task
 
-Try installing the following packages: `data.table`, `readr`, `readxl` using the `install.packages()` function. 
+Try installing the following packages:`readr`, `readxl`, `writexl`, and `here` using the `install.packages()` function. We will be using these in today's session. 
 
 ```{r}
 # your code here
-```
 
-Once installed, you will not need to do this again unless you install a newer version of R. 
+```
 
 ## Loading packages
 
-Now you have installed the packages, you need to load them so you can use them. Each time you load R you will need to re-load the packages you want to use. 
+Now you have installed the packages, you need to load them so you can use them. **Each time you load R you will need to re-load the packages you want to use**. 
 
 To load a package you need to use the `library()` function. For example, if I wanted to load the `readr` package I would type `library(readr)`.
 
 ## Loading packages task
 
-Using `library()` load in the packages you just installed: `data.table`, `readr`, `readxl`.
+Using `library()` load in the packages you just installed: `readr`, `readxl`, `writexl`, and `here`.
 
 ```{r}
 # your code here
+
 ```
 
-If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readxl, readr, and data.table. 
+If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readr, readxl, writexl, and here. 
 ```{r}
 sessionInfo()
+```
+
+# Introduction to directories
+
+A directory is a file path on your computer, known as the working directory. It tells R where to find files to load or save files out of R. Directories work in a top down hierarchical manner. 
+
+To find out where your working directory is in R you can use `getwd()`. 
+
+Run the code below, the output should be the file your rWorkshop4b.Rmd is saved in. 
+```{r}
+getwd()
+```
+
+# Introduction to RStudio Projects
+
+A project is a centralised place to keep all your files for a study, piece of work, or 'project'. When you start a new Project it sets up a working directory in a fresh R session. Because the project sets up the working directory and keeps all your project related files in one place, it makes managing your files and analysis much easier, and helps you to share your code with collaborators or supervisors. 
+
+*note: you can also change your working directory using the setwd() function, but in the long run it can be difficult to manage. E.g. if a file moves or gets deleted* 
+
+## How to set up a project? 
+
+*File > New Project...*
+
+## Project task
+
+1) Set up a project for this workshop in either a file you have already created or a new file. 
+2) Go to your newly created folder in either File Explorer (Windows) or Finder (Mac). 
+3) Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
+4) Add a new file called data, and add in the data files for the session (). 
+
+Run both examples below, you should get the same file path and the file file should be the project file you just made. 
+```{r}
+getwd()
+here()
 ```
 
 # Loading in data
 
 Loading data is how you will be getting data into R most of the time! R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
 
-When loading data it is important to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd. 
+Data can be loaded into R either from files from your computer, using directories to find them, or the internet using URLs. 
+
+When loading data from your computer it is good practise to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd. 
 
 If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. This command should print out *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*, *rWorkshop4.Rmd*, plus any other files you have saved in that file. 
 ```{r}
-list.files()
+list.files(here("Workshop4b", "data"))
 ```
 
 We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
@@ -110,62 +145,19 @@ We are going to load in a .csv file and a .xlsx file, two of the most common fil
 
 ## Loading data task
 
-# Row binding data frames
+# Exporting data
 
-# Row binding task
+# Other options for loading data
 
-# Data frame task 
+It is useful to mention the `data.table` package, which is very good at loading large csv files with its `fread()` function. 
 
-Subset part of the data frame (first 50 rows or something)
+A typical project folder will have several sub-folders such as code (for scripts), data (for your data files), and outputs (for your figures). 
 
-Make a new column like average power
-
-# Adjusting column names
-
-To just look at the column names for your data frame there are two functions you can use: `names()` and `colnames()`. As `names()` is shorter and easier to type this is the better option. To run `names()` simply give it your data frame as shown below.
-
-```{r}
-names()
+Run the code below to see an example data science file system. Projects are usually at the analysis stage (blue boxes). 
+```{r message=FALSE}
+library(here)
+knitr::include_graphics(here("Workshop4b","images", "fileSys.png"))
 ```
-
-For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.
-
-```{r}
-# using number index
-names(exampleDat)[2] <- "integer1"
-names(exampleDat)
-```
-
-The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to `string`. It will search for the exact match so is case sensitive. 
-
-In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out: 
-```{r}
-# recommended using logic
-names(exampleDat)[names(exampleDat) == "string"] <- "string1"
-names(exampleDat)
-```
- 
-## Column names task
-
-We've been recording our running times and distances and have put them in a data frame. However, the column names we have used are not very informative. Using the examples above change the column names as follows:
-
-1)  Change runTime to runTime_mins
-2)  Change Len to distance_km
-3)  Change speed to minsPerKm
-4)  What function would we use to get the mean, max, min etc. on the dataset? Run that now to review your data. 
-```{r}
-# running data frame
-data <- data.frame(runTime = sample(20:40, 10),
-                   Len = sample(1:10, 10),
-                   week = as.factor(c(rep("weekOne",3), rep("weekTwo", 4), rep("weekThree", 3))))
-# work out your minutes per kilometer
-data$speed <- data$runTime/data$Len
-
-# your code here
-
-
-```
-*Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*
 
 # Final task - Please give us your individual feedback!
 
@@ -175,9 +167,8 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 
 # Individual take home challenge 
 
-
 ```{r}
-
+# Load in data from url > do a bit of indexing > make a new col etc. 
 ```
 
 

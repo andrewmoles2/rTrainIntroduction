@@ -114,4 +114,49 @@ StringsOrchestra <- c(rep('first Violin',12),
 
 ```
 
+# Adjusting column names
 
+To just look at the column names for your data frame there are two functions you can use: `names()` and `colnames()`. As `names()` is shorter and easier to type this is the better option. To run `names()` simply give it your data frame as shown below.
+
+```{r}
+#names()
+```
+
+For the example data we have been using, I want to change string to string1 and integer to integer1. There are two main ways of changing the name of a column. The first is using the columns index number, in this case integer is 2. This method is not recommended, as the size of your data frame can change.
+
+```{r}
+# using number index
+#names(exampleDat)[2] <- "integer1"
+#names(exampleDat)
+```
+
+The recommended method is below, here we call names, and within names we index our data. Within the index we call names again with the data and look for column names that are equal to `string`. It will search for the exact match so is case sensitive. 
+
+In session 5 we will be covering conditional statements like these in detail. For now, run the code to test it out: 
+```{r}
+# recommended using logic
+#names(exampleDat)[names(exampleDat) == "string"] <- "string1"
+#names(exampleDat)
+```
+ 
+## Column names task
+
+We've been recording our running times and distances and have put them in a data frame. However, the column names we have used are not very informative. Using the examples above change the column names as follows:
+
+1)  Change runTime to runTime_mins
+2)  Change Len to distance_km
+3)  Change speed to minsPerKm
+4)  What function would we use to get the mean, max, min etc. on the dataset? Run that now to review your data. 
+```{r}
+# running data frame
+data <- data.frame(runTime = sample(20:40, 10),
+                   Len = sample(1:10, 10),
+                   week = as.factor(c(rep("weekOne",3), rep("weekTwo", 4), rep("weekThree", 3))))
+# work out your minutes per kilometer
+data$speed <- data$runTime/data$Len
+
+# your code here
+
+
+```
+*Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*
