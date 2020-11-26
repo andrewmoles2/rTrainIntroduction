@@ -84,7 +84,7 @@ Using `library()` load in the packages you just installed: `readr`, `readxl`, `w
 # your code here
 ```
 
-If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readxl, readr, here, and data.table. 
+If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readr, readxl, writexl, and here. 
 
 ```r
 sessionInfo()
@@ -112,47 +112,75 @@ sessionInfo()
 ## [13] evaluate_0.14
 ```
 
-# Introduction to directories and projects
+# Introduction to directories
 
-A directory is
+A directory is a file path on your computer, known as the working directory. It tells R where to find files to load or save files out of R. Directories work in a top down hierarchical manner. 
 
-A project is
+To find out where your working directory is in R you can use `getwd()`. 
 
-Why does all this matter? Helps you to keep your code and data organised, and helps you to share your code with collaborators or supervisors. 
-
-Run the code below to see an example data science file system. Projects are usually at the analysis stage (blue boxes). 
+Run the code below, the output should be the file your rWorkshop4b.Rmd is saved in. 
 
 ```r
-library(here)
-knitr::include_graphics(here("Workshop4b","images", "fileSys.png"))
+getwd()
 ```
 
-<img src="/Users/MOLES/OneDrive - London School of Economics/Code/rTrainIntroduction/Workshop4b/images/fileSys.png" width="1873" />
+```
+## [1] "/Users/MOLES/OneDrive - London School of Economics/Code/rTrainIntroduction/Workshop4b"
+```
+
+# Introduction to RStudio Projects
+
+A project is a centralised place to keep all your files for a study, piece of work, or 'project'. When you start a new Project it sets up a working directory in a fresh R session. Because the project sets up the working directory and keeps all your project related files in one place, it makes managing your files and analysis much easier, and helps you to share your code with collaborators or supervisors. 
+
+*note: you can also change your working directory using the setwd() function, but in the long run it can be difficult to manage. E.g. if a file moves or gets deleted* 
 
 ## How to set up a project? 
 
-*File > New Project...*
+1) File > New Project...
+2) Select new directory (or existing directory if you have already set up a file)
 
+*New directory*  
+
+1) Select new project
+2) Give your directory a name, e.g. "rWorkshop"
+3) Select browse and find the directory you want to start your project
+4) Press Create Project
+5) Your new project should open
+
+*Existing directory*
+
+1) Select browse and find the directory you want to start your project
+2) Press Create Project
+3) Your new project should open
+
+To open and review your projects in future you will see them in a drop down menu in the top right corner of RStudio. 
 
 ## Project task
 
-1) Set up a project for this workshop in either a file you have already created or a new file. 
-2) Go to your newly created folder in either File Explorer (Windows) or Finder (Mac). 
+1) Set up a project for this workshop using the steps above. 
+2) Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac). 
 3) Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
 4) Add a new file called data, and add in the data files for the session (). 
+5) You should see the changes reflected in your file explorer (bottom right in RStudio). 
+6) In the code chunk below run `getwd()`. You should get your new project file system as the output. 
 
-# Loading in data
 
-Loading data is how you will be getting data into R most of the time! R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
+```r
+# your code here
+```
 
-Data can be loaded into R either from files from your computer, using directories to find them, or the internet using URLs. 
+# Loading in data from your computer
 
-When loading data from your computer it is good practise to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd. 
+Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
+
+
+
+When loading data from your computer it is good practice to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd. 
 
 If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. This command should print out *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*, *rWorkshop4.Rmd*, plus any other files you have saved in that file. 
 
 ```r
-list.files(here("Workshop4b", "data"))
+list.files(here::here("Workshop4b", "data"))
 ```
 
 ```
@@ -166,8 +194,55 @@ We are going to load in a .csv file and a .xlsx file, two of the most common fil
 
 ## Loading data task
 
+# Using the here package
+
+Short intro to here, example, and task. 
+
+Here is good for many reasons, it can build a file path that is not dependent on the operating system you are using. For example, file paths in Mac use forward slashes (/) and Windows use backward slashes (\). This is great for using your code across different systems, and for sharing your code.
+
+
+# Loading in data from the internet
+
+For example, every Tuesday an open source data set is released on GitHub via https://github.com/rfordatascience/tidytuesday. I can scroll down to the datasets section, pick a data set I'm interested in, go to the 'get the data here' section, and follow the first line.
+
+
+```r
+passwords <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-14/passwords.csv')
+```
+
+```
+## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   rank = col_double(),
+##   password = col_character(),
+##   category = col_character(),
+##   value = col_double(),
+##   time_unit = col_character(),
+##   offline_crack_sec = col_double(),
+##   rank_alt = col_double(),
+##   strength = col_double(),
+##   font_size = col_double()
+## )
+```
+
+The general rule is if there is a file you can download, you can get the url from that download and load it into R. You do this by right clicking on the data file I want and selecting *'copy link address'*. I then paste that into the speech marks in my `read.csv()` function. 
+
 # Exporting data
 
+# Other options for loading data
+
+It is useful to mention the `data.table` package, which is very good at loading large csv files with its `fread()` function. 
+
+A typical project folder will have several sub-folders such as code (for scripts), data (for your data files), and outputs (for your figures). 
+
+Run the code below to see an example data science file system. Projects are usually at the analysis stage (blue boxes). 
+
+```r
+knitr::include_graphics(here::here("Workshop4b","images", "fileSys.png"))
+```
+
+<img src="/Users/MOLES/OneDrive - London School of Economics/Code/rTrainIntroduction/Workshop4b/images/fileSys.png" width="1873" />
 
 # Final task - Please give us your individual feedback!
 
@@ -178,6 +253,8 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 # Individual take home challenge 
 
 
-
+```r
+# Load in data from url > do a bit of indexing > make a new col etc. 
+```
 
 

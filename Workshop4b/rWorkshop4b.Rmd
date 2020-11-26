@@ -108,33 +108,65 @@ A project is a centralised place to keep all your files for a study, piece of wo
 
 ## How to set up a project? 
 
-*File > New Project...*
+1) File > New Project...
+2) Select new directory (or existing directory if you have already set up a file)
+
+*New directory*  
+
+1) Select new project
+2) Give your directory a name, e.g. "rWorkshop"
+3) Select browse and find the directory you want to start your project
+4) Press Create Project
+5) Your new project should open
+
+*Existing directory*
+
+1) Select browse and find the directory you want to start your project
+2) Press Create Project
+3) Your new project should open
+
+To open and review your projects in future you will see them in a drop down menu in the top right corner of RStudio. 
 
 ## Project task
 
-1) Set up a project for this workshop in either a file you have already created or a new file. 
-2) Go to your newly created folder in either File Explorer (Windows) or Finder (Mac). 
+1) Set up a project for this workshop using the steps above. 
+2) Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac). 
 3) Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
 4) Add a new file called data, and add in the data files for the session (). 
+5) You should see the changes reflected in your file explorer (bottom right in RStudio). 
+6) In the code chunk below run `getwd()`. You should get your new project file system as the output. 
 
-Run both examples below, you should get the same file path and the file file should be the project file you just made. 
 ```{r}
-getwd()
-here()
+# your code here
+
 ```
 
-# Loading in data
+# Loading in data from your computer
 
-Loading data is how you will be getting data into R most of the time! R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
+Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
 
-Data can be loaded into R either from files from your computer, using directories to find them, or the internet using URLs. 
-
-When loading data from your computer it is good practise to make sure your data file is in the same directory as your rWorkshop4.Rmd file. Make sure you save both the .csv and .xlsx file in the same file as your .Rmd. 
-
-If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. This command should print out *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*, *rWorkshop4.Rmd*, plus any other files you have saved in that file. 
+To check your data files are where you expect them to be, you can use the `list.files()` function. 
 ```{r}
+list.files()
+```
+
+
+You should see your rworkshop4b.Rmd and your data file. We can direct this to the data file where our data is now saved using the here package. If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. *note: you will likely have to change the file names to the names of your files, e.g. Workshop4b*.  
+
+`list.files(here("datafolder", "datafile"))`
+
+*not working for me, they just need to put in data*
+```{r}
+library(here)
 list.files(here("Workshop4b", "data"))
 ```
+This command should print out: *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*.
+
+We can also call packages using the package name and two colons (::), see example below:
+```{r}
+list.files(here::here("Workshop4b", "data"))
+```
+
 
 We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
 
@@ -144,6 +176,47 @@ We are going to load in a .csv file and a .xlsx file, two of the most common fil
 ```
 
 ## Loading data task
+
+# Using the here package
+
+Short intro to here, example, and task. 
+
+Here is good for many reasons, it can build a file path that is not dependent on the operating system you are using. For example, file paths in Mac use forward slashes (/) and Windows use backward slashes (\). This is great for using your code across different systems, and for sharing your code.
+
+```{r}
+# example using here to write a file
+```
+
+
+## Here package task
+
+Subset a data frame, then write the csv using here
+```{r}
+
+```
+
+
+
+# Loading in data from the internet
+
+For example, every Tuesday an open source data set is released on GitHub via https://github.com/rfordatascience/tidytuesday. I can scroll down to the datasets section, pick a data set I'm interested in, go to the 'get the data here' section, and follow the first line as shown below.
+```{r}
+passwords <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-14/passwords.csv')
+```
+
+The general rule is if there is a file you can download, you can get the url from that download and load it into R. You do this by right clicking on the data file I want and selecting *'copy link address'*. I then paste that into the speech marks in my `read.csv()` function. 
+
+## Loading data from a url task
+
+To to the tidyverse page and download the IKEA data set - https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-11-03/readme.md
+
+*hint: in the get data here section, follow the read in data manually section*
+
+```{r}
+# your code here
+
+```
+
 
 # Exporting data
 
@@ -155,8 +228,7 @@ A typical project folder will have several sub-folders such as code (for scripts
 
 Run the code below to see an example data science file system. Projects are usually at the analysis stage (blue boxes). 
 ```{r message=FALSE}
-library(here)
-knitr::include_graphics(here("Workshop4b","images", "fileSys.png"))
+knitr::include_graphics(here::here("Workshop4b","images", "fileSys.png"))
 ```
 
 # Final task - Please give us your individual feedback!
