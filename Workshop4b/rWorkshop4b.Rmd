@@ -71,7 +71,7 @@ Try installing the following packages:`readr`, `readxl`, `writexl`, and `here` u
 
 ## Loading packages
 
-Now you have installed the packages, you need to load them so you can use them. **Each time you load R you will need to re-load the packages you want to use**. 
+Now you have installed the packages, you need to load them in order to use them. **Each time you load R you will need to re-load the packages you want to use**. 
 
 To load a package you need to use the `library()` function. For example, if I wanted to load the `readr` package I would type `library(readr)`.
 
@@ -91,9 +91,9 @@ sessionInfo()
 
 # Introduction to directories
 
-A directory is a file path on your computer, known as the working directory. It tells R where to find files to load or save files out of R. Directories work in a top down hierarchical manner. 
+A directory is a file path on your computer. In R we use working directories and file paths to tell R where to find files to load or save out of R. Directories work in a top down hierarchical manner. 
 
-To find out where your working directory is in R you can use `getwd()`. 
+To find out where your working directory is in R you can use `getwd()`. This gives prints out a file path. 
 
 Run the code below, the output should be the file your rWorkshop4b.Rmd is saved in. 
 ```{r}
@@ -129,12 +129,15 @@ To open and review your projects in future you will see them in a drop down menu
 
 ## Project task
 
+*note: making a new project opens a new RStudio window, you can go back to your original window by selecting close project from the project drop down list in the top right corner.*
+
 1) Set up a project for this workshop using the steps above. 
 2) Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac). 
 3) Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
 4) Add a new file called data, and add in the data files for the session (). 
-5) You should see the changes reflected in your file explorer (bottom right in RStudio). 
-6) In the code chunk below run `getwd()`. You should get your new project file system as the output. 
+5) Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made. 
+6) If you have not already, open the rWorkshop4b.Rmd file.
+7) In the code chunk below run `getwd()`. You should get your new project file system as the output. 
 
 ```{r}
 # your code here
@@ -145,13 +148,59 @@ To open and review your projects in future you will see them in a drop down menu
 
 Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
 
-To check your data files are where you expect them to be, you can use the `list.files()` function. 
+To check your folders or data files are where you expect them to be, you can use the `list.files()` function. You should see your rWorkshop4b.Rmd and your data file. 
 ```{r}
 list.files()
 ```
 
+RStudio helpfully has auto-completion for directories to help you build file paths. To get this working use speech marks with a function, like `list.files()`. Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want. Repeat the process till you get to where you want to be. 
 
-You should see your rworkshop4b.Rmd and your data file. We can direct this to the data file where our data is now saved using the here package. If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. *note: you will likely have to change the file names to the names of your files, e.g. Workshop4b*.  
+## List files task
+
+1) Using speech marks and tab, as outlined above, list the files in your data file. You should get something like: `list.files("data/")`
+2) Run the code, the output should be the data files you put in the data file in step 4 of the project task. 
+```{r}
+# your code here
+
+```
+
+# Loading csv and Excel (.xlsx) files
+Now you know how to access files, we can load them into R! We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
+
+First we will load a csv file. To load data into R we use a read function. To load a csv we can use either `read.csv()` that comes with R by default, or we can use `read_csv()` that comes with the readr package. `read_csv()` is preferable as it loads in large datasets faster than `read.csv()`. 
+
+Just like making vectors or data frames in the previous workshops, you need to assign a name to your data that is being loaded. For example, if I was loading a dataset called *dataset.csv* stored in the data folder I would use: `data <- read_csv("data/dataset.csv")`.
+
+## Loading csv files task
+
+1) Load in the *tfl-journeys-type.csv* using the `read_csv()` function from readr. Make sure to give the data a meaningful name, such as tflJourneyType. 
+2) Get some information on your loaded data frame using functions such as `str()`, `head()`, or `summary()`.
+3) From the information, when does the dataset start recording data, and end recording data? *hint: head and tail functions will help*
+
+```{r}
+# make sure readr is loaded
+library(readr)
+# your code here
+
+```
+
+
+## Loading Excel (.xlsx) files task
+
+
+# Introducing the here package
+
+Short intro to here, example, and task. move here stuff from earlier up. Show both ways. 
+
+Here is good for many reasons, it can build a file path that is not dependent on the operating system you are using. For example, file paths in Mac use forward slashes (/) and Windows use backward slashes (\). This is great for using your code across different systems, and for sharing your code.
+
+```{r}
+# example using here to write a file
+```
+
+## Here package task
+
+We can direct the `list.files` function to the data file where our data is now saved using the `here` package. If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. *note: you will likely have to change the file names to the names of your files, e.g. Workshop4b*.  
 
 `list.files(here("datafolder", "datafile"))`
 
@@ -159,6 +208,7 @@ You should see your rworkshop4b.Rmd and your data file. We can direct this to th
 ```{r}
 library(here)
 list.files(here("Workshop4b", "data"))
+list.files("data/")
 ```
 This command should print out: *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*.
 
@@ -167,28 +217,6 @@ We can also call packages using the package name and two colons (::), see exampl
 list.files(here::here("Workshop4b", "data"))
 ```
 
-
-We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
-
-**hint: an RStudio shortcut to find files is to press tab when the cursor is in the speech marks ("")**
-```{r}
-
-```
-
-## Loading data task
-
-# Using the here package
-
-Short intro to here, example, and task. 
-
-Here is good for many reasons, it can build a file path that is not dependent on the operating system you are using. For example, file paths in Mac use forward slashes (/) and Windows use backward slashes (\). This is great for using your code across different systems, and for sharing your code.
-
-```{r}
-# example using here to write a file
-```
-
-
-## Here package task
 
 Subset a data frame, then write the csv using here
 ```{r}
@@ -216,7 +244,6 @@ To to the tidyverse page and download the IKEA data set - https://github.com/rfo
 # your code here
 
 ```
-
 
 # Exporting data
 
