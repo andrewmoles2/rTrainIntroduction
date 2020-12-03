@@ -161,6 +161,80 @@ data$speed <- data$runTime/data$Len
 ```
 *Note: The `sample()` function takes a sample from a distribution. In our case for runTime it picks out 10 variables randomly from numbers between 20 to 40.*
 
+# Introducing the here package
+
+So far we have been loading files by using file paths. Another option is using the here package. 
+
+Short intro to here, example, and task. move here stuff from earlier up. Show both ways. 
+
+Here is good for many reasons, it can build a file path that is not dependent on the operating system you are using. For example, file paths in Mac use forward slashes (/) and Windows use backward slashes (\). This is great for using your code across different systems, and for sharing your code.
+
+```{r}
+# example using here to write a file
+```
+
+## Here package task
+
+We can direct the `list.files` function to the data file where our data is now saved using the `here` package. If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. *note: you will likely have to change the file names to the names of your files, e.g. Workshop4b*.  
+
+`list.files(here("datafolder", "datafile"))`
+
+*not working for me, they just need to put in data*
+```{r}
+library(here)
+list.files(here("Workshop4b", "data"))
+list.files("data/")
+```
+This command should print out: *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*.
+
+We can also call packages using the package name and two colons (::), see example below:
+```{r}
+list.files(here::here("Workshop4b", "data"))
+```
+
+# writing multiple sheets to excel
+
+In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns as the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. 
+
+
+```{r}
+# load libraries
+library(readxl)
+library(writexl)
+
+# load in tfl cycle data (might need to change file path)
+tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2) 
+
+# Take out raw data (hire by day)
+tflCycleByDay <- tflCycle[,1:2]
+
+# hire by month and ave hire time
+tflCycleByMonth <- tflCycle[,c("Month...4","Number of Bicycle Hires...5","Average Hire Time (mins)")]
+
+# hire by year
+tflCycleByYear <- tflCycle[1:10,c("Year", "Number of Bicycle Hires...8")]
+
+# most popular day, months and year
+maxDay <- tflCycleByDay[which.max(tflCycleByDay$`Number of Bicycle Hires...2`),]
+maxMonth <- tflCycleByMonth[which.max(tflCycleByMonth$`Number of Bicycle Hires...5`),]
+maxHire <- tflCycleByMonth[which.max(tflCycleByMonth$`Average Hire Time (mins)`),]
+maxYear <- tflCycleByYear[which.max(tflCycleByYear$`Number of Bicycle Hires...8`),]
+
+# making month a character for paste
+maxHire$Month...4 <- as.character(maxHire$Month...4)
+
+# pasting an output
+paste("The highest highest average cycle hire time per month was", maxHire[1,3], 
+      "minutes, with the total hires of", maxHire[1,2], "on the", maxHire[1,1],
+      "just after lockdown started!")
+
+# Make list of data frames
+sheets <- list("by_day" = tflCycleByDay, "by+month" = tflCycleByMonth,
+               "by_year" = tflCycleByYear) 
+# Write out the data into xlsx file, with separate sheets
+write_xlsx(sheets, "data/tflCycleHire.xlsx")
+```
+
 # Useful datasets
 
 School workforce data:

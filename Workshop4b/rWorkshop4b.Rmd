@@ -62,7 +62,7 @@ Once installed, you will not need to do this again unless you install a newer ve
 
 ## Installing packages task
 
-Try installing the following packages:`readr`, `readxl`, `writexl`, and `here` using the `install.packages()` function. We will be using these in today's session. 
+Try installing the following packages:`readr`, `readxl`, and `writexl` using the `install.packages()` function. We will be using these in today's session. 
 
 ```{r}
 # your code here
@@ -77,15 +77,15 @@ To load a package you need to use the `library()` function. For example, if I wa
 
 ## Loading packages task
 
-Using `library()` load in the packages you just installed: `readr`, `readxl`, `writexl`, and `here`.
+Using `library()` load in the packages you just installed: `readr`, `readxl`, and `writexl`.
 
 ```{r}
 # your code here
 
 ```
 
-If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readr, readxl, writexl, and here. 
-```{r}
+If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readr, readxl, and writexl. 
+```{r eval=FALSE}
 sessionInfo()
 ```
 
@@ -165,9 +165,9 @@ RStudio helpfully has auto-completion for directories to help you build file pat
 ```
 
 # Loading csv and Excel (.xlsx) files
-Now you know how to access files, we can load them into R! We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. 
+Now you know how to access files, we can load them into R! We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. To load data into R we use a read function.
 
-First we will load a csv file. To load data into R we use a read function. To load a csv we can use either `read.csv()` that comes with R by default, or we can use `read_csv()` that comes with the readr package. `read_csv()` is preferable as it loads in large datasets faster than `read.csv()`. 
+First we will load a csv file. To load a csv we can use either `read.csv()` that comes with R by default, or we can use `read_csv()` that comes with the readr package. `read_csv()` is preferable as it loads in large datasets faster than `read.csv()`. 
 
 Just like making vectors or data frames in the previous workshops, you need to assign a name to your data that is being loaded. For example, if I was loading a dataset called *dataset.csv* stored in the data folder I would use: `data <- read_csv("data/dataset.csv")`.
 
@@ -175,7 +175,7 @@ Just like making vectors or data frames in the previous workshops, you need to a
 
 1) Load in the *tfl-journeys-type.csv* using the `read_csv()` function from readr. Make sure to give the data a meaningful name, such as tflJourneyType. 
 2) Get some information on your loaded data frame using functions such as `str()`, `head()`, or `summary()`.
-3) From the information, when does the dataset start recording data, and end recording data? *hint: head and tail functions will help*
+3) From the information, when does the dataset start and end recording data? *hint: head and tail functions will help*
 
 ```{r}
 # make sure readr is loaded
@@ -184,79 +184,69 @@ library(readr)
 
 ```
 
+**Great work, you've loaded your first dataset!** 
 
 ## Loading Excel (.xlsx) files task
 
+Now lets have a go at reading data from an Excel file (.xlsx) using the tfl-daily-cycle-hires.xlsx file. 
 
-# Introducing the here package
+Excel files can come with multiple worksheets, such as the example we will use. To handle this the read_xlsx function has a sheet option. By default it will load sheet 1. For example, if I wanted to load in the third worksheet of an .xlsx file I would use: `data <- read_xlsx("data/datafile.xlsx", sheet = 3)`
 
-Short intro to here, example, and task. move here stuff from earlier up. Show both ways. 
+1) Using the `read_xlsx()` function, load worksheet 2 of the tfl-daily-cycle-hires.xlsx file, call your loaded data tflCycle. 
+2) Get information on your data like you did for the csv task. 
+3) Find out the mean, max, and min for the "Number of Bicycle Hires...2" column. 
 
-Here is good for many reasons, it can build a file path that is not dependent on the operating system you are using. For example, file paths in Mac use forward slashes (/) and Windows use backward slashes (\). This is great for using your code across different systems, and for sharing your code.
-
+*note: we will tidy this dataframe up in the individual coding challenge*
 ```{r}
-# example using here to write a file
-```
-
-## Here package task
-
-We can direct the `list.files` function to the data file where our data is now saved using the `here` package. If you are not sure if your data file is in the same directory as this notebook run the below command to list the files in your directory. *note: you will likely have to change the file names to the names of your files, e.g. Workshop4b*.  
-
-`list.files(here("datafolder", "datafile"))`
-
-*not working for me, they just need to put in data*
-```{r}
-library(here)
-list.files(here("Workshop4b", "data"))
-list.files("data/")
-```
-This command should print out: *pokemonGen1.csv*, *pokemonGen1.xlsx*, *pokemonGen2.csv*, *pokemongen2.xlsx*.
-
-We can also call packages using the package name and two colons (::), see example below:
-```{r}
-list.files(here::here("Workshop4b", "data"))
-```
-
-
-Subset a data frame, then write the csv using here
-```{r}
+# make sure readxl is loaded
+library(readxl)
+# your code here
 
 ```
-
-
 
 # Loading in data from the internet
 
-For example, every Tuesday an open source data set is released on GitHub via https://github.com/rfordatascience/tidytuesday. I can scroll down to the datasets section, pick a data set I'm interested in, go to the 'get the data here' section, and follow the first line as shown below.
-```{r}
-passwords <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-14/passwords.csv')
-```
+Loading data from the internet can be useful for datasets that regularly update, such as the tfl dataset we loaded earlier. By using the URL for the dataset, we don't need to regularly download and store the data on our computer. 
 
-The general rule is if there is a file you can download, you can get the url from that download and load it into R. You do this by right clicking on the data file I want and selecting *'copy link address'*. I then paste that into the speech marks in my `read.csv()` function. 
+We load the data in a very similar way to how we load in files from our computer, but instead of giving the file path, we give the URL to where the raw data is stored online. For example, we would write something like: `data <- read_csv("link to data")`.
 
-## Loading data from a url task
+## Loading data from the internet task
 
-To to the tidyverse page and download the IKEA data set - https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-11-03/readme.md
-
-*hint: in the get data here section, follow the read in data manually section*
+1) Go to the following website: https://data.london.gov.uk/dataset/public-transport-journeys-type-transport
+2) Find the csv file (yellow colour with 8.94kB). Use the download drop down menu and copy the *'copy link to file'* link provided.
+3) Using `read_csv()`, load in the data using the link you just copied. Call it `tflJourneyType` again. 
+4) Run commands such as `str()` and `summary()` to make sure the data has loaded correctly. 
 
 ```{r}
 # your code here
+
 
 ```
 
 # Exporting data
 
-# Other options for loading data
+You've learned how to load in data from computer files and the internet, now lets save some data. We will have a go at writing to both csv and xlsx (using `writexl`). The concept is very much the same as reading in data. We provide the write function with our data, then give it a file path and file name. 
 
-It is useful to mention the `data.table` package, which is very good at loading large csv files with its `fread()` function. 
+For example, if I wanted to save a csv file to my data folder: `write_csv(data, "data/data.csv")`. 
 
-A typical project folder will have several sub-folders such as code (for scripts), data (for your data files), and outputs (for your figures). 
+## Exporting data task
 
-Run the code below to see an example data science file system. Projects are usually at the analysis stage (blue boxes). 
-```{r message=FALSE}
-knitr::include_graphics(here::here("Workshop4b","images", "fileSys.png"))
+Using the tflJourneyType dataset follow the steps:
+
+1) First lets do some calculations. Make a new column called BusTube that is the sum of bus journeys and tube journeys *think back to R4a if you get stuck: data$newcol <- data$col1 + data$col2*.
+2) Make another new column called DLR_Tram that is the sum of DLR journeys and Tram journeys. 
+3) Make a new dataset called tflSubset that contains the first column, and both your new columns (BusTube & DLR_Tram) *hint: use indexing [,]*
+4) Using `write_csv()` write your tflSubset data to your data file. Call it tflSubset.csv. 
+5) Using `write_xlsx()` write your tflSubset data to your data file. Call it tflSubset.xlsx. 
+6) Have a look at the csv and xlsx files you have created in finder or windows explorer. 
+
+```{r}
+# make sure writexl is loaded
+library(writexl)
+# your code here
+
 ```
+
 
 # Final task - Please give us your individual feedback!
 
@@ -266,8 +256,48 @@ https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=
 
 # Individual take home challenge 
 
-```{r}
-# Load in data from url > do a bit of indexing > make a new col etc. 
+In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns as the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. Then write out the most interesting data. 
+
+You should end up with an output of "The highest highest average cycle hire time per month was 36 minutes, on the 2020-04-01 with total hires of 591058 which is just after lockdown started!", and the by month xlsx file in your data file.
+
+*note: you might need to change the file paths to match your system*
+
+```{r eval=FALSE}
+# Take out raw data (hire by day)
+tflCycleByDay <- tflCycle[,1:2]
+
+# most popular day, months and year
+maxDay <- tflCycleByDay[which.max(tflCycleByDay$`Number of Bicycle Hires...2`),]
+maxMonth <- tflCycleByMonth[which.max(tflCycleByMonth$`Number of Bicycle Hires...5`),]
+maxHire <- tflCycleByMonth[which.max(tflCycleByMonth$`Average Hire Time (mins)`),]
+maxYear <- tflCycleByYear[which.max(tflCycleByYear$`Number of Bicycle Hires...8`),]
+
+# load in tfl cycle data (might need to change file path)
+tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2) 
+
+# hire by month and ave hire time
+tflCycleByMonth <- tflCycle[,c("Month...4","Number of Bicycle Hires...5","Average Hire Time (mins)")]
+
+# making month a character for paste
+maxHire$Month...4 <- as.character(maxHire$Month...4)
+
+# pasting an output
+paste("The highest highest average cycle hire time per month was", maxHire[1,3], 
+      "minutes, on the", maxHire[1,1],"with total hires of", maxHire[1,2],
+      "which is just after lockdown started!")
+
+# hire by year
+tflCycleByYear <- tflCycle[1:10,c("Year", "Number of Bicycle Hires...8")]
+
+# write the tfl cycle by month data (most interesting)
+write_xlsx(tflCycleByMonth, "data/tflCycleHire_byMonth.xlsx")
+
+# load libraries
+library(readxl)
+library(writexl)
 ```
 
+
+# Other options for loading data
+It is useful to mention the `data.table` package, which is the fastest option when loading large csv files by using the `fread()` function. 
 
