@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 2"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2020"
+date: "10 December, 2020"
 output: 
   html_document: 
     theme: readable
@@ -113,6 +113,8 @@ A project is a centralised place to keep all your files for a study, piece of wo
 *note: you can also change your working directory using the setwd() function, but in the long run it can be difficult to manage. E.g. if a file moves or gets deleted* 
 
 ## How to set up a project? 
+
+![](images/RStudio_projects.png)
 
 1) File > New Project...
 2) Select new directory (or existing directory if you have already set up a file)
