@@ -108,7 +108,7 @@ A project is a centralised place to keep all your files for a study, piece of wo
 
 ## How to set up a project? 
 
-![](images/RStudio_projects.png)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4b/images/RStudio_projects.png?raw=true)
 
 1) File > New Project...
 2) Select new directory (or existing directory if you have already set up a file)
