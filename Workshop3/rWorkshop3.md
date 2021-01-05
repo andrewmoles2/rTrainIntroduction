@@ -3,7 +3,7 @@ title: "R Workshop 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "25 November, 2020"
+date: "04 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -343,7 +343,7 @@ As you can see paste can make new strings from existing strings, and format them
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D048-R3SFTC&topic=R&cohort=MT20
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D048-R3SFTC&topic=R&cohort=LT21
 
 
 ## Individual take home challenge 1

@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 2"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 December, 2020"
+date: "04 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -260,12 +260,11 @@ library(writexl)
 # your code here
 ```
 
-
 # Final task - Please give us your individual feedback!
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D025-R1NV&topic=R&cohort=MT20
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21
 
 # Individual take home challenge 
 

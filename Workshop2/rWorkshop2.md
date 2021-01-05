@@ -3,7 +3,7 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "23 November, 2020"
+date: "04 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -265,7 +265,7 @@ You decided to track your total monthly expenditures for the year to find out mo
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_9zagWkOtzNhmqt7?course=D046-R2VFI&topic=R&cohort=MT20
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D046-R2VFI&topic=R&cohort=LT21
 
 ## Individual coding challenge 1
 

@@ -39,3 +39,28 @@ output:
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ***
+
+# Conditional Operators
+
+
+| Operator | Meaning                  |
+|----------|--------------------------|
+| >        | Greater than             |
+| >=       | Greater than or equal to |
+| <        | Less than                |
+| <=       | Less than or equal to    |
+| ==       | Equal to                 |
+| !=       | Not equal to             |
+| !X       | Not X                    |
+| X | Y    | X OR Y                   |
+| X & Y    | X AND Y                  |
+| X %in% Y | Is X in Y                |
+
+
+
+
+
+
+
+
+
