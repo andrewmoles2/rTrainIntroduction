@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 1"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 January, 2021"
+date: "05 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -60,7 +60,7 @@ Fundamentally, a data frame can contain a mix of different data types (e.g. colu
 
 # Making a data frame manually
 
-First, lets have a look how to make data frames manually. This will help you understand the make up of data frames and struture of data frames. 
+First, lets have a look how to make data frames manually. This will help you understand the make up of data frames and structure of data frames. 
 
 To make a data frame we use the `data.frame()` function. The easiest way to do this is to make a vector and add that vector into the data frame. Run the example below and review the output. 
 
@@ -206,7 +206,7 @@ To add a row to a data frame you use the `rbind()` function. First, you make a d
 Run the example below to test this out:
 
 ```r
-# new row infomation
+# new row information
 newRow <- data.frame(string = "person_6",
                      integer = 6,
                      number = 5,
@@ -234,7 +234,7 @@ exampleDat
 For this exercise we will use the same `messi_career` data frame, adding this years data. 
 
 1)  Make a data frame called thisYear (or similar) and add the following data:
-Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 1. *hint: Make sure the column names match up*
+Appearances: 19, Goals: 10, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 3. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
 2)  Now, using `rbind()` add the new row of data to your messi_career data frame. 
 3)  Print the result, you should now see your new row of data! 
 
@@ -451,7 +451,7 @@ https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D0550R4aDF1&topi
 
 # Individual take home challenge 
 
-For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: *Dobby the house elf is very Devoteted and has a power to evil ratio of 0.67*. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.
+For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: *Dobby the house elf is very Devoted and has a power to evil ratio of 0.67*. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.
 
 
 ```r
@@ -461,7 +461,7 @@ HP_Characters <- dataframe(
            "Hermione Granger", "Severus Snape", "Cedric Diggory",
            "Dobby the house elf"),
   Trait = ("Brave", "Wise", "Loyal", "Brave", "Cunning", "Loyal", 
-            "Devoteted"))
+            "Devoted"))
 # Give them a score out of 10 for power
 HP_Char$Power <- sample(1:10, 7)
 # Give them a score out of 10 for Evilness
@@ -473,4 +473,3 @@ HP_Characters$PowEvilRatio <- HP_Characters$Pow/HP_Characters$Evil
 paste(HP_Characters[1,1], "is very", HP_Characters[7,2], 
       "and has a power to evil ratio of", round(HP_Characters[7,5],2), sep = "# ")
 ```
-

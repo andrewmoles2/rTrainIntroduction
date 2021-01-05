@@ -499,7 +499,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 4 - Data Frames part 1</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">05 January, 2021</h4>
 
 </div>
 
@@ -564,7 +564,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 </div>
 <div id="making-a-data-frame-manually" class="section level1">
 <h1>Making a data frame manually</h1>
-<p>First, lets have a look how to make data frames manually. This will help you understand the make up of data frames and struture of data frames.</p>
+<p>First, lets have a look how to make data frames manually. This will help you understand the make up of data frames and structure of data frames.</p>
 <p>To make a data frame we use the <code>data.frame()</code> function. The easiest way to do this is to make a vector and add that vector into the data frame. Run the example below and review the output.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># vectors for various data types</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>str1 &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;person_&quot;</span>, <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</span>
@@ -657,7 +657,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <h2>Adding rows to a data frame</h2>
 <p>To add a row to a data frame you use the <code>rbind()</code> function. First, you make a data frame with the data you want to add, then you use <code>rbind()</code> to add this onto the data frame. Again, the number of columns (and names of the columns) has to match those of the data frame you are joining to.</p>
 <p>Run the example below to test this out:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># new row infomation</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># new row information</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>newRow &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">string =</span> <span class="st">&quot;person_6&quot;</span>,</span>
 <span id="cb13-3"><a href="#cb13-3"></a>                     <span class="dt">integer =</span> <span class="dv">6</span>,</span>
 <span id="cb13-4"><a href="#cb13-4"></a>                     <span class="dt">number =</span> <span class="dv">5</span>,</span>
@@ -680,7 +680,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <h2>Adding rows exercise</h2>
 <p>For this exercise we will use the same <code>messi_career</code> data frame, adding this years data.</p>
 <ol style="list-style-type: decimal">
-<li>Make a data frame called thisYear (or similar) and add the following data: Appearances: 6, Goals: 2, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 1. <em>hint: Make sure the column names match up</em></li>
+<li>Make a data frame called thisYear (or similar) and add the following data: Appearances: 19, Goals: 10, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 3. <em>hint: Make sure the column names match up (e.g. champLeagueGoal)</em></li>
 <li>Now, using <code>rbind()</code> add the new row of data to your messi_career data frame.</li>
 <li>Print the result, you should now see your new row of data!</li>
 </ol>
@@ -813,14 +813,14 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 </div>
 <div id="individual-take-home-challenge" class="section level1">
 <h1>Individual take home challenge</h1>
-<p>For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: <em>Dobby the house elf is very Devoteted and has a power to evil ratio of 0.67</em>. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.</p>
+<p>For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: <em>Dobby the house elf is very Devoted and has a power to evil ratio of 0.67</em>. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Some Harry Potter characters</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a>HP_Characters &lt;-<span class="st"> </span><span class="kw">dataframe</span>(</span>
 <span id="cb38-3"><a href="#cb38-3"></a>  <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;Harry Potter&quot;</span>, <span class="st">&quot;Luna Lovegood&quot;</span>, <span class="st">&quot;Nymphadora Tonks&quot;</span>, </span>
 <span id="cb38-4"><a href="#cb38-4"></a>           <span class="st">&quot;Hermione Granger&quot;</span>, <span class="st">&quot;Severus Snape&quot;</span>, <span class="st">&quot;Cedric Diggory&quot;</span>,</span>
 <span id="cb38-5"><a href="#cb38-5"></a>           <span class="st">&quot;Dobby the house elf&quot;</span>),</span>
 <span id="cb38-6"><a href="#cb38-6"></a>  <span class="dt">Trait =</span> (<span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Wise&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, <span class="st">&quot;Brave&quot;</span>, <span class="st">&quot;Cunning&quot;</span>, <span class="st">&quot;Loyal&quot;</span>, </span>
-<span id="cb38-7"><a href="#cb38-7"></a>            <span class="st">&quot;Devoteted&quot;</span>))</span>
+<span id="cb38-7"><a href="#cb38-7"></a>            <span class="st">&quot;Devoted&quot;</span>))</span>
 <span id="cb38-8"><a href="#cb38-8"></a><span class="co"># Give them a score out of 10 for power</span></span>
 <span id="cb38-9"><a href="#cb38-9"></a>HP_Char<span class="op">$</span>Power &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">7</span>)</span>
 <span id="cb38-10"><a href="#cb38-10"></a><span class="co"># Give them a score out of 10 for Evilness</span></span>
