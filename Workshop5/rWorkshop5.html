@@ -690,9 +690,9 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">07 January, 2021</h4>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># 2</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>z &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">20</span>)</span>
 <span id="cb27-3"><a href="#cb27-3"></a><span class="kw">sum</span>(z <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>)</span></code></pre></div>
-<pre><code>## [1] 6</code></pre>
+<pre><code>## [1] 10</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">sum</span>(z <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>)</span></code></pre></div>
-<pre><code>## [1] 14</code></pre>
+<pre><code>## [1] 10</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># 3</span></span>
 <span id="cb31-2"><a href="#cb31-2"></a>pets &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;cat&#39;</span>,<span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">&#39;fish&#39;</span>,<span class="dv">13</span>), <span class="kw">rep</span>(<span class="st">&#39;dog&#39;</span>,<span class="dv">6</span>))</span>
 <span id="cb31-3"><a href="#cb31-3"></a><span class="kw">sum</span>(pets <span class="op">==</span><span class="st"> &#39;fish&#39;</span>)</span></code></pre></div>
@@ -722,34 +722,33 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">07 January, 2021</h4>
 <span id="cb37-6"><a href="#cb37-6"></a><span class="co"># showing data where x is less than 20</span></span>
 <span id="cb37-7"><a href="#cb37-7"></a>df[df<span class="op">$</span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">20</span>, ]</span></code></pre></div>
 <pre><code>##    x  y
-## 8 16 65
-## 9  8 85</code></pre>
+## 4 15 53</code></pre>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># subsetting data into df2 that are &gt;= 35</span></span>
 <span id="cb39-2"><a href="#cb39-2"></a>df2 &lt;-<span class="st"> </span>df[df<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">35</span>, ]</span>
 <span id="cb39-3"><a href="#cb39-3"></a>df2</span></code></pre></div>
 <pre><code>##     x  y
-## 2  89 25
-## 3  80 40
-## 4  50 98
-## 5  64 71
-## 6  81 20
-## 10 42  7</code></pre>
+## 2  80 59
+## 5  90 90
+## 7  68 72
+## 8  47 89
+## 9  53 14
+## 10 75 47</code></pre>
 <p>In base R there is a specialised function for subsetting data frames called <code>subset()</code>. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw">subset</span>(df, y <span class="op">&lt;=</span><span class="st"> </span><span class="dv">40</span>)</span></code></pre></div>
-<pre><code>##     x  y
-## 1  32 12
-## 2  89 25
-## 3  80 40
-## 6  81 20
-## 7  22 14
-## 10 42  7</code></pre>
+<pre><code>##    x  y
+## 6 25 20
+## 9 53 14</code></pre>
 <div id="subsetting-task" class="section level2">
 <h2>Subsetting task</h2>
-<p>In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing.</p>
+<p>In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing.</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>read_csv()</code> from the <code>readr</code> library load in the data from the following URL, calling the data pokemon: <a href="https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv" class="uri">https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv</a></li>
 <li>Get information on your loaded data using the <code>str()</code>, <code>head()</code> and <code>View()</code> functions.</li>
-<li></li>
+<li>Using <code>subset()</code> make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. <em>HP stands for hit points</em></li>
+<li>Run <code>summary()</code> on your highHP data frame to see the statistics of pokemon with high hit points (HP)</li>
+<li>There are some very low stats for Attack, Defense, and Speed. Use <code>which.min()</code> to find out which pokemon have these stats. <em>hint: data[which.min(data$col),]</em>.</li>
+<li>The attack stat seems to have the highest mean (other than HP). Using <code>sum()</code> find out how many of your high HP pokemon have an Attack stat greater than or equal to 100.</li>
+<li>Finally, find out who those pokemon are. <em>hint: use subsetting</em></li>
 </ol>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># load in readr (install using install.packages(&#39;readr&#39;) if you don&#39;t have it</span></span>
 <span id="cb43-2"><a href="#cb43-2"></a><span class="kw">library</span>(readr)</span>
@@ -817,44 +816,280 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">07 January, 2021</h4>
 ##   ..   Generation = col_double(),
 ##   ..   Legendary = col_character()
 ##   .. )</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="kw">summary</span>(pokemon)</span></code></pre></div>
-<pre><code>##      Number          Name              Type.1             Type.2         
-##  Min.   :  1.0   Length:151         Length:151         Length:151        
-##  1st Qu.: 38.5   Class :character   Class :character   Class :character  
-##  Median : 76.0   Mode  :character   Mode  :character   Mode  :character  
-##  Mean   : 76.0                                                           
-##  3rd Qu.:113.5                                                           
-##  Max.   :151.0                                                           
-##      Total             HP             Attack          Defense      
-##  Min.   :195.0   Min.   : 10.00   Min.   :  5.00   Min.   :  5.00  
-##  1st Qu.:320.0   1st Qu.: 45.00   1st Qu.: 51.00   1st Qu.: 50.00  
-##  Median :405.0   Median : 60.00   Median : 70.00   Median : 65.00  
-##  Mean   :407.1   Mean   : 64.21   Mean   : 72.55   Mean   : 68.23  
-##  3rd Qu.:490.0   3rd Qu.: 80.00   3rd Qu.: 90.00   3rd Qu.: 84.00  
-##  Max.   :680.0   Max.   :250.00   Max.   :134.00   Max.   :180.00  
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># subset based on hit points</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>highHP &lt;-<span class="st"> </span><span class="kw">subset</span>(pokemon, HP <span class="op">&gt;=</span><span class="st"> </span><span class="dv">80</span>)</span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="kw">summary</span>(highHP)</span></code></pre></div>
+<pre><code>##      Number           Name              Type.1             Type.2         
+##  Min.   :  3.00   Length:39          Length:39          Length:39         
+##  1st Qu.: 64.50   Class :character   Class :character   Class :character  
+##  Median : 89.00   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   : 92.26                                                           
+##  3rd Qu.:130.50                                                           
+##  Max.   :151.00                                                           
+##      Total             HP             Attack          Defense     
+##  Min.   :270.0   Min.   : 80.00   Min.   :  5.00   Min.   :  5.0  
+##  1st Qu.:477.0   1st Qu.: 80.50   1st Qu.: 74.00   1st Qu.: 65.0  
+##  Median :500.0   Median : 90.00   Median : 92.00   Median : 79.0  
+##  Mean   :491.4   Mean   : 99.13   Mean   : 89.41   Mean   : 77.1  
+##  3rd Qu.:530.0   3rd Qu.:102.50   3rd Qu.:105.00   3rd Qu.: 88.5  
+##  Max.   :680.0   Max.   :250.00   Max.   :134.00   Max.   :130.0  
 ##     Sp..Atk          Sp..Def           Speed          Generation
-##  Min.   : 15.00   Min.   : 20.00   Min.   : 15.00   Min.   :1   
-##  1st Qu.: 45.00   1st Qu.: 49.00   1st Qu.: 46.50   1st Qu.:1   
-##  Median : 65.00   Median : 65.00   Median : 70.00   Median :1   
-##  Mean   : 67.14   Mean   : 66.02   Mean   : 68.93   Mean   :1   
-##  3rd Qu.: 87.50   3rd Qu.: 80.00   3rd Qu.: 90.00   3rd Qu.:1   
-##  Max.   :154.00   Max.   :125.00   Max.   :140.00   Max.   :1   
+##  Min.   : 30.00   Min.   : 25.00   Min.   : 15.00   Min.   :1   
+##  1st Qu.: 60.00   1st Qu.: 70.00   1st Qu.: 45.00   1st Qu.:1   
+##  Median : 73.00   Median : 85.00   Median : 68.00   Median :1   
+##  Mean   : 77.87   Mean   : 81.28   Mean   : 66.62   Mean   :1   
+##  3rd Qu.:100.00   3rd Qu.: 97.50   3rd Qu.: 85.00   3rd Qu.:1   
+##  Max.   :154.00   Max.   :125.00   Max.   :130.00   Max.   :1   
 ##   Legendary        
-##  Length:151        
+##  Length:39         
 ##  Class :character  
 ##  Mode  :character  
 ##                    
 ##                    
 ## </code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="co"># find low attack and defence</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>highHP[<span class="kw">which.min</span>(highHP<span class="op">$</span>Attack),]</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 13
+##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1    113 Chan… Normal &lt;NA&gt;     450   250      5       5      35     105    50
+## # … with 2 more variables: Generation &lt;dbl&gt;, Legendary &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>highHP[<span class="kw">which.min</span>(highHP<span class="op">$</span>Defense),]</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 13
+##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1    113 Chan… Normal &lt;NA&gt;     450   250      5       5      35     105    50
+## # … with 2 more variables: Generation &lt;dbl&gt;, Legendary &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>highHP[<span class="kw">which.min</span>(highHP<span class="op">$</span>Speed),]</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 13
+##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1     79 Slow… Water  Psych…   315    90     65      65      40      40    15
+## # … with 2 more variables: Generation &lt;dbl&gt;, Legendary &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co"># high attack</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="kw">sum</span>(highHP<span class="op">$</span>Attack <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## [1] 15</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="kw">subset</span>(highHP, Attack <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 15 x 13
+##    Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
+##     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     34 Nido… Poison Ground   505    81    102      77      85      75    85
+##  2     59 Arca… Fire   &lt;NA&gt;     555    90    110      80     100      80    95
+##  3     67 Mach… Fight… &lt;NA&gt;     405    80    100      70      50      60    45
+##  4     68 Mach… Fight… &lt;NA&gt;     505    90    130      80      65      85    55
+##  5     71 Vict… Grass  Poison   490    80    105      65     100      70    70
+##  6     76 Golem Rock   Ground   495    80    120     130      55      65    45
+##  7     89 Muk   Poison &lt;NA&gt;     500   105    105      75      65     100    50
+##  8    112 Rhyd… Ground Rock     485   105    130     120      45      45    40
+##  9    130 Gyar… Water  Flying   540    95    125      79      60     100    81
+## 10    142 Aero… Rock   Flying   515    80    105      65      60      75   130
+## 11    143 Snor… Normal &lt;NA&gt;     540   160    110      65      65     110    30
+## 12    146 Molt… Fire   Flying   580    90    100      90     125      85    90
+## 13    149 Drag… Dragon Flying   600    91    134      95     100     100    80
+## 14    150 Mewt… Psych… &lt;NA&gt;     680   106    110      90     154      90   130
+## 15    151 Mew   Psych… &lt;NA&gt;     600   100    100     100     100     100   100
+## # … with 2 more variables: Generation &lt;dbl&gt;, Legendary &lt;chr&gt;</code></pre>
 </div>
 </div>
-<div id="using-and-or" class="section level1">
-<h1>Using AND OR</h1>
-<p>We can thread together multiple conditional operators using the AND and OR statements.</p>
+<div id="using-and-or-and-in" class="section level1">
+<h1>Using AND OR and %in%</h1>
+<p>So far we have only been using one condition. By using the AND/OR operators we can thread together multiple conditional tests to make our code more efficient.</p>
+<p>Both statements behave slightly differently. When using AND you must satisfy both conditional tests, when using OR you can satisfy either of your conditional tests. Therefore, AND is strict, while OR is more lenient.</p>
+<p>For example, we have the 7 times table from -70 to 140 and we want to find what numbers are below 20 but above 0. AND works really well for this as it is strict, however OR doesn’t work so well and includes everything. OR is better used if we wanted to find numbers less than 0 OR over 70.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="co"># 7 times table number sequence </span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">70</span>, <span class="dv">140</span>, <span class="dt">by =</span> <span class="dv">7</span>)</span>
+<span id="cb61-3"><a href="#cb61-3"></a>s</span></code></pre></div>
+<pre><code>##  [1] -70 -63 -56 -49 -42 -35 -28 -21 -14  -7   0   7  14  21  28  35  42  49  56
+## [20]  63  70  77  84  91  98 105 112 119 126 133 140</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># AND </span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>s[s <span class="op">&lt;</span><span class="st"> </span><span class="dv">20</span> <span class="op">&amp;</span><span class="st"> </span>s <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]</span></code></pre></div>
+<pre><code>## [1]  7 14</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="co"># OR</span></span>
+<span id="cb65-2"><a href="#cb65-2"></a>s[s <span class="op">&lt;</span><span class="st"> </span><span class="dv">20</span> <span class="op">|</span><span class="st"> </span>s <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]</span></code></pre></div>
+<pre><code>##  [1] -70 -63 -56 -49 -42 -35 -28 -21 -14  -7   0   7  14  21  28  35  42  49  56
+## [20]  63  70  77  84  91  98 105 112 119 126 133 140</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co"># OR finding each end of seq</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a>s[s <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>s <span class="op">&gt;</span><span class="st"> </span><span class="dv">70</span>]</span></code></pre></div>
+<pre><code>##  [1] -70 -63 -56 -49 -42 -35 -28 -21 -14  -7  77  84  91  98 105 112 119 126 133
+## [20] 140</code></pre>
+<div id="and-or-exercise" class="section level2">
+<h2>AND OR exercise</h2>
+<p>Using the df3 data frame provided run the following tests. Be sure to run the rests using square brackets or the <code>subset()</code> function so you see the data as the output.</p>
+<ol style="list-style-type: decimal">
+<li>Subset data where x is less than 50 but greater then 20</li>
+<li>Subset data where y is greater than or equal to 70 and z is also greater than or equal to 70</li>
+<li>Subset data where x, y, or z are all less than 15</li>
+<li>Subset data where y is less than 60 and exp is equal to control</li>
+</ol>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="co"># test data frame</span></span>
+<span id="cb69-2"><a href="#cb69-2"></a>df3 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb69-3"><a href="#cb69-3"></a>  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&quot;person_&quot;</span>,letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]),</span>
+<span id="cb69-4"><a href="#cb69-4"></a>  <span class="dt">x =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>),</span>
+<span id="cb69-5"><a href="#cb69-5"></a>  <span class="dt">y =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>),</span>
+<span id="cb69-6"><a href="#cb69-6"></a>  <span class="dt">z =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>),</span>
+<span id="cb69-7"><a href="#cb69-7"></a>  <span class="dt">exp =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;control&quot;</span>,<span class="dv">50</span>),<span class="kw">rep</span>(<span class="st">&quot;test&quot;</span>,<span class="dv">50</span>)),<span class="dv">10</span>)</span>
+<span id="cb69-8"><a href="#cb69-8"></a>)</span>
+<span id="cb69-9"><a href="#cb69-9"></a><span class="co"># your code here</span></span>
+<span id="cb69-10"><a href="#cb69-10"></a>df3[df3<span class="op">$</span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span> <span class="op">&amp;</span><span class="st"> </span>df3<span class="op">$</span>x <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>,]</span></code></pre></div>
+<pre><code>##          id  x  y  z     exp
+## 2 person_ b 28 22 16    test
+## 5 person_ e 48  6 57 control</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>df3[df3<span class="op">$</span>y <span class="op">&gt;=</span><span class="st"> </span><span class="dv">70</span> <span class="op">&amp;</span><span class="st"> </span>df3<span class="op">$</span>z <span class="op">&gt;=</span><span class="st"> </span><span class="dv">70</span>,]</span></code></pre></div>
+<pre><code>##          id  x  y   z     exp
+## 3 person_ c 17 78  87 control
+## 9 person_ i 57 97 100    test</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>df3[df3<span class="op">$</span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span> <span class="op">|</span><span class="st"> </span>df3<span class="op">$</span>y <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span> <span class="op">|</span><span class="st"> </span>df3<span class="op">$</span>z <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>,]</span></code></pre></div>
+<pre><code>##          id  x  y  z     exp
+## 1 person_ a 59 14 48 control
+## 4 person_ d 66 11 50 control
+## 5 person_ e 48  6 57 control</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="kw">subset</span>(df3, y <span class="op">&lt;</span><span class="st"> </span><span class="dv">60</span> <span class="op">&amp;</span><span class="st"> </span>exp <span class="op">==</span><span class="st"> &#39;control&#39;</span>)</span></code></pre></div>
+<pre><code>##          id  x  y  z     exp
+## 1 person_ a 59 14 48 control
+## 4 person_ d 66 11 50 control
+## 5 person_ e 48  6 57 control
+## 6 person_ f 90 19 25 control
+## 8 person_ h 94 36 76 control</code></pre>
+</div>
+</div>
+<div id="in-operator" class="section level1">
+<h1>%in% operator</h1>
+<p>The %in% operator is for value matching. It is a really handy way of comparing vectors of different lengths to see if elements of one vector match at least one element in another. The length of output will be equal to the length of the vector being compared (the first one). This is different to equal to (==) which tests compares if two vectors or variables are exactly equal.</p>
+<p>Two examples of %in% below using the df3 data we just used for the task. First, we compare if numbers 1 to 10 are present in column z. Second, we make a vector with some id’s, then we compare those id’s to the id column in df3.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="co"># comparing if 1-10 are in col z</span></span>
+<span id="cb77-2"><a href="#cb77-2"></a>df3[df3<span class="op">$</span>z <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<pre><code>## [1] id  x   y   z   exp
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="co"># make a table to compare against</span></span>
+<span id="cb79-2"><a href="#cb79-2"></a>match &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;person_&quot;</span>,letters[<span class="dv">6</span><span class="op">:</span><span class="dv">10</span>])</span>
+<span id="cb79-3"><a href="#cb79-3"></a>match</span></code></pre></div>
+<pre><code>## [1] &quot;person_ f&quot; &quot;person_ g&quot; &quot;person_ h&quot; &quot;person_ i&quot; &quot;person_ j&quot;</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="co"># compare your id column to your match vector</span></span>
+<span id="cb81-2"><a href="#cb81-2"></a><span class="kw">subset</span>(df3, id <span class="op">%in%</span><span class="st"> </span>match)</span></code></pre></div>
+<pre><code>##           id  x  y   z     exp
+## 6  person_ f 90 19  25 control
+## 7  person_ g 98 63  41    test
+## 8  person_ h 94 36  76 control
+## 9  person_ i 57 97 100    test
+## 10 person_ j 82 25  82    test</code></pre>
+<div id="and-or-in-exercise" class="section level2">
+<h2>AND OR %in% exercise</h2>
+<p>Will be using the Pokemon dataset again for this exercise.</p>
+<ol style="list-style-type: decimal">
+<li>Make a vector called Types with the following data: Water, Fire, Grass</li>
+<li>Using the %in% operator, match your Types vector to the Type.1 or Type.2 column to subset out that data. Call your data poke_wfg (or similar)</li>
+<li>You should now have a dataset with pokemon that are either fire, water, or grass in the Type.1 or Type.2 columns. Run <code>summary()</code> to review your data.</li>
+<li>It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using <code>as.factor()</code> make the Type.1 and Type.2 columns into factors.</li>
+<li>Run <code>summary()</code> again on your dataset, you will see counts for your Type 1 &amp; 2 columns.</li>
+<li>Now run <code>table()</code> function on the Type.1 and Type.2 columns, should should see the same result. <em>hint: table(data$col)</em></li>
+<li>Now, using subsetting, find out which of your fire, grass or water pokemon have a Speed and Attack stat greater than or equal to 90</li>
+<li>Test out the same conditions but use OR instead.</li>
+</ol>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="co"># your code here</span></span>
+<span id="cb83-2"><a href="#cb83-2"></a><span class="co"># types vector</span></span>
+<span id="cb83-3"><a href="#cb83-3"></a>Types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Water&#39;</span>, <span class="st">&#39;Fire&#39;</span>, <span class="st">&#39;Grass&#39;</span>)</span>
+<span id="cb83-4"><a href="#cb83-4"></a><span class="co"># using %in% to match</span></span>
+<span id="cb83-5"><a href="#cb83-5"></a>poke_wfg &lt;-<span class="st"> </span><span class="kw">subset</span>(pokemon, Type<span class="fl">.1</span> <span class="op">%in%</span><span class="st"> </span>Types <span class="op">|</span><span class="st"> </span>Type<span class="fl">.2</span> <span class="op">%in%</span><span class="st"> </span>Types)</span>
+<span id="cb83-6"><a href="#cb83-6"></a><span class="co"># making types a factor</span></span>
+<span id="cb83-7"><a href="#cb83-7"></a>poke_wfg<span class="op">$</span>Type<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">as.factor</span>(poke_wfg<span class="op">$</span>Type<span class="fl">.1</span>)</span>
+<span id="cb83-8"><a href="#cb83-8"></a>poke_wfg<span class="op">$</span>Type<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">as.factor</span>(poke_wfg<span class="op">$</span>Type<span class="fl">.2</span>)</span>
+<span id="cb83-9"><a href="#cb83-9"></a><span class="co"># factor counts</span></span>
+<span id="cb83-10"><a href="#cb83-10"></a><span class="kw">summary</span>(poke_wfg)</span></code></pre></div>
+<pre><code>##      Number           Name             Type.1       Type.2       Total      
+##  Min.   :  1.00   Length:58          Bug  : 2   Poison :11   Min.   :200.0  
+##  1st Qu.: 46.25   Class :character   Fire :12   Psychic: 5   1st Qu.:325.0  
+##  Median : 77.50   Mode  :character   Grass:12   Water  : 4   Median :407.5  
+##  Mean   : 77.48                      Rock : 4   Flying : 3   Mean   :418.7  
+##  3rd Qu.:117.75                      Water:28   Ice    : 3   3rd Qu.:503.8  
+##  Max.   :146.00                                 (Other): 3   Max.   :580.0  
+##                                                 NA&#39;s   :29                  
+##        HP             Attack          Defense          Sp..Atk     
+##  Min.   : 20.00   Min.   : 10.00   Min.   : 35.00   Min.   : 15.0  
+##  1st Qu.: 45.00   1st Qu.: 56.25   1st Qu.: 55.50   1st Qu.: 60.0  
+##  Median : 60.00   Median : 70.00   Median : 70.00   Median : 70.0  
+##  Mean   : 62.81   Mean   : 73.83   Mean   : 74.33   Mean   : 74.4  
+##  3rd Qu.: 79.75   3rd Qu.: 91.50   3rd Qu.: 85.00   3rd Qu.: 95.0  
+##  Max.   :130.00   Max.   :130.00   Max.   :180.00   Max.   :125.0  
+##                                                                    
+##     Sp..Def           Speed          Generation  Legendary        
+##  Min.   : 20.00   Min.   : 15.00   Min.   :1    Length:58         
+##  1st Qu.: 50.00   1st Qu.: 51.25   1st Qu.:1    Class :character  
+##  Median : 67.50   Median : 65.00   Median :1    Mode  :character  
+##  Mean   : 67.66   Mean   : 65.67   Mean   :1                      
+##  3rd Qu.: 85.00   3rd Qu.: 80.75   3rd Qu.:1                      
+##  Max.   :120.00   Max.   :115.00   Max.   :1                      
+## </code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="kw">table</span>(poke_wfg<span class="op">$</span>Type<span class="fl">.1</span>)</span></code></pre></div>
+<pre><code>## 
+##   Bug  Fire Grass  Rock Water 
+##     2    12    12     4    28</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="kw">table</span>(poke_wfg<span class="op">$</span>Type<span class="fl">.2</span>)</span></code></pre></div>
+<pre><code>## 
+## Fighting   Flying    Grass      Ice   Poison  Psychic    Water 
+##        1        3        2        3       11        5        4</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="co"># finding fast attacking pokemon</span></span>
+<span id="cb89-2"><a href="#cb89-2"></a><span class="kw">subset</span>(poke_wfg, Speed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span>Attack <span class="op">&gt;=</span><span class="st"> </span><span class="dv">90</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 13
+##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
+##    &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt;  &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1     59 Arca… Fire   &lt;NA&gt;     555    90    110      80     100      80    95
+## 2     78 Rapi… Fire   &lt;NA&gt;     500    65    100      70      80      80   105
+## 3    126 Magm… Fire   &lt;NA&gt;     495    65     95      57     100      85    93
+## 4    146 Molt… Fire   Flying   580    90    100      90     125      85    90
+## # … with 2 more variables: Generation &lt;dbl&gt;, Legendary &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a><span class="kw">subset</span>(poke_wfg, Speed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">90</span> <span class="op">|</span><span class="st"> </span>Attack <span class="op">&gt;=</span><span class="st"> </span><span class="dv">90</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 23 x 13
+##    Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
+##     &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt;  &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1      6 Char… Fire   Flying   534    78     84      78     109      85   100
+##  2     38 Nine… Fire   &lt;NA&gt;     505    73     76      75      81     100   100
+##  3     47 Para… Bug    Grass    405    60     95      80      60      80    30
+##  4     59 Arca… Fire   &lt;NA&gt;     555    90    110      80     100      80    95
+##  5     60 Poli… Water  &lt;NA&gt;     300    40     50      40      40      40    90
+##  6     61 Poli… Water  &lt;NA&gt;     385    65     65      65      50      50    90
+##  7     62 Poli… Water  Fight…   510    90     95      95      70      90    70
+##  8     70 Weep… Grass  Poison   390    65     90      50      85      45    55
+##  9     71 Vict… Grass  Poison   490    80    105      65     100      70    70
+## 10     73 Tent… Water  Poison   515    80     70      65      80     120   100
+## # … with 13 more rows, and 2 more variables: Generation &lt;dbl&gt;, Legendary &lt;chr&gt;</code></pre>
+</div>
 </div>
 <div id="the-if-statement" class="section level1">
 <h1>The If statement</h1>
-<p>The if statement is fundamental to programming. It uses conditional operators and boolean to <em>control flow</em>. This means to run a test to determine which operation of output is given, so it controls the flow of your code.</p>
+<p>The if statement is fundamental to programming. It uses conditional operators and boolean to <em>control flow</em>. This means to run a test to determine which operation of output is given, so it controls the flow of your code.They work as follows: If statement is true, do this, else do something else.</p>
+<p>If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>pizza_price &lt;-<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb93-2"><a href="#cb93-2"></a>bank_balance &lt;-<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb93-3"><a href="#cb93-3"></a><span class="cf">if</span> (bank_balance <span class="op">&gt;=</span><span class="st"> </span>pizza_price){</span>
+<span id="cb93-4"><a href="#cb93-4"></a><span class="kw">print</span>(<span class="st">&quot;Yes I can afford pizza!&quot;</span>) } <span class="cf">else</span> {</span>
+<span id="cb93-5"><a href="#cb93-5"></a><span class="kw">print</span>(<span class="st">&quot;No pizza for you&quot;</span>) }</span></code></pre></div>
+<pre><code>## [1] &quot;Yes I can afford pizza!&quot;</code></pre>
+<p>If you have a vector with multiple elements you can use the built in <code>ifelse()</code> function. The make up of this function is the test (x &lt; y), what happens when true, and what happens when false (the else). This function will compare each element for you.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>pizza_price &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">7</span>)</span>
+<span id="cb95-2"><a href="#cb95-2"></a>bank_balance &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
+<span id="cb95-3"><a href="#cb95-3"></a><span class="kw">ifelse</span>(bank_balance <span class="op">&gt;=</span><span class="st"> </span>pizza_price, <span class="st">&quot;Yes I can afford pizza!&quot;</span>, <span class="st">&quot;No pizza for you&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Yes I can afford pizza!&quot; &quot;No pizza for you&quot;       
+## [3] &quot;Yes I can afford pizza!&quot; &quot;Yes I can afford pizza!&quot;</code></pre>
+<p>We can nest if statements together. In this example we are setting a category of low, medium and high from our x column.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>df3<span class="op">$</span>cat &lt;-<span class="st"> </span><span class="kw">ifelse</span>(df3<span class="op">$</span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">33</span>, <span class="st">&quot;low&quot;</span>,</span>
+<span id="cb97-2"><a href="#cb97-2"></a>                  <span class="kw">ifelse</span>(df3<span class="op">$</span>x <span class="op">&gt;</span><span class="st"> </span><span class="dv">33</span> <span class="op">&amp;</span><span class="st"> </span>df3<span class="op">$</span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">66</span>, <span class="st">&#39;medium&#39;</span>, <span class="st">&#39;high&#39;</span>))</span>
+<span id="cb97-3"><a href="#cb97-3"></a>df3</span></code></pre></div>
+<pre><code>##           id  x  y   z     exp    cat
+## 1  person_ a 59 14  48 control medium
+## 2  person_ b 28 22  16    test    low
+## 3  person_ c 17 78  87 control    low
+## 4  person_ d 66 11  50 control   high
+## 5  person_ e 48  6  57 control medium
+## 6  person_ f 90 19  25 control   high
+## 7  person_ g 98 63  41    test   high
+## 8  person_ h 94 36  76 control   high
+## 9  person_ i 57 97 100    test medium
+## 10 person_ j 82 25  82    test   high</code></pre>
+<p>When nesting if statements like this, the <em>else</em> part becomes the next ifelse statement.</p>
+<div id="ifelse-exercise" class="section level2">
+<h2>ifelse exercise</h2>
+<p>one if else statement for total stats (high stats, not as high) nested if else statement to make speed categories</p>
+</div>
 </div>
 
 

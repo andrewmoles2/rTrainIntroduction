@@ -261,37 +261,80 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 subset(df3, y < 60 & exp == 'control')
 ```
 
-
 # %in% operator
-The %in% operator is a really handy way of finding data that matches a criteria you are looking for. 
+
+The %in% operator is for value matching. It is a really handy way of comparing vectors of different lengths to see if elements of one vector match at least one element in another. The length of output will be equal to the length of the vector being compared (the first one). This is different to equal to (==) which tests compares if two vectors or variables are exactly equal. 
+
+Two examples of %in% below using the df3 data we just used for the task. First, we compare if numbers 1 to 10 are present in column z. Second, we make a vector with some id's, then we compare those id's to the id column in df3. 
 ```{r}
-# test data frame
-df3 <- data.frame(
-  id = paste("person_",letters[1:10]),
-  x = sample(1:100, 10),
-  y = sample(1:100, 10),
-  z = sample(1:100, 10),
-  exp = sample(c(rep("control",50),rep("test",50)),10)
-)
+# comparing if 1-10 are in col z
+df3[df3$z %in% 1:10,]
 
-1:10 %in% df3$z
-match <- paste("person_",letters[5:10])
+# make a table to compare against
+match <- paste("person_",letters[6:10])
+match
+# compare your id column to your match vector
 subset(df3, id %in% match)
-
 ```
+
 ## AND OR %in% exercise
 
+Will be using the Pokemon dataset again for this exercise. 
 
-
+1) Make a vector called Types with the following data: Water, Fire, Grass
+2) Using the %in% operator, match your Types vector to the Type.1 or Type.2 column to subset out that data. Call your data poke_wfg (or similar)
+3) You should now have a dataset with pokemon that are either fire, water, or grass in the Type.1 or Type.2 columns. Run `summary()` to review your data.
+4) It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using `as.factor()` make the Type.1 and Type.2 columns into factors.
+5) Run `summary()` again on your dataset, you will see counts for your Type 1 & 2 columns. 
+6) Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint: table(data$col)*
+7) Now, using subsetting, find out which of your fire, grass or water pokemon have a Speed and Attack stat greater than or equal to 90
+8) Test out the same conditions but use OR instead. 
+```{r}
+# your code here
+# types vector
+Types <- c('Water', 'Fire', 'Grass')
+# using %in% to match
+poke_wfg <- subset(pokemon, Type.1 %in% Types | Type.2 %in% Types)
+# making types a factor
+poke_wfg$Type.1 <- as.factor(poke_wfg$Type.1)
+poke_wfg$Type.2 <- as.factor(poke_wfg$Type.2)
+# factor counts
+summary(poke_wfg)
+table(poke_wfg$Type.1)
+table(poke_wfg$Type.2)
+# finding fast attacking pokemon
+subset(poke_wfg, Speed >= 90 & Attack >= 90)
+subset(poke_wfg, Speed >= 90 | Attack >= 90)
+```
 # The If statement
 
-The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means to run a test to determine which operation of output is given, so it controls the flow of your code. 
+The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means to run a test to determine which operation of output is given, so it controls the flow of your code.They work as follows: If statement is true, do this, else do something else. 
 
+If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens. 
 ```{r}
-
+pizza_price <- 5
+bank_balance <- 10
+if (bank_balance >= pizza_price){
+print("Yes I can afford pizza!") } else {
+print("No pizza for you") }
 ```
 
+If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is the test (x < y), what happens when true, and what happens when false (the else). This function will compare each element for you. 
+```{r}
+pizza_price <- c(5, 11, 9, 7)
+bank_balance <- rep(10, 4)
+ifelse(bank_balance >= pizza_price, "Yes I can afford pizza!", "No pizza for you")
+```
 
+We can nest if statements together. In this example we are setting a category of low, medium and high from our x column. 
+```{r}
+df3$cat <- ifelse(df3$x < 33, "low",
+                  ifelse(df3$x > 33 & df3$x < 66, 'medium', 'high'))
+df3
+```
+When nesting if statements like this, the *else* part becomes the next ifelse statement. 
 
+## ifelse exercise
 
-
+one if else statement for total stats (high stats, not as high)
+nested if else statement to make speed categories
