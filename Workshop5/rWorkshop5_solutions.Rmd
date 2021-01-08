@@ -68,7 +68,14 @@ Why is this useful? Using boolean allows us to set *conditions* that can either 
 Topping <- c('Mozzarella', 'Pepperoni','Pinapple', 'Pepper', 'Carrot')
 
 # your code here
+pizza <- data.frame(
+  Topping,
+  Good_topping = c(1,1,0,1,0)
+)
 
+pizza$Good_topping <- as.logical(pizza$Good_topping)
+
+str(pizza)
 ```
 
 # Conditional Operators
@@ -132,7 +139,17 @@ Using conditional operators work out the following:
 
 ```{r}
 # your code here
-
+# 1 
+70 <= 11
+# 2
+z <- sample(1:100, 20)
+sum(z < 50)
+sum(z >= 50)
+# 3
+pets <- c(rep('cat',5), rep('fish',13), rep('dog',6))
+sum(pets == 'fish')
+# 4
+sum(pets != 'fish')
 ```
 
 # Indexing using conditional operators (subsetting)
@@ -185,7 +202,21 @@ In this task we are going to load in data from a URL and do some subsetting with
 library(readr)
 
 # your code here
-
+# load in data
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv")
+# get information about dataset
+head(pokemon)
+str(pokemon)
+# subset based on hit points
+highHP <- subset(pokemon, HP >= 80)
+summary(highHP)
+# find low attack and defence
+highHP[which.min(highHP$Attack),]
+highHP[which.min(highHP$Defense),]
+highHP[which.min(highHP$Speed),]
+# high attack
+sum(highHP$Attack >= 100)
+subset(highHP, Attack >= 100)
 ```
 
 # Using AND OR and %in%
@@ -225,7 +256,9 @@ df3 <- data.frame(
 )
 
 # your code here
-
+df3[df3$y >= 70 & df3$z >= 70,]
+df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
+subset(df3, y < 60 & exp == 'control')
 ```
 
 # %in% operator
@@ -258,7 +291,20 @@ Will be using the Pokemon dataset again for this exercise.
 8) Test out the same conditions but use OR instead. 
 ```{r}
 # your code here
-
+# types vector
+Types <- c('Water', 'Fire', 'Grass')
+# using %in% to match
+poke_wfg <- subset(pokemon, Type.1 %in% Types | Type.2 %in% Types)
+# making types a factor
+poke_wfg$Type.1 <- factor(poke_wfg$Type.1)
+poke_wfg$Type.2 <- factor(poke_wfg$Type.2)
+# factor counts
+summary(poke_wfg)
+table(poke_wfg$Type.1)
+table(poke_wfg$Type.2)
+# finding fast attacking pokemon
+subset(poke_wfg, Speed >= 90 & Attack >= 90)
+subset(poke_wfg, Speed >= 90 | Attack >= 90)
 ```
 *note: the table() function makes counts of categorical data (factors)* 
 
@@ -304,7 +350,18 @@ When nesting if statements like this,  *else* becomes the next ifelse statement.
 ```{r}
 # your code here
 
-
+# initial ifelse
+ifelse(pokemon$Speed >= 100, 'fast', 'slow')
+# nested ifelse on speed
+pokemon$SpeedTier <- ifelse(pokemon$Speed >= 110, 'very fast',
+                            ifelse(pokemon$Speed < 110 & pokemon$Speed >= 90, 'fast',
+                                   ifelse(pokemon$Speed < 90 & pokemon$Speed >= 70, 'not so fast', 'slow')))
+# make Type.1 and SpeedTier factors
+pokemon$Type.1 <- as.factor(pokemon$Type.1)
+pokemon$SpeedTier <- factor(pokemon$SpeedTier, levels = c('very fast', 'fast',
+                                                          'not so fast', 'slow'))
+# cross tabulation of speed and type
+table(pokemon$SpeedTier, pokemon$Type.1)
 ```
 
 # Final task - Please give us your individual feedback!
@@ -326,6 +383,16 @@ In this coding challenge we are going to keep looking at the pokemon data. In th
 
 ```{r}
 # your code here
-
+# ash pokemon  match table
+ashPoke <- c('Pikachu', 'Butterfree', 'Pidgeot', 'Bulbasaur', 'Charizard', 'Squirtle')
+# ash pokemon data
+ash <- subset(pokemon, Name %in% ashPoke)
+# comparison
+c(mean(ash$Total),mean(pokemon$Total))
+mean(ash$Total)-mean(pokemon$Total)
+# Who of Ash's pokemon have higher total stats than the average
+table(ash$Name, ash$Total >= mean(pokemon$Total))
+# who has stats over 100?
+ash[ash$HP >=100 | ash$Attack >= 100 | ash$Defense >= 100 | ash$Sp..Atk >= 100 | ash$Sp..Def >= 100 | ash$Speed >= 100,]
 ```
 

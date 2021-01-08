@@ -3,7 +3,7 @@ title: "R Workshop 5 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "07 January, 2021"
+date: "08 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -12,6 +12,7 @@ output:
 ---
 
 # What this workshop will cover
+
 *  Boolean operators 
 *  Conditional operators
 *  Conditional logic
@@ -78,20 +79,6 @@ Why is this useful? Using boolean allows us to set *conditions* that can either 
 Topping <- c('Mozzarella', 'Pepperoni','Pinapple', 'Pepper', 'Carrot')
 
 # your code here
-pizza <- data.frame(
-  Topping,
-  Good_topping = c(1,1,0,1,0)
-)
-
-pizza$Good_topping <- as.logical(pizza$Good_topping)
-
-str(pizza)
-```
-
-```
-## 'data.frame':	5 obs. of  2 variables:
-##  $ Topping     : chr  "Mozzarella" "Pepperoni" "Pinapple" "Pepper" ...
-##  $ Good_topping: logi  TRUE TRUE FALSE TRUE FALSE
 ```
 
 # Conditional Operators
@@ -223,49 +210,6 @@ Using conditional operators work out the following:
 
 ```r
 # your code here
-# 1 
-70 <= 11
-```
-
-```
-## [1] FALSE
-```
-
-```r
-# 2
-z <- sample(1:100, 20)
-sum(z < 50)
-```
-
-```
-## [1] 10
-```
-
-```r
-sum(z >= 50)
-```
-
-```
-## [1] 10
-```
-
-```r
-# 3
-pets <- c(rep('cat',5), rep('fish',13), rep('dog',6))
-sum(pets == 'fish')
-```
-
-```
-## [1] 13
-```
-
-```r
-# 4
-sum(pets != 'fish')
-```
-
-```
-## [1] 11
 ```
 
 # Indexing using conditional operators (subsetting)
@@ -300,8 +244,8 @@ df[df$x < 20, ]
 ```
 
 ```
-##    x  y
-## 4 15 53
+##   x  y
+## 4 7 93
 ```
 
 ```r
@@ -312,12 +256,14 @@ df2
 
 ```
 ##     x  y
-## 2  80 59
-## 5  90 90
-## 7  68 72
-## 8  47 89
-## 9  53 14
-## 10 75 47
+## 1  65 74
+## 2  55 44
+## 3  61 24
+## 5  91 89
+## 6  62  8
+## 7  57 73
+## 9  41  5
+## 10 69 96
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -328,8 +274,9 @@ subset(df, y <= 40)
 
 ```
 ##    x  y
-## 6 25 20
-## 9 53 14
+## 3 61 24
+## 6 62  8
+## 9 41  5
 ```
 
 ## Subsetting task
@@ -350,192 +297,6 @@ In this task we are going to load in data from a URL and do some subsetting with
 library(readr)
 
 # your code here
-# load in data
-pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv")
-```
-
-```
-## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   Number = col_double(),
-##   Name = col_character(),
-##   Type.1 = col_character(),
-##   Type.2 = col_character(),
-##   Total = col_double(),
-##   HP = col_double(),
-##   Attack = col_double(),
-##   Defense = col_double(),
-##   Sp..Atk = col_double(),
-##   Sp..Def = col_double(),
-##   Speed = col_double(),
-##   Generation = col_double(),
-##   Legendary = col_character()
-## )
-```
-
-```r
-# get information about dataset
-head(pokemon)
-```
-
-```
-## # A tibble: 6 x 13
-##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##    <dbl> <chr> <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-## 1      1 Bulb… Grass  Poison   318    45     49      49      65      65    45
-## 2      2 Ivys… Grass  Poison   405    60     62      63      80      80    60
-## 3      3 Venu… Grass  Poison   525    80     82      83     100     100    80
-## 4      4 Char… Fire   <NA>     309    39     52      43      60      50    65
-## 5      5 Char… Fire   <NA>     405    58     64      58      80      65    80
-## 6      6 Char… Fire   Flying   534    78     84      78     109      85   100
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
-```
-
-```r
-str(pokemon)
-```
-
-```
-## tibble [151 × 13] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Number    : num [1:151] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Name      : chr [1:151] "Bulbasaur" "Ivysaur" "Venusaur" "Charmander" ...
-##  $ Type.1    : chr [1:151] "Grass" "Grass" "Grass" "Fire" ...
-##  $ Type.2    : chr [1:151] "Poison" "Poison" "Poison" NA ...
-##  $ Total     : num [1:151] 318 405 525 309 405 534 314 405 530 195 ...
-##  $ HP        : num [1:151] 45 60 80 39 58 78 44 59 79 45 ...
-##  $ Attack    : num [1:151] 49 62 82 52 64 84 48 63 83 30 ...
-##  $ Defense   : num [1:151] 49 63 83 43 58 78 65 80 100 35 ...
-##  $ Sp..Atk   : num [1:151] 65 80 100 60 80 109 50 65 85 20 ...
-##  $ Sp..Def   : num [1:151] 65 80 100 50 65 85 64 80 105 20 ...
-##  $ Speed     : num [1:151] 45 60 80 65 80 100 43 58 78 45 ...
-##  $ Generation: num [1:151] 1 1 1 1 1 1 1 1 1 1 ...
-##  $ Legendary : chr [1:151] "No" "No" "No" "No" ...
-##  - attr(*, "spec")=
-##   .. cols(
-##   ..   Number = col_double(),
-##   ..   Name = col_character(),
-##   ..   Type.1 = col_character(),
-##   ..   Type.2 = col_character(),
-##   ..   Total = col_double(),
-##   ..   HP = col_double(),
-##   ..   Attack = col_double(),
-##   ..   Defense = col_double(),
-##   ..   Sp..Atk = col_double(),
-##   ..   Sp..Def = col_double(),
-##   ..   Speed = col_double(),
-##   ..   Generation = col_double(),
-##   ..   Legendary = col_character()
-##   .. )
-```
-
-```r
-# subset based on hit points
-highHP <- subset(pokemon, HP >= 80)
-summary(highHP)
-```
-
-```
-##      Number           Name              Type.1             Type.2         
-##  Min.   :  3.00   Length:39          Length:39          Length:39         
-##  1st Qu.: 64.50   Class :character   Class :character   Class :character  
-##  Median : 89.00   Mode  :character   Mode  :character   Mode  :character  
-##  Mean   : 92.26                                                           
-##  3rd Qu.:130.50                                                           
-##  Max.   :151.00                                                           
-##      Total             HP             Attack          Defense     
-##  Min.   :270.0   Min.   : 80.00   Min.   :  5.00   Min.   :  5.0  
-##  1st Qu.:477.0   1st Qu.: 80.50   1st Qu.: 74.00   1st Qu.: 65.0  
-##  Median :500.0   Median : 90.00   Median : 92.00   Median : 79.0  
-##  Mean   :491.4   Mean   : 99.13   Mean   : 89.41   Mean   : 77.1  
-##  3rd Qu.:530.0   3rd Qu.:102.50   3rd Qu.:105.00   3rd Qu.: 88.5  
-##  Max.   :680.0   Max.   :250.00   Max.   :134.00   Max.   :130.0  
-##     Sp..Atk          Sp..Def           Speed          Generation
-##  Min.   : 30.00   Min.   : 25.00   Min.   : 15.00   Min.   :1   
-##  1st Qu.: 60.00   1st Qu.: 70.00   1st Qu.: 45.00   1st Qu.:1   
-##  Median : 73.00   Median : 85.00   Median : 68.00   Median :1   
-##  Mean   : 77.87   Mean   : 81.28   Mean   : 66.62   Mean   :1   
-##  3rd Qu.:100.00   3rd Qu.: 97.50   3rd Qu.: 85.00   3rd Qu.:1   
-##  Max.   :154.00   Max.   :125.00   Max.   :130.00   Max.   :1   
-##   Legendary        
-##  Length:39         
-##  Class :character  
-##  Mode  :character  
-##                    
-##                    
-## 
-```
-
-```r
-# find low attack and defence
-highHP[which.min(highHP$Attack),]
-```
-
-```
-## # A tibble: 1 x 13
-##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##    <dbl> <chr> <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-## 1    113 Chan… Normal <NA>     450   250      5       5      35     105    50
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
-```
-
-```r
-highHP[which.min(highHP$Defense),]
-```
-
-```
-## # A tibble: 1 x 13
-##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##    <dbl> <chr> <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-## 1    113 Chan… Normal <NA>     450   250      5       5      35     105    50
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
-```
-
-```r
-highHP[which.min(highHP$Speed),]
-```
-
-```
-## # A tibble: 1 x 13
-##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##    <dbl> <chr> <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-## 1     79 Slow… Water  Psych…   315    90     65      65      40      40    15
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
-```
-
-```r
-# high attack
-sum(highHP$Attack >= 100)
-```
-
-```
-## [1] 15
-```
-
-```r
-subset(highHP, Attack >= 100)
-```
-
-```
-## # A tibble: 15 x 13
-##    Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##     <dbl> <chr> <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-##  1     34 Nido… Poison Ground   505    81    102      77      85      75    85
-##  2     59 Arca… Fire   <NA>     555    90    110      80     100      80    95
-##  3     67 Mach… Fight… <NA>     405    80    100      70      50      60    45
-##  4     68 Mach… Fight… <NA>     505    90    130      80      65      85    55
-##  5     71 Vict… Grass  Poison   490    80    105      65     100      70    70
-##  6     76 Golem Rock   Ground   495    80    120     130      55      65    45
-##  7     89 Muk   Poison <NA>     500   105    105      75      65     100    50
-##  8    112 Rhyd… Ground Rock     485   105    130     120      45      45    40
-##  9    130 Gyar… Water  Flying   540    95    125      79      60     100    81
-## 10    142 Aero… Rock   Flying   515    80    105      65      60      75   130
-## 11    143 Snor… Normal <NA>     540   160    110      65      65     110    30
-## 12    146 Molt… Fire   Flying   580    90    100      90     125      85    90
-## 13    149 Drag… Dragon Flying   600    91    134      95     100     100    80
-## 14    150 Mewt… Psych… <NA>     680   106    110      90     154      90   130
-## 15    151 Mew   Psych… <NA>     600   100    100     100     100     100   100
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 # Using AND OR and %in%
@@ -588,12 +349,11 @@ s[s < 0 | s > 70]
 
 ## AND OR exercise
 
-Using the df3 data frame provided run the following tests. Be sure to run the rests using square brackets or the `subset()` function so you see the data as the output. 
+Using the df3 data frame provided run the following tests. Be sure to run the tests using square brackets or the `subset()` function so you see the data as the output. 
 
-1) Subset data where x is less than 50 but greater then 20
-2) Subset data where y is greater than or equal to 70 and z is also greater than or equal to 70
-3) Subset data where x, y, or z are all less than 15
-4) Subset data where y is less than 60 and exp is equal to control
+1) Subset data where y is greater than or equal to 70 and z is also greater than or equal to 70
+2) Subset data where x, y, or z are all less than 15
+3) Subset data where y is less than 60 and exp is equal to control
 
 ```r
 # test data frame
@@ -604,53 +364,13 @@ df3 <- data.frame(
   z = sample(1:100, 10),
   exp = sample(c(rep("control",50),rep("test",50)),10)
 )
+
 # your code here
-df3[df3$x < 50 & df3$x > 20,]
-```
-
-```
-##          id  x  y  z     exp
-## 2 person_ b 28 22 16    test
-## 5 person_ e 48  6 57 control
-```
-
-```r
-df3[df3$y >= 70 & df3$z >= 70,]
-```
-
-```
-##          id  x  y   z     exp
-## 3 person_ c 17 78  87 control
-## 9 person_ i 57 97 100    test
-```
-
-```r
-df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
-```
-
-```
-##          id  x  y  z     exp
-## 1 person_ a 59 14 48 control
-## 4 person_ d 66 11 50 control
-## 5 person_ e 48  6 57 control
-```
-
-```r
-subset(df3, y < 60 & exp == 'control')
-```
-
-```
-##          id  x  y  z     exp
-## 1 person_ a 59 14 48 control
-## 4 person_ d 66 11 50 control
-## 5 person_ e 48  6 57 control
-## 6 person_ f 90 19 25 control
-## 8 person_ h 94 36 76 control
 ```
 
 # %in% operator
 
-The %in% operator is for value matching. It is a really handy way of comparing vectors of different lengths to see if elements of one vector match at least one element in another. The length of output will be equal to the length of the vector being compared (the first one). This is different to equal to (==) which tests compares if two vectors or variables are exactly equal. 
+The %in% operator is for value matching. It is a really handy way of comparing vectors of different lengths to see if elements of one vector match at least one element in another. The length of output will be equal to the length of the vector being compared (the first one). This is different to equal to (==) which compares if two vectors or variables are exactly equal. 
 
 Two examples of %in% below using the df3 data we just used for the task. First, we compare if numbers 1 to 10 are present in column z. Second, we make a vector with some id's, then we compare those id's to the id column in df3. 
 
@@ -660,18 +380,19 @@ df3[df3$z %in% 1:10,]
 ```
 
 ```
-## [1] id  x   y   z   exp
-## <0 rows> (or 0-length row.names)
+##          id  x  y z     exp
+## 4 person_ d 51 31 7 control
+## 8 person_ h 88 37 8    test
 ```
 
 ```r
 # make a table to compare against
-match <- paste("person_",letters[6:10])
+match <- paste("person_",letters[8:10])
 match
 ```
 
 ```
-## [1] "person_ f" "person_ g" "person_ h" "person_ i" "person_ j"
+## [1] "person_ h" "person_ i" "person_ j"
 ```
 
 ```r
@@ -680,12 +401,10 @@ subset(df3, id %in% match)
 ```
 
 ```
-##           id  x  y   z     exp
-## 6  person_ f 90 19  25 control
-## 7  person_ g 98 63  41    test
-## 8  person_ h 94 36  76 control
-## 9  person_ i 57 97 100    test
-## 10 person_ j 82 25  82    test
+##           id  x  y  z     exp
+## 8  person_ h 88 37  8    test
+## 9  person_ i 74 38 99 control
+## 10 person_ j 13 15 68 control
 ```
 
 ## AND OR %in% exercise
@@ -695,7 +414,7 @@ Will be using the Pokemon dataset again for this exercise.
 1) Make a vector called Types with the following data: Water, Fire, Grass
 2) Using the %in% operator, match your Types vector to the Type.1 or Type.2 column to subset out that data. Call your data poke_wfg (or similar)
 3) You should now have a dataset with pokemon that are either fire, water, or grass in the Type.1 or Type.2 columns. Run `summary()` to review your data.
-4) It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using `as.factor()` make the Type.1 and Type.2 columns into factors.
+4) It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using `factor()` make the Type.1 and Type.2 columns into factors.
 5) Run `summary()` again on your dataset, you will see counts for your Type 1 & 2 columns. 
 6) Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint: table(data$col)*
 7) Now, using subsetting, find out which of your fire, grass or water pokemon have a Speed and Attack stat greater than or equal to 90
@@ -703,155 +422,98 @@ Will be using the Pokemon dataset again for this exercise.
 
 ```r
 # your code here
-# types vector
-Types <- c('Water', 'Fire', 'Grass')
-# using %in% to match
-poke_wfg <- subset(pokemon, Type.1 %in% Types | Type.2 %in% Types)
-# making types a factor
-poke_wfg$Type.1 <- as.factor(poke_wfg$Type.1)
-poke_wfg$Type.2 <- as.factor(poke_wfg$Type.2)
-# factor counts
-summary(poke_wfg)
 ```
+*note: the table() function makes counts of categorical data (factors)* 
 
-```
-##      Number           Name             Type.1       Type.2       Total      
-##  Min.   :  1.00   Length:58          Bug  : 2   Poison :11   Min.   :200.0  
-##  1st Qu.: 46.25   Class :character   Fire :12   Psychic: 5   1st Qu.:325.0  
-##  Median : 77.50   Mode  :character   Grass:12   Water  : 4   Median :407.5  
-##  Mean   : 77.48                      Rock : 4   Flying : 3   Mean   :418.7  
-##  3rd Qu.:117.75                      Water:28   Ice    : 3   3rd Qu.:503.8  
-##  Max.   :146.00                                 (Other): 3   Max.   :580.0  
-##                                                 NA's   :29                  
-##        HP             Attack          Defense          Sp..Atk     
-##  Min.   : 20.00   Min.   : 10.00   Min.   : 35.00   Min.   : 15.0  
-##  1st Qu.: 45.00   1st Qu.: 56.25   1st Qu.: 55.50   1st Qu.: 60.0  
-##  Median : 60.00   Median : 70.00   Median : 70.00   Median : 70.0  
-##  Mean   : 62.81   Mean   : 73.83   Mean   : 74.33   Mean   : 74.4  
-##  3rd Qu.: 79.75   3rd Qu.: 91.50   3rd Qu.: 85.00   3rd Qu.: 95.0  
-##  Max.   :130.00   Max.   :130.00   Max.   :180.00   Max.   :125.0  
-##                                                                    
-##     Sp..Def           Speed          Generation  Legendary        
-##  Min.   : 20.00   Min.   : 15.00   Min.   :1    Length:58         
-##  1st Qu.: 50.00   1st Qu.: 51.25   1st Qu.:1    Class :character  
-##  Median : 67.50   Median : 65.00   Median :1    Mode  :character  
-##  Mean   : 67.66   Mean   : 65.67   Mean   :1                      
-##  3rd Qu.: 85.00   3rd Qu.: 80.75   3rd Qu.:1                      
-##  Max.   :120.00   Max.   :115.00   Max.   :1                      
-## 
-```
-
-```r
-table(poke_wfg$Type.1)
-```
-
-```
-## 
-##   Bug  Fire Grass  Rock Water 
-##     2    12    12     4    28
-```
-
-```r
-table(poke_wfg$Type.2)
-```
-
-```
-## 
-## Fighting   Flying    Grass      Ice   Poison  Psychic    Water 
-##        1        3        2        3       11        5        4
-```
-
-```r
-# finding fast attacking pokemon
-subset(poke_wfg, Speed >= 90 & Attack >= 90)
-```
-
-```
-## # A tibble: 4 x 13
-##   Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##    <dbl> <chr> <fct>  <fct>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-## 1     59 Arca… Fire   <NA>     555    90    110      80     100      80    95
-## 2     78 Rapi… Fire   <NA>     500    65    100      70      80      80   105
-## 3    126 Magm… Fire   <NA>     495    65     95      57     100      85    93
-## 4    146 Molt… Fire   Flying   580    90    100      90     125      85    90
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
-```
-
-```r
-subset(poke_wfg, Speed >= 90 | Attack >= 90)
-```
-
-```
-## # A tibble: 23 x 13
-##    Number Name  Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
-##     <dbl> <chr> <fct>  <fct>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
-##  1      6 Char… Fire   Flying   534    78     84      78     109      85   100
-##  2     38 Nine… Fire   <NA>     505    73     76      75      81     100   100
-##  3     47 Para… Bug    Grass    405    60     95      80      60      80    30
-##  4     59 Arca… Fire   <NA>     555    90    110      80     100      80    95
-##  5     60 Poli… Water  <NA>     300    40     50      40      40      40    90
-##  6     61 Poli… Water  <NA>     385    65     65      65      50      50    90
-##  7     62 Poli… Water  Fight…   510    90     95      95      70      90    70
-##  8     70 Weep… Grass  Poison   390    65     90      50      85      45    55
-##  9     71 Vict… Grass  Poison   490    80    105      65     100      70    70
-## 10     73 Tent… Water  Poison   515    80     70      65      80     120   100
-## # … with 13 more rows, and 2 more variables: Generation <dbl>, Legendary <chr>
-```
 # The If statement
 
-The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means to run a test to determine which operation of output is given, so it controls the flow of your code.They work as follows: If statement is true, do this, else do something else. 
+The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means running a test to determine which operation or output is given, controlling the flow of your code. They work as follows: If statement is true, do this, else do something else. 
 
 If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens. 
 
 ```r
-pizza_price <- 5
+# pizza variables
+pizza_price <- 7
 bank_balance <- 10
+# if statement
 if (bank_balance >= pizza_price){
-print("Yes I can afford pizza!") } else {
-print("No pizza for you") }
+paste("Yes I can afford pizza!") } else {
+paste("No pizza for you") }
 ```
 
 ```
 ## [1] "Yes I can afford pizza!"
 ```
 
-If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is the test (x < y), what happens when true, and what happens when false (the else). This function will compare each element for you. 
+If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: *the test (x < y), what happens when true, and what happens when false (the else)*. This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and does the same. 
 
 ```r
-pizza_price <- c(5, 11, 9, 7)
-bank_balance <- rep(10, 4)
+pizza_price <- c(7, 11, 9, 10.5)
+bank_balance <- 10
 ifelse(bank_balance >= pizza_price, "Yes I can afford pizza!", "No pizza for you")
 ```
 
 ```
 ## [1] "Yes I can afford pizza!" "No pizza for you"       
-## [3] "Yes I can afford pizza!" "Yes I can afford pizza!"
+## [3] "Yes I can afford pizza!" "No pizza for you"
 ```
 
-We can nest if statements together. In this example we are setting a category of low, medium and high from our x column. 
+We can nest if statements together. In this example we are setting a category of low, medium and high from our x column in the df3 data frame. All values less then or equal to 33 are low, any value between 33 and 66 is medium and the rest are high. Run the code to test it out. 
 
 ```r
-df3$cat <- ifelse(df3$x < 33, "low",
-                  ifelse(df3$x > 33 & df3$x < 66, 'medium', 'high'))
-df3
+# nested if else
+df3$cat <- ifelse(df3$x <= 33, "low",
+                  ifelse(df3$x > 33 & df3$x <= 66, 'medium', 'high'))
+# view x and cat cols
+df3[, c('x','cat')]
 ```
 
 ```
-##           id  x  y   z     exp    cat
-## 1  person_ a 59 14  48 control medium
-## 2  person_ b 28 22  16    test    low
-## 3  person_ c 17 78  87 control    low
-## 4  person_ d 66 11  50 control   high
-## 5  person_ e 48  6  57 control medium
-## 6  person_ f 90 19  25 control   high
-## 7  person_ g 98 63  41    test   high
-## 8  person_ h 94 36  76 control   high
-## 9  person_ i 57 97 100    test medium
-## 10 person_ j 82 25  82    test   high
+##     x    cat
+## 1  19    low
+## 2  16    low
+## 3  18    low
+## 4  51 medium
+## 5  75   high
+## 6  82   high
+## 7  63 medium
+## 8  88   high
+## 9  74   high
+## 10 13    low
 ```
-When nesting if statements like this, the *else* part becomes the next ifelse statement. 
+When nesting if statements like this,  *else* becomes the next ifelse statement. 
 
 ## ifelse exercise
 
-one if else statement for total stats (high stats, not as high)
-nested if else statement to make speed categories
+1) Using `ifelse()` on the Speed column in the pokemon data use the following condition: if speed is greater than or equal to 100 they are fast, otherwise they are slow. 
+2) We need a bit more classification. This time make a new column called *SpeedTier*, using `ifelse()` on the following conditions: if Speed >= 110, very fast, if Speed < 110 & >= 90, fast, if Speed < 90 & >= 70, not so fast, else slow. *hint: use a nested ifelse()*
+3) Make Type.1 a factor, and make SpeedTier a factor with a level order of: very fast, fast,not so fast, and slow.
+4) Using `table()` compare SpeedTier with Type.1. You will be able to see counts of which speed tier different types of pokemon are in. *hint: table(data$col1, data$col2)*
+
+
+```r
+# your code here
+```
+
+# Final task - Please give us your individual feedback!
+
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21
+
+# Individual take home challenge 
+
+In this coding challenge we are going to keep looking at the pokemon data. In the Pokemon tv show, the main character (Ash) had a team of Pokemon, we want to see how good they would be in the games, and how they compare to other pokemon. 
+
+1) First, make a vector with Ash's pokemon: Pikachu, Butterfree, Pidgeot, Bulbasaur, Charizard, Squirtle
+2) Next we need to make a dataset called ash, and subset out all his pokemon using %in% as shown above
+3) Now using `mean()` compare the mean Total for Ash's pokemon and the rest in the pokemon data *hint: putting both mean functions in a c function will allow you to see them side by side*
+4) Looks like Ash's pokemon on average are worse, but by how much? Work out the difference between the total of Ash's pokemon and the other pokemon.
+5) Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. *hint: table(data$name, data$total >= mean(data2$total))*
+6) Having stats over or equal to 100 seems important. Using subsetting and OR statements, find out how many of Ash's pokemon have stats in HP,Attack,Defense,Sp..Atk,Sp..Def, and Speed over or equal to 100.   
+
+
+```r
+# your code here
+```
+
