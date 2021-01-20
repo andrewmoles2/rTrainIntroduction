@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 2"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 January, 2021"
+date: "19 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -142,8 +142,8 @@ To open and review your projects in future you will see them in a drop down menu
 1) Set up a project for this workshop using the steps above. 
 2) Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac). 
 3) Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
-4) Add a new file called data, and add in the data files for the session (). 
-5) Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made. 
+4) Add a new file called data, and add in the data files for the session (tfl-daily-cycle-hires.xlsx and tfl-journeys-type.csv). 
+5) Come back to RStudio and make sure your project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made. 
 6) If you have not already, open the rWorkshop4b.Rmd file.
 7) In the code chunk below run `getwd()`. You should get your new project file system as the output. 
 
@@ -154,18 +154,10 @@ To open and review your projects in future you will see them in a drop down menu
 
 # Loading in data from your computer
 
-Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta. 
+Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta and .txt.
 
 To check your folders or data files are where you expect them to be, you can use the `list.files()` function. You should see your rWorkshop4b.Rmd and your data file. 
 
-```r
-list.files()
-```
-
-```
-## [1] "data"             "images"           "rWorkshop4b.html" "rWorkshop4b.md"  
-## [5] "rWorkshop4b.Rmd"
-```
 
 RStudio helpfully has auto-completion for directories to help you build file paths. To get this working use speech marks with a function, like `list.files()`. Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want. Repeat the process till you get to where you want to be. 
 
@@ -246,7 +238,7 @@ For example, if I wanted to save a csv file to my data folder: `write_csv(data, 
 
 Using the tflJourneyType dataset follow the steps:
 
-1) First lets do some calculations. Make a new column called BusTube that is the sum of bus journeys and tube journeys *think back to R4a if you get stuck: data$newcol <- data$col1 + data$col2*.
+1) First lets do some calculations. Make a new column called BusTube that is the sum of bus journeys and tube journeys *think back to R4a if you get stuck: data$newCol <- data$col1 + data$col2*.
 2) Make another new column called DLR_Tram that is the sum of DLR journeys and Tram journeys. 
 3) Make a new dataset called tflSubset that contains the first column, and both your new columns (BusTube & DLR_Tram) *hint: use indexing [,]*
 4) Using `write_csv()` write your tflSubset data to your data file. Call it tflSubset.csv. 
@@ -264,13 +256,15 @@ library(writexl)
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EdKicU-A1QZHhmDBRsEe-ykBzny3RNZVvavx_zsZ-Fom9Q?e=aPnCfn
+
+At the end of the survey a link to the solutions for the workshop will be provided. 
 
 # Individual take home challenge 
 
-In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns as the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. Then write out the most interesting data. 
+In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns are the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. Then write out the most interesting data. 
 
-You should end up with an output of "The highest highest average cycle hire time per month was 36 minutes, on the 2020-04-01 with total hires of 591058 which is just after lockdown started!", and the by month xlsx file in your data file.
+You should end up with an output of *"The highest highest average cycle hire time per month was 36 minutes, on the 2020-04-01 with total hires of 591058 which is just after lockdown started!"*, and the by month xlsx file in your data file.
 
 *note: you might need to change the file paths to match your system*
 

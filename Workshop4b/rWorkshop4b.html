@@ -499,7 +499,7 @@ summary {
 <h1 class="title toc-ignore">R Workshop 4 - Data Frames part 2</h1>
 <h4 class="author">Andrew Moles</h4>
 <address class="author_afil">
-Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
+Learning Developer, Digital Skills Lab<br><h4 class="date">19 January, 2021</h4>
 
 </div>
 
@@ -617,8 +617,8 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <li>Set up a project for this workshop using the steps above.</li>
 <li>Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac).</li>
 <li>Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).</li>
-<li>Add a new file called data, and add in the data files for the session ().</li>
-<li>Come back to RStudio and make sure you’re project is open (<em>will see in top right corner your project name</em>), in the RStudio file explorer (bottom right) you should see the changes you’ve made.</li>
+<li>Add a new file called data, and add in the data files for the session (tfl-daily-cycle-hires.xlsx and tfl-journeys-type.csv).</li>
+<li>Come back to RStudio and make sure your project is open (<em>will see in top right corner your project name</em>), in the RStudio file explorer (bottom right) you should see the changes you’ve made.</li>
 <li>If you have not already, open the rWorkshop4b.Rmd file.</li>
 <li>In the code chunk below run <code>getwd()</code>. You should get your new project file system as the output.</li>
 </ol>
@@ -627,11 +627,8 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 </div>
 <div id="loading-in-data-from-your-computer" class="section level1">
 <h1>Loading in data from your computer</h1>
-<p>Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta.</p>
+<p>Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta and .txt.</p>
 <p>To check your folders or data files are where you expect them to be, you can use the <code>list.files()</code> function. You should see your rWorkshop4b.Rmd and your data file.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">list.files</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;data&quot;             &quot;images&quot;           &quot;rWorkshop4b.html&quot; &quot;rWorkshop4b.md&quot;  
-## [5] &quot;rWorkshop4b.Rmd&quot;</code></pre>
 <p>RStudio helpfully has auto-completion for directories to help you build file paths. To get this working use speech marks with a function, like <code>list.files()</code>. Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (&quot;&quot;). You should get a drop down list of your files, press tab again to select the file you want. Repeat the process till you get to where you want to be.</p>
 <div id="list-files-task" class="section level2">
 <h2>List files task</h2>
@@ -639,7 +636,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <li>Using speech marks and tab, as outlined above, list the files in your data file. You should get something like: <code>list.files(&quot;data/&quot;)</code></li>
 <li>Run the code, the output should be the data files you put in the data file in step 4 of the project task.</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="loading-csv-and-excel-.xlsx-files" class="section level1">
@@ -654,9 +651,9 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <li>Get some information on your loaded data frame using functions such as <code>str()</code>, <code>head()</code>, or <code>summary()</code>.</li>
 <li>From the information, when does the dataset start and end recording data? <em>hint: head and tail functions will help</em></li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># make sure readr is loaded</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">library</span>(readr)</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># make sure readr is loaded</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">library</span>(readr)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># your code here</span></span></code></pre></div>
 <p><strong>Great work, you’ve loaded your first dataset!</strong></p>
 </div>
 <div id="loading-excel-.xlsx-files-task" class="section level2">
@@ -669,9 +666,9 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <li>Find out the mean, max, and min for the “Number of Bicycle Hires…2” column.</li>
 </ol>
 <p><em>note: we will tidy this dataframe up in the individual coding challenge</em></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># make sure readxl is loaded</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">library</span>(readxl)</span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># make sure readxl is loaded</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="loading-in-data-from-the-internet" class="section level1">
@@ -686,7 +683,7 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <li>Using <code>read_csv()</code>, load in the data using the link you just copied. Call it <code>tflJourneyType</code> again.</li>
 <li>Run commands such as <code>str()</code> and <code>summary()</code> to make sure the data has loaded correctly.</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="exporting-data" class="section level1">
@@ -697,60 +694,61 @@ Learning Developer, Digital Skills Lab<br><h4 class="date">04 January, 2021</h4>
 <h2>Exporting data task</h2>
 <p>Using the tflJourneyType dataset follow the steps:</p>
 <ol style="list-style-type: decimal">
-<li>First lets do some calculations. Make a new column called BusTube that is the sum of bus journeys and tube journeys <em>think back to R4a if you get stuck: data<span class="math inline">\(newcol &lt;- data\)</span>col1 + data$col2</em>.</li>
+<li>First lets do some calculations. Make a new column called BusTube that is the sum of bus journeys and tube journeys <em>think back to R4a if you get stuck: data<span class="math inline">\(newCol &lt;- data\)</span>col1 + data$col2</em>.</li>
 <li>Make another new column called DLR_Tram that is the sum of DLR journeys and Tram journeys.</li>
 <li>Make a new dataset called tflSubset that contains the first column, and both your new columns (BusTube &amp; DLR_Tram) <em>hint: use indexing [,]</em></li>
 <li>Using <code>write_csv()</code> write your tflSubset data to your data file. Call it tflSubset.csv.</li>
 <li>Using <code>write_xlsx()</code> write your tflSubset data to your data file. Call it tflSubset.xlsx.</li>
 <li>Have a look at the csv and xlsx files you have created in finder or windows explorer.</li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># make sure writexl is loaded</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">library</span>(writexl)</span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># make sure writexl is loaded</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">library</span>(writexl)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="final-task---please-give-us-your-individual-feedback" class="section level1">
 <h1>Final task - Please give us your individual feedback!</h1>
 <p>This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!</p>
-<p><a href="https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&amp;topic=R&amp;cohort=LT21" class="uri">https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&amp;topic=R&amp;cohort=LT21</a></p>
+<p><a href="https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&amp;topic=R&amp;cohort=LT21&amp;link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EdKicU-A1QZHhmDBRsEe-ykBzny3RNZVvavx_zsZ-Fom9Q?e=aPnCfn" class="uri">https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&amp;topic=R&amp;cohort=LT21&amp;link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EdKicU-A1QZHhmDBRsEe-ykBzny3RNZVvavx_zsZ-Fom9Q?e=aPnCfn</a></p>
+<p>At the end of the survey a link to the solutions for the workshop will be provided.</p>
 </div>
 <div id="individual-take-home-challenge" class="section level1">
 <h1>Individual take home challenge</h1>
-<p>In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns as the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. Then write out the most interesting data.</p>
-<p>You should end up with an output of “The highest highest average cycle hire time per month was 36 minutes, on the 2020-04-01 with total hires of 591058 which is just after lockdown started!”, and the by month xlsx file in your data file.</p>
+<p>In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns are the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. Then write out the most interesting data.</p>
+<p>You should end up with an output of <em>“The highest highest average cycle hire time per month was 36 minutes, on the 2020-04-01 with total hires of 591058 which is just after lockdown started!”</em>, and the by month xlsx file in your data file.</p>
 <p><em>note: you might need to change the file paths to match your system</em></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Take out raw data (hire by day)</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>tflCycleByDay &lt;-<span class="st"> </span>tflCycle[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
-<span id="cb14-3"><a href="#cb14-3"></a></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># most popular day, months and year</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>maxDay &lt;-<span class="st"> </span>tflCycleByDay[<span class="kw">which.max</span>(tflCycleByDay<span class="op">$</span><span class="st">`</span><span class="dt">Number of Bicycle Hires...2</span><span class="st">`</span>),]</span>
-<span id="cb14-6"><a href="#cb14-6"></a>maxMonth &lt;-<span class="st"> </span>tflCycleByMonth[<span class="kw">which.max</span>(tflCycleByMonth<span class="op">$</span><span class="st">`</span><span class="dt">Number of Bicycle Hires...5</span><span class="st">`</span>),]</span>
-<span id="cb14-7"><a href="#cb14-7"></a>maxHire &lt;-<span class="st"> </span>tflCycleByMonth[<span class="kw">which.max</span>(tflCycleByMonth<span class="op">$</span><span class="st">`</span><span class="dt">Average Hire Time (mins)</span><span class="st">`</span>),]</span>
-<span id="cb14-8"><a href="#cb14-8"></a>maxYear &lt;-<span class="st"> </span>tflCycleByYear[<span class="kw">which.max</span>(tflCycleByYear<span class="op">$</span><span class="st">`</span><span class="dt">Number of Bicycle Hires...8</span><span class="st">`</span>),]</span>
-<span id="cb14-9"><a href="#cb14-9"></a></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="co"># load in tfl cycle data (might need to change file path)</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>tflCycle &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;data/tfl-daily-cycle-hires.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">2</span>) </span>
-<span id="cb14-12"><a href="#cb14-12"></a></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="co"># hire by month and ave hire time</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a>tflCycleByMonth &lt;-<span class="st"> </span>tflCycle[,<span class="kw">c</span>(<span class="st">&quot;Month...4&quot;</span>,<span class="st">&quot;Number of Bicycle Hires...5&quot;</span>,<span class="st">&quot;Average Hire Time (mins)&quot;</span>)]</span>
-<span id="cb14-15"><a href="#cb14-15"></a></span>
-<span id="cb14-16"><a href="#cb14-16"></a><span class="co"># making month a character for paste</span></span>
-<span id="cb14-17"><a href="#cb14-17"></a>maxHire<span class="op">$</span>Month...<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">as.character</span>(maxHire<span class="op">$</span>Month...<span class="dv">4</span>)</span>
-<span id="cb14-18"><a href="#cb14-18"></a></span>
-<span id="cb14-19"><a href="#cb14-19"></a><span class="co"># pasting an output</span></span>
-<span id="cb14-20"><a href="#cb14-20"></a><span class="kw">paste</span>(<span class="st">&quot;The highest highest average cycle hire time per month was&quot;</span>, maxHire[<span class="dv">1</span>,<span class="dv">3</span>], </span>
-<span id="cb14-21"><a href="#cb14-21"></a>      <span class="st">&quot;minutes, on the&quot;</span>, maxHire[<span class="dv">1</span>,<span class="dv">1</span>],<span class="st">&quot;with total hires of&quot;</span>, maxHire[<span class="dv">1</span>,<span class="dv">2</span>],</span>
-<span id="cb14-22"><a href="#cb14-22"></a>      <span class="st">&quot;which is just after lockdown started!&quot;</span>)</span>
-<span id="cb14-23"><a href="#cb14-23"></a></span>
-<span id="cb14-24"><a href="#cb14-24"></a><span class="co"># hire by year</span></span>
-<span id="cb14-25"><a href="#cb14-25"></a>tflCycleByYear &lt;-<span class="st"> </span>tflCycle[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="st">&quot;Number of Bicycle Hires...8&quot;</span>)]</span>
-<span id="cb14-26"><a href="#cb14-26"></a></span>
-<span id="cb14-27"><a href="#cb14-27"></a><span class="co"># write the tfl cycle by month data (most interesting)</span></span>
-<span id="cb14-28"><a href="#cb14-28"></a><span class="kw">write_xlsx</span>(tflCycleByMonth, <span class="st">&quot;data/tflCycleHire_byMonth.xlsx&quot;</span>)</span>
-<span id="cb14-29"><a href="#cb14-29"></a></span>
-<span id="cb14-30"><a href="#cb14-30"></a><span class="co"># load libraries</span></span>
-<span id="cb14-31"><a href="#cb14-31"></a><span class="kw">library</span>(readxl)</span>
-<span id="cb14-32"><a href="#cb14-32"></a><span class="kw">library</span>(writexl)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Take out raw data (hire by day)</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>tflCycleByDay &lt;-<span class="st"> </span>tflCycle[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># most popular day, months and year</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>maxDay &lt;-<span class="st"> </span>tflCycleByDay[<span class="kw">which.max</span>(tflCycleByDay<span class="op">$</span><span class="st">`</span><span class="dt">Number of Bicycle Hires...2</span><span class="st">`</span>),]</span>
+<span id="cb12-6"><a href="#cb12-6"></a>maxMonth &lt;-<span class="st"> </span>tflCycleByMonth[<span class="kw">which.max</span>(tflCycleByMonth<span class="op">$</span><span class="st">`</span><span class="dt">Number of Bicycle Hires...5</span><span class="st">`</span>),]</span>
+<span id="cb12-7"><a href="#cb12-7"></a>maxHire &lt;-<span class="st"> </span>tflCycleByMonth[<span class="kw">which.max</span>(tflCycleByMonth<span class="op">$</span><span class="st">`</span><span class="dt">Average Hire Time (mins)</span><span class="st">`</span>),]</span>
+<span id="cb12-8"><a href="#cb12-8"></a>maxYear &lt;-<span class="st"> </span>tflCycleByYear[<span class="kw">which.max</span>(tflCycleByYear<span class="op">$</span><span class="st">`</span><span class="dt">Number of Bicycle Hires...8</span><span class="st">`</span>),]</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># load in tfl cycle data (might need to change file path)</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>tflCycle &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="st">&quot;data/tfl-daily-cycle-hires.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">2</span>) </span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co"># hire by month and ave hire time</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>tflCycleByMonth &lt;-<span class="st"> </span>tflCycle[,<span class="kw">c</span>(<span class="st">&quot;Month...4&quot;</span>,<span class="st">&quot;Number of Bicycle Hires...5&quot;</span>,<span class="st">&quot;Average Hire Time (mins)&quot;</span>)]</span>
+<span id="cb12-15"><a href="#cb12-15"></a></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co"># making month a character for paste</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a>maxHire<span class="op">$</span>Month...<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">as.character</span>(maxHire<span class="op">$</span>Month...<span class="dv">4</span>)</span>
+<span id="cb12-18"><a href="#cb12-18"></a></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="co"># pasting an output</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="kw">paste</span>(<span class="st">&quot;The highest highest average cycle hire time per month was&quot;</span>, maxHire[<span class="dv">1</span>,<span class="dv">3</span>], </span>
+<span id="cb12-21"><a href="#cb12-21"></a>      <span class="st">&quot;minutes, on the&quot;</span>, maxHire[<span class="dv">1</span>,<span class="dv">1</span>],<span class="st">&quot;with total hires of&quot;</span>, maxHire[<span class="dv">1</span>,<span class="dv">2</span>],</span>
+<span id="cb12-22"><a href="#cb12-22"></a>      <span class="st">&quot;which is just after lockdown started!&quot;</span>)</span>
+<span id="cb12-23"><a href="#cb12-23"></a></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="co"># hire by year</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a>tflCycleByYear &lt;-<span class="st"> </span>tflCycle[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="st">&quot;Number of Bicycle Hires...8&quot;</span>)]</span>
+<span id="cb12-26"><a href="#cb12-26"></a></span>
+<span id="cb12-27"><a href="#cb12-27"></a><span class="co"># write the tfl cycle by month data (most interesting)</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a><span class="kw">write_xlsx</span>(tflCycleByMonth, <span class="st">&quot;data/tflCycleHire_byMonth.xlsx&quot;</span>)</span>
+<span id="cb12-29"><a href="#cb12-29"></a></span>
+<span id="cb12-30"><a href="#cb12-30"></a><span class="co"># load libraries</span></span>
+<span id="cb12-31"><a href="#cb12-31"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb12-32"><a href="#cb12-32"></a><span class="kw">library</span>(writexl)</span></code></pre></div>
 </div>
 <div id="other-options-for-loading-data" class="section level1">
 <h1>Other options for loading data</h1>

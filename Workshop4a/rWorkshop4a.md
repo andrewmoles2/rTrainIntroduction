@@ -3,7 +3,7 @@ title: "R Workshop 4 - Data Frames part 1"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "05 January, 2021"
+date: "20 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -447,7 +447,9 @@ We will index the `messi_career` data we have using to do some calculations, sub
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D0550R4aDF1&topic=R&cohort=LT21
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D0550R4aDF1&topic=R&cohort=LT21&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ETS9C3uz0oRDtMqHDyJ5HaMB2WY_0gV3Emoi2ZlQQdKp8g?e=Ly5dKq
+
+The solutions are available from a link at the end of the survey.
 
 # Individual take home challenge 
 

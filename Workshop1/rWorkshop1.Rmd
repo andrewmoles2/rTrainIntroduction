@@ -269,7 +269,9 @@ Charlie_hoursPerWeek <- 35
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D025-R1NV&topic=R&cohort=LT21
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D025-R1NV&topic=R&cohort=LT21&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EVT6p9EbxI1IjJZs_L-6ltEBuDwbhnaQoSBXI3S9Cvk6jw?e=x7izX8
+
+The solutions we be available from a link at the end of the survey.
 
 # Individual (take home) coding challenge
 

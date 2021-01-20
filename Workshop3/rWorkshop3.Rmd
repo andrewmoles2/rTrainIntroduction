@@ -232,8 +232,9 @@ As you can see paste can make new strings from existing strings, and format them
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D048-R3SFTC&topic=R&cohort=LT21
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D048-R3SFTC&topic=R&cohort=LT21&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EaKYuPJngFFGgWKvscjEfI4B34bA-Yg9Md524ArLXyLP3w?e=RSh5Av
 
+The solutions will be available from a link at the end of the survey.
 
 ## Individual take home challenge 1
 
