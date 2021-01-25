@@ -3,7 +3,7 @@ title: "R Workshop 5 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "20 January, 2021"
+date: "21 January, 2021"
 output: 
   html_document: 
     theme: readable
@@ -94,10 +94,10 @@ In order to test conditions we need conditional operators. Below is a table of c
 
 | Operator | Meaning                  |
 |----------|--------------------------|
-| \>       | Greater than             |
-| \>=      | Greater than or equal to |
-| \<       | Less than                |
-| \<=      | Less than or equal to    |
+| >       | Greater than             |
+| >=      | Greater than or equal to |
+| <       | Less than                |
+| <=      | Less than or equal to    |
 | ==       | Equal to                 |
 | !=       | Not equal to             |
 | !X       | NOT X                    |
@@ -105,7 +105,7 @@ In order to test conditions we need conditional operators. Below is a table of c
 | X & Y    | X AND Y                  |
 | X %in% Y | is X in Y                |
 
-The greater than (\>), or greater than or equal to (\>=) operators test if variable x is greater than y; less than (\<), or less than or equal to (\<=) test if x is less than, or equal to, y. The output is always boolean.
+The greater than (>), or greater than or equal to (>=) operators test if variable x is greater than y; less than (<), or less than or equal to (<=) test if x is less than, or equal to, y. The output is always boolean.
 
 Run the code below to test this out.
 
@@ -134,7 +134,7 @@ Run the code below to test this out.
 ## [1] FALSE
 ```
 
-Why is 18 \> 18 false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator.
+Why is 18 > 18 false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator.
 
 You're most likely to use these tests on data frames or vectors. Run the code below to test out using equals to and not equal to on two columns in a data frame.
 
@@ -202,7 +202,7 @@ The *equal to* test tells us where x and y have the same data, *not equal to* do
 ```
 
 ```r
-"pizza" == "pizza"
+"pizza" != "bad"
 ```
 
 ```
@@ -214,9 +214,10 @@ The *equal to* test tells us where x and y have the same data, *not equal to* do
 Using conditional operators work out the following:
 
 1)  Is 70 less than or equal to 11?
-2)  Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (\<) 50, and how many are greater then or equal to (\>=) 50.
-3)  Using the following vector, `pets <- c(rep('cat',5), rep('fish',11), rep('dog',6))`, count how many fish there are.
-4)  Using the same pets vector, how many pets are not fish?
+2)  Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (<) 50
+3)  Now count how many elements in *z* are greater then or equal to (>=) 50.
+4)  Using the following vector, `pets <- c(rep('cat',5), rep('fish',11), rep('dog',6))`, count how many fish there are.
+5)  Using the same pets vector, how many pets are not fish?
 
 
 ```r
@@ -257,8 +258,10 @@ df[df$x < 20, ]
 ```
 
 ```
-## [1] x y
-## <0 rows> (or 0-length row.names)
+##    x  y
+## 4 13 40
+## 6  8 20
+## 7  2 25
 ```
 
 ```r
@@ -268,14 +271,11 @@ df2
 ```
 
 ```
-##    x  y
-## 1 98  5
-## 4 81 88
-## 5 64 14
-## 6 41 33
-## 7 60 34
-## 8 39 31
-## 9 37 98
+##     x   y
+## 3  88  82
+## 5  52  30
+## 8  70  60
+## 10 69 100
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once.
@@ -286,24 +286,24 @@ subset(df, y <= 40)
 ```
 
 ```
-##     x  y
-## 1  98  5
-## 5  64 14
-## 6  41 33
-## 7  60 34
-## 8  39 31
-## 10 27  7
+##    x  y
+## 1 31  2
+## 4 13 40
+## 5 52 30
+## 6  8 20
+## 7  2 25
+## 9 33  9
 ```
 
 ## Subsetting task
 
 In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing.
 
-1)  Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: <https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv>
+1)  Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv
 2)  Get information on your loaded data using the `str()`, `head()` and `View()` functions.
 3)  Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
 4)  Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
-5)  There are some very low stats for Attack, Defense, and Speed. Use `which.min()` to find out which pokemon have these stats. *hint: data[which.min(data\$col),]*.
+5)  There are some very low stats for Attack, Defense, and Speed. Use `which.min()` to find out which pokemon have these stats. *hint:* `data[which.min(data$col),]`.
 6)  The attack stat seems to have the highest mean (other than HP). Using `sum()` find out how many of your high HP pokemon have an Attack stat greater than or equal to 100.
 7)  Finally, find out who those pokemon are. *hint: use subsetting*
 
@@ -399,8 +399,10 @@ df3[df3$z %in% 1:10,]
 ```
 
 ```
-## [1] id  x   y   z   exp
-## <0 rows> (or 0-length row.names)
+##          id   x  y z     exp
+## 1 person_ a  99 99 6    test
+## 5 person_ e  57 21 7    test
+## 7 person_ g 100 33 8 control
 ```
 
 ```r
@@ -419,10 +421,10 @@ subset(df3, id %in% match)
 ```
 
 ```
-##           id  x   y   z     exp
-## 8  person_ h 77  65  13    test
-## 9  person_ i 38  21  33    test
-## 10 person_ j 55 100 100 control
+##           id  x  y  z     exp
+## 8  person_ h 33 82 15    test
+## 9  person_ i 62 80 54 control
+## 10 person_ j 89 78 81    test
 ```
 
 ## AND OR %in% exercise
@@ -434,7 +436,7 @@ Will be using the Pokemon dataset again for this exercise.
 3)  You should now have a dataset with pokemon that are either fire, water, or grass in the Type.1 or Type.2 columns. Run `summary()` to review your data.
 4)  It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using `factor()` make the Type.1 and Type.2 columns into factors.
 5)  Run `summary()` again on your dataset, you will see counts for your Type 1 & 2 columns.
-6)  Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint: table(data\$col)*
+6)  Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint:* `table(data$col)`
 7)  Now, using subsetting, find out which of your fire, grass or water pokemon have a Speed and Attack stat greater than or equal to 90
 8)  Test out the same conditions but use OR instead.
 
@@ -466,7 +468,7 @@ paste("No pizza for you") }
 ## [1] "Yes I can afford pizza!"
 ```
 
-If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: *the test (x \< y), what happens when true, and what happens when false (the else)*. This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and does the same.
+If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: the test: (x < y), what happens when true, and what happens when false (the else). This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and does the same.
 
 
 ```r
@@ -492,17 +494,17 @@ df3[, c('x','cat')]
 ```
 
 ```
-##     x    cat
-## 1  47 medium
-## 2  51 medium
-## 3  85   high
-## 4  11    low
-## 5  36 medium
-## 6  67   high
-## 7  87   high
-## 8  77   high
-## 9  38 medium
-## 10 55 medium
+##      x    cat
+## 1   99   high
+## 2   98   high
+## 3   88   high
+## 4    8    low
+## 5   57 medium
+## 6   29    low
+## 7  100   high
+## 8   33    low
+## 9   62 medium
+## 10  89   high
 ```
 
 When nesting if statements like this, *else* becomes the next ifelse statement.
@@ -535,7 +537,7 @@ In this coding challenge we are going to keep looking at the pokemon data. In th
 2)  Next we need to make a dataset called ash, and subset out all his pokemon using %in% as shown above
 3)  Now using `mean()` compare the mean Total for Ash's pokemon and the rest in the pokemon data *hint: putting both mean functions in a c function will allow you to see them side by side*
 4)  Looks like Ash's pokemon on average are worse, but by how much? Work out the difference between the total of Ash's pokemon and the other pokemon.
-5)  Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. *hint: table(data*$name, data$total \>= mean(data2\$total))
+5)  Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. hint: `table(data$name, data$total >= mean(data2$total))`
 6)  Having stats over or equal to 100 seems important. Using subsetting and OR statements, find out how many of Ash's pokemon have stats in HP,Attack,Defense,Sp..Atk,Sp..Def, and Speed over or equal to 100.
 
 

@@ -84,10 +84,10 @@ In order to test conditions we need conditional operators. Below is a table of c
 
 | Operator | Meaning                  |
 |----------|--------------------------|
-| \>       | Greater than             |
-| \>=      | Greater than or equal to |
-| \<       | Less than                |
-| \<=      | Less than or equal to    |
+| >       | Greater than             |
+| >=      | Greater than or equal to |
+| <       | Less than                |
+| <=      | Less than or equal to    |
 | ==       | Equal to                 |
 | !=       | Not equal to             |
 | !X       | NOT X                    |
@@ -95,7 +95,7 @@ In order to test conditions we need conditional operators. Below is a table of c
 | X & Y    | X AND Y                  |
 | X %in% Y | is X in Y                |
 
-The greater than (\>), or greater than or equal to (\>=) operators test if variable x is greater than y; less than (\<), or less than or equal to (\<=) test if x is less than, or equal to, y. The output is always boolean.
+The greater than (>), or greater than or equal to (>=) operators test if variable x is greater than y; less than (<), or less than or equal to (<=) test if x is less than, or equal to, y. The output is always boolean.
 
 Run the code below to test this out.
 
@@ -105,7 +105,7 @@ Run the code below to test this out.
 18 < 17
 ```
 
-Why is 18 \> 18 false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator.
+Why is 18 > 18 false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator.
 
 You're most likely to use these tests on data frames or vectors. Run the code below to test out using equals to and not equal to on two columns in a data frame.
 
@@ -129,7 +129,7 @@ The *equal to* test tells us where x and y have the same data, *not equal to* do
 
 ```{r}
 "pizza" == "bad"
-"pizza" == "pizza"
+"pizza" != "bad"
 ```
 
 ## Conditional operator task
@@ -137,9 +137,10 @@ The *equal to* test tells us where x and y have the same data, *not equal to* do
 Using conditional operators work out the following:
 
 1)  Is 70 less than or equal to 11?
-2)  Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (\<) 50, and how many are greater then or equal to (\>=) 50.
-3)  Using the following vector, `pets <- c(rep('cat',5), rep('fish',11), rep('dog',6))`, count how many fish there are.
-4)  Using the same pets vector, how many pets are not fish?
+2)  Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (<) 50
+3)  Now count how many elements in *z* are greater then or equal to (>=) 50.
+4)  Using the following vector, `pets <- c(rep('cat',5), rep('fish',11), rep('dog',6))`, count how many fish there are.
+5)  Using the same pets vector, how many pets are not fish?
 
 ```{r}
 # your code here
@@ -186,11 +187,11 @@ subset(df, y <= 40)
 
 In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing.
 
-1)  Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: <https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv>
+1)  Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv
 2)  Get information on your loaded data using the `str()`, `head()` and `View()` functions.
 3)  Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
 4)  Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
-5)  There are some very low stats for Attack, Defense, and Speed. Use `which.min()` to find out which pokemon have these stats. *hint: data[which.min(data\$col),]*.
+5)  There are some very low stats for Attack, Defense, and Speed. Use `which.min()` to find out which pokemon have these stats. *hint:* `data[which.min(data$col),]`.
 6)  The attack stat seems to have the highest mean (other than HP). Using `sum()` find out how many of your high HP pokemon have an Attack stat greater than or equal to 100.
 7)  Finally, find out who those pokemon are. *hint: use subsetting*
 
@@ -270,7 +271,7 @@ Will be using the Pokemon dataset again for this exercise.
 3)  You should now have a dataset with pokemon that are either fire, water, or grass in the Type.1 or Type.2 columns. Run `summary()` to review your data.
 4)  It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using `factor()` make the Type.1 and Type.2 columns into factors.
 5)  Run `summary()` again on your dataset, you will see counts for your Type 1 & 2 columns.
-6)  Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint: table(data\$col)*
+6)  Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint:* `table(data$col)`
 7)  Now, using subsetting, find out which of your fire, grass or water pokemon have a Speed and Attack stat greater than or equal to 90
 8)  Test out the same conditions but use OR instead.
 
@@ -285,7 +286,7 @@ Will be using the Pokemon dataset again for this exercise.
 
 The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means running a test to determine which operation or output is given, controlling the flow of your code. They work as follows: If statement is true, do this, else do something else.
 
-If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens.
+If you're doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens.
 
 ```{r}
 # pizza variables
@@ -297,10 +298,10 @@ paste("Yes I can afford pizza!") } else {
 paste("No pizza for you") }
 ```
 
-If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: *the test (x \< y), what happens when true, and what happens when false (the else)*. This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and does the same.
+If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: the test: (x < y), what happens when true, and what happens when false (the else). This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and has the same functionality.
 
 ```{r}
-pizza_price <- c(7, 11, 9, 10.5)
+pizza_price <- c(7, 11, 10.5, 9)
 bank_balance <- 10
 ifelse(bank_balance >= pizza_price, "Yes I can afford pizza!", "No pizza for you")
 ```
@@ -334,7 +335,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=R5:ConditionalsandLogic&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5XYlTL1NP38_8kLKxeTJVA?e=GVBwQZ>
+https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=R5:ConditionalsandLogic&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5XYlTL1NP38_8kLKxeTJVA?e=GVBwQZ
 
 The solutions will be available from a link at the end of the survey.
 
@@ -346,7 +347,7 @@ In this coding challenge we are going to keep looking at the pokemon data. In th
 2)  Next we need to make a dataset called ash, and subset out all his pokemon using %in% as shown above
 3)  Now using `mean()` compare the mean Total for Ash's pokemon and the rest in the pokemon data *hint: putting both mean functions in a c function will allow you to see them side by side*
 4)  Looks like Ash's pokemon on average are worse, but by how much? Work out the difference between the total of Ash's pokemon and the other pokemon.
-5)  Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. *hint: table(data*$name, data$total \>= mean(data2\$total))
+5)  Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. hint: `table(data$name, data$total >= mean(data2$total))`
 6)  Having stats over or equal to 100 seems important. Using subsetting and OR statements, find out how many of Ash's pokemon have stats in HP,Attack,Defense,Sp..Atk,Sp..Def, and Speed over or equal to 100.
 
 ```{r}
