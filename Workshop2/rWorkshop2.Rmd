@@ -207,7 +207,7 @@ https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D046-R2VFI&topic
 
 The solutions will be available from a link at the end of the survey.
 
-## Individual coding challenge 1
+# Individual coding challenge 1
 
 You decide to calculate your commuting times over a weekly period. You decide to see if you can workout, based off your weekly commute, how much commuting you will do on average this month.
 
