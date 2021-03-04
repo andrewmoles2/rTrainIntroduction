@@ -9,6 +9,9 @@ output:
     theme: readable
     highlight: pygments
     keep_md: yes
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 # What will this workshop cover?

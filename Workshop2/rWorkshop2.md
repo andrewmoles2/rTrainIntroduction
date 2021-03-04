@@ -3,12 +3,15 @@ title: "R Workshop 2 - Vectors, functions, and indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "20 January, 2021"
+date: "04 March, 2021"
 output: 
   html_document: 
     theme: readable
     highlight: pygments
     keep_md: yes
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 # What will this workshop cover?
