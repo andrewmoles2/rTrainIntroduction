@@ -84,10 +84,10 @@ In order to test conditions we need conditional operators. Below is a table of c
 
 | Operator | Meaning                  |
 |----------|--------------------------|
-| >       | Greater than             |
-| >=      | Greater than or equal to |
-| <       | Less than                |
-| <=      | Less than or equal to    |
+| \>       | Greater than             |
+| \>=      | Greater than or equal to |
+| \<       | Less than                |
+| \<=      | Less than or equal to    |
 | ==       | Equal to                 |
 | !=       | Not equal to             |
 | !X       | NOT X                    |
@@ -95,7 +95,7 @@ In order to test conditions we need conditional operators. Below is a table of c
 | X & Y    | X AND Y                  |
 | X %in% Y | is X in Y                |
 
-The greater than (>), or greater than or equal to (>=) operators test if variable x is greater than y; less than (<), or less than or equal to (<=) test if x is less than, or equal to, y. The output is always boolean.
+The greater than (\>), or greater than or equal to (\>=) operators test if variable x is greater than y; less than (\<), or less than or equal to (\<=) test if x is less than, or equal to, y. The output is always boolean.
 
 Run the code below to test this out.
 
@@ -105,7 +105,7 @@ Run the code below to test this out.
 18 < 17
 ```
 
-Why is 18 > 18 false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator.
+Why is 18 \> 18 false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator.
 
 You're most likely to use these tests on data frames or vectors. Run the code below to test out using equals to and not equal to on two columns in a data frame.
 
@@ -137,8 +137,8 @@ The *equal to* test tells us where x and y have the same data, *not equal to* do
 Using conditional operators work out the following:
 
 1)  Is 70 less than or equal to 11?
-2)  Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (<) 50
-3)  Now count how many elements in *z* are greater then or equal to (>=) 50.
+2)  Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (\<) 50
+3)  Now count how many elements in *z* are greater then or equal to (\>=) 50.
 4)  Using the following vector, `pets <- c(rep('cat',5), rep('fish',11), rep('dog',6))`, count how many fish there are.
 5)  Using the same pets vector, how many pets are not fish?
 
@@ -187,7 +187,7 @@ subset(df, y <= 40)
 
 In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing.
 
-1)  Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv
+1)  Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: <https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv>
 2)  Get information on your loaded data using the `str()`, `head()` and `View()` functions.
 3)  Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
 4)  Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
@@ -298,7 +298,7 @@ paste("Yes I can afford pizza!") } else {
 paste("No pizza for you") }
 ```
 
-If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: the test: (x < y), what happens when true, and what happens when false (the else). This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and has the same functionality.
+If you have a vector with multiple elements you can use the built in `ifelse()` function. The make up of this function is: the test: (x \< y), what happens when true, and what happens when false (the else). This function will compare each element for you. `ifelse()` is generally easier to use than the if statement and has the same functionality.
 
 ```{r}
 pizza_price <- c(7, 11, 10.5, 9)
@@ -321,7 +321,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 ## ifelse exercise
 
 1)  Using `ifelse()` on the Speed column in the pokemon data use the following condition: if speed is greater than or equal to 100 they are fast, otherwise they are slow.
-2)  We need a bit more classification. This time make a new column called *SpeedTier*, using `ifelse()` on the following conditions: if Speed >= 110, very fast, if Speed < 110 & >= 90, fast, if Speed < 90 & >= 70, not so fast, else slow. *hint: use a nested ifelse()*
+2)  We need a bit more classification. This time make a new column called *SpeedTier*, using `ifelse()` on the following conditions: if Speed \>= 110, very fast, if Speed \< 110 & \>= 90, fast, if Speed \< 90 & \>= 70, not so fast, else slow. *hint: use a nested ifelse()*
 3)  Make Type.1 a factor, and make SpeedTier a factor with a level order of: very fast, fast,not so fast, and slow.
 4)  Using `table()` compare SpeedTier with Type.1. You will be able to see counts of which speed tier different types of pokemon are in. hint: `table(data$col1, data$col2)`
 
@@ -335,7 +335,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=R5:ConditionalsandLogic&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5XYlTL1NP38_8kLKxeTJVA?e=GVBwQZ
+<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=R5:ConditionalsandLogic&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5XYlTL1NP38_8kLKxeTJVA?e=GVBwQZ>
 
 The solutions will be available from a link at the end of the survey.
 
