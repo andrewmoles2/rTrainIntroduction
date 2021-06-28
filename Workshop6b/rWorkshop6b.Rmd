@@ -1,0 +1,29 @@
+---
+title: "R Workshop 6b - Tidyverse continued"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
+---
+
+Second tidyverse workshop to be called R 6b - Tidyverse continued
+
+Introduction to tidyr
+
+Dealing with Na values
+
+Joining data
+
+Cleaning column names
+
+Grouping and aggregation - if time, if not, next workshop is aggregation (basically have materials already) > then data viz. Needs to include broadcasting options (add count and add tally)
+
+Packages to be used: magrittr, dplyr, tidyr, janitor, and readr (just for data loading)
