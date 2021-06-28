@@ -1,0 +1,67 @@
+---
+title: "R Workshop 6a - Introduction to the Tidyverse"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
+---
+
+Introduction to tidy data
+
+Introduction to pipes
+
+Introduction to dplyr
+
+Cover key functions such as select, filter, and mutate
+
+Joins
+
+Packages to be used: magrittr, dplyr, tidyr, and readr (just for data loading)
+
+Nice reference point - https://jhudatascience.org/tidyversecourse/index.html
+
+# What is the tidyverse?
+
+# What is tidy data? 
+
+Give an example of tidy data and untidy data (with actual or made data)
+
+# Intro to pipes
+
+The pipe operator is for chaining a sequence of operations together.
+
+```{r}
+library(magrittr)
+
+# 20 randomly selected data points, from 1 to 10
+x <- sample(1:10, 20, replace = TRUE)
+y <- sample(1:10, 20, replace = TRUE)
+
+# magrittr pipe
+x_mean <- x %>%
+  mean() %>%
+  round(digits = 2)
+
+x_mean
+
+# naive R pipe
+y_mean <- y |>
+  mean() |>
+  round(digits = 2)
+
+y_mean
+```
+
+
+# Introduction to dplyr
+
+
+# Joining data
