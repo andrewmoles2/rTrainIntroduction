@@ -27,3 +27,78 @@ Cleaning column names
 Grouping and aggregation - if time, if not, next workshop is aggregation (basically have materials already) > then data viz. Needs to include broadcasting options (add count and add tally)
 
 Packages to be used: magrittr, dplyr, tidyr, janitor, and readr (just for data loading)
+
+
+
+# Materials for next workshop
+
+## Joining data
+
+We will join up our bechdel data to our imdb data. We have to do some tidying first. 
+
+```{r}
+library(readr)
+
+bechdel <- read_csv("data/raw_bechdel.csv")
+
+# use rename to change imdb_title_id to imdb_id
+movies_imdb %>%
+  rename(imdb_id = imdb_title_id) -> movies_imdb
+
+# fix ids so they match (remove tt and 0's)
+movies_imdb$imdb_id <- parse_number(movies_imdb$imdb_id)
+
+head(bechdel)
+head(movies_imdb)
+```
+
+## data viz
+
+```{r}
+library(ggplot2)
+
+movies_imdb %>%
+  filter(country == 'USA') %>%
+  filter(reviews_from_critics > 10) %>%
+  ggplot(aes(avg_vote, reviews_from_critics)) +
+  geom_point() + 
+  geom_smooth(method = 'lm')
+
+movies_imdb %>%
+  filter(country == 'USA') %>%
+  filter(reviews_from_critics > 10) %>%
+  ggplot(aes(avg_vote, duration)) +
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+## Sampling explaination
+
+```{r}
+movies_imdb[grepl("Leonardo DiCaprio", movies_imdb$actors), ]
+```
+
+
+If you are curious about how the sample function works, which we used earlier, run the below code several times, reviewing the histogram it produces. This process is known as sampling with replacement, which means from our sample (numbers 1 to 10) we randomly extract a set number of values (20 in our example) which can be duplicates (extract the same number more than once). 
+
+```{r}
+# sample with replacement
+rand_num <- sample(1:10, 20, replace = TRUE)
+# plot using hist function
+hist(rand_num, breaks = 0:10)
+# add line for mean
+abline(v=mean(rand_num),col="darkblue")
+```
+
+Sampling without replacement means we don't extract the same number more than once, this means the number we extract must be less than the amount of data in our sample; in our second example we have 1 to 10 and are extract 5 values.
+
+```{r}
+# sample without replacement
+rand_num2 <- sample(1:10, 5, replace = FALSE)
+# plot using hist function
+hist(rand_num2, breaks = 0:10)
+# add line for mean
+abline(v=mean(rand_num2),col="darkgreen")
+```
+
+
