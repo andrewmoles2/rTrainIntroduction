@@ -1,5 +1,5 @@
 ---
-title: "R Workshop 6b - Tidyverse continued"
+title: "R Workshop 7 - Tidyverse continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
