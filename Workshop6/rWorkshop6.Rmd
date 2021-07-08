@@ -1,5 +1,5 @@
 ---
-title: "R Workshop 6 - Introduction to the Tidyverse"
+title: "R Workshop 6 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
@@ -20,9 +20,11 @@ Nice reference point - https://jhudatascience.org/tidyversecourse/index.html
 
 # What is the tidyverse?
 
-The tidyverse is a collection of R packages that are designed for data science. These packages share design, syntax, and philosophy. These packages cover the import of data (`readr`), manipulation and transformation of data (`dplyr`, `tidyr`, `stringr`, `purrr`, `forcats`, and `lubridate`), visualisation (`ggplot` and it's extensions), and analysis (`tidymodels`). 
 
-Essentially, the tidyverse makes data science in R less painless, improving your experience of R and data science. 
+
+The tidyverse is a collection of R packages that are designed for data science. These packages share design, syntax, and philosophy. These packages cover the import of data (`readr` and `haven`), manipulation and transformation of data (`dplyr`, `tidyr`, `stringr`, `purrr`, `forcats`, and `lubridate`), visualisation (`ggplot` and it's extensions), and analysis (`tidymodels`). 
+
+Essentially, the tidyverse makes data science in R less painless, improving your experience of R and data science, especially in the data cleaning and wrangling stages. 
 
 # What is tidy data? 
 
@@ -265,7 +267,7 @@ library(readr)
 library(dplyr)
 
 # load data
-movies_imdb <- read_csv("data/IMDb movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
 
 # use glimpse to review data (tidyverse version of str())
 movies_imdb %>% glimpse()
