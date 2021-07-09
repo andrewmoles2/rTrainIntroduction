@@ -158,7 +158,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 5.6"
+## [1] "Mean value of y is 5.7"
 ```
 
 Now lets have a look at how to do this same set of operations with a pipe. There are two ways, but both work the same. You can either assign the result at the beginning of your pipe operation, or at the end, as shown in the examples.
@@ -177,7 +177,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.8"
+## [1] "Mean value of x is 5.25"
 ```
 
 ```r
@@ -191,7 +191,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.8"
+## [1] "Mean value of x is 5.25"
 ```
 
 It is also worth mentioning that as of version 4.1 of R, base R comes with a native pipe operator. This has just been introduced, and may get more use in examples you'll see online in the future. The syntax uses \|\> as the pipe, and the structure is the same as a magrittr pipe.
@@ -211,7 +211,7 @@ z_mean
 ```
 
 ```
-## [1] 5.15
+## [1] 6.5
 ```
 
 ```r
@@ -223,7 +223,7 @@ z_mean
 ```
 
 ```
-## [1] 5.15
+## [1] 6.5
 ```
 
 We will be using the magrittr pipe for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
@@ -244,6 +244,23 @@ library(magrittr)
 temperature <- c(10, 16, 12, 15, 14, 15, 20)
 
 # your code here
+temperature %>%
+  median() %>%
+  paste("median temp is", .)
+```
+
+```
+## [1] "median temp is 15"
+```
+
+```r
+temperature %>%
+  max() %>%
+  paste("max temp is", .)
+```
+
+```
+## [1] "max temp is 20"
 ```
 
 # Introduction to dplyr
@@ -560,6 +577,30 @@ movies_imdb %>% glimpse()
 
 ```r
 # your code here
+imdb_sub <- movies_imdb %>%
+  select(imdb_title_id:writer, actors, avg_vote:votes, reviews_from_users:reviews_from_critics)
+
+imdb_sub %>% glimpse()
+```
+
+```
+## Rows: 85,855
+## Columns: 15
+## $ imdb_title_id        <chr> "tt0000009", "tt0000574", "tt0001892", "tt0002101…
+## $ title                <chr> "Miss Jerry", "The Story of the Kelly Gang", "Den…
+## $ year                 <dbl> 1894, 1906, 1911, 1912, 1911, 1912, 1919, 1913, 1…
+## $ date_published       <chr> "1894-10-09", "26/12/1906", "19/08/1911", "13/11/…
+## $ genre                <chr> "Romance", "Biography, Crime, Drama", "Drama", "D…
+## $ duration             <dbl> 45, 70, 53, 100, 68, 60, 85, 120, 120, 55, 121, 5…
+## $ country              <chr> "USA", "Australia", "Germany, Denmark", "USA", "I…
+## $ language             <chr> "None", "None", NA, "English", "Italian", "Englis…
+## $ director             <chr> "Alexander Black", "Charles Tait", "Urban Gad", "…
+## $ writer               <chr> "Alexander Black", "Charles Tait", "Urban Gad, Ge…
+## $ actors               <chr> "Blanche Bayliss, William Courtenay, Chauncey Dep…
+## $ avg_vote             <dbl> 5.9, 6.1, 5.8, 5.2, 7.0, 5.7, 6.8, 6.2, 6.7, 5.5,…
+## $ votes                <dbl> 154, 589, 188, 446, 2237, 484, 753, 273, 198, 225…
+## $ reviews_from_users   <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, NA…
+## $ reviews_from_critics <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, 2…
 ```
 
 # Filter function
@@ -676,6 +717,42 @@ We are going to filter our subsetted (`imdb_sub`) data to find the best rated fi
 
 ```r
 # your code here
+# several filters
+USA_1989_high <- imdb_sub %>%
+  filter(country == "USA") %>%
+  filter(year == 1989) %>%
+  filter(avg_vote >= 7.5 & reviews_from_critics > 10)
+
+# single filter
+USA_1989_high <- imdb_sub %>%
+  filter(country == "USA" &
+           year == 1989 &
+           avg_vote >= 7.5 &
+           reviews_from_critics > 10)
+
+# print result
+USA_1989_high
+```
+
+```
+## # A tibble: 12 x 15
+##    imdb_title_id title     year date_published genre  duration country language 
+##    <chr>         <chr>    <dbl> <chr>          <chr>     <dbl> <chr>   <chr>    
+##  1 tt0096754     The Aby…  1989 22/12/1989     Adven…      171 USA     English  
+##  2 tt0096874     Back to…  1989 22/12/1989     Adven…      108 USA     English  
+##  3 tt0097123     Crimes …  1989 20/02/1990     Comed…      104 USA     English,…
+##  4 tt0097165     Dead Po…  1989 29/09/1989     Comed…      128 USA     English,…
+##  5 tt0097216     Do the …  1989 17/11/1989     Comed…      120 USA     English,…
+##  6 tt0097351     Field o…  1989 05/05/1989     Drama…      107 USA     English  
+##  7 tt0097441     Glory     1989 16/02/1990     Biogr…      122 USA     English  
+##  8 tt0097576     Indiana…  1989 06/10/1989     Actio…      127 USA     English,…
+##  9 tt0097757     The Lit…  1989 06/12/1990     Anima…       83 USA     English,…
+## 10 tt0097958     Nationa…  1989 01/12/1989     Comedy       97 USA     English  
+## 11 tt0098635     When Ha…  1989 05/01/1990     Comed…       95 USA     English  
+## 12 tt0100049     Longtim…  1989 01/05/1990     Drama…       96 USA     English  
+## # … with 7 more variables: director <chr>, writer <chr>, actors <chr>,
+## #   avg_vote <dbl>, votes <dbl>, reviews_from_users <dbl>,
+## #   reviews_from_critics <dbl>
 ```
 
 You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
@@ -812,6 +889,22 @@ You should get a data frame returned that has the films: The Abyss, Dead Poets S
 
 ```r
 # your code here
+
+# user critic review ratio
+USA_1989_high %>%
+  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2)) %>%
+  select(title, avg_vote, user_critic_ratio) %>%
+  filter(user_critic_ratio > 4)
+```
+
+```
+## # A tibble: 4 x 3
+##   title              avg_vote user_critic_ratio
+##   <chr>                 <dbl>             <dbl>
+## 1 The Abyss               7.6              4.08
+## 2 Dead Poets Society      8.1              5.98
+## 3 Do the Right Thing      7.9              4.72
+## 4 Glory                   7.8              6.18
 ```
 
 We can see we get more user reviews than critic reviews, which makes sense; for example, the The Abyss has 4 user reviews for each critic review.
@@ -834,6 +927,30 @@ imdb_sub |>
   filter(duration < 120 & avg_vote >= 8.5)
 ```
 
+
+```r
+# answer for solutions
+# Re using the user_critic_ratio variable
+
+imdb_sub %>%
+  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
+         ratio_string = paste(title, "has a user to critic ratio of", user_critic_ratio)) %>%
+  filter(country == "USA" & year < 1990) %>%
+  filter(duration < 120 & avg_vote >= 8.5) %>%
+  select(title, year, avg_vote, ratio_string)
+```
+
+```
+## # A tibble: 6 x 4
+##   title             year avg_vote ratio_string                                  
+##   <chr>            <dbl>    <dbl> <chr>                                         
+## 1 City Lights       1931      8.5 City Lights has a user to critic ratio of 2.42
+## 2 Modern Times      1936      8.5 Modern Times has a user to critic ratio of 2.…
+## 3 Casablanca        1942      8.5 Casablanca has a user to critic ratio of 6.65 
+## 4 12 Angry Men      1957      8.9 12 Angry Men has a user to critic ratio of 10…
+## 5 Psycho            1960      8.5 Psycho has a user to critic ratio of 5.44     
+## 6 Back to the Fut…  1985      8.5 Back to the Future has a user to critic ratio…
+```
 
 # Mutate with the across function
 
@@ -1035,6 +1152,41 @@ Lets go back to our imdb_sub data. We want to extract films from 1990 through to
 
 ```r
 # your code here
+
+# first way of doing this
+imdb_sub %>% 
+  filter(year >= 1990 & year <= 1995 &
+           country == "USA" & avg_vote >= 7.5) %>%
+  mutate(across(where(is.character), as.factor),
+         year = as.factor(year)) -> USA_early90_high
+
+# second way of doing this
+to_factor <- c("year")
+
+imdb_sub %>% 
+  filter(year >= 1990 & year <= 1995 &
+           country == "USA" & avg_vote >= 7.5) %>%
+  mutate(across(where(is.character), as.factor),
+         across(any_of(to_factor), as.factor)) -> USA_early90_high
+
+# highest rated with title, avg_vote, and year
+USA_early90_high %>%
+  filter(avg_vote >= 8.5) %>%
+  select(title, avg_vote, year)
+```
+
+```
+## # A tibble: 8 x 3
+##   title                    avg_vote year 
+##   <fct>                       <dbl> <fct>
+## 1 Goodfellas                    8.7 1990 
+## 2 The Silence of the Lambs      8.6 1991 
+## 3 Schindler's List              8.9 1993 
+## 4 Forrest Gump                  8.8 1994 
+## 5 The Lion King                 8.5 1994 
+## 6 Pulp Fiction                  8.9 1994 
+## 7 The Shawshank Redemption      9.3 1994 
+## 8 Se7en                         8.6 1995
 ```
 
 # Final task - Please give us your individual feedback!
@@ -1069,6 +1221,41 @@ Potter <- c("Harry Potter and the Sorcerer's Stone", "Harry Potter and the Chamb
             "Harry Potter and the Deathly Hallows: Part 1", "Harry Potter and the Deathly Hallows: Part 2")
 
 # your code here
+
+Tolkien_Potter <- imdb_sub %>%
+  filter(title %in% Tolkien | title %in% Potter) %>%
+  mutate(duration_hours = duration * 0.0166667) %>%
+  select(title, year, avg_vote, duration, duration_hours) 
+
+filter(Tolkien_Potter, avg_vote > mean(avg_vote))
+```
+
+```
+## # A tibble: 4 x 5
+##   title                                    year avg_vote duration duration_hours
+##   <chr>                                   <dbl>    <dbl>    <dbl>          <dbl>
+## 1 The Lord of the Rings: The Fellowship …  2001      8.8      178           2.97
+## 2 The Lord of the Rings: The Return of t…  2003      8.9      201           3.35
+## 3 The Lord of the Rings: The Two Towers    2002      8.7      179           2.98
+## 4 Harry Potter and the Deathly Hallows: …  2011      8.1      130           2.17
+```
+
+```r
+filter(Tolkien_Potter, duration_hours < mean(duration_hours))
+```
+
+```
+## # A tibble: 8 x 5
+##   title                                    year avg_vote duration duration_hours
+##   <chr>                                   <dbl>    <dbl>    <dbl>          <dbl>
+## 1 Harry Potter and the Sorcerer's Stone    2001      7.6      152           2.53
+## 2 Harry Potter and the Prisoner of Azkab…  2004      7.9      142           2.37
+## 3 Harry Potter and the Goblet of Fire      2005      7.7      157           2.62
+## 4 Harry Potter and the Order of the Phoe…  2007      7.5      138           2.30
+## 5 Harry Potter and the Half-Blood Prince   2009      7.6      153           2.55
+## 6 Harry Potter and the Deathly Hallows: …  2010      7.7      146           2.43
+## 7 Harry Potter and the Deathly Hallows: …  2011      8.1      130           2.17
+## 8 The Hobbit: The Battle of the Five Arm…  2014      7.4      144           2.40
 ```
 
 
