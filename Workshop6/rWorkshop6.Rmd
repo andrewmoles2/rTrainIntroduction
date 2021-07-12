@@ -496,7 +496,7 @@ Lets go back to our imdb_sub data. We want to extract films from 1990 through to
 
 This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
 
-Add survey link here
+**Add survey link here**
 
 The solutions we be available from a link at the end of the survey.
 

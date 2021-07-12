@@ -14,32 +14,121 @@ output:
     toc_float: TRUE
 ---
 
-Second tidyverse workshop to be called R 6b - Tidyverse continued
+# What this workshop will cover
 
-Introduction to tidyr
+-  Changing column names
+-  Relational joining of datasets
+-  Grouping and aggregating your data
+-  Rowwise aggregations
 
-Dealing with Na values
+## Why this style?
 
-Joining data
+-   Online training is tiring so keeping the sessions to one hour
+-   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
+-   Trainer support to guide through process of learning
 
-Cleaning column names
+## We will be working in pairs:
 
-Grouping and aggregation - if time, if not, next workshop is aggregation (basically have materials already) > then data viz. Needs to include broadcasting options (add count and add tally)
+-   Option to work together on worksheet or to work individually
+-   If possible have your camera on and introduce yourself to each other
 
-Packages to be used: magrittr, dplyr, tidyr, janitor, and readr (just for data loading)
+## What to do when getting stuck:
+
+1)  Ask your team members
+2)  Search online:
+-   The answer box on the top of Google's results page
+-   stackoverflow.com (for task-specific solutions)
+-   <https://www.r-bloggers.com/> (topic based tutorials)
+3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
+
+------------------------------------------------------------------------
+
+# Rename function to change column names
 
 
 
-# Materials for next workshop
+# Joining data
 
-## Joining data
+```{r}
+# load dplyr
+library(dplyr)
 
-We will join up our bechdel data to our imdb data. We have to do some tidying first. 
+# Make a person information data frame
+Person_Info <- data.frame(
+  ID_num = seq(1:6),
+  Name = c("Andrew", "Chloe", "Antony", "Cleopatra", "Zoe", "Nathan"),
+  Age = c(28, 26, 19, 35, 21, 42)
+  )
+
+Person_Info
+
+# Make a food information data frame
+Food_Info <- data.frame(
+  ID = c(1, 4, 7),
+  Fav_Food = c("Pizza", "Pasta con il pesto alla Trapanese", "Egg fried rice"),
+  Allergic = c(NA, "Soy", "Shellfish")
+)
+
+Food_Info
+```
+
+```{r eval=FALSE}
+# doesn't work...
+inner_join(Person_Info, Food_Info)
+```
+
+
+![]("images/1.jpg")
+```{r}
+# fix the id column name to match
+Person_Info <- Person_Info %>%
+  rename(ID = ID_num)
+
+# Inner join (just the id matches)
+inner_join(Person_Info, Food_Info)
+```
+
+![]("images/2.jpg")
+```{r}
+# left join 
+left_join(Person_Info, Food_Info)
+```
+
+![]("images/3.jpg")
+```{r}
+# right join
+right_join(Person_Info, Food_Info)
+```
+
+![]("images/4.jpg")
+```{r}
+# full join
+full_join(Person_Info, Food_Info)
+```
+
+
+## Joining data exercise
+
+For this workshop you'll be using the imdb data we used in the previous workshop. We will also be using the Bechdel Test flim data. What is the Bechdel test?
+
+The Bechdel test is a simple test with three criteria, which films are scored on:
+1) Film has at least two women in it
+2) The two, or more, women talk to each other
+3) The two, or more, women talk about something besides a man
+
+Films are scored 0 to 3. They score 0 if they don't meet any of the criteria, and 3 if they meet all of them. 
+
+Lets jump in, and load our data. I've provided the code for loading the data. 
+
+To join the data we have to make sure our joining Id's match. First we change the name, then we remove the text from the imdb data `imdb_title_id` column. 
 
 ```{r}
 library(readr)
+library(dplyr)
 
-bechdel <- read_csv("data/raw_bechdel.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
+
+bechdel <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/raw_bechdel.csv")
 
 # use rename to change imdb_title_id to imdb_id
 movies_imdb %>%
@@ -50,36 +139,16 @@ movies_imdb$imdb_id <- parse_number(movies_imdb$imdb_id)
 
 head(bechdel)
 head(movies_imdb)
+
+test_join <- inner_join(movies_imdb, bechdel, by = c("imdb_id", "title", "year")) %>%
+  select(-id)
 ```
 
-## data viz
+***
 
-```{r}
-library(ggplot2)
+## Extra: Sampling explaination
 
-movies_imdb %>%
-  filter(country == 'USA') %>%
-  filter(reviews_from_critics > 10) %>%
-  ggplot(aes(avg_vote, reviews_from_critics)) +
-  geom_point() + 
-  geom_smooth(method = 'lm')
-
-movies_imdb %>%
-  filter(country == 'USA') %>%
-  filter(reviews_from_critics > 10) %>%
-  ggplot(aes(avg_vote, duration)) +
-  geom_point() + 
-  geom_smooth(method = 'lm')
-```
-
-## Sampling explaination
-
-```{r}
-movies_imdb[grepl("Leonardo DiCaprio", movies_imdb$actors), ]
-```
-
-
-If you are curious about how the sample function works, which we used earlier, run the below code several times, reviewing the histogram it produces. This process is known as sampling with replacement, which means from our sample (numbers 1 to 10) we randomly extract a set number of values (20 in our example) which can be duplicates (extract the same number more than once). 
+If you are curious about how the `sample()` function works, which we used earlier, run the below code several times, reviewing the histogram it produces. This process is known as sampling with replacement, which means from our sample (numbers 1 to 10) we randomly extract a set number of values (20 in our example) which can be duplicates (extract the same number more than once). 
 
 ```{r}
 # sample with replacement
