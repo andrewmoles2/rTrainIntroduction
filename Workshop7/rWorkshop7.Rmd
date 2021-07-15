@@ -18,6 +18,7 @@ output:
 
 -   Changing column names
 -   Relational joining of datasets
+-   Cross tabluation
 -   Grouping and aggregating your data
 -   Rowwise aggregations
 
@@ -231,28 +232,214 @@ imdb_bechdel %>% glimpse()
 imdb_bechdel_full %>% glimpse()
 ```
 
+# Cross tabulation
 
-# Aggregation
+You can perform simple cross tabulation very quickly in R with either the base R `table()` function or `count()` from dplyr. Cross tabulation provides frequencies of categorical data. 
 
-Table and count functions
+In the examples we will look at both the `table` and `count` functions for comparison. First, run the example below to see how to get a frequency table of one categorial variable.
+```{r}
+# Some made up tourist data
+df1 <- data.frame(
+  city = factor(sample(c("Manchester", "Cambridge", "Birmingham", "Bristol"), 20, replace = TRUE)),
+  tourist_rating = sample(1:5, 20, replace = TRUE)
+)
 
+head(df1)
+
+# frequency of one variable
+df1 %>%
+  count(city)
+
+table(df1$city)
+```
+
+We can expand this by using conditional operators in the count or table functions.
+```{r}
+# conditional frequency
+df1 %>%
+  count(city == "Cambridge")
+
+table(df1$city == "Cambridge")
+```
+
+We can also make two way frequency tables to compare two variables next to each other. Notice the difference between the two functions. Count provides the table in a data frame structure, which is easy to work with should you need to, but table is perhaps easier to read initially. 
 
 ```{r}
-names(imdb_bechdel)
-imdb_bechdel %>% count(year, sort = TRUE)
-table(imdb_bechdel$year)
+# two way frequency tables
+df1 %>%
+  count(city, tourist_rating)
+
+table(df1$city, df1$tourist_rating)
+```
+
+We can also apply filtering using count or table functions. With count we use dplyr's filter function, with table we use base r indexing.
+
+```{r}
+df1 %>%
+  filter(tourist_rating == 1 | tourist_rating == 5) %>%
+  count(city, tourist_rating)
+
+table(df1$city, df1$tourist_rating)[, c(1, 5)]
 ```
 
 
-# Grouped aggregation
+## Cross tabluation exercise
 
-More exciting aggregation involes grouping your data using group_by
+Using your `imdb_bechdel` data you just made, do the following cross tabulations using dplyr's `count` function. If you have time, you can also do the same with the base r `table` function.
+
+1) Use count on the rating column in your imdb_bechdel data, which rating has the most results?
+2) Using count on the rating column again, conditionally select ratings greater than 2 *hint: try and do this within the count function*. 
+3) Create a two way cross tabulation with year and rating columns. Filter for the years 1966 or 1996. 
+
+```{r}
+# your code here
+
+# frequency of each value of the bechdel test rating for all data
+imdb_bechdel %>%
+  count(rating)
+
+table(imdb_bechdel$rating)
+
+# Conditional frequency
+imdb_bechdel %>%
+  count(rating > 2)
+
+table(imdb_bechdel$rating > 2)
+
+# two way table (with just two years)
+imdb_bechdel %>% 
+  filter(year == 1966 | year == 1996) %>%
+  count(year, rating)
+
+table(imdb_bechdel$rating, imdb_bechdel$year)[,c("1966", "1996")]
+```
+
+# Aggregation using grouping
+ 
+Frequency tables, like we just use are simple aggregations. They count how many instances of each category you have in your data. You can perform more complicated aggregations by *grouping* your data. 
+
+When doing aggregation with dplyr we use the `group_by()` and `summarise()` functions together. We first *group* our data by a categorical variable, in the below example is three groups (A, B, and C). We then call `summarise()` to perform a function on a column in our data, in this case we sum the num1 column. You get a summary table with the sum per group.
+```{r}
+# make some random data
+df2 <- data.frame(
+  key = factor(sample(c("A", "B", "C"), 20, replace = TRUE)),
+  key2 = factor(sample(c("X", "Y"), 20, replace = TRUE)),
+  num1 = sample(1:10, 20, replace = TRUE),
+  num2 = runif(20, min = 1, max = 10),
+  num3 = rnorm(20, mean = 5, sd = 2.5)
+)
+
+head(df2)
+
+# perform simple grouped aggregation
+df2 %>%
+  group_by(key) %>%
+  summarise(sum = sum(num1))
+```
+
+The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
+
+1) Group your data by a categorical variable
+2) Split your data by that group. You'll end up with several subsets of data
+3) Perform a function, such as a mean or sum function, based on those split subsets of data
+4) Combine the split subsets back together to make a summary table
+
+![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/Aggregation.png?raw=true){width="600"}
+
+
+You can also aggregate more than one variable. 
+
+```{r}
+df2 %>%
+  group_by(key) %>%
+  summarise(sum = sum(num1), sum2 = sum(num2))
+```
+
+
+We can take this a bit further by adding the `n()` function, which counts how many of each category in our grouped variable there are. If you want to add in a relative frequency, we can then pipe to a `mutate` function. We then divide our count by the sum of our count.
+```{r}
+# adding frequency using n()
+df2 %>%
+  group_by(key) %>%
+  summarise(sum = sum(num1), sum2 = sum(num2),
+            count_n = n()) %>%
+  mutate(rel_freq = count_n / sum(count_n))
+
+```
+
+You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits. 
+
+![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/Aggregation_twogroup.png?raw=true){width="600"}
+
+
+To do so, we add an extra categorical column to our `group_by()` function. The ordering of the groups matters. Have a look at both examples with the groups in a different order. 
+```{r}
+# two group aggregation
+df2 %>%
+  group_by(key, key2) %>%
+  summarise(sum = sum(num1), sum2 = sum(num2),
+            count_n = n()) %>%
+  mutate(rel_freq = count_n / sum(count_n))
+
+# flip the groups to see the difference
+df2 %>%
+  group_by(key2, key) %>%
+  summarise(sum = sum(num1), sum2 = sum(num2),
+            count_n = n()) %>%
+  mutate(rel_freq = count_n / sum(count_n))
+```
+
+You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result. 
+```{r}
+# adjusting the grouping structure of the result: drop
+df2 %>%
+  group_by(key, key2) %>%
+  summarise(sum = sum(num1), sum2 = sum(num2),
+            count_n = n(), .groups = "drop") %>%
+  mutate(rel_freq = count_n / sum(count_n))
+
+# keep
+df2 %>%
+  group_by(key, key2) %>%
+  summarise(sum = sum(num1), sum2 = sum(num2),
+            count_n = n(), .groups = "keep") %>%
+  mutate(rel_freq = count_n / sum(count_n))
+```
+
+## Aggregation exercise
+
+```{r}
+head(imdb_bechdel)
+names(imdb_bechdel)
+
+imdb_bechdel %>%
+  filter(year > 2015) %>%
+  group_by(year) %>%
+  summarise(avg_vote_year = mean(avg_vote),
+            avg_bechdel = mean(rating),
+            count_n = n())  
+```
+
+
 
 # Rowwise aggregation
 
 Performing aggregation of rows using either RowMeans or rowwise
 
 ------------------------------------------------------------------------
+
+## Other options for aggregation
+
+We have used dplyr for aggregation here, but there are two other options: the base r `aggregate()` function, or using the data.table package. We have shown some examples here so you are able to compare. 
+
+
+```{r}
+# fun extra, change your frequency to a percentage
+df2 %>%
+  group_by(key2, key) %>%
+  summarise(sum = sum(num1), count_n = n()) %>%
+  mutate(rel_freq = paste0(round(100 * count_n/sum(count_n), 0), "%"))
+```
 
 ## Extra: Sampling explaination
 

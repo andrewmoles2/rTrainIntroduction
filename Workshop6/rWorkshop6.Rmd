@@ -106,7 +106,7 @@ install.packages("")
 
 # Intro to pipes
 
-The pipe operator in R comes from the `magrittr` package, using syntax of %\>%.
+The pipe operator in R comes from the `magrittr` package, using syntax of `%>%`.
 
 The pipe operator is for chaining a sequence of operations together. This has two main advantages: it makes your code more readable, and it saves some typing.
 
@@ -149,7 +149,7 @@ x %>%
 x_mean
 ```
 
-It is also worth mentioning that as of version 4.1 of R, base R comes with a native pipe operator. This has just been introduced, and may get more use in examples you'll see online in the future. The syntax uses \|\> as the pipe, and the structure is the same as a magrittr pipe.
+It is also worth mentioning that as of version 4.1 of R, base R comes with a native pipe operator. This has just been introduced, and may get more use in examples you'll see online in the future. The syntax uses `|>` as the pipe, and the structure is the same as a magrittr pipe.
 
 *note that the native pipe currently doesn't have a placeholder, so we won't use paste in this example*
 
