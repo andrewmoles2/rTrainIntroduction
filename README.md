@@ -14,6 +14,10 @@ Workshop 4b: Data Frames part 2, with packages
 
 Workshop 5: Conditionals and Logic
 
+Workshop 6: Tidyverse introduction with Pipes and dplyr
+
+Workshop 7: Joining and aggregation
+
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
 
 
