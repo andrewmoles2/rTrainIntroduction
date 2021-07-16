@@ -69,10 +69,10 @@ df
 
 ```
 ##   column1 column2 column3
-## 1   Hello      10       1
-## 2   Hello       9       2
-## 3   Hello       2       3
-## 4   Hello       3       4
+## 1   Hello       1       1
+## 2   Hello       6       2
+## 3   Hello       7       3
+## 4   Hello      10       4
 ```
 
 ```r
@@ -87,10 +87,10 @@ df_new_col
 
 ```
 ##   string random sequence
-## 1  Hello     10        1
-## 2  Hello      9        2
-## 3  Hello      2        3
-## 4  Hello      3        4
+## 1  Hello      1        1
+## 2  Hello      6        2
+## 3  Hello      7        3
+## 4  Hello     10        4
 ```
 
 ## Rename columns exercise
@@ -109,6 +109,35 @@ library(dplyr)
 movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
 
 # your code here
+names(movies_imdb)
+```
+
+```
+##  [1] "imdb_title_id"         "title"                 "year"                 
+##  [4] "date_published"        "genre"                 "duration"             
+##  [7] "country"               "language"              "director"             
+## [10] "writer"                "production_company"    "actors"               
+## [13] "description"           "avg_vote"              "votes"                
+## [16] "budget"                "usa_gross_income"      "worlwide_gross_income"
+## [19] "metascore"             "reviews_from_users"    "reviews_from_critics"
+```
+
+```r
+movies_imdb %>%
+  rename(User_reviews = reviews_from_users,
+         Critic_reviews = reviews_from_critics) -> movies_imdb
+
+names(movies_imdb)
+```
+
+```
+##  [1] "imdb_title_id"         "title"                 "year"                 
+##  [4] "date_published"        "genre"                 "duration"             
+##  [7] "country"               "language"              "director"             
+## [10] "writer"                "production_company"    "actors"               
+## [13] "description"           "avg_vote"              "votes"                
+## [16] "budget"                "usa_gross_income"      "worlwide_gross_income"
+## [19] "metascore"             "User_reviews"          "Critic_reviews"
 ```
 
 # Joining data
@@ -336,8 +365,8 @@ movies_imdb %>% glimpse()
 ## $ usa_gross_income      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ worlwide_gross_income <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ metascore             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-## $ reviews_from_users    <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
-## $ reviews_from_critics  <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
+## $ User_reviews          <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
+## $ Critic_reviews        <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
 ```
 
 To join the data we have to make sure the IDs we will be using to join the data match. First we change the name, then we remove the text from the imdb data `imdb_title_id` column.
@@ -351,6 +380,81 @@ To join the data we have to make sure the IDs we will be using to join the data 
 
 ```r
 # your code here
+
+# use rename to change imdb_title_id to imdb_id
+movies_imdb %>%
+  rename(imdb_id = imdb_title_id) -> movies_imdb
+
+# fix ids so they match (remove tt and 0's)
+movies_imdb$imdb_id <- parse_number(movies_imdb$imdb_id)
+
+# inner join to keep just the matches
+imdb_bechdel <- inner_join(movies_imdb, bechdel, by = c("imdb_id", "title", "year"))
+
+# full join with everything 
+imdb_bechdel_full <- full_join(movies_imdb, bechdel, by = c("imdb_id", "title", "year")) 
+
+imdb_bechdel %>% glimpse()
+```
+
+```
+## Rows: 6,084
+## Columns: 23
+## $ imdb_id               <dbl> 574, 2101, 3973, 4972, 6745, 7361, 8443, 8489, 8…
+## $ title                 <chr> "The Story of the Kelly Gang", "Cleopatra", "A F…
+## $ year                  <dbl> 1906, 1912, 1914, 1915, 1916, 1916, 1917, 1917, …
+## $ date_published        <chr> "26/12/1906", "13/11/1912", "04/09/1916", "21/03…
+## $ genre                 <chr> "Biography, Crime, Drama", "Drama, History", "Co…
+## $ duration              <dbl> 70, 100, 63, 195, 58, 63, 65, 70, 78, 91, 70, 84…
+## $ country               <chr> "Australia", "USA", "USA", "USA", "USA", "USA", …
+## $ language              <chr> "None", "English", "English", "None", "English",…
+## $ director              <chr> "Charles Tait", "Charles L. Gaskill", "Sidney Dr…
+## $ writer                <chr> "Charles Tait", "Victorien Sardou", "Marguerite …
+## $ production_company    <chr> "J. and N. Tait", "Helen Gardner Picture Players…
+## $ actors                <chr> "Elizabeth Tait, John Tait, Norman Campbell, Bel…
+## $ description           <chr> "True story of notorious Australian outlaw Ned K…
+## $ avg_vote              <dbl> 6.1, 5.2, 5.8, 6.3, 5.7, 6.2, 6.7, 6.4, 6.1, 5.7…
+## $ votes                 <dbl> 589, 446, 202, 22213, 479, 349, 1266, 130, 770, …
+## $ budget                <chr> "$ 2250", "$ 45000", NA, "$ 100000", NA, NA, NA,…
+## $ usa_gross_income      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ worlwide_gross_income <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ metascore             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ User_reviews          <dbl> 7, 25, 6, 368, 7, 13, 16, 3, 9, 12, 6, 19, 14, 8…
+## $ Critic_reviews        <dbl> 7, 3, 3, 97, 1, 5, 13, 3, 5, 4, 1, 11, 21, 78, 6…
+## $ id                    <dbl> 1349, 2003, 4457, 1258, 2008, 7004, 1994, 2019, …
+## $ rating                <dbl> 1, 2, 2, 2, 3, 3, 3, 2, 3, 0, 3, 3, 3, 0, 3, 3, …
+```
+
+```r
+imdb_bechdel_full %>% glimpse()
+```
+
+```
+## Rows: 88,614
+## Columns: 23
+## $ imdb_id               <dbl> 9, 574, 1892, 2101, 2130, 2199, 2423, 2445, 2452…
+## $ title                 <chr> "Miss Jerry", "The Story of the Kelly Gang", "De…
+## $ year                  <dbl> 1894, 1906, 1911, 1912, 1911, 1912, 1919, 1913, …
+## $ date_published        <chr> "1894-10-09", "26/12/1906", "19/08/1911", "13/11…
+## $ genre                 <chr> "Romance", "Biography, Crime, Drama", "Drama", "…
+## $ duration              <dbl> 45, 70, 53, 100, 68, 60, 85, 120, 120, 55, 121, …
+## $ country               <chr> "USA", "Australia", "Germany, Denmark", "USA", "…
+## $ language              <chr> "None", "None", NA, "English", "Italian", "Engli…
+## $ director              <chr> "Alexander Black", "Charles Tait", "Urban Gad", …
+## $ writer                <chr> "Alexander Black", "Charles Tait", "Urban Gad, G…
+## $ production_company    <chr> "Alexander Black Photoplays", "J. and N. Tait", …
+## $ actors                <chr> "Blanche Bayliss, William Courtenay, Chauncey De…
+## $ description           <chr> "The adventures of a female reporter in the 1890…
+## $ avg_vote              <dbl> 5.9, 6.1, 5.8, 5.2, 7.0, 5.7, 6.8, 6.2, 6.7, 5.5…
+## $ votes                 <dbl> 154, 589, 188, 446, 2237, 484, 753, 273, 198, 22…
+## $ budget                <chr> NA, "$ 2250", NA, "$ 45000", NA, NA, NA, "ITL 45…
+## $ usa_gross_income      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ worlwide_gross_income <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ metascore             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ User_reviews          <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
+## $ Critic_reviews        <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
+## $ id                    <dbl> NA, 1349, NA, 2003, NA, NA, NA, NA, NA, NA, NA, …
+## $ rating                <dbl> NA, 1, NA, 2, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ```
 
 # Cross tabulation
@@ -371,12 +475,12 @@ head(df1)
 
 ```
 ##         city tourist_rating
-## 1  Cambridge              1
-## 2 Birmingham              5
-## 3 Birmingham              4
-## 4 Birmingham              4
-## 5 Birmingham              2
-## 6    Bristol              1
+## 1 Birmingham              4
+## 2 Manchester              1
+## 3  Cambridge              3
+## 4  Cambridge              3
+## 5 Manchester              5
+## 6 Birmingham              4
 ```
 
 ```r
@@ -387,10 +491,10 @@ df1 %>%
 
 ```
 ##         city n
-## 1 Birmingham 8
-## 2    Bristol 5
+## 1 Birmingham 4
+## 2    Bristol 3
 ## 3  Cambridge 6
-## 4 Manchester 1
+## 4 Manchester 7
 ```
 
 ```r
@@ -400,7 +504,7 @@ table(df1$city)
 ```
 ## 
 ## Birmingham    Bristol  Cambridge Manchester 
-##          8          5          6          1
+##          4          3          6          7
 ```
 
 We can expand this by using conditional operators in the count or table functions.
@@ -438,19 +542,20 @@ df1 %>%
 
 ```
 ##          city tourist_rating n
-## 1  Birmingham              1 3
-## 2  Birmingham              2 1
-## 3  Birmingham              4 3
-## 4  Birmingham              5 1
-## 5     Bristol              1 1
-## 6     Bristol              2 1
-## 7     Bristol              3 2
-## 8     Bristol              4 1
-## 9   Cambridge              1 2
-## 10  Cambridge              2 1
-## 11  Cambridge              3 2
-## 12  Cambridge              4 1
-## 13 Manchester              2 1
+## 1  Birmingham              1 1
+## 2  Birmingham              4 2
+## 3  Birmingham              5 1
+## 4     Bristol              1 1
+## 5     Bristol              2 1
+## 6     Bristol              3 1
+## 7   Cambridge              1 1
+## 8   Cambridge              2 1
+## 9   Cambridge              3 3
+## 10  Cambridge              4 1
+## 11 Manchester              1 3
+## 12 Manchester              2 2
+## 13 Manchester              4 1
+## 14 Manchester              5 1
 ```
 
 ```r
@@ -460,10 +565,10 @@ table(df1$city, df1$tourist_rating)
 ```
 ##             
 ##              1 2 3 4 5
-##   Birmingham 3 1 0 3 1
-##   Bristol    1 1 2 1 0
-##   Cambridge  2 1 2 1 0
-##   Manchester 0 1 0 0 0
+##   Birmingham 1 0 0 2 1
+##   Bristol    1 1 1 0 0
+##   Cambridge  1 1 3 1 0
+##   Manchester 3 2 0 1 1
 ```
 
 We can also apply filtering using count or table functions. With count we use dplyr's filter function, with table we use base r indexing.
@@ -477,10 +582,12 @@ df1 %>%
 
 ```
 ##         city tourist_rating n
-## 1 Birmingham              1 3
+## 1 Birmingham              1 1
 ## 2 Birmingham              5 1
 ## 3    Bristol              1 1
-## 4  Cambridge              1 2
+## 4  Cambridge              1 1
+## 5 Manchester              1 3
+## 6 Manchester              5 1
 ```
 
 ```r
@@ -490,10 +597,10 @@ table(df1$city, df1$tourist_rating)[, c(1, 5)]
 ```
 ##             
 ##              1 5
-##   Birmingham 3 1
+##   Birmingham 1 1
 ##   Bristol    1 0
-##   Cambridge  2 0
-##   Manchester 0 0
+##   Cambridge  1 0
+##   Manchester 3 1
 ```
 
 
@@ -508,6 +615,88 @@ Using your `imdb_bechdel` data you just made, do the following cross tabulations
 
 ```r
 # your code here
+
+# frequency of each value of the bechdel test rating for all data
+imdb_bechdel %>%
+  count(rating)
+```
+
+```
+## # A tibble: 4 x 2
+##   rating     n
+##    <dbl> <int>
+## 1      0   519
+## 2      1  1441
+## 3      2   643
+## 4      3  3481
+```
+
+```r
+table(imdb_bechdel$rating)
+```
+
+```
+## 
+##    0    1    2    3 
+##  519 1441  643 3481
+```
+
+```r
+# Conditional frequency
+imdb_bechdel %>%
+  count(rating > 2)
+```
+
+```
+## # A tibble: 2 x 2
+##   `rating > 2`     n
+##   <lgl>        <int>
+## 1 FALSE         2603
+## 2 TRUE          3481
+```
+
+```r
+table(imdb_bechdel$rating > 2)
+```
+
+```
+## 
+## FALSE  TRUE 
+##  2603  3481
+```
+
+```r
+# two way table (with just two years)
+imdb_bechdel %>% 
+  filter(year == 1966 | year == 1996) %>%
+  count(year, rating)
+```
+
+```
+## # A tibble: 8 x 3
+##    year rating     n
+##   <dbl>  <dbl> <int>
+## 1  1966      0     4
+## 2  1966      1    10
+## 3  1966      2     2
+## 4  1966      3     8
+## 5  1996      0     4
+## 6  1996      1    23
+## 7  1996      2     9
+## 8  1996      3    62
+```
+
+```r
+table(imdb_bechdel$rating, imdb_bechdel$year)[,c("1966", "1996")]
+```
+
+```
+##    
+##     1966 1996
+##   0    4    4
+##   1   10   23
+##   2    2    9
+##   3    8   62
 ```
 
 # Aggregation using grouping
@@ -533,12 +722,12 @@ head(df2)
 
 ```
 ##   key key2 num1     num2     num3
-## 1   B    X    9 6.782238 9.569728
-## 2   C    Y    2 2.652997 5.017626
-## 3   B    Y    4 7.498142 6.010212
-## 4   B    X    3 2.548153 1.349955
-## 5   C    X    9 9.809728 3.354930
-## 6   C    Y    4 3.586538 8.408162
+## 1   C    Y    2 8.073429 5.867665
+## 2   C    Y    1 8.403831 2.963707
+## 3   A    Y    8 4.737822 8.296029
+## 4   A    X    2 1.344063 2.966349
+## 5   B    X    8 7.745181 4.509375
+## 6   B    Y    5 5.609830 5.321738
 ```
 
 ```r
@@ -552,9 +741,9 @@ df2 %>%
 ## # A tibble: 3 x 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A         8
-## 2 B        25
-## 3 C        59
+## 1 A        50
+## 2 B        31
+## 3 C        45
 ```
 
 The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
@@ -580,9 +769,9 @@ df2 %>%
 ## # A tibble: 3 x 3
 ##   key    sum1  sum2
 ##   <fct> <int> <dbl>
-## 1 A         8  11.2
-## 2 B        25  37.1
-## 3 C        59  61.2
+## 1 A        50  43.2
+## 2 B        31  36.3
+## 3 C        45  40.9
 ```
 
 
@@ -601,9 +790,9 @@ df2 %>%
 ## # A tibble: 3 x 5
 ##   key    sum1  sum2 count_n rel_freq
 ##   <fct> <int> <dbl>   <int>    <dbl>
-## 1 A         8  11.2       2     0.1 
-## 2 B        25  37.1       7     0.35
-## 3 C        59  61.2      11     0.55
+## 1 A        50  43.2       8     0.4 
+## 2 B        31  36.3       5     0.25
+## 3 C        45  40.9       7     0.35
 ```
 
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits. 
@@ -631,12 +820,12 @@ df2 %>%
 ## # Groups:   key [3]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X         7  1.78       1    0.5  
-## 2 A     Y         1  9.37       1    0.5  
-## 3 B     X        13 12.7        3    0.429
-## 4 B     Y        12 24.4        4    0.571
-## 5 C     X        45 42.1        7    0.636
-## 6 C     Y        14 19.1        4    0.364
+## 1 A     X        16  17.7       3    0.375
+## 2 A     Y        34  25.5       5    0.625
+## 3 B     X        22  22.6       3    0.6  
+## 4 B     Y         9  13.7       2    0.4  
+## 5 C     X        19  12.2       2    0.286
+## 6 C     Y        26  28.6       5    0.714
 ```
 
 ```r
@@ -657,12 +846,12 @@ df2 %>%
 ## # Groups:   key2 [2]
 ##   key2  key    sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 X     A         7  1.78       1   0.0909
-## 2 X     B        13 12.7        3   0.273 
-## 3 X     C        45 42.1        7   0.636 
-## 4 Y     A         1  9.37       1   0.111 
-## 5 Y     B        12 24.4        4   0.444 
-## 6 Y     C        14 19.1        4   0.444
+## 1 X     A        16  17.7       3    0.375
+## 2 X     B        22  22.6       3    0.375
+## 3 X     C        19  12.2       2    0.25 
+## 4 Y     A        34  25.5       5    0.417
+## 5 Y     B         9  13.7       2    0.167
+## 6 Y     C        26  28.6       5    0.417
 ```
 
 You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result. 
@@ -680,12 +869,12 @@ df2 %>%
 ## # A tibble: 6 x 6
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X         7  1.78       1     0.05
-## 2 A     Y         1  9.37       1     0.05
-## 3 B     X        13 12.7        3     0.15
-## 4 B     Y        12 24.4        4     0.2 
-## 5 C     X        45 42.1        7     0.35
-## 6 C     Y        14 19.1        4     0.2
+## 1 A     X        16  17.7       3     0.15
+## 2 A     Y        34  25.5       5     0.25
+## 3 B     X        22  22.6       3     0.15
+## 4 B     Y         9  13.7       2     0.1 
+## 5 C     X        19  12.2       2     0.1 
+## 6 C     Y        26  28.6       5     0.25
 ```
 
 ```r
@@ -702,12 +891,12 @@ df2 %>%
 ## # Groups:   key, key2 [6]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X         7  1.78       1        1
-## 2 A     Y         1  9.37       1        1
-## 3 B     X        13 12.7        3        1
-## 4 B     Y        12 24.4        4        1
-## 5 C     X        45 42.1        7        1
-## 6 C     Y        14 19.1        4        1
+## 1 A     X        16  17.7       3        1
+## 2 A     Y        34  25.5       5        1
+## 3 B     X        22  22.6       3        1
+## 4 B     Y         9  13.7       2        1
+## 5 C     X        19  12.2       2        1
+## 6 C     Y        26  28.6       5        1
 ```
 
 ## Aggregation exercise
@@ -720,6 +909,85 @@ Using the examples above, we are going to create three aggregations from our `im
 
 ```r
 # your code here
+
+# avg_vote by rating
+imdb_bechdel %>%
+  group_by(rating) %>%
+  summarise(avg_vote_rating = median(avg_vote),
+            count_n = n()) 
+```
+
+```
+## # A tibble: 4 x 3
+##   rating avg_vote_rating count_n
+##    <dbl>           <dbl>   <int>
+## 1      0             6.8     519
+## 2      1             6.8    1441
+## 3      2             6.8     643
+## 4      3             6.6    3481
+```
+
+```r
+# avg_vote and duration by year
+imdb_bechdel %>%
+  filter(year > 2015) %>%
+  group_by(year) %>%
+  summarise(avg_vote_year = median(avg_vote),
+            avg_duration = median(duration),
+            count_n = n())  
+```
+
+```
+## # A tibble: 5 x 4
+##    year avg_vote_year avg_duration count_n
+##   <dbl>         <dbl>        <dbl>   <int>
+## 1  2016          6.5          106      241
+## 2  2017          6.4          105      196
+## 3  2018          6.55         106      164
+## 4  2019          6.5          106.     164
+## 5  2020          6.5          102.      44
+```
+
+```r
+# avg_vote and duration by year and rating
+imdb_bechdel %>%
+  filter(year > 2015) %>%
+  group_by(year, rating) %>%
+  summarise(avg_vote_year = median(avg_vote),
+            avg_duration = median(duration),
+            count_n = n()) %>%
+  mutate(rel_freq = round(count_n / sum(count_n), 2))
+```
+
+```
+## `summarise()` has grouped output by 'year'. You can override using the `.groups` argument.
+```
+
+```
+## # A tibble: 20 x 6
+## # Groups:   year [5]
+##     year rating avg_vote_year avg_duration count_n rel_freq
+##    <dbl>  <dbl>         <dbl>        <dbl>   <int>    <dbl>
+##  1  2016      0          6.2          103       15     0.06
+##  2  2016      1          6.7          106       52     0.22
+##  3  2016      2          6.25         103       28     0.12
+##  4  2016      3          6.5          106.     146     0.61
+##  5  2017      0          6.2          101       13     0.07
+##  6  2017      1          6.6          113       37     0.19
+##  7  2017      2          6.1          102.      16     0.08
+##  8  2017      3          6.4          104      130     0.66
+##  9  2018      0          6             85        9     0.05
+## 10  2018      1          6.75         111       24     0.15
+## 11  2018      2          6.6          116       17     0.1 
+## 12  2018      3          6.5          106.     114     0.7 
+## 13  2019      0          7.2          115        9     0.05
+## 14  2019      1          6.7          117       37     0.23
+## 15  2019      2          6.8          109       13     0.08
+## 16  2019      3          6.3          102      105     0.64
+## 17  2020      0          6.65         102        2     0.05
+## 18  2020      1          6.5          104        5     0.11
+## 19  2020      2          5.2          109        1     0.02
+## 20  2020      3          6.5          102.      36     0.82
 ```
 
 # Rowwise aggregation
@@ -745,26 +1013,26 @@ df2 %>%
 ## # A tibble: 20 x 1
 ##    total_avg
 ##        <dbl>
-##  1      8.45
-##  2      3.22
-##  3      5.84
-##  4      2.30
-##  5      7.39
-##  6      5.33
-##  7      3.41
-##  8      7.97
-##  9      4.09
-## 10      5.82
-## 11      2.45
-## 12      5.80
-## 13      5.77
-## 14      4.14
-## 15      4.08
-## 16      7.75
-## 17      3.56
-## 18      7.35
-## 19      3.80
-## 20      2.36
+##  1      5.31
+##  2      4.12
+##  3      7.01
+##  4      2.10
+##  5      6.75
+##  6      5.31
+##  7      8.63
+##  8      5.69
+##  9      3.23
+## 10      7.31
+## 11      7.01
+## 12      6.57
+## 13      6.12
+## 14      5.85
+## 15      6.03
+## 16      6.44
+## 17      5.87
+## 18      5.23
+## 19      5.17
+## 20      4.73
 ```
 
 ```r
@@ -782,26 +1050,26 @@ df2 %>%
 ## # A tibble: 20 x 1
 ##    total_avg
 ##        <dbl>
-##  1      8.45
-##  2      3.22
-##  3      5.84
-##  4      2.30
-##  5      7.39
-##  6      5.33
-##  7      3.41
-##  8      7.97
-##  9      4.09
-## 10      5.82
-## 11      2.45
-## 12      5.80
-## 13      5.77
-## 14      4.14
-## 15      4.08
-## 16      7.75
-## 17      3.56
-## 18      7.35
-## 19      3.80
-## 20      2.36
+##  1      5.31
+##  2      4.12
+##  3      7.01
+##  4      2.10
+##  5      6.75
+##  6      5.31
+##  7      8.63
+##  8      5.69
+##  9      3.23
+## 10      7.31
+## 11      7.01
+## 12      6.57
+## 13      6.12
+## 14      5.85
+## 15      6.03
+## 16      6.44
+## 17      5.87
+## 18      5.23
+## 19      5.17
+## 20      4.73
 ```
 
 If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns. 
@@ -818,26 +1086,26 @@ df2 %>%
 ## # Rowwise: 
 ##    key   key2   num1  num2  num3 total_avg
 ##    <fct> <fct> <int> <dbl> <dbl>     <dbl>
-##  1 B     X         9  6.78  9.57      8.45
-##  2 C     Y         2  2.65  5.02      3.22
-##  3 B     Y         4  7.50  6.01      5.84
-##  4 B     X         3  2.55  1.35      2.30
-##  5 C     X         9  9.81  3.35      7.39
-##  6 C     Y         4  3.59  8.41      5.33
-##  7 B     Y         2  5.72  2.53      3.41
-##  8 C     Y         7  9.23  7.69      7.97
-##  9 C     X         1  6.64  4.63      4.09
-## 10 A     Y         1  9.37  7.07      5.82
-## 11 A     X         7  1.78 -1.43      2.45
-## 12 C     X        10  3.10  4.31      5.80
-## 13 C     X        10  5.75  1.56      5.77
-## 14 B     X         1  3.40  8.01      4.14
-## 15 C     X         2  6.48  3.75      4.08
-## 16 C     X         9  8.50  5.75      7.75
-## 17 C     Y         1  3.64  6.04      3.56
-## 18 B     Y         5  9.73  7.32      7.35
-## 19 C     X         4  1.80  5.61      3.80
-## 20 B     Y         1  1.42  4.65      2.36
+##  1 C     Y         2  8.07  5.87      5.31
+##  2 C     Y         1  8.40  2.96      4.12
+##  3 A     Y         8  4.74  8.30      7.01
+##  4 A     X         2  1.34  2.97      2.10
+##  5 B     X         8  7.75  4.51      6.75
+##  6 B     Y         5  5.61  5.32      5.31
+##  7 A     Y        10  7.37  8.53      8.63
+##  8 C     Y         9  5.88  2.19      5.69
+##  9 A     Y         3  2.48  4.22      3.23
+## 10 B     X        10  4.83  7.10      7.31
+## 11 C     X         9  7.26  4.77      7.01
+## 12 A     X         9  6.41  4.30      6.57
+## 13 B     X         4 10.0   4.36      6.12
+## 14 C     Y         4  3.71  9.84      5.85
+## 15 B     Y         4  8.08  6.01      6.03
+## 16 A     X         5  9.97  4.33      6.44
+## 17 C     X        10  4.98  2.64      5.87
+## 18 C     Y        10  2.55  3.14      5.23
+## 19 A     Y         7  4.48  4.03      5.17
+## 20 A     Y         6  6.42  1.77      4.73
 ```
 
 An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`. 
@@ -849,27 +1117,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_avg
-## 1    B    X    9 6.782238  9.569728  8.450655
-## 2    C    Y    2 2.652997  5.017626  3.223541
-## 3    B    Y    4 7.498142  6.010212  5.836118
-## 4    B    X    3 2.548153  1.349955  2.299369
-## 5    C    X    9 9.809728  3.354930  7.388219
-## 6    C    Y    4 3.586538  8.408162  5.331567
-## 7    B    Y    2 5.716680  2.527597  3.414759
-## 8    C    Y    7 9.230242  7.688049  7.972763
-## 9    C    X    1 6.641735  4.633204  4.091646
-## 10   A    Y    1 9.373589  7.073632  5.815741
-## 11   A    X    7 1.777652 -1.430055  2.449199
-## 12   C    X   10 3.098852  4.313253  5.804035
-## 13   C    X   10 5.747769  1.559590  5.769120
-## 14   B    X    1 3.395330  8.014856  4.136729
-## 15   C    X    2 6.480945  3.750126  4.077023
-## 16   C    X    9 8.498917  5.752309  7.750409
-## 17   C    Y    1 3.637159  6.038958  3.558706
-## 18   B    Y    5 9.726283  7.324579  7.350287
-## 19   C    X    4 1.797630  5.605133  3.800921
-## 20   B    Y    1 1.420101  4.652377  2.357493
+##    key key2 num1     num2     num3 total_avg
+## 1    C    Y    2 8.073429 5.867665  5.313698
+## 2    C    Y    1 8.403831 2.963707  4.122513
+## 3    A    Y    8 4.737822 8.296029  7.011284
+## 4    A    X    2 1.344063 2.966349  2.103471
+## 5    B    X    8 7.745181 4.509375  6.751519
+## 6    B    Y    5 5.609830 5.321738  5.310522
+## 7    A    Y   10 7.373172 8.526363  8.633178
+## 8    C    Y    9 5.879944 2.185889  5.688611
+## 9    A    Y    3 2.481830 4.221017  3.234282
+## 10   B    X   10 4.827800 7.100228  7.309343
+## 11   C    X    9 7.262607 4.766246  7.009617
+## 12   A    X    9 6.410060 4.299400  6.569820
+## 13   B    X    4 9.999613 4.356811  6.118808
+## 14   C    Y    4 3.714771 9.839897  5.851556
+## 15   B    Y    4 8.081661 6.005807  6.029156
+## 16   A    X    5 9.973801 4.332658  6.435486
+## 17   C    X   10 4.975197 2.638618  5.871272
+## 18   C    Y   10 2.554548 3.135446  5.229998
+## 19   A    Y    7 4.476435 4.033871  5.170102
+## 20   A    Y    6 6.417004 1.772715  4.729906
 ```
 
 ```r
@@ -879,27 +1147,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_avg
-## 1    B    X    9 6.782238  9.569728  8.450655
-## 2    C    Y    2 2.652997  5.017626  3.223541
-## 3    B    Y    4 7.498142  6.010212  5.836118
-## 4    B    X    3 2.548153  1.349955  2.299369
-## 5    C    X    9 9.809728  3.354930  7.388219
-## 6    C    Y    4 3.586538  8.408162  5.331567
-## 7    B    Y    2 5.716680  2.527597  3.414759
-## 8    C    Y    7 9.230242  7.688049  7.972763
-## 9    C    X    1 6.641735  4.633204  4.091646
-## 10   A    Y    1 9.373589  7.073632  5.815741
-## 11   A    X    7 1.777652 -1.430055  2.449199
-## 12   C    X   10 3.098852  4.313253  5.804035
-## 13   C    X   10 5.747769  1.559590  5.769120
-## 14   B    X    1 3.395330  8.014856  4.136729
-## 15   C    X    2 6.480945  3.750126  4.077023
-## 16   C    X    9 8.498917  5.752309  7.750409
-## 17   C    Y    1 3.637159  6.038958  3.558706
-## 18   B    Y    5 9.726283  7.324579  7.350287
-## 19   C    X    4 1.797630  5.605133  3.800921
-## 20   B    Y    1 1.420101  4.652377  2.357493
+##    key key2 num1     num2     num3 total_avg
+## 1    C    Y    2 8.073429 5.867665  5.313698
+## 2    C    Y    1 8.403831 2.963707  4.122513
+## 3    A    Y    8 4.737822 8.296029  7.011284
+## 4    A    X    2 1.344063 2.966349  2.103471
+## 5    B    X    8 7.745181 4.509375  6.751519
+## 6    B    Y    5 5.609830 5.321738  5.310522
+## 7    A    Y   10 7.373172 8.526363  8.633178
+## 8    C    Y    9 5.879944 2.185889  5.688611
+## 9    A    Y    3 2.481830 4.221017  3.234282
+## 10   B    X   10 4.827800 7.100228  7.309343
+## 11   C    X    9 7.262607 4.766246  7.009617
+## 12   A    X    9 6.410060 4.299400  6.569820
+## 13   B    X    4 9.999613 4.356811  6.118808
+## 14   C    Y    4 3.714771 9.839897  5.851556
+## 15   B    Y    4 8.081661 6.005807  6.029156
+## 16   A    X    5 9.973801 4.332658  6.435486
+## 17   C    X   10 4.975197 2.638618  5.871272
+## 18   C    Y   10 2.554548 3.135446  5.229998
+## 19   A    Y    7 4.476435 4.033871  5.170102
+## 20   A    Y    6 6.417004 1.772715  4.729906
 ```
 
 If you want to do a sum calculation, you should use the `rowSums()` function. 
@@ -911,27 +1179,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_sum
-## 1    B    X    9 6.782238  9.569728 25.351966
-## 2    C    Y    2 2.652997  5.017626  9.670622
-## 3    B    Y    4 7.498142  6.010212 17.508353
-## 4    B    X    3 2.548153  1.349955  6.898107
-## 5    C    X    9 9.809728  3.354930 22.164658
-## 6    C    Y    4 3.586538  8.408162 15.994700
-## 7    B    Y    2 5.716680  2.527597 10.244277
-## 8    C    Y    7 9.230242  7.688049 23.918290
-## 9    C    X    1 6.641735  4.633204 12.274939
-## 10   A    Y    1 9.373589  7.073632 17.447222
-## 11   A    X    7 1.777652 -1.430055  7.347597
-## 12   C    X   10 3.098852  4.313253 17.412105
-## 13   C    X   10 5.747769  1.559590 17.307359
-## 14   B    X    1 3.395330  8.014856 12.410187
-## 15   C    X    2 6.480945  3.750126 12.231070
-## 16   C    X    9 8.498917  5.752309 23.251226
-## 17   C    Y    1 3.637159  6.038958 10.676117
-## 18   B    Y    5 9.726283  7.324579 22.050862
-## 19   C    X    4 1.797630  5.605133 11.402763
-## 20   B    Y    1 1.420101  4.652377  7.072478
+##    key key2 num1     num2     num3 total_sum
+## 1    C    Y    2 8.073429 5.867665 15.941094
+## 2    C    Y    1 8.403831 2.963707 12.367538
+## 3    A    Y    8 4.737822 8.296029 21.033851
+## 4    A    X    2 1.344063 2.966349  6.310412
+## 5    B    X    8 7.745181 4.509375 20.254556
+## 6    B    Y    5 5.609830 5.321738 15.931567
+## 7    A    Y   10 7.373172 8.526363 25.899535
+## 8    C    Y    9 5.879944 2.185889 17.065833
+## 9    A    Y    3 2.481830 4.221017  9.702847
+## 10   B    X   10 4.827800 7.100228 21.928028
+## 11   C    X    9 7.262607 4.766246 21.028852
+## 12   A    X    9 6.410060 4.299400 19.709460
+## 13   B    X    4 9.999613 4.356811 18.356424
+## 14   C    Y    4 3.714771 9.839897 17.554668
+## 15   B    Y    4 8.081661 6.005807 18.087468
+## 16   A    X    5 9.973801 4.332658 19.306459
+## 17   C    X   10 4.975197 2.638618 17.613815
+## 18   C    Y   10 2.554548 3.135446 15.689995
+## 19   A    Y    7 4.476435 4.033871 15.510306
+## 20   A    Y    6 6.417004 1.772715 14.189719
 ```
 
 ## Rowwise aggregation exercise
@@ -955,6 +1223,61 @@ imdb_bechdel %>%
   mutate(total_reviews = sum(across(User_reviews:Critic_reviews)))
 ```
 
+
+
+```r
+# answer for solutions
+
+# rowwise method
+imdb_bechdel %>%
+  filter(year < 1930) %>%
+  select(title:year, duration, avg_vote, User_reviews:Critic_reviews, rating) %>%
+  rowwise() %>%
+  mutate(total_reviews = sum(c_across(User_reviews:Critic_reviews), na.rm = TRUE))
+```
+
+```
+## # A tibble: 70 x 8
+## # Rowwise: 
+##    title               year duration avg_vote User_reviews Critic_reviews rating
+##    <chr>              <dbl>    <dbl>    <dbl>        <dbl>          <dbl>  <dbl>
+##  1 The Story of the …  1906       70      6.1            7              7      1
+##  2 Cleopatra           1912      100      5.2           25              3      2
+##  3 A Florida Enchant…  1914       63      5.8            6              3      2
+##  4 The Birth of a Na…  1915      195      6.3          368             97      2
+##  5 Gretchen the Gree…  1916       58      5.7            7              1      3
+##  6 Snow White          1916       63      6.2           13              5      3
+##  7 The Poor Little R…  1917       65      6.7           16             13      3
+##  8 Raffles, the Amat…  1917       70      6.4            3              3      2
+##  9 Rebecca of Sunnyb…  1917       78      6.1            9              5      3
+## 10 A Romance of the …  1917       91      5.7           12              4      0
+## # … with 60 more rows, and 1 more variable: total_reviews <dbl>
+```
+
+```r
+# rowSums method
+imdb_bechdel %>%
+  filter(year < 1930) %>%
+  select(title:year, duration, avg_vote, User_reviews:Critic_reviews, rating) %>%
+  mutate(total_reviews = rowSums(across(User_reviews:Critic_reviews), na.rm = TRUE))
+```
+
+```
+## # A tibble: 70 x 8
+##    title               year duration avg_vote User_reviews Critic_reviews rating
+##    <chr>              <dbl>    <dbl>    <dbl>        <dbl>          <dbl>  <dbl>
+##  1 The Story of the …  1906       70      6.1            7              7      1
+##  2 Cleopatra           1912      100      5.2           25              3      2
+##  3 A Florida Enchant…  1914       63      5.8            6              3      2
+##  4 The Birth of a Na…  1915      195      6.3          368             97      2
+##  5 Gretchen the Gree…  1916       58      5.7            7              1      3
+##  6 Snow White          1916       63      6.2           13              5      3
+##  7 The Poor Little R…  1917       65      6.7           16             13      3
+##  8 Raffles, the Amat…  1917       70      6.4            3              3      2
+##  9 Rebecca of Sunnyb…  1917       78      6.1            9              5      3
+## 10 A Romance of the …  1917       91      5.7           12              4      0
+## # … with 60 more rows, and 1 more variable: total_reviews <dbl>
+```
 
 # Final task - Please give us your individual feedback!
 
@@ -1002,7 +1325,106 @@ library(kableExtra)
 
 ```r
 # your code here
+imdb_bechdel %>%
+  group_by(year) %>%
+  summarise(avg_bechdel = round(mean(rating),2),
+            avg_vote_year = round(mean(avg_vote),2),
+            count_n = n()) %>%
+  filter(avg_vote_year > 7 & count_n > 20) %>%
+  kbl() %>%
+  kable_minimal(full_width = F)
 ```
+
+<table class=" lightable-minimal" style='font-family: "Trebuchet MS", verdana, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> year </th>
+   <th style="text-align:right;"> avg_bechdel </th>
+   <th style="text-align:right;"> avg_vote_year </th>
+   <th style="text-align:right;"> count_n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1939 </td>
+   <td style="text-align:right;"> 2.27 </td>
+   <td style="text-align:right;"> 7.24 </td>
+   <td style="text-align:right;"> 26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1940 </td>
+   <td style="text-align:right;"> 2.00 </td>
+   <td style="text-align:right;"> 7.23 </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1941 </td>
+   <td style="text-align:right;"> 2.18 </td>
+   <td style="text-align:right;"> 7.17 </td>
+   <td style="text-align:right;"> 22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1946 </td>
+   <td style="text-align:right;"> 1.76 </td>
+   <td style="text-align:right;"> 7.20 </td>
+   <td style="text-align:right;"> 21 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1954 </td>
+   <td style="text-align:right;"> 1.75 </td>
+   <td style="text-align:right;"> 7.22 </td>
+   <td style="text-align:right;"> 24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1957 </td>
+   <td style="text-align:right;"> 1.40 </td>
+   <td style="text-align:right;"> 7.20 </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1963 </td>
+   <td style="text-align:right;"> 1.88 </td>
+   <td style="text-align:right;"> 7.02 </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1964 </td>
+   <td style="text-align:right;"> 1.62 </td>
+   <td style="text-align:right;"> 7.09 </td>
+   <td style="text-align:right;"> 21 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1968 </td>
+   <td style="text-align:right;"> 1.96 </td>
+   <td style="text-align:right;"> 7.12 </td>
+   <td style="text-align:right;"> 23 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1971 </td>
+   <td style="text-align:right;"> 1.89 </td>
+   <td style="text-align:right;"> 7.08 </td>
+   <td style="text-align:right;"> 35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1973 </td>
+   <td style="text-align:right;"> 1.60 </td>
+   <td style="text-align:right;"> 7.20 </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1976 </td>
+   <td style="text-align:right;"> 1.76 </td>
+   <td style="text-align:right;"> 7.07 </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1979 </td>
+   <td style="text-align:right;"> 1.75 </td>
+   <td style="text-align:right;"> 7.26 </td>
+   <td style="text-align:right;"> 32 </td>
+  </tr>
+</tbody>
+</table>
 
 As a fun extra, you can use `paste` to change a percentage to a string. This is useful if you are exporting your results as a report. See below for how to do this, using one of our examples from earlier. 
 
@@ -1036,44 +1458,44 @@ df2 %>%
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 50% </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> 38% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 50% </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 62% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 22 </td>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> 43% </td>
+   <td style="text-align:left;"> 60% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> 57% </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 40% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:left;"> 64% </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 29% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> 36% </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 71% </td>
   </tr>
 </tbody>
 </table>
@@ -1092,6 +1514,29 @@ First, we have a look at the base r `aggregate()` function. The main disadvantag
 # aggregate by rating
 aggregate(imdb_bechdel, by = list(imdb_bechdel$rating), FUN = mean)
 ```
+
+```
+##   Group.1   imdb_id title     year date_published genre duration country
+## 1       0  981035.7    NA 1988.420             NA    NA 102.1946      NA
+## 2       1 1115337.0    NA 1996.729             NA    NA 108.1124      NA
+## 3       2 1059395.0    NA 1991.974             NA    NA 107.5708      NA
+## 4       3 1448443.7    NA 1999.162             NA    NA 105.4392      NA
+##   language director writer production_company actors description avg_vote
+## 1       NA       NA     NA                 NA     NA          NA 6.749326
+## 2       NA       NA     NA                 NA     NA          NA 6.725954
+## 3       NA       NA     NA                 NA     NA          NA 6.663142
+## 4       NA       NA     NA                 NA     NA          NA 6.483625
+##       votes budget usa_gross_income worlwide_gross_income metascore
+## 1  91214.68     NA               NA                    NA        NA
+## 2 121127.70     NA               NA                    NA        NA
+## 3  92324.09     NA               NA                    NA        NA
+## 4  79685.94     NA               NA                    NA        NA
+##   User_reviews Critic_reviews       id rating
+## 1           NA             NA 4350.973      0
+## 2           NA             NA 4385.918      1
+## 3           NA             NA 4587.362      2
+## 4           NA             NA 4625.983      3
+```
 The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets. 
 
 In order to run this example you will have to have data.table installed. 
@@ -1108,10 +1553,44 @@ setDT(imdb_bechdel)
 # aggregate by rating for vote and duration
 imdb_bechdel[, .(avg_vote_rating = median(avg_vote),
                  avg_duration = median(duration)), by = "rating"]
+```
 
+```
+##    rating avg_vote_rating avg_duration
+## 1:      1             6.8          105
+## 2:      2             6.8          104
+## 3:      3             6.6          102
+## 4:      0             6.8           99
+```
+
+```r
 # by year and rating (> 2015)
 imdb_bechdel[year > 2015, .(avg_vote_rating = median(avg_vote),
                  avg_duration = median(duration)), by = c("year","rating")]
+```
+
+```
+##     year rating avg_vote_rating avg_duration
+##  1: 2019      3            6.30        102.0
+##  2: 2017      3            6.40        104.0
+##  3: 2017      1            6.60        113.0
+##  4: 2016      1            6.70        106.0
+##  5: 2016      0            6.20        103.0
+##  6: 2017      2            6.10        102.5
+##  7: 2019      1            6.70        117.0
+##  8: 2016      3            6.50        106.5
+##  9: 2020      3            6.50        101.5
+## 10: 2020      1            6.50        104.0
+## 11: 2019      0            7.20        115.0
+## 12: 2017      0            6.20        101.0
+## 13: 2018      3            6.50        105.5
+## 14: 2016      2            6.25        103.0
+## 15: 2020      0            6.65        102.0
+## 16: 2019      2            6.80        109.0
+## 17: 2018      1            6.75        111.0
+## 18: 2018      2            6.60        116.0
+## 19: 2018      0            6.00         85.0
+## 20: 2020      2            5.20        109.0
 ```
 If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>. 
 
