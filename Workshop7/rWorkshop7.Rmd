@@ -315,7 +315,9 @@ table(imdb_bechdel$rating, imdb_bechdel$year)[,c("1966", "1996")]
 ```
 
 # Aggregation using grouping
- 
+
+What is aggregation? It is the computation of summary statistics, giving a single output value from several variables.  
+
 Frequency tables, like we just use are simple aggregations. They count how many instances of each category you have in your data. You can perform more complicated aggregations by *grouping* your data. 
 
 When doing aggregation with dplyr we use the `group_by()` and `summarise()` functions together. We first *group* our data by a categorical variable, in the below example is three groups (A, B, and C). We then call `summarise()` to perform a function on a column in our data, in this case we sum the num1 column. You get a summary table with the sum per group.
@@ -334,7 +336,7 @@ head(df2)
 # perform simple grouped aggregation
 df2 %>%
   group_by(key) %>%
-  summarise(sum = sum(num1))
+  summarise(sum1 = sum(num1))
 ```
 
 The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
@@ -347,12 +349,12 @@ The grouping concept can be a little confusing, and the below illustrations hope
 ![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/Aggregation.png?raw=true){width="600"}
 
 
-You can also aggregate more than one variable. 
+You can also aggregate more than one variable. In the below example, we will run sum on the num1 and num2 variables. 
 
 ```{r}
 df2 %>%
   group_by(key) %>%
-  summarise(sum = sum(num1), sum2 = sum(num2))
+  summarise(sum1 = sum(num1), sum2 = sum(num2))
 ```
 
 
@@ -361,7 +363,7 @@ We can take this a bit further by adding the `n()` function, which counts how ma
 # adding frequency using n()
 df2 %>%
   group_by(key) %>%
-  summarise(sum = sum(num1), sum2 = sum(num2),
+  summarise(sum1 = sum(num1), sum2 = sum(num2),
             count_n = n()) %>%
   mutate(rel_freq = count_n / sum(count_n))
 
@@ -377,14 +379,14 @@ To do so, we add an extra categorical column to our `group_by()` function. The o
 # two group aggregation
 df2 %>%
   group_by(key, key2) %>%
-  summarise(sum = sum(num1), sum2 = sum(num2),
+  summarise(sum1 = sum(num1), sum2 = sum(num2),
             count_n = n()) %>%
   mutate(rel_freq = count_n / sum(count_n))
 
 # flip the groups to see the difference
 df2 %>%
   group_by(key2, key) %>%
-  summarise(sum = sum(num1), sum2 = sum(num2),
+  summarise(sum1 = sum(num1), sum2 = sum(num2),
             count_n = n()) %>%
   mutate(rel_freq = count_n / sum(count_n))
 ```
@@ -394,37 +396,194 @@ You can manually adjust the grouping structure of the output from your aggregati
 # adjusting the grouping structure of the result: drop
 df2 %>%
   group_by(key, key2) %>%
-  summarise(sum = sum(num1), sum2 = sum(num2),
+  summarise(sum1 = sum(num1), sum2 = sum(num2),
             count_n = n(), .groups = "drop") %>%
   mutate(rel_freq = count_n / sum(count_n))
 
 # keep
 df2 %>%
   group_by(key, key2) %>%
-  summarise(sum = sum(num1), sum2 = sum(num2),
+  summarise(sum1 = sum(num1), sum2 = sum(num2),
             count_n = n(), .groups = "keep") %>%
   mutate(rel_freq = count_n / sum(count_n))
 ```
 
 ## Aggregation exercise
 
-```{r}
-head(imdb_bechdel)
-names(imdb_bechdel)
+Using the examples above, we are going to create three aggregations from our `imdb_bechdel` dataset we made earlier in the session. 
 
+1) Group your imdb_bechdel data by rating, and use summarise to find the avg_vote per rating, and the frequency of each group. Use `median()` to calculate the average. 
+2) Filter for years greater than 2015 and group by year. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Use `median()` to calculate the average. 
+3) Filter for years greater than 2015 and group by year and rating. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Finally, pipe to a mutate function, and calculate the relative frequency of each year. Use `median()` to calculate the average. 
+```{r}
+# your code here
+library(kableExtra)
+
+# avg_vote by rating
+imdb_bechdel %>%
+  group_by(rating) %>%
+  summarise(avg_vote_rating = median(avg_vote),
+            count_n = n()) 
+
+# avg_vote and duration by year
 imdb_bechdel %>%
   filter(year > 2015) %>%
   group_by(year) %>%
-  summarise(avg_vote_year = mean(avg_vote),
-            avg_bechdel = mean(rating),
+  summarise(avg_vote_year = median(avg_vote),
+            avg_duration = median(duration),
             count_n = n())  
+
+# avg_vote and duration by year and rating
+imdb_bechdel %>%
+  filter(year > 2015) %>%
+  group_by(year, rating) %>%
+  summarise(avg_vote_year = median(avg_vote),
+            avg_duration = median(duration),
+            count_n = n()) %>%
+  mutate(rel_freq = round(count_n / sum(count_n), 2))
+
 ```
-
-
 
 # Rowwise aggregation
 
-Performing aggregation of rows using either RowMeans or rowwise
+So far we have performed operations (functions) over columns, but sometimes you want to perform operations by rows. For example, you might want to find the average value for each row of several columns in a data frame.  
+
+Performing row based aggregation in r can be done with either one of these two functions: dplyr's `rowwise()` or base r's `rowMeans()`. 
+
+In the below examples we are using `rowwise()` with `summarise()`, just like we did with `group_by` and `summarise`. You get a total average back for each row in your dataset. 
+```{r}
+# rowwise on selected columns
+df2 %>%
+  rowwise() %>%
+  summarise(total_avg = mean(c(num1, num2, num3)))
+
+# rowwise using c_across
+df2 %>%
+  rowwise() %>%
+  summarise(total_avg = mean(c_across(num1:num3)))
+```
+
+If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns. 
+```{r}
+# Adding the aggregation as a new column 
+df2 %>%
+  rowwise() %>%
+  mutate(total_avg = mean(c_across(num1:num3)))
+```
+
+An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`. 
+```{r}
+# using rowMeans with mutate and across
+df2 %>%
+  mutate(total_avg = rowMeans(across(c(num1, num2, num3))))
+
+# using rowMeans with mutate, across, and where
+df2 %>%
+  mutate(total_avg = rowMeans(across(where(is.numeric))))
+
+```
+
+If you want to do a sum calculation, you should use the `rowSums()` function. 
+```{r}
+# row sum
+df2 %>%
+  mutate(total_sum = rowSums(across(c(num1, num2, num3))))
+```
+
+## Rowwise aggregation exercise
+
+In this exercise you will be debugging my code to get it running! We are going to sum the User_reviews and Critic_reviews column, to make a new column called total_reviews. We want the total reviews for each row of films from before 1930.
+
+You have to debug the code for both the rowwise method and the rowSums/rowMeans method. 
+
+```{r eval=FALSE}
+# rowwise method
+imdb_bechdel %>%
+  filter(year < 1930) %>%
+  select(title:year, duration, avg_vote, User_reviews, rating) %>%
+  mutate(total_reviews = sum(c_across(User_reviews:Critic_reviews), na.rm = TRUE))
+
+# rowSums method
+imdb_bechdel %>%
+  filter(year < 1930) %>%
+  select(title:year, duration, avg_vote, User_reviews, rating) %>%
+  mutate(total_reviews = sum(across(User_reviews:Critic_reviews)))
+```
+
+
+```{r}
+# answer for solutions
+
+# rowwise method
+imdb_bechdel %>%
+  filter(year < 1930) %>%
+  select(title:year, duration, avg_vote, User_reviews:Critic_reviews, rating) %>%
+  rowwise() %>%
+  mutate(total_reviews = sum(c_across(User_reviews:Critic_reviews), na.rm = TRUE))
+
+# rowSums method
+imdb_bechdel %>%
+  filter(year < 1930) %>%
+  select(title:year, duration, avg_vote, User_reviews:Critic_reviews, rating) %>%
+  mutate(total_reviews = rowSums(across(User_reviews:Critic_reviews), na.rm = TRUE))
+```
+
+# Final task - Please give us your individual feedback!
+
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+**Add survey link here**
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge
+
+For the individual coding challenge you will be making the output of your aggregations more presentable! We will do this using the excellent `kableExtra` package, which makes very nice tables. 
+
+First, install the kableExtra package. 
+```{r eval=FALSE}
+# install kableExtra
+install.packages("kableExtra")
+```
+
+1) Using your imdb_bechdel dataset, group by year
+2) Pipe to a summarise, and work out the average rating (bechdel), average vote, and the frequency (using n())
+3) Pipe to a filter, filtering for your average vote to be greater than 7 and your frequency (count) to be greater than 20 
+4) Now pipe the output to `kbl()`
+5) Finally, pipe that to `kable_minimal(full_width = F)`. You should now have a nice table! 
+6) Play around with different kable styles. Try out the following: `kable_classic(full_width = F)`, `kable_classic2(full_width = F)` and `kable_paper(full_width = F)`
+
+See the kableExtra vignette for more examples to test out: <https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html>
+
+```{r}
+library(kableExtra)
+
+# your code here
+imdb_bechdel %>%
+  group_by(year) %>%
+  summarise(avg_bechdel = round(mean(rating),2),
+            avg_vote_year = round(mean(avg_vote),2),
+            count_n = n()) %>%
+  filter(avg_vote_year > 7 & count_n > 20) %>%
+  kbl() %>%
+  kable_minimal(full_width = F)
+
+```
+
+As a fun extra, you can use `paste` to change a percentage to a string. This is useful if you are exporting your results as a report. See below for how to do this, using one of our examples from earlier. 
+```{r}
+library(kableExtra)
+
+# fun extra, change your frequency to a percentage
+df2 %>%
+  group_by(key, key2) %>%
+  summarise(sum = sum(num1), count_n = n()) %>%
+  mutate(rel_freq = paste0(round(100 * count_n/sum(count_n), 0), "%")) %>%
+  kbl() %>%
+  kable_paper(full_width = F)
+```
+
+
 
 ------------------------------------------------------------------------
 
@@ -432,35 +591,31 @@ Performing aggregation of rows using either RowMeans or rowwise
 
 We have used dplyr for aggregation here, but there are two other options: the base r `aggregate()` function, or using the data.table package. We have shown some examples here so you are able to compare. 
 
-
-```{r}
-# fun extra, change your frequency to a percentage
-df2 %>%
-  group_by(key2, key) %>%
-  summarise(sum = sum(num1), count_n = n()) %>%
-  mutate(rel_freq = paste0(round(100 * count_n/sum(count_n), 0), "%"))
+First, we have a look at the base r `aggregate()` function. The main disadvantage of `aggregate` over dplyr is you have less control. It runs an aggregate across your whole dataset, which causes a lot of NA values for all your non-numerical variables. This might be what you want occasionally, but not all the time! 
+```{r warning=FALSE, message=FALSE}
+# aggregate by rating
+aggregate(imdb_bechdel, by = list(imdb_bechdel$rating), FUN = mean)
 ```
+The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets. 
 
-## Extra: Sampling explaination
+In order to run this example you will have to have data.table installed. 
+```{r message=FALSE, warning=FALSE}
+#install.packages("data.table")
 
-If you are curious about how the `sample()` function works, which we used earlier, run the below code several times, reviewing the histogram it produces. This process is known as sampling with replacement, which means from our sample (numbers 1 to 10) we randomly extract a set number of values (20 in our example) which can be duplicates (extract the same number more than once).
+# load in data.table
+library(data.table)
 
-```{r}
-# sample with replacement
-rand_num <- sample(1:10, 20, replace = TRUE)
-# plot using hist function
-hist(rand_num, breaks = 0:10)
-# add line for mean
-abline(v=mean(rand_num),col="darkblue")
+# make your data a data table object
+setDT(imdb_bechdel)
+
+# aggregate by rating for vote and duration
+imdb_bechdel[, .(avg_vote_rating = median(avg_vote),
+                 avg_duration = median(duration)), by = "rating"]
+
+# by year and rating (> 2015)
+imdb_bechdel[year > 2015, .(avg_vote_rating = median(avg_vote),
+                 avg_duration = median(duration)), by = c("year","rating")]
 ```
+If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>. 
 
-Sampling without replacement means we don't extract the same number more than once, this means the number we extract must be less than the amount of data in our sample; in our second example we have 1 to 10 and are extract 5 values.
 
-```{r}
-# sample without replacement
-rand_num2 <- sample(1:10, 5, replace = FALSE)
-# plot using hist function
-hist(rand_num2, breaks = 0:10)
-# add line for mean
-abline(v=mean(rand_num2),col="darkgreen")
-```
