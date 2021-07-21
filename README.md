@@ -16,7 +16,7 @@ Workshop 5: Conditionals and Logic
 
 Workshop 6: Tidyverse introduction with Pipes and dplyr
 
-Workshop 6: Data wrangling with dplyr continued
+Workshop 7: Data wrangling with dplyr continued
 
 Workshop 8: Joining and aggregation
 
