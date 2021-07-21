@@ -110,7 +110,7 @@ The pipe operator in R comes from the `magrittr` package, using syntax of `%>%`.
 
 The pipe operator is for chaining a sequence of operations together. This has two main advantages: it makes your code more readable, and it saves some typing.
 
-Run the example below to see the difference between using pipes and not using pipes. We are going to calculate a mean of a vector of numbers, then round the result. First we look at what we do when we don't use pipes, which you might be familiar with.
+Run the examples below to see the difference between using pipes and not using pipes. We are going to calculate a mean of a vector of numbers, then round the result. First we look at what we do when we don't use pipes, which you might be familiar with.
 
 ```{r}
 # load in magrittr
@@ -125,11 +125,12 @@ y_mean <- mean(y)
 y_mean <- round(y_mean, digits = 2)
 y_mean <- paste("Mean value of y is", y_mean)
 y_mean
+
+# without pipe in one line
+paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
-Now lets have a look at how to do this same set of operations with a pipe. There are two ways, but both work the same. You can either assign the result at the beginning of your pipe operation, or at the end, as shown in the examples.
-
-You will notice in the paste function we have used a `.` after the text. This is called a *placeholder*, whereby instead of using the data (like we did above without the pipe) we add a `.` to tell R that is where we want our data to go.
+Now lets have a look at how to do this same set of operations with a pipe. You will notice in the paste function we have used a `.` after the text. This is called a *placeholder*, whereby instead of using the data (like we did above without the pipe) we add a `.` to tell R that is where we want our data to go.
 
 ```{r}
 # magrittr pipe
@@ -137,14 +138,6 @@ x_mean <- x %>% # assign result at the start
   mean() %>% 
   round(digits = 2) %>%
   paste("Mean value of x is", .) # we use the . as a place holder for a variable (e.g. instead of x)
-
-x_mean
-
-# a pipe can also be written like this 
-x %>%
-  mean() %>%
-  round(digits = 2) %>%
-  paste("Mean value of x is", .) -> x_mean # assign result at the end
 
 x_mean
 ```
@@ -157,27 +150,28 @@ It is also worth mentioning that as of version 4.1 of R, base R comes with a nat
 # native R pipe
 z <- sample(1:10, 20, replace = TRUE)
 
-z_mean <- z |> # assign result at the start
+z_mean <- z |> 
   mean() |>
   round(digits = 2)
 
 z_mean
-
-z |>
-  mean() |>
-  round(digits = 2) -> z_mean # assign result at the end
-
-z_mean
 ```
 
-We will be using the magrittr pipe for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
+If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop. 
+
+```{r}
+# test your r version
+R.version.string
+```
+
+We will be using the magrittr pipe (`%>%`) for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
 
 ## Exercise - using pipes
 
 Using the vector of temperature provided and using magrittr pipes:
 
-1)  Pipe median and paste functions together to print the message: "median temp is 15"\
-2)  Pipe max and paste functions together to print the message: "max temp is 20"
+1)  Pipe median and paste functions together to get a final result that looks like: *"median temp is 15"*
+2)  Pipe max and paste functions together to get a final result that looks like: *"max temp is 20"*
 
 *hint: don't forget to use the placeholder with paste*
 
@@ -207,7 +201,7 @@ messi_career <- data.frame(Appearances = c(9,25,36,40,51,53,55,60,50,46,57,49,52
                            Goals = c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31),
                            Season = c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
             2013,2014,2015,2016,2017,2018,2019),
-                           Club = rep("FC Barcelona", length(16)),
+                           Club = rep("FC Barcelona", 16),
                           Age = seq(17, 32),
                           champLeagueGoal = c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3))
 # view the data
@@ -245,7 +239,7 @@ messi_career %>% select(!(Season:Age))
 messi_career %>% select(!c(Season:Age, champLeagueGoal))
 ```
 
-Finally, we can use the `contains()` function in dplyr to select columns that contain the string "Goal". This is a useful option if you just want to pick out columns that have some similar text in them. 
+Finally, we can use the `contains()` function in dplyr to select columns that contain the string "Goal". This is a useful option if you just want to pick out columns that have some similar text in their names. 
 
 ```{r}
 # select by literal string
@@ -298,18 +292,18 @@ movies_imdb %>% glimpse()
 
 The filter function allows you to subset rows based on conditions, using conditional operators (==, \<=, != etc.). It is similar to the base r `subset()` function which we have used in previous R workshops. The table below is a reminder of the conditional operators you can use.
 
-| Operator | Meaning                  |
-|----------|--------------------------|
-| \>       | Greater than             |
-| \>=      | Greater than or equal to |
-| \<       | Less than                |
-| \<=      | Less than or equal to    |
-| ==       | Equal to                 |
-| !=       | Not equal to             |
-| !X       | NOT X                    |
-| X        | Y                        |
-| X & Y    | X AND Y                  |
-| X %in% Y | is X in Y                |
+| Operator   | Meaning                  |
+|------------|--------------------------|
+| `>`        | Greater than             |
+| `>=`       | Greater than or equal to |
+| `<`        | Less than                |
+| `<=`       | Less than or equal to    |
+| `==`       | Equal to                 |
+| `!=`       | Not equal to             |
+| `!X`       | NOT X                    |
+| `X`        | Y                        |
+| `X & Y`    | X AND Y                  |
+| `X %in% Y` | is X in Y                |
 
 Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
