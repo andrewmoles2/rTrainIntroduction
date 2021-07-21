@@ -16,16 +16,11 @@ Workshop 5: Conditionals and Logic
 
 Workshop 6: Tidyverse introduction with Pipes and dplyr
 
-Workshop 7: Joining and aggregation
+Workshop 6: Data wrangling with dplyr continued
+
+Workshop 8: Joining and aggregation
 
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
-
-
-![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/6714.jpg?raw=true)
-
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/22895-NUNWT2.jpg?raw=true)
-
 
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true)
 
