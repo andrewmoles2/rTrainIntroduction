@@ -18,7 +18,7 @@ output:
 
 -  Data manipulation with mutate from dplyr
 -  Renaming columns 
--  Cleaning up column names
+-  Cleaning up column names with janitor
 
 ## Why this style?
 
@@ -42,15 +42,19 @@ output:
 
 ------------------------------------------------------------------------
 
-# Mutate function
+# The mutate function
 
-The mutate function is for making, modifying, or deleting columns in your dataset. Similar to what we have done in previous sessions, mutate allows you to make a new column from a calculation you have made.
+The mutate function is from the dplyr library, and is for making, modifying, or deleting columns in your dataset. Similar to what we have done in previous sessions, mutate allows you to make a new column from a calculation you have made.
 
-The main difference between using matate and making new columns in base R, is that mutate is smarter. You can create a new column based on a new column you have just made in mutate, which you can't do in base R. Lets look at some examples with our messi data.
+The main difference between using mutate and making new columns in base R, is that mutate is smarter. You can create a new column based on a new column you have just made within mutate, which you can't do in base R. Lets look at some examples with our messi data we used in the last session.
 
 In our previous workshops, we calculated Messi's goals per game (goals/appearances). We can do this with mutate. Notice the syntax, we give the name we want to call our new column first, then =, then what we want to do (e.g. a calculation);  `mutate(new_column = x/y)`.
 
-```{r}
+*note: when loading dplyr you also load the magrittr library for piping*
+```{r message=FALSE, warning=FALSE}
+# load dplyr
+library(dplyr)
+
 # create the messi career data
 messi_career <- data.frame(Appearances = c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44),
                            Goals = c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31),
@@ -67,7 +71,8 @@ messi_career %>%
   mutate(goal_ratio = Goals/Appearances)
 ```
 
-The new column, goal_ratio in this case, will automatically be added to the end of your data.frame. This is the same behaviour you will see when using base R. This behaviour can be altered if you want, but we won't have time to cover it here. 
+The new column, goal_ratio in this case, will automatically be added to the end of your data frame. This is the same behaviour you will see when using base R. This behaviour can be altered if you want, but we won't have time to cover it here. 
+
 What makes `mutate()` powerful, is the ability to do multiple calculations in one statement, as well as using newly made columns. See the below example which will help to understand this. We will use goal_ratio to find out the difference between goal_ratio and the average goal ratio for each row (or season).
 
 ```{r}
@@ -93,7 +98,7 @@ messi_career %>%
 
 ## Mutate exercise 1
 
-We will be using the imdb dataset again for this workshop. Use the code below to load in the data again. 
+We will be using the imdb movies dataset again for this workshop. Use the code below to load in the data.  
 
 ```{r message=FALSE, warning=FALSE}
 # load libraries
@@ -107,22 +112,24 @@ movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIn
 movies_imdb %>% glimpse()
 ```
 
-Lets pretend we are interested in the difference between the number of user reviews and critic reviews for each film in our USA_1989_high dataset we just made in the last exercise. We can use mutate to explore this difference a bit further.
+Lets pretend we are interested in the difference between the number of user reviews and critic reviews for each film in our movies_imdb dataset. We can use mutate to explore this difference a bit further.
 
-1)  Pipe your USA_1989_high data to a `mutate()` function. Make a new column called `user_critic_ratio`, and divide `reviews_from_users` by `reviews_from_critics`. Wrap the result in a `round()` function, rounding by two digits
+1)  Pipe your movies_imdb data to a `mutate()` function. Make a new column called `user_critic_ratio`, and divide `reviews_from_users` by `reviews_from_critics`. Wrap the result in a `round()` function, rounding by two digits
+2)  Now pipe to a `filter()` function, filtering country to be USA and year to be 1989
 2)  Now pipe to a `select()` function, selecting the title, avg_vote and user_critic_ratio columns
-3)  Now pipe to a `filter()` function, filtering for user_critic_ratio to be greater than 4.
+3)  Now pipe to a `slice_max` function, extracting rows that had the top 10 avg_rating
 
-You should get a data frame returned that has the films: The Abyss, Dead Poets Society, Do the Right Thing, and Glory.
+You should get a data frame returned that has films including: The Abyss, Dead Poets Society, Do the Right Thing, and Glory.
 
 ```{r}
 # your code here
 
 # user critic review ratio
-USA_1989_high %>%
+movies_imdb %>%
   mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2)) %>%
+  filter(country == "USA" & year == 1989) %>%
   select(title, avg_vote, user_critic_ratio) %>%
-  filter(user_critic_ratio > 4)
+  slice_max(avg_vote, n = 10)
 ```
 
 We can see we get more user reviews than critic reviews, which makes sense; for example, the The Abyss has 4 user reviews for each critic review.
@@ -131,30 +138,34 @@ We can see we get more user reviews than critic reviews, which makes sense; for 
 
 In our second mutate exercise, you will need to de-bug the code to get it running! You may need to re-order some elements of the code as well as checking for other errors. 
 
-We are filtering the imdb_sub data for films that are from the USA before the year 1990, have a duration less than 120 minutes, and an average vote greater than 8.5. We will also be using the user_critic_ratio column to make it into a string for easier reading. 
+We are filtering the movies_imdb data for films that are from the USA before the year 1990, have a duration less than 120 minutes, and an average vote greater than 8.5. We will also be using the user_critic_ratio column to make it into a string for easier reading. 
 
 You should end up with a data frame with 6 rows, and 4 columns (title, year, avg_vote, and ratio_string). The final column, ratio_string, should have an output like "Psycho has a user to critic ratio of 5.44". 
 
 ```{r eval=FALSE}
-imdb_sub |>
+# your code here
+usa_pre90_high <- movies_imdb |>
   mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
          ratio_string = paste(title, "has a user to critic ratio of", userCriticRatio)) %>%
   filter(country == "USA" & year < 1990) 
   select(title, year, avg_vote, ratio_string) %>%
   filter(duration < 120 & avg_vote >= 8.5)
+  
+usa_pre90_high
 ```
 
 ```{r}
 # answer for solutions
 # Re using the user_critic_ratio variable
 
-imdb_sub %>%
+usa_pre90_high <- movies_imdb %>%
   mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
          ratio_string = paste(title, "has a user to critic ratio of", user_critic_ratio)) %>%
   filter(country == "USA" & year < 1990) %>%
   filter(duration < 120 & avg_vote >= 8.5) %>%
   select(title, year, avg_vote, ratio_string)
 
+usa_pre90_high
 ```
 
 # Mutate with the across function
@@ -177,7 +188,7 @@ messi_career %>%
   mutate(across(Appearances:Season, sqrt))
 ```
 
-We can also combine the across function with the `where()` or `all_of()` function to perform conditional mutations.
+We can also combine the across function with the `where()` or `all_of()` functions to perform conditional mutations.
 
 The `where()` function does conditional matching between the statement you've used and what is in your dataset. In the example we are asking `where()` to look for columns that are the character (string) data type. Then we can perform an operation, such as convert those columns to factors. In this case it is just the Club column that changes. 
 
@@ -201,20 +212,20 @@ messi_career %>%
 
 ## Across function exercise
 
-Lets go back to our imdb_sub data. We want to extract films from 1990 through to 1995, that are from the USA, and have an avg_vote greater than or equal to 7.5. We also want all our variables that are currently characters to be factors, and want the year column to also be a factor.
+Lets go back to our movies_imdb data. We want to extract films from 1990 through to 1995, that are from the USA, and have an avg_vote greater than or equal to 7.5. We also want all our variables that are currently characters to be factors, and want the year column to also be a factor.
 
-1)  Using the imdb_sub data, filter for years between and including 1990 and 1995
+1)  Using the movies_imdb data, filter for years between and including 1990 and 1995
 2)  Now also filter for the country to be the USA, with an avg_vote greater then or equal to 7.5
 3)  Using mutate, across and where, convert any column that has a character data type to a factor
 4)  Using mutate, convert year to a factor
-5)  Save the result in a data frame called `USA_early90_high`
-6)  Using your new USA_early90_high subset, filter for avg_vote greater than or equal to 8.5, then select the title, avg_vote, and year columns. View the result to see the top rated films and what year they were in.
+5)  Save the result in a data frame called `usa_early90_high`
+6)  Using your new `usa_early90_high` subset, filter for avg_vote greater than or equal to 8.5, then select the title, avg_vote, and year columns. View the result to see the top rated films and what year they were in.
 
 ```{r}
 # your code here
 
 # first way of doing this
-USA_early90_high <- imdb_sub %>% 
+usa_early90_high <- movies_imdb %>% 
   filter(year >= 1990 & year <= 1995 &
            country == "USA" & avg_vote >= 7.5) %>%
   mutate(across(where(is.character), as.factor),
@@ -223,39 +234,192 @@ USA_early90_high <- imdb_sub %>%
 # second way of doing this
 to_factor <- c("year")
 
-USA_early90_high <- imdb_sub %>% 
+usa_early90_high <- movies_imdb %>% 
   filter(year >= 1990 & year <= 1995 &
            country == "USA" & avg_vote >= 7.5) %>%
   mutate(across(where(is.character), as.factor),
          across(any_of(to_factor), as.factor))
 
 # highest rated with title, avg_vote, and year
-USA_early90_high %>%
+usa_early90_high %>%
   filter(avg_vote >= 8.5) %>%
   select(title, avg_vote, year)
 
 ```
 
-# Extra mutate exercises
+# Ranking and cumulativate calculations using mutate
 
-transmutate and rankings
+It can sometimes be helpful to rank your dataset, using mutate and the `min_rank()` or `percent_rank` functions allow you to add a new column with a rank based on a important column. Higher rank or percent rank means a better ranking. 
+
+In this example, we want to make a goal ranking column and a percent raking column. We can then use filter to select rankings we are interested in. 
+```{r}
+messi_career <- messi_career %>%
+  mutate(goal_rank = min_rank(Goals),
+         goal_perc_rank = percent_rank(Goals))
+
+# select rankings over 10
+messi_career %>%
+  filter(goal_rank > 10)
+```
+
+Another useful calculation you can do is to do cumulativate calculations, such as cumulativate sum or mean of a useful variable. For example, in our messi_career data it might be interesting to workout  his cumulativate goals, and average cumulativate appearances. We use the `cumsum()` and `cummean()` functions for these calculations. 
+
+*note: cumulativate calculations are work very well with longitudinal data, like we have for Lionel Messi's career goals and appearances*
+
 ```{r}
 messi_career %>%
-  glimpse()
-
-messi_career %>%
-  transmute(goal_ratio = Goals/Appearances)
-
-messi_career %>%
-  mutate(cumulativate_goals = cumsum(Goals),
-         mean_cumulativate_goals = cummean(Goals),
-         cumulativate_app = cumsum(Appearances))
-
-messi_career %>%
-  transmute(cumulativate_goals = cumsum(Goals),
-         mean_cumulativate_goals = cummean(Goals),
-         cumulativate_app = cumsum(Appearances))
-
-messi_career %>%
-  mutate(rank_goal = percent_rank(Goals))
+  mutate(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances)) %>%
+  select(Goals, cumul_goals, Appearances, mean_cumul_app)
 ```
+
+## Ranking and cumulativate calculations exercise
+
+Using your usa_early90_high data we just made in the last exercise:
+
+1)  Use mutate to make a new column called `duration_rank`, using the `min_rank()` function on the duration column
+2)  In the same mutate statement, make a new column called `perc_duration_rank`, using the `percent_rank()` function on the duration column
+3)  In the same mutate statement, make a new column called `avg_cumul_duration`, using the `cummean()` function on duration. 
+4)  Pipe to a filter function, and filter for perc_duration_rank between 0.5 and 0.6
+5)  Use select to extract the following columns: title, year, duration, avg_vote, duration_rank, perc_duration_rank, and avg_cumul_duration. 
+
+```{r}
+# your code here
+usa_early90_high %>%
+  mutate(duration_rank = min_rank(duration),
+         perc_duration_rank = percent_rank(duration),
+         avg_cumul_duration = cummean(duration)) %>%
+  filter(perc_duration_rank > 0.5 & perc_duration_rank < 0.6) %>%
+  select(title, year, duration, avg_vote, duration_rank:avg_cumul_duration)
+```
+
+# The transmute function
+
+The `transmute()` function in dplyr works in a similar way to `mutate()`, but it drops all columns *except* those it has just made. 
+
+```{r}
+# use transmutate
+messi_career %>%
+  transmute(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances))
+```
+
+
+The behaviour of transmute can be helpful in certain situations, but if you really want to keep some columns, you can add them into the transmute statement. For example, in the example below I might want to keep the Goals and Appearances columns for comparison with the cumulativate calculations I've made. 
+
+```{r}
+# keep Goals and Appearances
+messi_career %>%
+  transmute(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances),
+         Goals, 
+         Appearances)
+```
+## Transmute exercise
+
+```{r}
+movie_durations <- movies_imdb %>%
+  transmute(avg_duration = cummean(duration),
+            avg_duration_hours = avg_duration*0.0166667,
+            duration,
+            year) %>%
+  filter(avg_duration < median(avg_duration))
+
+movie_durations %>%
+  filter(year == round(mean(year)))
+```
+
+
+# Change column names
+
+Changing column names is a very useful part of data science. Sometimes you'll get a dataset with column names that are not very meaningful, or far too long. There are a few methods for changing column names, with the easiest (not surprisingly) being the tidyverse solution. 
+
+The first step in changing column names is actaully viewing what the names are! Two functions in R exist for this: `colnames()` and `names()`. They do the same thing...so I prefer `names()` as it is less typing. 
+```{r}
+# view a datasets column names
+colnames(messi_career)
+names(messi_career)
+```
+
+The non-tidyverse way of changing column names is to use the `names()` function. If you are changing one column you use indexing using `[]`, and multiple columns you use `c(). 
+```{r}
+# Make a data frame
+df <- data.frame(
+  column1 = rep("Hello", 4),
+  column2 = sample(1:10, 4),
+  column3 = seq(1:4),
+  integer = 4:7,
+  factor = factor(c("dog", "cat", "cat", "dog"))
+)
+
+df
+
+# multiple columns using names
+names(df) <- c("string", "random", "sequence", "integer", "factor")
+names(df)
+
+# using names and number index
+names(df)[1] <- "a_string"
+names(df)
+
+# using logic and names
+names(df)[names(df) == "sequence"] <- "its_a_sequence"
+names(df)
+```
+
+The main issue with these techniques is 1) it can get really messy if you need to rename lots of columns in a larger dataset. 2) I have to rename all my columns if renaming more than one column, otherwise it doesn't work! 3) The syntax is a bit messy, especially the last example
+
+The `rename()` function from dplyr allows for simple changing of column names with no fuss, and solves these problems. 
+
+The syntax is the same as the `mutate()` function, where we have the name of the column we want to make, then what column we are changing: `data %>% rename(new_column_name = old_column_name)`. 
+
+```{r message=FALSE}
+# load dplyr
+library(dplyr)
+
+# Make a data frame
+df <- data.frame(
+  column1 = rep("Hello", 4),
+  column2 = sample(1:10, 4),
+  column3 = seq(1:4),
+  integer = 4:7,
+  factor = factor(c("dog", "cat", "cat", "dog"))
+)
+
+df
+
+# rename columns that need renaming
+df_new_col <- df %>%
+  rename(string = column1,
+         random = column2,
+         sequence = column3) 
+
+df_new_col
+```
+
+## Rename columns exercise
+
+Let's have a practice renaming some columns in the movies_imdb dataset. 
+
+1) Type in and run `names(movies_imdb)` to get the column names of your dataset. This is a nice way to finding the column names, making it easy to copy and paste the names should you need to
+2) Using the `rename()` function from dplyr, change `reviews_from_users` to `User_reviews` and `reviews_from_critics` to `Critic_reviews`
+3) Save the result back to `movies_imdb`
+4) Type in and run `names(movies_imdb)` again to view the new column names
+
+```{r}
+# your code here
+names(movies_imdb)
+
+movies_imdb <- movies_imdb %>%
+  rename(User_reviews = reviews_from_users,
+         Critic_reviews = reviews_from_critics)
+
+names(movies_imdb)
+```
+
+
+# Tidy column names with janitor
+
+Sometimes you have a dataset that has messy or ugly column names. 
+
+It changes all the column names to the same format.

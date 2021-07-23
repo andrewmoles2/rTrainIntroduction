@@ -16,7 +16,6 @@ output:
 
 # What this workshop will cover
 
--   Changing column names
 -   Relational joining of datasets
 -   Cross tabluation
 -   Grouping and aggregating your data
@@ -46,57 +45,16 @@ output:
 
 ------------------------------------------------------------------------
 
-# Change column names with rename
 
-Before we move into joining and aggregation, it is helpful to learn about the `rename()` function from dplyr, which allows for simple changing of column names. 
 
-The syntax is the same as the `mutate()` function, where we have the name of the column we want to make, then what column we are changing: `data %>% rename(new_column_name = old_column_name)`. 
-
-```{r message=FALSE}
-# load dplyr
-library(dplyr)
-
-# Make a data frame
-df <- data.frame(
-  column1 = rep("Hello", 4),
-  column2 = sample(1:10, 4),
-  column3 = seq(1:4)
-)
-
-df
-
-# rename all the columns
-df %>%
-  rename(string = column1,
-         random = column2,
-         sequence = column3) -> df_new_col
-
-df_new_col
-```
-
-## Rename columns exercise
-
-We will be using the imdb movies dataset again, and code has been provided for you to load it. 
-
-1) Type in and run `names(movies_imdb)` to get the column names of your dataset. This is a nice way to finding the column names, making it easy to copy and paste the names should you need to
-2) Using the `rename()` function from dplyr, change `reviews_from_users` to `User_reviews` and `reviews_from_critics` to `Critic_reviews`
-3) Save the result back to `movies_imdb`
-4) Type in and run `names(movies_imdb)` again to view the new column names
 ```{r warning=FALSE, message=FALSE}
 library(readr)
 library(dplyr)
 
 movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
-
-# your code here
-names(movies_imdb)
-
-movies_imdb %>%
-  rename(User_reviews = reviews_from_users,
-         Critic_reviews = reviews_from_critics) -> movies_imdb
-
-names(movies_imdb)
 ```
+
+
 
 # Joining data
 
