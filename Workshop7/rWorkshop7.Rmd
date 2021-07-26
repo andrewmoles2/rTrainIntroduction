@@ -317,27 +317,45 @@ messi_career %>%
 ```
 ## Transmute exercise
 
-```{r}
-movie_durations <- movies_imdb %>%
-  transmute(avg_duration = cummean(duration),
-            avg_duration_hours = avg_duration*0.0166667,
-            duration,
-            year) %>%
-  filter(avg_duration < median(avg_duration))
+Let's use transmute to look at the durations of the films in the imdb_movies data. 
 
+1)  Pipe movies_imdb to `transmute()`
+2)  Make a variable called duration_hours, which converts duration to hours *hint: look online for minute to hour conversion*
+3)  In the same `transmute()` make a variable called duration_rank, and use the `min_rank()` function on duration
+4)  Include the year, title, duration, and genre columns. 
+5)  Assign the result to movie_durations
+6)  Using `filter()`, `slice_max()` or `slice_min()`, find out the top 4 and bottom 4 film durations
+
+```{r}
+# your code here
+
+# make movie durations 
+movie_durations <- movies_imdb %>%
+  transmute(duration_hours = duration*0.0166667,
+            duration_rank = min_rank(duration),
+            year,
+            title,
+            duration,
+            genre)
+
+# 4 longest
 movie_durations %>%
-  filter(year == round(mean(year)))
+  slice_max(duration_hours, n = 4)
+
+# 4 shortest
+movie_durations %>%
+  filter(duration_rank < 5)
+
 ```
 
 
 # Change column names
 
-Changing column names is a very useful part of data science. Sometimes you'll get a dataset with column names that are not very meaningful, or far too long. There are a few methods for changing column names, with the easiest (not surprisingly) being the tidyverse solution. 
+Changing column names is a very useful part of data science. Sometimes you'll get a dataset with column names that are not very meaningful, or far too long. There are a few methods for changing column names, with the easiest being the tidyverse solution. 
 
-The first step in changing column names is actaully viewing what the names are! Two functions in R exist for this: `colnames()` and `names()`. They do the same thing...so I prefer `names()` as it is less typing. 
+The first step in changing column names is viewing what the names are! Two functions in R exist for this: `colnames()` and `names()`. They do the same thing...so I prefer `names()` as it is less typing. 
 ```{r}
 # view a datasets column names
-colnames(messi_career)
 names(messi_career)
 ```
 
@@ -354,7 +372,7 @@ df <- data.frame(
 
 df
 
-# multiple columns using names
+# change multiple columns using names
 names(df) <- c("string", "random", "sequence", "integer", "factor")
 names(df)
 
@@ -367,7 +385,7 @@ names(df)[names(df) == "sequence"] <- "its_a_sequence"
 names(df)
 ```
 
-The main issue with these techniques is 1) it can get really messy if you need to rename lots of columns in a larger dataset. 2) I have to rename all my columns if renaming more than one column, otherwise it doesn't work! 3) The syntax is a bit messy, especially the last example
+The main issue with these techniques is 1) it can get really messy if you need to rename lots of columns in a larger dataset. 2) I have to rename all my columns if I need to rename more than one column, otherwise it doesn't work! 3) The syntax is a bit messy, especially the last example. 
 
 The `rename()` function from dplyr allows for simple changing of column names with no fuss, and solves these problems. 
 
@@ -420,6 +438,130 @@ names(movies_imdb)
 
 # Tidy column names with janitor
 
-Sometimes you have a dataset that has messy or ugly column names. 
+Sometimes you have a dataset that has messy or ugly column names, which would take some time to tidy up manually. As usual with R there is a package for that situation; which happens more often than you think! 
 
-It changes all the column names to the same format.
+First, we need to install the `janitor` library. 
+
+```{r eval=FALSE}
+# run to install janitor
+install.packages("janitor")
+```
+
+A simple example is below. We have a data frame with inconsistent column names. We use the `clean_names()` function from janitor to tidy up the column names. 
+
+The output shows the difference between default R behaviour and how janitor has cleaned the names. As you can see the janitor output is consistent and in "snake_case" format. 
+```{r}
+# load janitor
+library(janitor)
+
+# make an example data frame
+messy_cols <- data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+)
+
+# compare default to janitor col names
+data_frame(default = names(messy_cols),
+           janitor = names(clean_names(messy_cols)))
+
+```
+
+The janitor library is designed to be used with the tidyverse, so when loading in data, we can pipe our loaded data straight into the `clean_names()` function form janitor.
+
+```{r}
+# pipe data to clean names
+messy_cols <- data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>%
+  clean_names()
+
+# view col names
+names(messy_cols)
+```
+
+You can change the default style, or case, of `clean_names()` from snake case to another if you need or want to. See some examples below.
+```{r}
+# lower camel case
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>%
+  clean_names(case = "lower_camel")
+
+# title case
+# This is useful for plotting or tables
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>%
+  clean_names(case = "title") 
+
+# all_caps case
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>%
+  clean_names(case = "all_caps") 
+```
+
+A full list of what different cases are available are on this page under the case arguments: <https://rdrr.io/cran/snakecase/man/to_any_case.html>
+
+Finally, you can decide if you want the numbers (if you have any) to be aligned in the left, right, or middle of the column name. By default `clean_names()` puts numbers to the middle/right. To change this behaviour we use the numerals argument and specify left as shown below. 
+
+```{r}
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>%
+  clean_names(numerals = "left") 
+```
+
+## Clean names exercise
+As the movies_imdb data we are using already has cleaned names, we will load in another dataset as an example: the pokemon dataset we have used in previous workshops. 
+
+1)  Load in the `janitor` library. Make sure to load `readr` if you don't have it loaded already
+2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv">. Cal your data pokemon
+3)  Use `read_csv()` to load in the same pokemon dataset the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
+4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
+5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
+
+*Different cases available can be found at this link: <https://rdrr.io/cran/snakecase/man/to_any_case.html>*
+```{r}
+# your code here
+library(janitor)
+
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") 
+
+pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names()
+
+pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names(case = "upper_camel")
+
+data_frame(default = names(pokemon),
+           cleaned = names(pokemon_cleaned),
+           cleaned2 = names(pokemon_cleaned_2))
+```
+
+# Final task - Please give us your individual feedback!
+
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+**Add survey link here**
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge
+
+
