@@ -404,7 +404,7 @@ df <- data.frame(
   factor = factor(c("dog", "cat", "cat", "dog"))
 )
 
-df
+names(df)
 
 # rename columns that need renaming
 df_new_col <- df %>%
@@ -477,8 +477,7 @@ messy_cols <- data.frame(
   'messy.col 2' = seq(1:5),
   'MESSY.COL 3' = seq(1:5),
   'messy.col (4)' = seq(1:5)
-) %>%
-  clean_names()
+) %>% clean_names()
 
 # view col names
 names(messy_cols)
@@ -492,8 +491,7 @@ data.frame(
   'messy.col 2' = seq(1:5),
   'MESSY.COL 3' = seq(1:5),
   'messy.col (4)' = seq(1:5)
-) %>%
-  clean_names(case = "lower_camel")
+) %>% clean_names(case = "lower_camel")
 
 # title case
 # This is useful for plotting or tables
@@ -502,8 +500,7 @@ data.frame(
   'messy.col 2' = seq(1:5),
   'MESSY.COL 3' = seq(1:5),
   'messy.col (4)' = seq(1:5)
-) %>%
-  clean_names(case = "title") 
+) %>% clean_names(case = "title") 
 
 # all_caps case
 data.frame(
@@ -511,8 +508,7 @@ data.frame(
   'messy.col 2' = seq(1:5),
   'MESSY.COL 3' = seq(1:5),
   'messy.col (4)' = seq(1:5)
-) %>%
-  clean_names(case = "all_caps") 
+) %>% clean_names(case = "all_caps") 
 ```
 
 A full list of what different cases are available are on this page under the case arguments: <https://rdrr.io/cran/snakecase/man/to_any_case.html>
@@ -532,16 +528,17 @@ data.frame(
 ## Clean names exercise
 As the movies_imdb data we are using already has cleaned names, we will load in another dataset as an example: the pokemon dataset we have used in previous workshops. 
 
-1)  Load in the `janitor` library. Make sure to load `readr` if you don't have it loaded already
-2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv">. Cal your data pokemon
+1)  Load in the `janitor` and `readr` librarys
+2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv">. Call your data pokemon
 3)  Use `read_csv()` to load in the same pokemon dataset the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
 4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
 5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
 
 *Different cases available can be found at this link: <https://rdrr.io/cran/snakecase/man/to_any_case.html>*
-```{r}
+```{r message=FALSE}
 # your code here
 library(janitor)
+library(readr)
 
 pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") 
 
@@ -564,4 +561,62 @@ The solutions we be available from a link at the end of the survey.
 
 # Individual coding challenge
 
+```{r message=FALSE}
+# your code here
+
+# load data and clean the names
+pokemon <- read_csv("data/pokemon.csv") %>%
+  clean_names()
+
+# make ranks, and filter
+pokemon_500 <- pokemon %>%
+  mutate(across(where(is.character), as.factor),
+         speed_rank = min_rank(speed),
+         hp_rank = min_rank(hp)) %>%
+  filter(legendary == FALSE & generation <= 4) %>%
+  filter(total >= 500)
+
+# subsets for speed and hp
+slow <- pokemon_500 %>%
+  slice_min(speed_rank, n = 10) %>%
+  select(name, type_1, type_2, total)
+
+fast <- pokemon_500 %>%
+  slice_max(speed_rank, n = 10) %>%
+  select(name, type_1, type_2, total)
+
+high_hp <- pokemon_500 %>%
+  slice_max(hp_rank, n = 10) %>%
+  select(name, type_1, type_2, total)
+
+low_hp <- pokemon_500 %>%
+  slice_min(hp_rank, n = 10) %>%
+  select(name, type_1, type_2, total)
+
+# who features in both max hp and min speed?
+high_hp %>% filter(name %in% slow$name)
+
+# who features in both max speed and min hp?
+fast %>% filter(name %in% low_hp$name)
+
+
+# bonus - see a bar plot of your pokemon types
+# make a colour palette of the pokemon types
+colour <- c("#6a8b5a", "#414152", "#5a8bee", 
+            "#f6e652","#ffd5bd", "#b40000", 
+            "#ee8329","#6ab4e6", "#8b6283", "#20b49c", 
+            "#c57341", "#e6e6f6", "#ffffff", 
+            "#a483c5", "#f65273", "#e6d5ac", 
+            "#bdcdc5", "#083962")
+
+# view the colours
+scales::show_col(colour)
+
+# plot in a bar plot
+barplot(height = table(pokemon_500$type_1),
+        col = colour,
+        horiz=T, las=1, xlim = c(0, 20),
+        xlab = "Frequency", 
+        main = "Freqency of Pokemon types\n with total greater than 500")
+```
 
