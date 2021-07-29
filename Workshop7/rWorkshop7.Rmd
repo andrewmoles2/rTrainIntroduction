@@ -124,12 +124,7 @@ You should get a data frame returned that has films including: The Abyss, Dead P
 ```{r}
 # your code here
 
-# user critic review ratio
-movies_imdb %>%
-  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2)) %>%
-  filter(country == "USA" & year == 1989) %>%
-  select(title, avg_vote, user_critic_ratio) %>%
-  slice_max(avg_vote, n = 10)
+
 ```
 
 We can see we get more user reviews than critic reviews, which makes sense; for example, the The Abyss has 4 user reviews for each critic review.
@@ -154,19 +149,6 @@ usa_pre90_high <- movies_imdb |>
 usa_pre90_high
 ```
 
-```{r}
-# answer for solutions
-# Re using the user_critic_ratio variable
-
-usa_pre90_high <- movies_imdb %>%
-  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
-         ratio_string = paste(title, "has a user to critic ratio of", user_critic_ratio)) %>%
-  filter(country == "USA" & year < 1990) %>%
-  filter(duration < 120 & avg_vote >= 8.5) %>%
-  select(title, year, avg_vote, ratio_string)
-
-usa_pre90_high
-```
 
 # Mutate with the across function
 
@@ -224,26 +206,6 @@ Lets go back to our movies_imdb data. We want to extract films from 1990 through
 ```{r}
 # your code here
 
-# first way of doing this
-usa_early90_high <- movies_imdb %>% 
-  filter(year >= 1990 & year <= 1995 &
-           country == "USA" & avg_vote >= 7.5) %>%
-  mutate(across(where(is.character), as.factor),
-         year = as.factor(year))
-
-# second way of doing this
-to_factor <- c("year")
-
-usa_early90_high <- movies_imdb %>% 
-  filter(year >= 1990 & year <= 1995 &
-           country == "USA" & avg_vote >= 7.5) %>%
-  mutate(across(where(is.character), as.factor),
-         across(any_of(to_factor), as.factor))
-
-# highest rated with title, avg_vote, and year
-usa_early90_high %>%
-  filter(avg_vote >= 8.5) %>%
-  select(title, avg_vote, year)
 
 ```
 
@@ -285,12 +247,7 @@ Using your usa_early90_high data we just made in the last exercise:
 
 ```{r}
 # your code here
-usa_early90_high %>%
-  mutate(duration_rank = min_rank(duration),
-         perc_duration_rank = percent_rank(duration),
-         avg_cumul_duration = cummean(duration)) %>%
-  filter(perc_duration_rank > 0.5 & perc_duration_rank < 0.6) %>%
-  select(title, year, duration, avg_vote, duration_rank:avg_cumul_duration)
+
 ```
 
 # The transmute function
@@ -303,7 +260,6 @@ messi_career %>%
   transmute(cumul_goals = cumsum(Goals),
          mean_cumul_app = cummean(Appearances))
 ```
-
 
 The behaviour of transmute can be helpful in certain situations, but if you really want to keep some columns, you can add them into the transmute statement. For example, in the example below I might want to keep the Goals and Appearances columns for comparison with the cumulativate calculations I've made. 
 
@@ -329,22 +285,6 @@ Let's use transmute to look at the durations of the films in the imdb_movies dat
 ```{r}
 # your code here
 
-# make movie durations 
-movie_durations <- movies_imdb %>%
-  transmute(duration_hours = duration*0.0166667,
-            duration_rank = min_rank(duration),
-            year,
-            title,
-            duration,
-            genre)
-
-# 4 longest
-movie_durations %>%
-  slice_max(duration_hours, n = 4)
-
-# 4 shortest
-movie_durations %>%
-  filter(duration_rank < 5)
 
 ```
 
@@ -426,13 +366,7 @@ Let's have a practice renaming some columns in the movies_imdb dataset.
 
 ```{r}
 # your code here
-names(movies_imdb)
 
-movies_imdb <- movies_imdb %>%
-  rename(User_reviews = reviews_from_users,
-         Critic_reviews = reviews_from_critics)
-
-names(movies_imdb)
 ```
 
 
@@ -530,25 +464,14 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 
 1)  Load in the `janitor` and `readr` librarys
 2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv">. Call your data pokemon
-3)  Use `read_csv()` to load in the same pokemon dataset the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
+3)  Use `read_csv()` to load in the same pokemon dataset from the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
 4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
 5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
 
 *Different cases available can be found at this link: <https://rdrr.io/cran/snakecase/man/to_any_case.html>*
 ```{r message=FALSE}
 # your code here
-library(janitor)
-library(readr)
 
-pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") 
-
-pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names()
-
-pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names(case = "upper_camel")
-
-data_frame(default = names(pokemon),
-           cleaned = names(pokemon_cleaned),
-           cleaned2 = names(pokemon_cleaned_2))
 ```
 
 # Final task - Please give us your individual feedback!
@@ -561,45 +484,30 @@ The solutions we be available from a link at the end of the survey.
 
 # Individual coding challenge
 
+In this coding challenge we will try and put together what we have learned in this and previous workshops. 
+
+We will be using data from the pokemon games, making some subsets from that data. If you are curious about the data, have a look at the source here: <https://pokemondb.net/pokedex/all>. 
+
+1)  Make sure you have the following packages loaded: dplyr, readr, janitor
+2)  Load in the pokemon data using the following link: "https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop7/data/pokemon.csv". Call your data `pokemon`
+3)  Clean up the column names using janitor. Try and use pipes like we did in the examples earlier in the workshop
+4)  Using mutate, change all data that is a character in `pokemon` to a factor
+5)  In the same mutate, add columns for speed_rank and hp_rank. Use the `min_rank()` function on speed and hp to calculate the rankings
+6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to generation 4. You should end up with the legendary column all being false and generations being 1-4
+7)  Pipe to another filter function, subsetting total to be greater than or equal to 500
+8)  Assign the result of this subset to `pokemon_500`
+9)  Make four different subsets called: slow, fast, high_hp, and low_hp. Pipe your `pokemon_500` data to slice_max or slice_min functions to find the top 10 fastest/slowest pokemon, and the top 10 highest/lowest hp pokemon. For example, `slow <- pokemon_500 %>% slice_min(speed_rank, n = 10)`
+10) Find out which pokemon feature in both the high_hp data and the slow data *hint: use filter and the `%in%` operator*
+11) Find out which pokemon feature in both the fast data and the low_hp data
+12) Bonus: run the code for the barplot (second code chunk). It uses the `pokemon_500` data you made to see which pokemon types have total statistics over 500. The colours represent each pokemon type (grass is green etc.). It won't run if `pokemon_500` has not been made or named differently. 
+
 ```{r message=FALSE}
 # your code here
 
-# load data and clean the names
-pokemon <- read_csv("data/pokemon.csv") %>%
-  clean_names()
+```
 
-# make ranks, and filter
-pokemon_500 <- pokemon %>%
-  mutate(across(where(is.character), as.factor),
-         speed_rank = min_rank(speed),
-         hp_rank = min_rank(hp)) %>%
-  filter(legendary == FALSE & generation <= 4) %>%
-  filter(total >= 500)
-
-# subsets for speed and hp
-slow <- pokemon_500 %>%
-  slice_min(speed_rank, n = 10) %>%
-  select(name, type_1, type_2, total)
-
-fast <- pokemon_500 %>%
-  slice_max(speed_rank, n = 10) %>%
-  select(name, type_1, type_2, total)
-
-high_hp <- pokemon_500 %>%
-  slice_max(hp_rank, n = 10) %>%
-  select(name, type_1, type_2, total)
-
-low_hp <- pokemon_500 %>%
-  slice_min(hp_rank, n = 10) %>%
-  select(name, type_1, type_2, total)
-
-# who features in both max hp and min speed?
-high_hp %>% filter(name %in% slow$name)
-
-# who features in both max speed and min hp?
-fast %>% filter(name %in% low_hp$name)
-
-
+Bonus code (see part 12 of coding challenge)
+```{r eval=FALSE}
 # bonus - see a bar plot of your pokemon types
 # make a colour palette of the pokemon types
 colour <- c("#6a8b5a", "#414152", "#5a8bee", 
@@ -610,13 +518,16 @@ colour <- c("#6a8b5a", "#414152", "#5a8bee",
             "#bdcdc5", "#083962")
 
 # view the colours
-scales::show_col(colour)
+#scales::show_col(colour)
 
 # plot in a bar plot
 barplot(height = table(pokemon_500$type_1),
         col = colour,
-        horiz=T, las=1, xlim = c(0, 20),
+        horiz= TRUE, las= 1, 
+        xlim = c(0, 20),
         xlab = "Frequency", 
         main = "Freqency of Pokemon types\n with total greater than 500")
 ```
+
+If you are wondering how the colouring works, we are using the factor levels of the type_1 column. If you type `levels(pokemon_500$type_1)` you'll get a vector with the 18 different factor levels, with Bug being 1 and Dark being 2 and so on. The first element in our colour vector therefore matches up with the first level of the type_1 factor, which is bug.
 

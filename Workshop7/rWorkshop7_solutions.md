@@ -244,6 +244,29 @@ You should get a data frame returned that has films including: The Abyss, Dead P
 
 ```r
 # your code here
+
+# user critic review ratio
+movies_imdb %>%
+  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2)) %>%
+  filter(country == "USA" & year == 1989) %>%
+  select(title, avg_vote, user_critic_ratio) %>%
+  slice_max(avg_vote, n = 10)
+```
+
+```
+## # A tibble: 10 x 3
+##    title                                 avg_vote user_critic_ratio
+##    <chr>                                    <dbl>             <dbl>
+##  1 Indiana Jones and the Last Crusade         8.2              3.42
+##  2 Dead Poets Society                         8.1              5.98
+##  3 Crimes and Misdemeanors                    7.9              1.78
+##  4 Do the Right Thing                         7.9              4.72
+##  5 Back to the Future Part II                 7.8              2.83
+##  6 Glory                                      7.8              6.18
+##  7 The Abyss                                  7.6              4.08
+##  8 The Little Mermaid                         7.6              1.89
+##  9 National Lampoon's Christmas Vacation      7.6              3.42
+## 10 When Harry Met Sally...                    7.6              2.57
 ```
 
 We can see we get more user reviews than critic reviews, which makes sense; for example, the The Abyss has 4 user reviews for each critic review.
@@ -269,6 +292,32 @@ usa_pre90_high <- movies_imdb |>
 usa_pre90_high
 ```
 
+
+```r
+# answer for solutions
+# Re using the user_critic_ratio variable
+
+usa_pre90_high <- movies_imdb %>%
+  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
+         ratio_string = paste(title, "has a user to critic ratio of", user_critic_ratio)) %>%
+  filter(country == "USA" & year < 1990) %>%
+  filter(duration < 120 & avg_vote >= 8.5) %>%
+  select(title, year, avg_vote, ratio_string)
+
+usa_pre90_high
+```
+
+```
+## # A tibble: 6 x 4
+##   title             year avg_vote ratio_string                                  
+##   <chr>            <dbl>    <dbl> <chr>                                         
+## 1 City Lights       1931      8.5 City Lights has a user to critic ratio of 2.42
+## 2 Modern Times      1936      8.5 Modern Times has a user to critic ratio of 2.…
+## 3 Casablanca        1942      8.5 Casablanca has a user to critic ratio of 6.65 
+## 4 12 Angry Men      1957      8.9 12 Angry Men has a user to critic ratio of 10…
+## 5 Psycho            1960      8.5 Psycho has a user to critic ratio of 5.44     
+## 6 Back to the Fut…  1985      8.5 Back to the Future has a user to critic ratio…
+```
 
 # Mutate with the across function
 
@@ -470,6 +519,41 @@ Lets go back to our movies_imdb data. We want to extract films from 1990 through
 
 ```r
 # your code here
+
+# first way of doing this
+usa_early90_high <- movies_imdb %>% 
+  filter(year >= 1990 & year <= 1995 &
+           country == "USA" & avg_vote >= 7.5) %>%
+  mutate(across(where(is.character), as.factor),
+         year = as.factor(year))
+
+# second way of doing this
+to_factor <- c("year")
+
+usa_early90_high <- movies_imdb %>% 
+  filter(year >= 1990 & year <= 1995 &
+           country == "USA" & avg_vote >= 7.5) %>%
+  mutate(across(where(is.character), as.factor),
+         across(any_of(to_factor), as.factor))
+
+# highest rated with title, avg_vote, and year
+usa_early90_high %>%
+  filter(avg_vote >= 8.5) %>%
+  select(title, avg_vote, year)
+```
+
+```
+## # A tibble: 8 x 3
+##   title                    avg_vote year 
+##   <fct>                       <dbl> <fct>
+## 1 Goodfellas                    8.7 1990 
+## 2 The Silence of the Lambs      8.6 1991 
+## 3 Schindler's List              8.9 1993 
+## 4 Forrest Gump                  8.8 1994 
+## 5 The Lion King                 8.5 1994 
+## 6 Pulp Fiction                  8.9 1994 
+## 7 The Shawshank Redemption      9.3 1994 
+## 8 Se7en                         8.6 1995
 ```
 
 # Ranking and cumulativate calculations using mutate
@@ -550,6 +634,27 @@ Using your usa_early90_high data we just made in the last exercise:
 
 ```r
 # your code here
+usa_early90_high %>%
+  mutate(duration_rank = min_rank(duration),
+         perc_duration_rank = percent_rank(duration),
+         avg_cumul_duration = cummean(duration)) %>%
+  filter(perc_duration_rank > 0.5 & perc_duration_rank < 0.6) %>%
+  select(title, year, duration, avg_vote, duration_rank:avg_cumul_duration)
+```
+
+```
+## # A tibble: 9 x 7
+##   title  year  duration avg_vote duration_rank perc_duration_r… avg_cumul_durat…
+##   <fct>  <fct>    <dbl>    <dbl>         <int>            <dbl>            <dbl>
+## 1 Awake… 1990       121      7.8            37            0.507             121 
+## 2 The F… 1991       121      7.6            37            0.507             120.
+## 3 The P… 1992       124      7.5            41            0.563             116.
+## 4 A Bro… 1993       121      7.8            37            0.507             117.
+## 5 Juras… 1993       127      8.1            43            0.592             122.
+## 6 Phila… 1993       125      7.7            42            0.577             120.
+## 7 Ed Wo… 1994       127      7.8            43            0.592             122.
+## 8 Inter… 1994       123      7.5            40            0.549             122.
+## 9 Se7en  1995       127      8.6            43            0.592             124.
 ```
 
 # The transmute function
@@ -583,6 +688,7 @@ messi_career %>%
 ## 15         603       45.80000
 ## 16         634       45.68750
 ```
+
 
 The behaviour of transmute can be helpful in certain situations, but if you really want to keep some columns, you can add them into the transmute statement. For example, in the example below I might want to keep the Goals and Appearances columns for comparison with the cumulativate calculations I've made. 
 
@@ -629,6 +735,45 @@ Let's use transmute to look at the durations of the films in the imdb_movies dat
 
 ```r
 # your code here
+
+# make movie durations 
+movie_durations <- movies_imdb %>%
+  transmute(duration_hours = duration*0.0166667,
+            duration_rank = min_rank(duration),
+            year,
+            title,
+            duration,
+            genre)
+
+# 4 longest
+movie_durations %>%
+  slice_max(duration_hours, n = 4)
+```
+
+```
+## # A tibble: 4 x 6
+##   duration_hours duration_rank  year title               duration genre         
+##            <dbl>         <int> <dbl> <chr>                  <dbl> <chr>         
+## 1          13.5          85855  2016 La flor                  808 Drama, Fantas…
+## 2          12.2          85854  1971 Out 1, noli me tan…      729 Drama, Mystery
+## 3           9.67         85853  1988 Khleb - imya sushc…      580 Drama, Histor…
+## 4           9.50         85852  2020 Orbius                   570 Fantasy
+```
+
+```r
+# 4 shortest
+movie_durations %>%
+  filter(duration_rank < 5)
+```
+
+```
+## # A tibble: 4 x 6
+##   duration_hours duration_rank  year title                 duration genre       
+##            <dbl>         <int> <dbl> <chr>                    <dbl> <chr>       
+## 1          0.717             3  1941 Niagara Falls               43 Comedy, Rom…
+## 2          0.683             1  1989 Doragon bôru Z              41 Animation, …
+## 3          0.733             4  2019 My Little Pony: Eque…       44 Animation, …
+## 4          0.700             2  2009 Enigma                      42 Sci-Fi
 ```
 
 
@@ -668,9 +813,9 @@ df
 ```
 ##   column1 column2 column3 integer factor
 ## 1   Hello       9       1       4    dog
-## 2   Hello       2       2       5    cat
-## 3   Hello       5       3       6    cat
-## 4   Hello       7       4       7    dog
+## 2   Hello       5       2       5    cat
+## 3   Hello       8       3       6    cat
+## 4   Hello       2       4       7    dog
 ```
 
 ```r
@@ -743,10 +888,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      6        1       4    dog
-## 2  Hello      8        2       5    cat
-## 3  Hello      7        3       6    cat
-## 4  Hello      9        4       7    dog
+## 1  Hello      8        1       4    dog
+## 2  Hello      4        2       5    cat
+## 3  Hello      5        3       6    cat
+## 4  Hello      7        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -761,6 +906,35 @@ Let's have a practice renaming some columns in the movies_imdb dataset.
 
 ```r
 # your code here
+names(movies_imdb)
+```
+
+```
+##  [1] "imdb_title_id"         "title"                 "year"                 
+##  [4] "date_published"        "genre"                 "duration"             
+##  [7] "country"               "language"              "director"             
+## [10] "writer"                "production_company"    "actors"               
+## [13] "description"           "avg_vote"              "votes"                
+## [16] "budget"                "usa_gross_income"      "worlwide_gross_income"
+## [19] "metascore"             "reviews_from_users"    "reviews_from_critics"
+```
+
+```r
+movies_imdb <- movies_imdb %>%
+  rename(User_reviews = reviews_from_users,
+         Critic_reviews = reviews_from_critics)
+
+names(movies_imdb)
+```
+
+```
+##  [1] "imdb_title_id"         "title"                 "year"                 
+##  [4] "date_published"        "genre"                 "duration"             
+##  [7] "country"               "language"              "director"             
+## [10] "writer"                "production_company"    "actors"               
+## [13] "description"           "avg_vote"              "votes"                
+## [16] "budget"                "usa_gross_income"      "worlwide_gross_income"
+## [19] "metascore"             "User_reviews"          "Critic_reviews"
 ```
 
 
@@ -934,7 +1108,7 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 
 1)  Load in the `janitor` and `readr` librarys
 2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv">. Call your data pokemon
-3)  Use `read_csv()` to load in the same pokemon dataset from the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
+3)  Use `read_csv()` to load in the same pokemon dataset the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
 4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
 5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
 
@@ -942,6 +1116,37 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 
 ```r
 # your code here
+library(janitor)
+library(readr)
+
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") 
+
+pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names()
+
+pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names(case = "upper_camel")
+
+data_frame(default = names(pokemon),
+           cleaned = names(pokemon_cleaned),
+           cleaned2 = names(pokemon_cleaned_2))
+```
+
+```
+## # A tibble: 13 x 3
+##    default    cleaned    cleaned2  
+##    <chr>      <chr>      <chr>     
+##  1 Number     number     Number    
+##  2 Name       name       Name      
+##  3 Type.1     type_1     Type1     
+##  4 Type.2     type_2     Type2     
+##  5 Total      total      Total     
+##  6 HP         hp         Hp        
+##  7 Attack     attack     Attack    
+##  8 Defense    defense    Defense   
+##  9 Sp..Atk    sp_atk     SpAtk     
+## 10 Sp..Def    sp_def     SpDef     
+## 11 Speed      speed      Speed     
+## 12 Generation generation Generation
+## 13 Legendary  legendary  Legendary
 ```
 
 # Final task - Please give us your individual feedback!
@@ -974,6 +1179,64 @@ We will be using data from the pokemon games, making some subsets from that data
 
 ```r
 # your code here
+library(dplyr)
+library(readr)
+library(janitor)
+
+# load data and clean the names
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop7/data/pokemon.csv") %>%
+  clean_names()
+
+# make ranks, and filter
+pokemon_500 <- pokemon %>%
+  mutate(across(where(is.character), as.factor),
+         speed_rank = min_rank(speed),
+         hp_rank = min_rank(hp)) %>%
+  filter(legendary == FALSE & generation <= 4) %>%
+  filter(total >= 500)
+
+# subsets for speed and hp
+slow <- pokemon_500 %>%
+  slice_min(speed_rank, n = 10) %>%
+  select(name, type_1, type_2, total, hp, speed)
+
+fast <- pokemon_500 %>%
+  slice_max(speed_rank, n = 10) %>%
+  select(name, type_1, type_2, total, hp, speed)
+
+high_hp <- pokemon_500 %>%
+  slice_max(hp_rank, n = 10) %>%
+  select(name, type_1, type_2, total, hp, speed)
+
+low_hp <- pokemon_500 %>%
+  slice_min(hp_rank, n = 10) %>%
+  select(name, type_1, type_2, total, hp, speed)
+
+# who features in both max hp and min speed?
+high_hp %>% filter(name %in% slow$name)
+```
+
+```
+## # A tibble: 3 x 6
+##   name       type_1 type_2 total    hp speed
+##   <fct>      <fct>  <fct>  <dbl> <dbl> <dbl>
+## 1 Snorlax    Normal <NA>     540   160    30
+## 2 Rhyperior  Ground Rock     535   115    40
+## 3 Lickilicky Normal <NA>     515   110    50
+```
+
+```r
+# who features in both max speed and min hp?
+fast %>% filter(name %in% low_hp$name)
+```
+
+```
+## # A tibble: 3 x 6
+##   name     type_1  type_2  total    hp speed
+##   <fct>    <fct>   <fct>   <dbl> <dbl> <dbl>
+## 1 Alakazam Psychic <NA>      500    55   120
+## 2 Starmie  Water   Psychic   520    60   115
+## 3 Gengar   Ghost   Poison    500    60   110
 ```
 
 Bonus code (see part 12 of coding challenge)
@@ -999,6 +1262,8 @@ barplot(height = table(pokemon_500$type_1),
         xlab = "Frequency", 
         main = "Freqency of Pokemon types\n with total greater than 500")
 ```
+
+![](rWorkshop7_solutions_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
 
 If you are wondering how the colouring works, we are using the factor levels of the type_1 column. If you type `levels(pokemon_500$type_1)` you'll get a vector with the 18 different factor levels, with Bug being 1 and Dark being 2 and so on. The first element in our colour vector therefore matches up with the first level of the type_1 factor, which is bug.
 
