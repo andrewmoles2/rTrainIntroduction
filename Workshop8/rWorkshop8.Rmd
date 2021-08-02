@@ -1,5 +1,5 @@
 ---
-title: "R Workshop 7 - Joining and aggregation"
+title: "R Workshop 8 - Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab

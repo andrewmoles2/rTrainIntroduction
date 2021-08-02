@@ -1,9 +1,9 @@
 ---
-title: "R Workshop 7 - Joining and aggregation"
+title: "R Workshop 8 - Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "16 July, 2021"
+date: "30 July, 2021"
 output: 
   html_document: 
     theme: readable
@@ -16,9 +16,8 @@ output:
 
 # What this workshop will cover
 
--   Changing column names
 -   Relational joining of datasets
--   Cross tabluation
+-   Cross tabulation
 -   Grouping and aggregating your data
 -   Rowwise aggregations
 
@@ -46,103 +45,9 @@ output:
 
 ------------------------------------------------------------------------
 
-# Change column names with rename
-
-Before we move into joining and aggregation, it is helpful to learn about the `rename()` function from dplyr, which allows for simple changing of column names. 
-
-The syntax is the same as the `mutate()` function, where we have the name of the column we want to make, then what column we are changing: `data %>% rename(new_column_name = old_column_name)`. 
-
-
-```r
-# load dplyr
-library(dplyr)
-
-# Make a data frame
-df <- data.frame(
-  column1 = rep("Hello", 4),
-  column2 = sample(1:10, 4),
-  column3 = seq(1:4)
-)
-
-df
-```
-
-```
-##   column1 column2 column3
-## 1   Hello       1       1
-## 2   Hello       6       2
-## 3   Hello       7       3
-## 4   Hello      10       4
-```
-
-```r
-# rename all the columns
-df %>%
-  rename(string = column1,
-         random = column2,
-         sequence = column3) -> df_new_col
-
-df_new_col
-```
-
-```
-##   string random sequence
-## 1  Hello      1        1
-## 2  Hello      6        2
-## 3  Hello      7        3
-## 4  Hello     10        4
-```
-
-## Rename columns exercise
-
-We will be using the imdb movies dataset again, and code has been provided for you to load it. 
-
-1) Type in and run `names(movies_imdb)` to get the column names of your dataset. This is a nice way to finding the column names, making it easy to copy and paste the names should you need to
-2) Using the `rename()` function from dplyr, change `reviews_from_users` to `User_reviews` and `reviews_from_critics` to `Critic_reviews`
-3) Save the result back to `movies_imdb`
-4) Type in and run `names(movies_imdb)` again to view the new column names
-
-```r
-library(readr)
-library(dplyr)
-
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
-
-# your code here
-names(movies_imdb)
-```
-
-```
-##  [1] "imdb_title_id"         "title"                 "year"                 
-##  [4] "date_published"        "genre"                 "duration"             
-##  [7] "country"               "language"              "director"             
-## [10] "writer"                "production_company"    "actors"               
-## [13] "description"           "avg_vote"              "votes"                
-## [16] "budget"                "usa_gross_income"      "worlwide_gross_income"
-## [19] "metascore"             "reviews_from_users"    "reviews_from_critics"
-```
-
-```r
-movies_imdb %>%
-  rename(User_reviews = reviews_from_users,
-         Critic_reviews = reviews_from_critics) -> movies_imdb
-
-names(movies_imdb)
-```
-
-```
-##  [1] "imdb_title_id"         "title"                 "year"                 
-##  [4] "date_published"        "genre"                 "duration"             
-##  [7] "country"               "language"              "director"             
-## [10] "writer"                "production_company"    "actors"               
-## [13] "description"           "avg_vote"              "votes"                
-## [16] "budget"                "usa_gross_income"      "worlwide_gross_income"
-## [19] "metascore"             "User_reviews"          "Critic_reviews"
-```
-
 # Joining data
 
-In previous workshops we have introduced how to combine data frames together that have matching columns using the `rbind` and `cbind` functions. Here we will introduce relational (or mutating) joins. This means the data frames are related by common columns, such as a id column, but the rest of the data held is different. 
+In previous workshops we have introduced how to combine data frames together that have matching columns using the `rbind` and `cbind` functions. Here we will introduce relational (or mutating) joins. This means the data frames are related by common columns, such as a id column, but the rest of the data held is different. These are known as relational data, in that multiple tables of data are related to each other, rather than being stand alone datasets.
 
 In our example we will have a person information data frame, with name and age, and a food information data frame with favourite food and allergies; both data frames have a id column which we can use to join them.
 
@@ -189,27 +94,56 @@ Food_Info
 ## 3  7                    Egg fried rice Shellfish
 ```
 
-Dplyr has several functions for joining data, which are based on SQL: 
+The id columns in our datasets above are a unique identifier (also known as a primary key). This means they identify one observation in their own table. You can test this by either using the `duplicated()` function or use the `count()` function from dplyr (more on this function later in this workshop). With `duplicated()` you should get back a blank dataset (we used `[]` indexing), and with `count()` + `filter()` method you should get the same.
 
-- `inner_join` finds matches between both data frames
-- `left_join` includes all of the data from the left data frame, and matches from the right
-- `right_join` includes all of the data from the right data frame, and matches from the left
-- `full_join` includes all data from both data frames
 
+```r
+# See if and ID appears more than once
+Person_Info[duplicated(Person_Info$ID_num), ]
+```
+
+```
+## [1] ID_num Name   Age   
+## <0 rows> (or 0-length row.names)
+```
+
+```r
+# count method
+Person_Info %>% 
+  count(ID_num) %>%
+  filter(n > 1)
+```
+
+```
+## [1] ID_num n     
+## <0 rows> (or 0-length row.names)
+```
+
+Dplyr has several functions for joining data, which are based on SQL:
+
+-   `inner_join` finds matches between both data frames
+-   `left_join` includes all of the data from the left data frame, and matches from the right
+-   `right_join` includes all of the data from the right data frame, and matches from the left
+-   `full_join` includes all data from both data frames
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/1.jpg?raw=true){width="600"}
+
+*To view images, either switch to visual markdown editor, or knit document to html*
 
 First, we can have a look at what a inner join looks like. Try and run the code below.
-
 
 ```r
 inner_join(Person_Info, Food_Info)
 ```
-This doesn't work because our column names for our data frames do not match. This is a common error and is easy to fix with the rename function.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/1.jpg?raw=true){width="600"}
+```
+## Error: `by` must be supplied when `x` and `y` have no common variables.
+## ℹ use by = character()` to perform a cross-join.
+```
 
-*To view images, either switch to visual markdown editor, or knit document to html*
+This doesn't work because our column names for our data frames do not match! This is a common error and is easy to fix with the rename function.
 
-See the example below, we rename the ID column, then we use the `inner_join()` function again. You can also specify what columns you are joining the data, using the by argument. 
+In the example below, we rename the ID column, then we use the `inner_join()` function again. 
 
 ```r
 # fix the id column name to match
@@ -230,6 +164,10 @@ inner_join(Person_Info, Food_Info)
 ## 2  4 Cleopatra  35 Pasta con il pesto alla Trapanese      Soy
 ```
 
+The inner join has included only data that is in both Person_Info and Food_Info, anything that didn't match was dropped.
+
+You can specify what columns you are joining the data, using the `by` argument. The `by` argument we use in the example below is for manually selecting the columns to join the datasets by. It is good practice to specify which columns you are joining your data by as it will help you understand your data better.
+
 ```r
 # Specifying what we are joining by
 inner_join(Person_Info, Food_Info, by = "ID")
@@ -241,18 +179,14 @@ inner_join(Person_Info, Food_Info, by = "ID")
 ## 2  4 Cleopatra  35 Pasta con il pesto alla Trapanese      Soy
 ```
 
-The left join includes all data from our Person_Info data frame and matches from the Food_Info data frame, anything that doesn't match is scored as a NA. 
+Next up is the left join, which includes all data from our Person_Info data frame and matches from the Food_Info data frame, anything that doesn't match is scored as a NA.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/3.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/3.jpg?raw=true){width="600"}
 
 
 ```r
 # left join 
-left_join(Person_Info, Food_Info)
-```
-
-```
-## Joining, by = "ID"
+left_join(Person_Info, Food_Info, by = "ID")
 ```
 
 ```
@@ -265,18 +199,14 @@ left_join(Person_Info, Food_Info)
 ## 6  6    Nathan  42                              <NA>     <NA>
 ```
 
-The right join is the opposite of the left join. We get everything from Food_Info, and just the matches from Person_Info. Again, anything that doesn't match is given NA. 
+The right join is the opposite of the left join. We get everything from Food_Info, and just the matches from Person_Info. Again, anything that doesn't match is given NA.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/4.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/4.jpg?raw=true){width="600"}
 
 
 ```r
 # right join
-right_join(Person_Info, Food_Info)
-```
-
-```
-## Joining, by = "ID"
+right_join(Person_Info, Food_Info, by = "ID")
 ```
 
 ```
@@ -286,18 +216,14 @@ right_join(Person_Info, Food_Info)
 ## 3  7      <NA>  NA                    Egg fried rice Shellfish
 ```
 
-Finally, the full join brings all the data of both data frames together. Anything that doesn't match is given NA. 
+Finally, the full join brings all the data of both data frames together. Anything that doesn't match is given NA.We can see quite clearly here that despite there being a person who wasn't in the `Person_Info` data frame, their data has been joined up as it was in the `Fav_food` data frame, with Na's given for Name and Age. 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/2.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/2.jpg?raw=true){width="600"}
 
 
 ```r
 # full join
-full_join(Person_Info, Food_Info)
-```
-
-```
-## Joining, by = "ID"
+full_join(Person_Info, Food_Info, by = "ID")
 ```
 
 ```
@@ -311,35 +237,27 @@ full_join(Person_Info, Food_Info)
 ## 7  7      <NA>  NA                    Egg fried rice Shellfish
 ```
 
+Deciding on the correct join to use depends on what you are aiming to do. An inner join is useful if you wanted to subset your data down to only matched data across the two tables. A full join is useful for keeping all your data together and ensures no data is lost in the joining process.
+
 ## Joining data exercise
 
-For this workshop you'll be using the imdb data we used in the previous workshop and we will also be using the Bechdel Test flim data. We will be joining the Bechel data to the imdb dataset. 
+For this workshop you'll be using the imdb data we used in the previous workshop and we will also be using the Bechdel Test flim data. We will be joining the Bechdel data to the imdb dataset.
 
 The Bechdel test is a measure of the representation of women in fiction. Scoring has three criteria which films are scored on: 1) Film has at least two women in it 2) The two, or more, women talk to each other 3) The two, or more, women talk about something besides a man. Films are scored 0 to 3. They score 0 if they don't meet any of the criteria, and 3 if they meet all of them.
 
-Lets jump in, and load our data. We previously loaded the imdb data, so we will just load the bechdel data using the code I've provided.
-
+Lets jump in, and load our data using the code provided.
 
 ```r
+# load libraries
 library(readr)
 library(dplyr)
 
+# load imdb and bechdel
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
+
 bechdel <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/raw_bechdel.csv")
 
-bechdel %>% glimpse()
-```
-
-```
-## Rows: 8,839
-## Columns: 5
-## $ year    <dbl> 1888, 1892, 1895, 1895, 1896, 1896, 1896, 1896, 1897, 1898, 18…
-## $ id      <dbl> 8040, 5433, 6200, 5444, 5406, 5445, 6199, 4982, 9328, 4978, 54…
-## $ imdb_id <dbl> 392728, 3, 132134, 14, 131, 223341, 12, 91, 41, 135696, 224240…
-## $ title   <chr> "Roundhay Garden Scene", "Pauvre Pierrot", "The Execution of M…
-## $ rating  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,…
-```
-
-```r
+# get glimpse of data
 movies_imdb %>% glimpse()
 ```
 
@@ -365,17 +283,31 @@ movies_imdb %>% glimpse()
 ## $ usa_gross_income      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ worlwide_gross_income <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ metascore             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-## $ User_reviews          <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
-## $ Critic_reviews        <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
+## $ reviews_from_users    <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
+## $ reviews_from_critics  <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
 ```
 
-To join the data we have to make sure the IDs we will be using to join the data match. First we change the name, then we remove the text from the imdb data `imdb_title_id` column.
+```r
+bechdel %>% glimpse()
+```
 
-1) Using the `rename` function, change the `imdb_title_id` column in movies_imdb to `imdb_id`. Make sure to save the result back to movies_imdb
-2) We now need to fix the ids in the movies_imdb dataset. Type the following code to fix the ids: `movies_imdb$imdb_id <- parse_number(movies_imdb$imdb_id)`. The `parse_number()` function is from the readr library, and removes text from strings, which is exactly what we need in this case
-3) Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the by argument with imdb_id, title, and year columns, or you can let the function do this for you
-4) Using the `full_join()` function,  join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the by argument with imdb_id, title, and year columns, or you can let the function do this for you
-5) Have a look at both your newly joined up data frames using head, glimpse or View. Do you notice how when we used inner_join we filtered out all data that isn't in our bechdel test dataset? 
+```
+## Rows: 8,839
+## Columns: 5
+## $ year    <dbl> 1888, 1892, 1895, 1895, 1896, 1896, 1896, 1896, 1897, 1898, 18…
+## $ id      <dbl> 8040, 5433, 6200, 5444, 5406, 5445, 6199, 4982, 9328, 4978, 54…
+## $ imdb_id <dbl> 392728, 3, 132134, 14, 131, 223341, 12, 91, 41, 135696, 224240…
+## $ title   <chr> "Roundhay Garden Scene", "Pauvre Pierrot", "The Execution of M…
+## $ rating  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,…
+```
+
+To join the data we have to make sure the IDs we will be using to join the data match. With these two datasets we have two issues we need to fix before we join the datasets. First, we change the column name in the movie_imdb dataset so it matches that of the bechdel data. We also have to remove the text from the imdb data `imdb_title_id` column so it is in the same format as the bechdel dataset. For example, *tt0000574* should be *574*.
+
+1)  Using the `rename` function, change the `imdb_title_id` column in movies_imdb to `imdb_id`. Make sure to save the result back to movies_imdb
+2)  We now need to fix the ids in the movies_imdb dataset. Type the following code to fix the ids: `movies_imdb$imdb_id <- parse_number(movies_imdb$imdb_id)`. The `parse_number()` function is from the readr library, and removes text from strings, which is exactly what we need in this case
+3)  Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
+4)  Using the `full_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
+5)  Have a look at both your newly joined up data frames using head, glimpse or View. Do you notice how when we used inner_join we filtered out all data that isn't in our bechdel test dataset?
 
 
 ```r
@@ -419,8 +351,8 @@ imdb_bechdel %>% glimpse()
 ## $ usa_gross_income      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ worlwide_gross_income <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ metascore             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-## $ User_reviews          <dbl> 7, 25, 6, 368, 7, 13, 16, 3, 9, 12, 6, 19, 14, 8…
-## $ Critic_reviews        <dbl> 7, 3, 3, 97, 1, 5, 13, 3, 5, 4, 1, 11, 21, 78, 6…
+## $ reviews_from_users    <dbl> 7, 25, 6, 368, 7, 13, 16, 3, 9, 12, 6, 19, 14, 8…
+## $ reviews_from_critics  <dbl> 7, 3, 3, 97, 1, 5, 13, 3, 5, 4, 1, 11, 21, 78, 6…
 ## $ id                    <dbl> 1349, 2003, 4457, 1258, 2008, 7004, 1994, 2019, …
 ## $ rating                <dbl> 1, 2, 2, 2, 3, 3, 3, 2, 3, 0, 3, 3, 3, 0, 3, 3, …
 ```
@@ -451,17 +383,20 @@ imdb_bechdel_full %>% glimpse()
 ## $ usa_gross_income      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ worlwide_gross_income <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ metascore             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-## $ User_reviews          <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
-## $ Critic_reviews        <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
+## $ reviews_from_users    <dbl> 1, 7, 5, 25, 31, 13, 12, 7, 4, 8, 9, 9, 16, 8, N…
+## $ reviews_from_critics  <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, …
 ## $ id                    <dbl> NA, 1349, NA, 2003, NA, NA, NA, NA, NA, NA, NA, …
 ## $ rating                <dbl> NA, 1, NA, 2, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ```
 
+For more information on joins in R I'd recommend reading the R for Data Science chapter on relational data: <https://r4ds.had.co.nz/relational-data.html>. To help understand the join lingo, the full join, inner join etc. we just looked at are *mutating joins*. Of particular use, if you are looking at doing joins on your own data, is the join problems section.
+
 # Cross tabulation
 
-You can perform simple cross tabulation very quickly in R with either the base R `table()` function or `count()` from dplyr. Cross tabulation provides frequencies of categorical data. 
+You can perform simple cross tabulation very quickly in R with either the base R `table()` function or `count()` from dplyr. Cross tabulation provides frequencies of categorical data.
 
 In the examples we will look at both the `table` and `count` functions for comparison. First, run the example below to see how to get a frequency table of one categorial variable.
+
 
 ```r
 # Some made up tourist data
@@ -475,12 +410,12 @@ head(df1)
 
 ```
 ##         city tourist_rating
-## 1 Birmingham              4
-## 2 Manchester              1
-## 3  Cambridge              3
-## 4  Cambridge              3
-## 5 Manchester              5
-## 6 Birmingham              4
+## 1  Cambridge              2
+## 2    Bristol              4
+## 3    Bristol              5
+## 4 Manchester              4
+## 5 Birmingham              4
+## 6    Bristol              4
 ```
 
 ```r
@@ -491,10 +426,10 @@ df1 %>%
 
 ```
 ##         city n
-## 1 Birmingham 4
-## 2    Bristol 3
-## 3  Cambridge 6
-## 4 Manchester 7
+## 1 Birmingham 5
+## 2    Bristol 7
+## 3  Cambridge 5
+## 4 Manchester 3
 ```
 
 ```r
@@ -504,10 +439,11 @@ table(df1$city)
 ```
 ## 
 ## Birmingham    Bristol  Cambridge Manchester 
-##          4          3          6          7
+##          5          7          5          3
 ```
 
 We can expand this by using conditional operators in the count or table functions.
+
 
 ```r
 # conditional frequency
@@ -517,8 +453,8 @@ df1 %>%
 
 ```
 ##   city == "Cambridge"  n
-## 1               FALSE 14
-## 2                TRUE  6
+## 1               FALSE 15
+## 2                TRUE  5
 ```
 
 ```r
@@ -528,10 +464,10 @@ table(df1$city == "Cambridge")
 ```
 ## 
 ## FALSE  TRUE 
-##    14     6
+##    15     5
 ```
 
-We can also make two way frequency tables to compare two variables next to each other. Notice the difference between the two functions. Count provides the table in a data frame structure, which is easy to work with should you need to, but table is perhaps easier to read initially. 
+We can also make two way frequency tables to compare two variables next to each other. Notice the difference between the two functions. Count provides the table in a data frame structure, which is easy to work with should you need to, but table is perhaps easier to read initially.
 
 
 ```r
@@ -542,20 +478,19 @@ df1 %>%
 
 ```
 ##          city tourist_rating n
-## 1  Birmingham              1 1
+## 1  Birmingham              1 2
 ## 2  Birmingham              4 2
 ## 3  Birmingham              5 1
-## 4     Bristol              1 1
-## 5     Bristol              2 1
-## 6     Bristol              3 1
-## 7   Cambridge              1 1
-## 8   Cambridge              2 1
-## 9   Cambridge              3 3
-## 10  Cambridge              4 1
-## 11 Manchester              1 3
-## 12 Manchester              2 2
-## 13 Manchester              4 1
-## 14 Manchester              5 1
+## 4     Bristol              1 2
+## 5     Bristol              2 2
+## 6     Bristol              4 2
+## 7     Bristol              5 1
+## 8   Cambridge              1 2
+## 9   Cambridge              2 2
+## 10  Cambridge              3 1
+## 11 Manchester              2 1
+## 12 Manchester              4 1
+## 13 Manchester              5 1
 ```
 
 ```r
@@ -565,10 +500,10 @@ table(df1$city, df1$tourist_rating)
 ```
 ##             
 ##              1 2 3 4 5
-##   Birmingham 1 0 0 2 1
-##   Bristol    1 1 1 0 0
-##   Cambridge  1 1 3 1 0
-##   Manchester 3 2 0 1 1
+##   Birmingham 2 0 0 2 1
+##   Bristol    2 2 0 2 1
+##   Cambridge  2 2 1 0 0
+##   Manchester 0 1 0 1 1
 ```
 
 We can also apply filtering using count or table functions. With count we use dplyr's filter function, with table we use base r indexing.
@@ -582,11 +517,11 @@ df1 %>%
 
 ```
 ##         city tourist_rating n
-## 1 Birmingham              1 1
+## 1 Birmingham              1 2
 ## 2 Birmingham              5 1
-## 3    Bristol              1 1
-## 4  Cambridge              1 1
-## 5 Manchester              1 3
+## 3    Bristol              1 2
+## 4    Bristol              5 1
+## 5  Cambridge              1 2
 ## 6 Manchester              5 1
 ```
 
@@ -597,20 +532,19 @@ table(df1$city, df1$tourist_rating)[, c(1, 5)]
 ```
 ##             
 ##              1 5
-##   Birmingham 1 1
-##   Bristol    1 0
-##   Cambridge  1 0
-##   Manchester 3 1
+##   Birmingham 2 1
+##   Bristol    2 1
+##   Cambridge  2 0
+##   Manchester 0 1
 ```
-
 
 ## Cross tabluation exercise
 
 Using your `imdb_bechdel` data you just made, do the following cross tabulations using dplyr's `count` function. If you have time, you can also do the same with the base r `table` function.
 
-1) Use count on the rating column in your imdb_bechdel data, which rating has the most results?
-2) Using count on the rating column again, conditionally select ratings greater than 2 *hint: try and do this within the count function*. 
-3) Create a two way cross tabulation with year and rating columns. Filter for the years 1966 or 1996. 
+1)  Use count on the rating column in your imdb_bechdel data, which rating has the most results?
+2)  Using count on the rating column again, conditionally select ratings greater than 2 *hint: try and do this within the count function*.
+3)  Create a two way cross tabulation with year and rating columns. Filter for the years 1966 or 1996.
 
 
 ```r
@@ -701,11 +635,12 @@ table(imdb_bechdel$rating, imdb_bechdel$year)[,c("1966", "1996")]
 
 # Aggregation using grouping
 
-What is aggregation? It is the computation of summary statistics, giving a single output value from several variables.  
+What is aggregation? It is the computation of summary statistics, giving a single output value from several variables.
 
-Frequency tables, like we just use are simple aggregations. They count how many instances of each category you have in your data. You can perform more complicated aggregations by *grouping* your data. 
+Frequency tables, like we just use are simple aggregations. They count how many instances of each category you have in your data. You can perform more complicated aggregations by *grouping* your data.
 
 When doing aggregation with dplyr we use the `group_by()` and `summarise()` functions together. We first *group* our data by a categorical variable, in the below example is three groups (A, B, and C). We then call `summarise()` to perform a function on a column in our data, in this case we sum the num1 column. You get a summary table with the sum per group.
+
 
 ```r
 # make some random data
@@ -722,12 +657,12 @@ head(df2)
 
 ```
 ##   key key2 num1     num2     num3
-## 1   C    Y    2 8.073429 5.867665
-## 2   C    Y    1 8.403831 2.963707
-## 3   A    Y    8 4.737822 8.296029
-## 4   A    X    2 1.344063 2.966349
-## 5   B    X    8 7.745181 4.509375
-## 6   B    Y    5 5.609830 5.321738
+## 1   A    X    9 3.833797 5.492343
+## 2   A    X    8 8.810564 2.105761
+## 3   A    X   10 6.373963 5.469746
+## 4   A    Y    5 1.616742 6.268939
+## 5   A    X    6 1.471477 3.800797
+## 6   B    Y    3 1.251584 6.668901
 ```
 
 ```r
@@ -741,22 +676,21 @@ df2 %>%
 ## # A tibble: 3 x 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A        50
-## 2 B        31
-## 3 C        45
+## 1 A        67
+## 2 B        29
+## 3 C        22
 ```
 
 The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
 
-1) Group your data by a categorical variable
-2) Split your data by that group. You'll end up with several subsets of data
-3) Perform a function, such as a mean or sum function, based on those split subsets of data
-4) Combine the split subsets back together to make a summary table
+1)  Group your data by a categorical variable
+2)  Split your data by that group. You'll end up with several subsets of data
+3)  Perform a function, such as a mean or sum function, based on those split subsets of data
+4)  Combine the split subsets back together to make a summary table
 
-![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/Aggregation.png?raw=true){width="600"}
+![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/Aggregation.png?raw=true){width="600"}
 
-
-You can also aggregate more than one variable. In the below example, we will run sum on the num1 and num2 variables. 
+You can also aggregate more than one variable. In the below example, we will run sum on the num1 and num2 variables.
 
 
 ```r
@@ -769,13 +703,13 @@ df2 %>%
 ## # A tibble: 3 x 3
 ##   key    sum1  sum2
 ##   <fct> <int> <dbl>
-## 1 A        50  43.2
-## 2 B        31  36.3
-## 3 C        45  40.9
+## 1 A        67  52.9
+## 2 B        29  39.5
+## 3 C        22  12.8
 ```
 
-
 We can take this a bit further by adding the `n()` function, which counts how many of each category in our grouped variable there are. If you want to add in a relative frequency, we can then pipe to a `mutate` function. We then divide our count by the sum of our count.
+
 
 ```r
 # adding frequency using n()
@@ -790,17 +724,17 @@ df2 %>%
 ## # A tibble: 3 x 5
 ##   key    sum1  sum2 count_n rel_freq
 ##   <fct> <int> <dbl>   <int>    <dbl>
-## 1 A        50  43.2       8     0.4 
-## 2 B        31  36.3       5     0.25
-## 3 C        45  40.9       7     0.35
+## 1 A        67  52.9      10     0.5 
+## 2 B        29  39.5       7     0.35
+## 3 C        22  12.8       3     0.15
 ```
 
-You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits. 
+You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
 
-![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop7/images/Aggregation_twogroup.png?raw=true){width="600"}
+![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/Aggregation_twogroup.png?raw=true){width="600"}
 
+To do so, we add an extra categorical column to our `group_by()` function. The ordering of the groups matters. Have a look at both examples with the groups in a different order.
 
-To do so, we add an extra categorical column to our `group_by()` function. The ordering of the groups matters. Have a look at both examples with the groups in a different order. 
 
 ```r
 # two group aggregation
@@ -820,12 +754,12 @@ df2 %>%
 ## # Groups:   key [3]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        16  17.7       3    0.375
-## 2 A     Y        34  25.5       5    0.625
-## 3 B     X        22  22.6       3    0.6  
-## 4 B     Y         9  13.7       2    0.4  
-## 5 C     X        19  12.2       2    0.286
-## 6 C     Y        26  28.6       5    0.714
+## 1 A     X        34 23.3        5    0.5  
+## 2 A     Y        33 29.6        5    0.5  
+## 3 B     X        23 30.6        5    0.714
+## 4 B     Y         6  8.89       2    0.286
+## 5 C     X        12 11.1        2    0.667
+## 6 C     Y        10  1.65       1    0.333
 ```
 
 ```r
@@ -846,15 +780,16 @@ df2 %>%
 ## # Groups:   key2 [2]
 ##   key2  key    sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 X     A        16  17.7       3    0.375
-## 2 X     B        22  22.6       3    0.375
-## 3 X     C        19  12.2       2    0.25 
-## 4 Y     A        34  25.5       5    0.417
-## 5 Y     B         9  13.7       2    0.167
-## 6 Y     C        26  28.6       5    0.417
+## 1 X     A        34 23.3        5    0.417
+## 2 X     B        23 30.6        5    0.417
+## 3 X     C        12 11.1        2    0.167
+## 4 Y     A        33 29.6        5    0.625
+## 5 Y     B         6  8.89       2    0.25 
+## 6 Y     C        10  1.65       1    0.125
 ```
 
-You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result. 
+You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result.
+
 
 ```r
 # adjusting the grouping structure of the result: drop
@@ -869,12 +804,12 @@ df2 %>%
 ## # A tibble: 6 x 6
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        16  17.7       3     0.15
-## 2 A     Y        34  25.5       5     0.25
-## 3 B     X        22  22.6       3     0.15
-## 4 B     Y         9  13.7       2     0.1 
-## 5 C     X        19  12.2       2     0.1 
-## 6 C     Y        26  28.6       5     0.25
+## 1 A     X        34 23.3        5     0.25
+## 2 A     Y        33 29.6        5     0.25
+## 3 B     X        23 30.6        5     0.25
+## 4 B     Y         6  8.89       2     0.1 
+## 5 C     X        12 11.1        2     0.1 
+## 6 C     Y        10  1.65       1     0.05
 ```
 
 ```r
@@ -891,21 +826,22 @@ df2 %>%
 ## # Groups:   key, key2 [6]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        16  17.7       3        1
-## 2 A     Y        34  25.5       5        1
-## 3 B     X        22  22.6       3        1
-## 4 B     Y         9  13.7       2        1
-## 5 C     X        19  12.2       2        1
-## 6 C     Y        26  28.6       5        1
+## 1 A     X        34 23.3        5        1
+## 2 A     Y        33 29.6        5        1
+## 3 B     X        23 30.6        5        1
+## 4 B     Y         6  8.89       2        1
+## 5 C     X        12 11.1        2        1
+## 6 C     Y        10  1.65       1        1
 ```
 
 ## Aggregation exercise
 
-Using the examples above, we are going to create three aggregations from our `imdb_bechdel` dataset we made earlier in the session. 
+Using the examples above, we are going to create three aggregations from our `imdb_bechdel` dataset we made earlier in the session.
 
-1) Group your imdb_bechdel data by rating, and use summarise to find the avg_vote per rating, and the frequency of each group. Use `median()` to calculate the average. 
-2) Filter for years greater than 2015 and group by year. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Use `median()` to calculate the average. 
-3) Filter for years greater than 2015 and group by year and rating. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Finally, pipe to a mutate function, and calculate the relative frequency of each year. Use `median()` to calculate the average. 
+1)  Group your imdb_bechdel data by rating, and use summarise to find the avg_vote per rating, and the frequency of each group. Use `median()` to calculate the average.
+2)  Filter for years greater than 2015 and group by year. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Use `median()` to calculate the average.
+3)  Filter for years greater than 2015 and group by year and rating. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Finally, pipe to a mutate function, and calculate the relative frequency of each year. Use `median()` to calculate the average.
+
 
 ```r
 # your code here
@@ -992,11 +928,12 @@ imdb_bechdel %>%
 
 # Rowwise aggregation
 
-So far we have performed operations (functions) over columns, but sometimes you want to perform operations by rows. For example, you might want to find the average value for each row of several columns in a data frame.  
+So far we have performed operations (functions) over columns, but sometimes you want to perform operations by rows. For example, you might want to find the average value for each row of several columns in a data frame.
 
-Performing row based aggregation in r can be done with either one of these two functions: dplyr's `rowwise()` or base r's `rowMeans()`. 
+Performing row based aggregation in r can be done with either one of these two functions: dplyr's `rowwise()` or base r's `rowMeans()`.
 
-In the below examples we are using `rowwise()` with `summarise()`, just like we did with `group_by` and `summarise`. You get a total average back for each row in your dataset. 
+In the below examples we are using `rowwise()` with `summarise()`, just like we did with `group_by` and `summarise`. You get a total average back for each row in your dataset.
+
 
 ```r
 # rowwise on selected columns
@@ -1013,26 +950,26 @@ df2 %>%
 ## # A tibble: 20 x 1
 ##    total_avg
 ##        <dbl>
-##  1      5.31
-##  2      4.12
-##  3      7.01
-##  4      2.10
-##  5      6.75
-##  6      5.31
-##  7      8.63
-##  8      5.69
-##  9      3.23
-## 10      7.31
-## 11      7.01
-## 12      6.57
-## 13      6.12
-## 14      5.85
-## 15      6.03
-## 16      6.44
-## 17      5.87
-## 18      5.23
-## 19      5.17
-## 20      4.73
+##  1      6.11
+##  2      6.31
+##  3      7.28
+##  4      4.30
+##  5      3.76
+##  6      3.64
+##  7      4.70
+##  8      6.47
+##  9      7.45
+## 10      3.52
+## 11      2.67
+## 12      6.34
+## 13      4.76
+## 14      5.46
+## 15      5.68
+## 16      4.41
+## 17      5.14
+## 18      6.74
+## 19      5.28
+## 20      7.64
 ```
 
 ```r
@@ -1050,29 +987,30 @@ df2 %>%
 ## # A tibble: 20 x 1
 ##    total_avg
 ##        <dbl>
-##  1      5.31
-##  2      4.12
-##  3      7.01
-##  4      2.10
-##  5      6.75
-##  6      5.31
-##  7      8.63
-##  8      5.69
-##  9      3.23
-## 10      7.31
-## 11      7.01
-## 12      6.57
-## 13      6.12
-## 14      5.85
-## 15      6.03
-## 16      6.44
-## 17      5.87
-## 18      5.23
-## 19      5.17
-## 20      4.73
+##  1      6.11
+##  2      6.31
+##  3      7.28
+##  4      4.30
+##  5      3.76
+##  6      3.64
+##  7      4.70
+##  8      6.47
+##  9      7.45
+## 10      3.52
+## 11      2.67
+## 12      6.34
+## 13      4.76
+## 14      5.46
+## 15      5.68
+## 16      4.41
+## 17      5.14
+## 18      6.74
+## 19      5.28
+## 20      7.64
 ```
 
-If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns. 
+If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns.
+
 
 ```r
 # Adding the aggregation as a new column 
@@ -1086,29 +1024,30 @@ df2 %>%
 ## # Rowwise: 
 ##    key   key2   num1  num2  num3 total_avg
 ##    <fct> <fct> <int> <dbl> <dbl>     <dbl>
-##  1 C     Y         2  8.07  5.87      5.31
-##  2 C     Y         1  8.40  2.96      4.12
-##  3 A     Y         8  4.74  8.30      7.01
-##  4 A     X         2  1.34  2.97      2.10
-##  5 B     X         8  7.75  4.51      6.75
-##  6 B     Y         5  5.61  5.32      5.31
-##  7 A     Y        10  7.37  8.53      8.63
-##  8 C     Y         9  5.88  2.19      5.69
-##  9 A     Y         3  2.48  4.22      3.23
-## 10 B     X        10  4.83  7.10      7.31
-## 11 C     X         9  7.26  4.77      7.01
-## 12 A     X         9  6.41  4.30      6.57
-## 13 B     X         4 10.0   4.36      6.12
-## 14 C     Y         4  3.71  9.84      5.85
-## 15 B     Y         4  8.08  6.01      6.03
-## 16 A     X         5  9.97  4.33      6.44
-## 17 C     X        10  4.98  2.64      5.87
-## 18 C     Y        10  2.55  3.14      5.23
-## 19 A     Y         7  4.48  4.03      5.17
-## 20 A     Y         6  6.42  1.77      4.73
+##  1 A     X         9  3.83 5.49       6.11
+##  2 A     X         8  8.81 2.11       6.31
+##  3 A     X        10  6.37 5.47       7.28
+##  4 A     Y         5  1.62 6.27       4.30
+##  5 A     X         6  1.47 3.80       3.76
+##  6 B     Y         3  1.25 6.67       3.64
+##  7 B     X         6  3.52 4.60       4.70
+##  8 B     X         6  9.97 3.43       6.47
+##  9 A     Y         7  9.98 5.38       7.45
+## 10 A     Y         8  1.65 0.900      3.52
+## 11 A     X         1  2.80 4.20       2.67
+## 12 C     X         9  2.93 7.10       6.34
+## 13 B     X         3  6.21 5.07       4.76
+## 14 B     X         7  3.26 6.12       5.46
+## 15 B     Y         3  7.64 6.41       5.68
+## 16 B     X         1  7.63 4.61       4.41
+## 17 C     X         3  8.19 4.23       5.14
+## 18 A     Y         7  6.54 6.67       6.74
+## 19 C     Y        10  1.65 4.20       5.28
+## 20 A     Y         6  9.85 7.07       7.64
 ```
 
-An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`. 
+An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`.
+
 
 ```r
 # using rowMeans with mutate and across
@@ -1117,27 +1056,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2     num3 total_avg
-## 1    C    Y    2 8.073429 5.867665  5.313698
-## 2    C    Y    1 8.403831 2.963707  4.122513
-## 3    A    Y    8 4.737822 8.296029  7.011284
-## 4    A    X    2 1.344063 2.966349  2.103471
-## 5    B    X    8 7.745181 4.509375  6.751519
-## 6    B    Y    5 5.609830 5.321738  5.310522
-## 7    A    Y   10 7.373172 8.526363  8.633178
-## 8    C    Y    9 5.879944 2.185889  5.688611
-## 9    A    Y    3 2.481830 4.221017  3.234282
-## 10   B    X   10 4.827800 7.100228  7.309343
-## 11   C    X    9 7.262607 4.766246  7.009617
-## 12   A    X    9 6.410060 4.299400  6.569820
-## 13   B    X    4 9.999613 4.356811  6.118808
-## 14   C    Y    4 3.714771 9.839897  5.851556
-## 15   B    Y    4 8.081661 6.005807  6.029156
-## 16   A    X    5 9.973801 4.332658  6.435486
-## 17   C    X   10 4.975197 2.638618  5.871272
-## 18   C    Y   10 2.554548 3.135446  5.229998
-## 19   A    Y    7 4.476435 4.033871  5.170102
-## 20   A    Y    6 6.417004 1.772715  4.729906
+##    key key2 num1     num2      num3 total_avg
+## 1    A    X    9 3.833797 5.4923433  6.108713
+## 2    A    X    8 8.810564 2.1057606  6.305442
+## 3    A    X   10 6.373963 5.4697461  7.281236
+## 4    A    Y    5 1.616742 6.2689385  4.295227
+## 5    A    X    6 1.471477 3.8007970  3.757425
+## 6    B    Y    3 1.251584 6.6689007  3.640161
+## 7    B    X    6 3.516193 4.5970842  4.704426
+## 8    B    X    6 9.974871 3.4339198  6.469597
+## 9    A    Y    7 9.978964 5.3843776  7.454447
+## 10   A    Y    8 1.652662 0.9001167  3.517593
+## 11   A    X    1 2.799167 4.1968852  2.665351
+## 12   C    X    9 2.927278 7.1045031  6.343927
+## 13   B    X    3 6.214589 5.0737776  4.762789
+## 14   B    X    7 3.256857 6.1241765  5.460344
+## 15   B    Y    3 7.641521 6.4093589  5.683626
+## 16   B    X    1 7.633456 4.6057817  4.413079
+## 17   C    X    3 8.194139 4.2280647  5.140735
+## 18   A    Y    7 6.544883 6.6705415  6.738475
+## 19   C    Y   10 1.654105 4.1965769  5.283561
+## 20   A    Y    6 9.845496 7.0655102  7.637002
 ```
 
 ```r
@@ -1147,30 +1086,31 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2     num3 total_avg
-## 1    C    Y    2 8.073429 5.867665  5.313698
-## 2    C    Y    1 8.403831 2.963707  4.122513
-## 3    A    Y    8 4.737822 8.296029  7.011284
-## 4    A    X    2 1.344063 2.966349  2.103471
-## 5    B    X    8 7.745181 4.509375  6.751519
-## 6    B    Y    5 5.609830 5.321738  5.310522
-## 7    A    Y   10 7.373172 8.526363  8.633178
-## 8    C    Y    9 5.879944 2.185889  5.688611
-## 9    A    Y    3 2.481830 4.221017  3.234282
-## 10   B    X   10 4.827800 7.100228  7.309343
-## 11   C    X    9 7.262607 4.766246  7.009617
-## 12   A    X    9 6.410060 4.299400  6.569820
-## 13   B    X    4 9.999613 4.356811  6.118808
-## 14   C    Y    4 3.714771 9.839897  5.851556
-## 15   B    Y    4 8.081661 6.005807  6.029156
-## 16   A    X    5 9.973801 4.332658  6.435486
-## 17   C    X   10 4.975197 2.638618  5.871272
-## 18   C    Y   10 2.554548 3.135446  5.229998
-## 19   A    Y    7 4.476435 4.033871  5.170102
-## 20   A    Y    6 6.417004 1.772715  4.729906
+##    key key2 num1     num2      num3 total_avg
+## 1    A    X    9 3.833797 5.4923433  6.108713
+## 2    A    X    8 8.810564 2.1057606  6.305442
+## 3    A    X   10 6.373963 5.4697461  7.281236
+## 4    A    Y    5 1.616742 6.2689385  4.295227
+## 5    A    X    6 1.471477 3.8007970  3.757425
+## 6    B    Y    3 1.251584 6.6689007  3.640161
+## 7    B    X    6 3.516193 4.5970842  4.704426
+## 8    B    X    6 9.974871 3.4339198  6.469597
+## 9    A    Y    7 9.978964 5.3843776  7.454447
+## 10   A    Y    8 1.652662 0.9001167  3.517593
+## 11   A    X    1 2.799167 4.1968852  2.665351
+## 12   C    X    9 2.927278 7.1045031  6.343927
+## 13   B    X    3 6.214589 5.0737776  4.762789
+## 14   B    X    7 3.256857 6.1241765  5.460344
+## 15   B    Y    3 7.641521 6.4093589  5.683626
+## 16   B    X    1 7.633456 4.6057817  4.413079
+## 17   C    X    3 8.194139 4.2280647  5.140735
+## 18   A    Y    7 6.544883 6.6705415  6.738475
+## 19   C    Y   10 1.654105 4.1965769  5.283561
+## 20   A    Y    6 9.845496 7.0655102  7.637002
 ```
 
-If you want to do a sum calculation, you should use the `rowSums()` function. 
+If you want to do a sum calculation, you should use the `rowSums()` function.
+
 
 ```r
 # row sum
@@ -1179,50 +1119,49 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2     num3 total_sum
-## 1    C    Y    2 8.073429 5.867665 15.941094
-## 2    C    Y    1 8.403831 2.963707 12.367538
-## 3    A    Y    8 4.737822 8.296029 21.033851
-## 4    A    X    2 1.344063 2.966349  6.310412
-## 5    B    X    8 7.745181 4.509375 20.254556
-## 6    B    Y    5 5.609830 5.321738 15.931567
-## 7    A    Y   10 7.373172 8.526363 25.899535
-## 8    C    Y    9 5.879944 2.185889 17.065833
-## 9    A    Y    3 2.481830 4.221017  9.702847
-## 10   B    X   10 4.827800 7.100228 21.928028
-## 11   C    X    9 7.262607 4.766246 21.028852
-## 12   A    X    9 6.410060 4.299400 19.709460
-## 13   B    X    4 9.999613 4.356811 18.356424
-## 14   C    Y    4 3.714771 9.839897 17.554668
-## 15   B    Y    4 8.081661 6.005807 18.087468
-## 16   A    X    5 9.973801 4.332658 19.306459
-## 17   C    X   10 4.975197 2.638618 17.613815
-## 18   C    Y   10 2.554548 3.135446 15.689995
-## 19   A    Y    7 4.476435 4.033871 15.510306
-## 20   A    Y    6 6.417004 1.772715 14.189719
+##    key key2 num1     num2      num3 total_sum
+## 1    A    X    9 3.833797 5.4923433 18.326140
+## 2    A    X    8 8.810564 2.1057606 18.916325
+## 3    A    X   10 6.373963 5.4697461 21.843709
+## 4    A    Y    5 1.616742 6.2689385 12.885680
+## 5    A    X    6 1.471477 3.8007970 11.272274
+## 6    B    Y    3 1.251584 6.6689007 10.920484
+## 7    B    X    6 3.516193 4.5970842 14.113277
+## 8    B    X    6 9.974871 3.4339198 19.408790
+## 9    A    Y    7 9.978964 5.3843776 22.363342
+## 10   A    Y    8 1.652662 0.9001167 10.552779
+## 11   A    X    1 2.799167 4.1968852  7.996052
+## 12   C    X    9 2.927278 7.1045031 19.031781
+## 13   B    X    3 6.214589 5.0737776 14.288367
+## 14   B    X    7 3.256857 6.1241765 16.381033
+## 15   B    Y    3 7.641521 6.4093589 17.050879
+## 16   B    X    1 7.633456 4.6057817 13.239238
+## 17   C    X    3 8.194139 4.2280647 15.422204
+## 18   A    Y    7 6.544883 6.6705415 20.215424
+## 19   C    Y   10 1.654105 4.1965769 15.850682
+## 20   A    Y    6 9.845496 7.0655102 22.911007
 ```
 
 ## Rowwise aggregation exercise
 
 In this exercise you will be debugging my code to get it running! We are going to sum the User_reviews and Critic_reviews column, to make a new column called total_reviews. We want the total reviews for each row of films from before 1930.
 
-You have to debug the code for both the rowwise method and the rowSums/rowMeans method. 
+You have to debug the code for both the rowwise method and the rowSums/rowMeans method.
 
 
 ```r
 # rowwise method
 imdb_bechdel %>%
   filter(year < 1930) %>%
-  select(title:year, duration, avg_vote, User_reviews, rating) %>%
-  mutate(total_reviews = sum(c_across(User_reviews:Critic_reviews), na.rm = TRUE))
+  select(title:year, duration, avg_vote, reviews_from_users, rating) %>%
+  mutate(total_reviews = sum(c_across(reviews_from_users:reviews_from_critics), na.rm = TRUE))
 
 # rowSums method
 imdb_bechdel %>%
   filter(year < 1930) %>%
-  select(title:year, duration, avg_vote, User_reviews, rating) %>%
-  mutate(total_reviews = sum(across(User_reviews:Critic_reviews)))
+  select(title:year, duration, avg_vote, reviews_from_users, rating) %>%
+  mutate(total_reviews = sum(across(reviews_from_users:reviews_from_critics)))
 ```
-
 
 
 ```r
@@ -1231,26 +1170,26 @@ imdb_bechdel %>%
 # rowwise method
 imdb_bechdel %>%
   filter(year < 1930) %>%
-  select(title:year, duration, avg_vote, User_reviews:Critic_reviews, rating) %>%
+  select(title:year, duration, avg_vote, reviews_from_users:reviews_from_critics, rating) %>%
   rowwise() %>%
-  mutate(total_reviews = sum(c_across(User_reviews:Critic_reviews), na.rm = TRUE))
+  mutate(total_reviews = sum(c_across(reviews_from_users:reviews_from_critics), na.rm = TRUE))
 ```
 
 ```
 ## # A tibble: 70 x 8
 ## # Rowwise: 
-##    title               year duration avg_vote User_reviews Critic_reviews rating
-##    <chr>              <dbl>    <dbl>    <dbl>        <dbl>          <dbl>  <dbl>
-##  1 The Story of the …  1906       70      6.1            7              7      1
-##  2 Cleopatra           1912      100      5.2           25              3      2
-##  3 A Florida Enchant…  1914       63      5.8            6              3      2
-##  4 The Birth of a Na…  1915      195      6.3          368             97      2
-##  5 Gretchen the Gree…  1916       58      5.7            7              1      3
-##  6 Snow White          1916       63      6.2           13              5      3
-##  7 The Poor Little R…  1917       65      6.7           16             13      3
-##  8 Raffles, the Amat…  1917       70      6.4            3              3      2
-##  9 Rebecca of Sunnyb…  1917       78      6.1            9              5      3
-## 10 A Romance of the …  1917       91      5.7           12              4      0
+##    title        year duration avg_vote reviews_from_use… reviews_from_cr… rating
+##    <chr>       <dbl>    <dbl>    <dbl>             <dbl>            <dbl>  <dbl>
+##  1 The Story …  1906       70      6.1                 7                7      1
+##  2 Cleopatra    1912      100      5.2                25                3      2
+##  3 A Florida …  1914       63      5.8                 6                3      2
+##  4 The Birth …  1915      195      6.3               368               97      2
+##  5 Gretchen t…  1916       58      5.7                 7                1      3
+##  6 Snow White   1916       63      6.2                13                5      3
+##  7 The Poor L…  1917       65      6.7                16               13      3
+##  8 Raffles, t…  1917       70      6.4                 3                3      2
+##  9 Rebecca of…  1917       78      6.1                 9                5      3
+## 10 A Romance …  1917       91      5.7                12                4      0
 ## # … with 60 more rows, and 1 more variable: total_reviews <dbl>
 ```
 
@@ -1258,24 +1197,24 @@ imdb_bechdel %>%
 # rowSums method
 imdb_bechdel %>%
   filter(year < 1930) %>%
-  select(title:year, duration, avg_vote, User_reviews:Critic_reviews, rating) %>%
-  mutate(total_reviews = rowSums(across(User_reviews:Critic_reviews), na.rm = TRUE))
+  select(title:year, duration, avg_vote, reviews_from_users:reviews_from_critics, rating) %>%
+  mutate(total_reviews = rowSums(across(reviews_from_users:reviews_from_critics), na.rm = TRUE))
 ```
 
 ```
 ## # A tibble: 70 x 8
-##    title               year duration avg_vote User_reviews Critic_reviews rating
-##    <chr>              <dbl>    <dbl>    <dbl>        <dbl>          <dbl>  <dbl>
-##  1 The Story of the …  1906       70      6.1            7              7      1
-##  2 Cleopatra           1912      100      5.2           25              3      2
-##  3 A Florida Enchant…  1914       63      5.8            6              3      2
-##  4 The Birth of a Na…  1915      195      6.3          368             97      2
-##  5 Gretchen the Gree…  1916       58      5.7            7              1      3
-##  6 Snow White          1916       63      6.2           13              5      3
-##  7 The Poor Little R…  1917       65      6.7           16             13      3
-##  8 Raffles, the Amat…  1917       70      6.4            3              3      2
-##  9 Rebecca of Sunnyb…  1917       78      6.1            9              5      3
-## 10 A Romance of the …  1917       91      5.7           12              4      0
+##    title        year duration avg_vote reviews_from_use… reviews_from_cr… rating
+##    <chr>       <dbl>    <dbl>    <dbl>             <dbl>            <dbl>  <dbl>
+##  1 The Story …  1906       70      6.1                 7                7      1
+##  2 Cleopatra    1912      100      5.2                25                3      2
+##  3 A Florida …  1914       63      5.8                 6                3      2
+##  4 The Birth …  1915      195      6.3               368               97      2
+##  5 Gretchen t…  1916       58      5.7                 7                1      3
+##  6 Snow White   1916       63      6.2                13                5      3
+##  7 The Poor L…  1917       65      6.7                16               13      3
+##  8 Raffles, t…  1917       70      6.4                 3                3      2
+##  9 Rebecca of…  1917       78      6.1                 9                5      3
+## 10 A Romance …  1917       91      5.7                12                4      0
 ## # … with 60 more rows, and 1 more variable: total_reviews <dbl>
 ```
 
@@ -1289,21 +1228,22 @@ The solutions we be available from a link at the end of the survey.
 
 # Individual coding challenge
 
-For the individual coding challenge you will be making the output of your aggregations more presentable! We will do this using the excellent `kableExtra` package, which makes very nice tables. 
+For the individual coding challenge you will be making the output of your aggregations more presentable! We will do this using the excellent `kableExtra` package, which makes very nice tables.
 
-First, install the kableExtra package. 
+First, install the kableExtra package.
+
 
 ```r
 # install kableExtra
 install.packages("kableExtra")
 ```
 
-1) Using your imdb_bechdel dataset, group by year
-2) Pipe to a summarise, and work out the average rating (bechdel), average vote, and the frequency (using n())
-3) Pipe to a filter, filtering for your average vote to be greater than 7 and your frequency (count) to be greater than 20 
-4) Now pipe the output to `kbl()`
-5) Finally, pipe that to `kable_minimal(full_width = F)`. You should now have a nice table! 
-6) Play around with different kable styles. Try out the following: `kable_classic(full_width = F)`, `kable_classic2(full_width = F)` and `kable_paper(full_width = F)`
+1)  Using your imdb_bechdel dataset, group by year
+2)  Pipe to a summarise, and work out the average rating (bechdel), average vote, and the frequency (using n())
+3)  Pipe to a filter, filtering for your average vote to be greater than 7 and your frequency (count) to be greater than 20
+4)  Now pipe the output to `kbl()`
+5)  Finally, pipe that to `kable_minimal(full_width = F)`. You should now have a nice table!
+6)  Play around with different kable styles. Try out the following: `kable_classic(full_width = F)`, `kable_classic2(full_width = F)` and `kable_paper(full_width = F)`
 
 See the kableExtra vignette for more examples to test out: <https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html>
 
@@ -1426,7 +1366,8 @@ imdb_bechdel %>%
 </tbody>
 </table>
 
-As a fun extra, you can use `paste` to change a percentage to a string. This is useful if you are exporting your results as a report. See below for how to do this, using one of our examples from earlier. 
+As a fun extra, you can use `paste` to change a percentage to a string. This is useful if you are exporting your results as a report. See below for how to do this, using one of our examples from earlier.
+
 
 ```r
 library(kableExtra)
@@ -1458,57 +1399,56 @@ df2 %>%
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 16 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> 38% </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 50% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 33 </td>
    <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> 62% </td>
+   <td style="text-align:left;"> 50% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 22 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> 60% </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 71% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 40% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> C </td>
-   <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 6 </td>
    <td style="text-align:right;"> 2 </td>
    <td style="text-align:left;"> 29% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> X </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 67% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> 71% </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 33% </td>
   </tr>
 </tbody>
 </table>
-
-
 
 ------------------------------------------------------------------------
 
 ## Other options for aggregation
 
-We have used dplyr for aggregation here, but there are two other options: the base r `aggregate()` function, or using the data.table package. We have shown some examples here so you are able to compare. 
+We have used dplyr for aggregation here, but there are two other options: the base r `aggregate()` function, or using the data.table package. We have shown some examples here so you are able to compare.
 
-First, we have a look at the base r `aggregate()` function. The main disadvantage of `aggregate` over dplyr is you have less control. It runs an aggregate across your whole dataset, which causes a lot of NA values for all your non-numerical variables. This might be what you want occasionally, but not all the time! 
+First, we have a look at the base r `aggregate()` function. The main disadvantage of `aggregate` over dplyr is you have less control. It runs an aggregate across your whole dataset, which causes a lot of NA values for all your non-numerical variables. This might be what you want occasionally, but not all the time!
+
 
 ```r
 # aggregate by rating
@@ -1531,15 +1471,17 @@ aggregate(imdb_bechdel, by = list(imdb_bechdel$rating), FUN = mean)
 ## 2 121127.70     NA               NA                    NA        NA
 ## 3  92324.09     NA               NA                    NA        NA
 ## 4  79685.94     NA               NA                    NA        NA
-##   User_reviews Critic_reviews       id rating
-## 1           NA             NA 4350.973      0
-## 2           NA             NA 4385.918      1
-## 3           NA             NA 4587.362      2
-## 4           NA             NA 4625.983      3
+##   reviews_from_users reviews_from_critics       id rating
+## 1                 NA                   NA 4350.973      0
+## 2                 NA                   NA 4385.918      1
+## 3                 NA                   NA 4587.362      2
+## 4                 NA                   NA 4625.983      3
 ```
-The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets. 
 
-In order to run this example you will have to have data.table installed. 
+The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets.
+
+In order to run this example you will have to have data.table installed.
+
 
 ```r
 #install.packages("data.table")
@@ -1592,6 +1534,8 @@ imdb_bechdel[year > 2015, .(avg_vote_rating = median(avg_vote),
 ## 19: 2018      0            6.00         85.0
 ## 20: 2020      2            5.20        109.0
 ```
-If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>. 
 
+If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>.
 
+Check out the data carpentry page for more ideas on grouping and aggregation:
+<https://datacarpentry.org/R-ecology-lesson/03-dplyr.html>
