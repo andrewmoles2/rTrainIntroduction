@@ -4,7 +4,7 @@ The repository is a series of short introduction to R training courses, built fo
 
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
 
-Workshop 1: RStudio introduction and numeric variables
+[Workshop 1](https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop1/rWorkshop1.html): RStudio introduction and numeric variables
 
 Workshop 2: Vectors, functions, and indexing
 
@@ -23,7 +23,4 @@ Workshop 7: Data wrangling with dplyr continued
 Workshop 8: Joining and aggregation
 
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true)
-
-
-
 
