@@ -1,6 +1,6 @@
 # DSL Introduction to R
 
-The repository and [website](https://andrewmoles2.github.io/rTrainIntroduction/) is a series of short introduction to R training courses, built for online delivery using RStudio and R Markdown. 
+The repository is a series of short introduction to R training courses, built for online delivery using RStudio and R Markdown. 
 
 ![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
 
