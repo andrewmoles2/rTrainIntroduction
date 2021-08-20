@@ -1,5 +1,5 @@
 ---
-title: "R Fundamentals 7 - Lists, Matrices, and objects"
+title: "R Fundamentals 7 - Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
@@ -12,14 +12,16 @@ output:
     code_download: true
     toc: true
     toc_float: 
-      collapsed: true
+      collapsed: false
 ---
 
 # What this workshop will cover
 
-*  Using lists in R
-*  Working with matrices
-*  How to work with other objects in R
+*  What a matrix is and how to use it
+*  Using a matrix for calculations
+*  What a list is and how to use it
+*  How to work with list of lists
+*  Converting lists and matrices to other data types
 
 ## Why this style?
 
@@ -434,6 +436,8 @@ fav_foods
 # List of lists
 
 Lists can be combined to become lists of lists. This is helpful if you have lots of lists of information, or want to tidy up your global environment and store everything in one list. 
+
+In the example code below we make two more lists with information in them and a data frame. We then combine them into a list called list_all. 
 ```{r}
 # make some more lists with information
 list_info2 <- list(name = "Margaret", age = 22, like_dinosaurs = FALSE)
@@ -454,7 +458,9 @@ list_all <- list(list_info1, list_info2, list_info3, dino_df)
 str(list_all)
 ```
 
-Just like when we made a list previously we can name each list in the list. Again, there are two methods. 
+We didn't name the lists within the lists we just made, so they will be 1, 2, 3 and 4 if we want to index them. 
+
+Just like when we made a list previously we can name each list in the list to make them more accessible. Again, there are two methods. 
 ```{r}
 # naming in the list
 list_all <- list(person1 = list_info1, person2 = list_info2, person3 = list_info3, dino_data = dino_df)
@@ -524,37 +530,71 @@ list_all$dino_data
 sum(list_all$dino_data$coolness)
 ```
 
-
 ## list of lists exercise
 
-Give them list to work with, get them to pull out parts of the data frame and do stuff to it. 
+In this exercise you will be making a list of lists and trying to work with it to do calculations, and extract information. You will be provided with two lists which you need to combine. As a bonus, if you get the code working correctly you will get a nice visualisation for your efforts!
 
-## Accessing and working with data frames from lists
-
+1)  Make a list of lists called `list_3` which contains `list_1` and `list_2`
+2)  Name the lists within the list. `list_1` can be num_data and `list_2` can be dino_data
+3)  Use `str()` on your list to check the output of your list of lists
+4)  There is a data frame called df in your number_data list. Access it through list_3 and make a new column called c, which is the calculation of column a times column b
+5)  Print the df data frame to review the changes you made
+6)  The dino_data list contains the dinosaurs data frame. Access it and find the mean values for the columns Length_m and Weight_tonnes
+7)  Make your mean calculations more presentable using `paste()` and `round()`. Try and get an output like: "Average dinosaur length is 15.13 meters"
+8)  Make a logical vector from the *Class* column in your dinosaurs data frame and call it *no_sauropods*. It should exclude the Sauropodomorpha class. You should end up with a vector that has TRUE and FALSE statements. *hint: try the != conditional operator with Sauropodomorpha*
+9)  Extract the *Length_m* column from the dinosaurs data to a vector called *dino_length*. Index the rows to exclude Sauropodomorpha using the *no_sauropods* vector you just made
+10) Do the same as step 9, but extract the *Weight_tonnes* column and call it *dino_weight*
+11) Do the same as step 9 and 10 but extract the *Class* column and call it *dino_class*. Make the vector a factor
+12) Run the code chunk with the plot code and you should get a visualisation! 
 ```{r}
-# vector with several (named) urls
-urls <- c(pokemon = "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv", 
-ronaldo = "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/ronaldo_club.csv",
-messi = "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/messi_club.csv")
+list_1 <- list(vector = 12:20, df = data.frame(a = rep(9,9), b = seq(6,10, by = 0.5)))
+list_2 <- list(dinosaurs = read.csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-7/data/dinosaurs.csv"), fav_dinosaurs = c("Stegosaurs", "Allosaurus", "diplodocus"))
 
-# lapply to load and put into a list
-data_files <- lapply(urls, read.csv)
+# your code here
+# make list of lists called list_3
+list_3 <- list(num_data = list_1, dino_data = list_2)
 
-str(data_files)
+# make new column with calculation
+list_3$num_data$df$c <- list_3$num_data$df$a * list_3$num_data$df$b
+list_3$num_data$df
+
+# find the mean dinosaur length and weight
+paste("Average dinosaur length is", round(mean(list_3$dino_data$dinosaurs$Length_m),2), "meters")
+paste("Average dinosaur weight is", round(mean(list_3$dino_data$dinosaurs$Weight_tonnes),2), "tonnes")
+
+# Make boolean vector to remove sauropods class
+no_sauropods <- list_3$dino_data$dinosaurs$Class != "Sauropodomorpha"
+
+# Extract vectors from data frame using conditional logic
+dino_length <- list_3$dino_data$dinosaurs[no_sauropods , "Length_m"]
+dino_weight <- list_3$dino_data$dinosaurs[no_sauropods, "Weight_tonnes"]
+dino_class <- as.factor(list_3$dino_data$dinosaurs[no_sauropods, "Class"])
 ```
 
-Note you can do this with any file type, such as a csv files you have saved in a folder of your computer. See this stackoverflow thread for examples: <https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once>
-
-# Other objects in R
-
-In R, everything is an object. Whether it is a vector, data frame, list or Matrix, they are all objects. 
-
+If you have extracted the columns from the dinosaur data correctly, the plot below should work! 
 ```{r}
-ronaldo <- read.csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/ronaldo_club.csv")
-
-ronaldo_lm <- lm(total_apps ~ total_goals, data = ronaldo)
-summary(ronaldo_lm)
-class(ronaldo_lm)
-ronaldo_lm$model
+# bonus, plot the dinosaur data!
+# length vs weight by class
+plot(x = dino_weight, y = dino_length, 
+     col = c("orange", "blue", "green", "purple")[dino_class],
+     main = "Dinosaurs weight and length by class",
+     pch = 19)
+legend("topleft", legend = levels(dino_class), 
+       col = c("orange", "blue", "green", "purple")[1:length(dino_class)], pch = 19)
 ```
+
+
+# Final task - Please give us your individual feedback!
+
+This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+
+**Add survey here**
+
+# Individual take home challenge 
+
+Possibly task that combines using lists and matrices? 
+
+***
+
+
 

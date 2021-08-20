@@ -265,3 +265,37 @@ abline(v=mean(rand_num2),col="darkgreen")
 
 School workforce data:
 https://explore-education-statistics.service.gov.uk/find-statistics/school-workforce-in-england#releaseHeadlines-charts
+
+
+# Model outputs are just lists
+
+Save for analysis workshops
+```{r}
+ronaldo <- read.csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/ronaldo_club.csv")
+
+ronaldo_lm <- lm(total_apps ~ total_goals, data = ronaldo)
+sum_ron <- summary(ronaldo_lm)
+ronaldo_lm$model
+sum_ron$coefficients
+sum_ron$adj.r.squared
+```
+
+# Accessing and working with data frames from lists
+
+Save for the apply and looping session
+```{r}
+# vector with several (named) urls
+urls <- c(dinosaurs = "https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-7/data/dinosaurs.csv",
+  pokemon = "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv", 
+  ronaldo = "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/ronaldo_club.csv",
+  messi = "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/messi_club.csv")
+
+# lapply to load and put into a list
+data_files <- lapply(urls, read.csv)
+
+str(data_files)
+```
+
+Note you can do this with any file type, such as a csv files you have saved in a folder of your computer. See this stackoverflow thread for examples: <https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once>
+
+
