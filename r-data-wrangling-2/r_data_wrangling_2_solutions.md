@@ -3,7 +3,7 @@ title: "R Data Wrangling 7 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 August, 2021"
+date: "23 August, 2021"
 output: 
   html_document: 
     theme: readable
@@ -200,7 +200,7 @@ library(readr)
 library(dplyr)
 
 # load data
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
 
 # use glimpse to review data (tidyverse version of str())
 movies_imdb %>% glimpse()
@@ -812,10 +812,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello      10       1       4    dog
-## 2   Hello       5       2       5    cat
-## 3   Hello       8       3       6    cat
-## 4   Hello       4       4       7    dog
+## 1   Hello       8       1       4    dog
+## 2   Hello       9       2       5    cat
+## 3   Hello       1       3       6    cat
+## 4   Hello       6       4       7    dog
 ```
 
 ```r
@@ -888,10 +888,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      1        1       4    dog
-## 2  Hello      9        2       5    cat
-## 3  Hello      2        3       6    cat
-## 4  Hello      3        4       7    dog
+## 1  Hello      3        1       4    dog
+## 2  Hello     10        2       5    cat
+## 3  Hello      8        3       6    cat
+## 4  Hello      1        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -1107,7 +1107,7 @@ data.frame(
 As the movies_imdb data we are using already has cleaned names, we will load in another dataset as an example: the pokemon dataset we have used in previous workshops. 
 
 1)  Load in the `janitor` and `readr` librarys
-2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv">. Call your data pokemon
+2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv">. Call your data pokemon
 3)  Use `read_csv()` to load in the same pokemon dataset the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
 4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
 5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
@@ -1119,11 +1119,11 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 library(janitor)
 library(readr)
 
-pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") 
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv") 
 
-pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names()
+pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv") %>% clean_names()
 
-pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv") %>% clean_names(case = "upper_camel")
+pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv") %>% clean_names(case = "upper_camel")
 
 data_frame(default = names(pokemon),
            cleaned = names(pokemon_cleaned),
@@ -1164,11 +1164,11 @@ In this coding challenge we will try and put together what we have learned in th
 We will be using data from the pokemon games, making some subsets from that data. If you are curious about the data, have a look at the source here: <https://pokemondb.net/pokedex/all>. 
 
 1)  Make sure you have the following packages loaded: dplyr, readr, janitor
-2)  Load in the pokemon data using the following link: "https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop7/data/pokemon.csv". Call your data `pokemon`
+2)  Load in the pokemon data using the following link: "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv". Call your data `pokemon`
 3)  Clean up the column names using janitor. Try and use pipes like we did in the examples earlier in the workshop
 4)  Using mutate, change all data that is a character in `pokemon` to a factor
 5)  In the same mutate, add columns for speed_rank and hp_rank. Use the `min_rank()` function on speed and hp to calculate the rankings
-6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to generation 4. You should end up with the legendary column all being false and generations being 1-4
+6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to gen 4. You should end up with the legendary column all being false and gen being 1-4
 7)  Pipe to another filter function, subsetting total to be greater than or equal to 500
 8)  Assign the result of this subset to `pokemon_500`
 9)  Make four different subsets called: slow, fast, high_hp, and low_hp. Pipe your `pokemon_500` data to slice_max or slice_min functions to find the top 10 fastest/slowest pokemon, and the top 10 highest/lowest hp pokemon. For example, `slow <- pokemon_500 %>% slice_min(speed_rank, n = 10)`
@@ -1184,7 +1184,7 @@ library(readr)
 library(janitor)
 
 # load data and clean the names
-pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop7/data/pokemon.csv") %>%
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv") %>%
   clean_names()
 
 # make ranks, and filter
@@ -1192,25 +1192,25 @@ pokemon_500 <- pokemon %>%
   mutate(across(where(is.character), as.factor),
          speed_rank = min_rank(speed),
          hp_rank = min_rank(hp)) %>%
-  filter(legendary == FALSE & generation <= 4) %>%
+  filter(legendary == FALSE & gen <= 4) %>%
   filter(total >= 500)
 
 # subsets for speed and hp
 slow <- pokemon_500 %>%
   slice_min(speed_rank, n = 10) %>%
-  select(name, type_1, type_2, total, hp, speed)
+  select(name, type1, type2, total, hp, speed)
 
 fast <- pokemon_500 %>%
   slice_max(speed_rank, n = 10) %>%
-  select(name, type_1, type_2, total, hp, speed)
+  select(name, type1, type2, total, hp, speed)
 
 high_hp <- pokemon_500 %>%
   slice_max(hp_rank, n = 10) %>%
-  select(name, type_1, type_2, total, hp, speed)
+  select(name, type1, type2, total, hp, speed)
 
 low_hp <- pokemon_500 %>%
   slice_min(hp_rank, n = 10) %>%
-  select(name, type_1, type_2, total, hp, speed)
+  select(name, type1, type2, total, hp, speed)
 
 # who features in both max hp and min speed?
 high_hp %>% filter(name %in% slow$name)
@@ -1218,11 +1218,11 @@ high_hp %>% filter(name %in% slow$name)
 
 ```
 ## # A tibble: 3 × 6
-##   name       type_1 type_2 total    hp speed
-##   <fct>      <fct>  <fct>  <dbl> <dbl> <dbl>
-## 1 Snorlax    Normal <NA>     540   160    30
-## 2 Rhyperior  Ground Rock     535   115    40
-## 3 Lickilicky Normal <NA>     515   110    50
+##   name       type1  type2 total    hp speed
+##   <fct>      <fct>  <fct> <dbl> <dbl> <dbl>
+## 1 Snorlax    Normal <NA>    540   160    30
+## 2 Rhyperior  Ground Rock    535   115    40
+## 3 Lickilicky Normal <NA>    515   110    50
 ```
 
 ```r
@@ -1232,7 +1232,7 @@ fast %>% filter(name %in% low_hp$name)
 
 ```
 ## # A tibble: 3 × 6
-##   name     type_1  type_2  total    hp speed
+##   name     type1   type2   total    hp speed
 ##   <fct>    <fct>   <fct>   <dbl> <dbl> <dbl>
 ## 1 Alakazam Psychic <NA>      500    55   120
 ## 2 Starmie  Water   Psychic   520    60   115
@@ -1255,7 +1255,7 @@ colour <- c("#6a8b5a", "#414152", "#5a8bee",
 #scales::show_col(colour)
 
 # plot in a bar plot
-barplot(height = table(pokemon_500$type_1),
+barplot(height = table(pokemon_500$type1),
         col = colour,
         horiz= TRUE, las= 1, 
         xlim = c(0, 20),
@@ -1265,5 +1265,6 @@ barplot(height = table(pokemon_500$type_1),
 
 ![](r_data_wrangling_2_solutions_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
 
-If you are wondering how the colouring works, we are using the factor levels of the type_1 column. If you type `levels(pokemon_500$type_1)` you'll get a vector with the 18 different factor levels, with Bug being 1 and Dark being 2 and so on. The first element in our colour vector therefore matches up with the first level of the type_1 factor, which is bug.
+If you are wondering how the colouring works, we are using the factor levels of the type1 column. If you type `levels(pokemon_500$type1)` you'll get a vector with the 18 different factor levels, with Bug being 1 and Dark being 2 and so on. The first element in our colour vector therefore matches up with the first level of the type1 factor, which is bug.
+
 

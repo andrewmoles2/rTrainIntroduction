@@ -92,18 +92,20 @@ Dplyr has several functions for joining data, which are based on SQL syntax:
 -   `right_join` includes all of the data from the right data frame, and matches from the left
 -   `full_join` includes all data from both data frames
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/1.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/inner_join.png?raw=true){width="700"}
 
 *To view images, either switch to visual markdown editor, or knit document to html*
 
 First, we can have a look at what a inner join looks like. Try and run the code below.
+
 ```{r error=TRUE}
 inner_join(Person_Info, Food_Info)
 ```
 
 This doesn't work because our column names for our data frames do not match! This is a common error and is easy to fix with the rename function.
 
-In the example below, we rename the ID column, then we use the `inner_join()` function again. 
+In the example below, we rename the ID column, then we use the `inner_join()` function again.
+
 ```{r}
 # fix the id column name to match
 Person_Info <- Person_Info %>%
@@ -116,6 +118,7 @@ inner_join(Person_Info, Food_Info)
 The inner join has included only data that is in both Person_Info and Food_Info, anything that didn't match was dropped.
 
 You can specify what columns you are joining the data, using the `by` argument. The `by` argument we use in the example below is for manually selecting the columns to join the datasets by. It is good practice to specify which columns you are joining your data by as it will help you understand your data better.
+
 ```{r}
 # Specifying what we are joining by
 inner_join(Person_Info, Food_Info, by = "ID")
@@ -123,25 +126,25 @@ inner_join(Person_Info, Food_Info, by = "ID")
 
 Next up is the left join, which includes all data from our Person_Info data frame and matches from the Food_Info data frame, anything that doesn't match is scored as a NA.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/3.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/left_join.png?raw=true){width="700"}
 
 ```{r}
 # left join 
 left_join(Person_Info, Food_Info, by = "ID")
 ```
 
-The right join is the opposite of the left join. We get everything from Food_Info, and just the matches from Person_Info. Again, anything that doesn't match is given NA. Notice this is the first time that id 7 has appeared as it is not in the Person_Info data. 
+The right join is the opposite of the left join. We get everything from Food_Info, and just the matches from Person_Info. Again, anything that doesn't match is given NA. Notice this is the first time that id 7 has appeared as it is not in the Person_Info data.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/4.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/right_join.png?raw=true){width="700"}
 
 ```{r}
 # right join
 right_join(Person_Info, Food_Info, by = "ID")
 ```
 
-Finally, the full join brings all the data of both data frames together. Anything that doesn't match is given NA. We can see quite clearly here that despite there being a person who wasn't in the `Person_Info` data frame, their data has been joined up as it was in the `Fav_food` data frame, with Na's given for Name and Age. 
+Finally, the full join brings all the data of both data frames together. Anything that doesn't match is given NA. We can see quite clearly here that despite there being a person who wasn't in the `Person_Info` data frame, their data has been joined up as it was in the `Fav_food` data frame, with Na's given for Name and Age.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/2.jpg?raw=true){width="600"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/full_join.png?raw=true){width="700"}
 
 ```{r}
 # full join
@@ -163,9 +166,9 @@ library(readr)
 library(dplyr)
 
 # load imdb and bechdel
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
 
-bechdel <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/raw_bechdel.csv")
+bechdel <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/raw_bechdel.csv")
 
 # get glimpse of data
 movies_imdb %>% glimpse()
@@ -294,7 +297,7 @@ The grouping concept can be a little confusing, and the below illustrations hope
 3)  Perform a function, such as a mean or sum function, based on those split subsets of data
 4)  Combine the split subsets back together to make a summary table
 
-![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/Aggregation.png?raw=true){width="600"}
+![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/Aggregation.png?raw=true){width="600"}
 
 You can also aggregate more than one variable. In the below example, we will run sum on the num1 and num2 variables.
 
@@ -320,7 +323,7 @@ df2 %>%
 
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
 
-![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop8/images/Aggregation_twogroup.png?raw=true){width="600"}
+![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/Aggregation_twogroup.png?raw=true){width="600"}
 
 To do so, we add an extra categorical column to our `group_by()` function. The ordering of the groups matters. Have a look at both examples with the groups in a different order.
 

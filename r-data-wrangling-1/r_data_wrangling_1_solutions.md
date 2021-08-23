@@ -3,15 +3,15 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 August, 2021"
+date: "23 August, 2021"
 output: 
   html_document: 
     theme: readable
     highlight: pygments
     keep_md: yes
     code_download: true
-    toc: TRUE
-    toc_float: TRUE
+    toc: true
+    toc_float: true
 ---
 
 # What this workshop will cover
@@ -46,7 +46,7 @@ output:
 
 # What is the tidyverse?
 
-![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop6/images/tidyverse.jpeg?raw=true)
+![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/tidyverse.jpeg?raw=true)
 
 The tidyverse is a collection of R packages that are designed for data science. These packages share design, syntax, and philosophy. These packages cover the import of data (`readr` and `haven`), manipulation and transformation of data (`dplyr`, `tidyr`, `stringr`, `purrr`, `forcats`, and `lubridate`), visualisation (`ggplot` and it's extensions), and analysis (`tidymodels`).
 
@@ -114,7 +114,7 @@ messy_df
 ## 12  6 calico
 ```
 
-![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop6/images/tidydata_2.jpeg?raw=true)
+![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/tidydata_2.jpeg?raw=true)
 
 See this excellent article, which has lots of nice images, for a summary :-<https://www.openscapes.org/blog/2020/10/12/tidy-data/>
 
@@ -173,7 +173,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 6.65"
+## [1] "Mean value of y is 6.1"
 ```
 
 ```r
@@ -182,7 +182,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 6.65"
+## [1] "Mean value of y is 6.1"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -204,7 +204,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.5"
+## [1] "Mean value of x is 4.8"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -226,7 +226,7 @@ z_mean
 ```
 
 ```
-## [1] 5.25
+## [1] 4.95
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -558,7 +558,7 @@ library(readr)
 library(dplyr)
 
 # load data
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop6/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
 
 # use glimpse to review data (tidyverse version of str())
 movies_imdb %>% glimpse()
@@ -1242,11 +1242,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          50    51   2018 FC Barcelona  31              12
-## 2          60    73   2011 FC Barcelona  24              14
-## 3          46    41   2013 FC Barcelona  26               8
-## 4          52    54   2016 FC Barcelona  29              11
-## 5          55    53   2010 FC Barcelona  23              12
+## 1          55    53   2010 FC Barcelona  23              12
+## 2          52    54   2016 FC Barcelona  29              11
+## 3          44    31   2019 FC Barcelona  32               3
+## 4          53    47   2009 FC Barcelona  22               8
+## 5          60    73   2011 FC Barcelona  24              14
 ```
 
 ```r
@@ -1257,10 +1257,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          55    53   2010 FC Barcelona  23              12
-## 2          49    41   2015 FC Barcelona  28               6
-## 3           9     1   2004 FC Barcelona  17               0
-## 4          54    45   2017 FC Barcelona  30               6
+## 1          57    58   2014 FC Barcelona  27              10
+## 2          53    47   2009 FC Barcelona  22               8
+## 3          44    31   2019 FC Barcelona  32               3
+## 4          50    51   2018 FC Barcelona  31              12
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
