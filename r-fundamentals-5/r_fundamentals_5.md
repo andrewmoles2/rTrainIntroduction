@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "17 August, 2021"
+date: "21 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -116,7 +116,7 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.27     R6_2.5.0          jsonlite_1.7.2    magrittr_2.0.1   
+##  [1] digest_0.6.27     R6_2.5.1          jsonlite_1.7.2    magrittr_2.0.1   
 ##  [5] evaluate_0.14     rlang_0.4.11      stringi_1.7.3     jquerylib_0.1.4  
 ##  [9] bslib_0.2.5.1     rmarkdown_2.10    tools_4.1.0       stringr_1.4.0    
 ## [13] xfun_0.25         yaml_2.2.1        compiler_4.1.0    htmltools_0.5.1.1
@@ -198,8 +198,10 @@ list.files()
 ```
 
 ```
-## [1] "data"                           "images"                        
-## [3] "r_fundamentals_5_solutions.Rmd" "r_fundamentals_5.Rmd"
+## [1] "data"                            "images"                         
+## [3] "r_fundamentals_5_solutions.html" "r_fundamentals_5_solutions.md"  
+## [5] "r_fundamentals_5_solutions.Rmd"  "r_fundamentals_5.html"          
+## [7] "r_fundamentals_5.md"             "r_fundamentals_5.Rmd"
 ```
 
 RStudio helpfully has auto-completion for directories to help you build file paths.
@@ -304,7 +306,7 @@ library(writexl)
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 <https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21>
 

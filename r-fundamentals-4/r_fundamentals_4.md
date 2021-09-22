@@ -3,7 +3,7 @@ title: "R Fundamentals 4 - Data Frames"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "17 August, 2021"
+date: "21 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -494,7 +494,7 @@ We will index the `messi_career` data we have using to do some calculations, sub
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 <https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D0550R4aDF1&topic=R&cohort=LT21>
 

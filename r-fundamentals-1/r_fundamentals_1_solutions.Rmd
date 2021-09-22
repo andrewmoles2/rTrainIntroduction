@@ -54,7 +54,7 @@ One hour exercise based session with tutor support. You will be given example co
 
 R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020. 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/tiobe-index.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/tiobe-index.png?raw=true)
 
 It has lots of strengths:
 
@@ -72,17 +72,17 @@ It has lots of strengths:
 
 RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background. 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/rstudioEnv.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/rstudioEnv.png?raw=true)
 
 When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/scripts.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/scripts.png?raw=true)
 
 # Using R markdown
 
 For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/RMarkdown.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/RMarkdown.png?raw=true)
 
 To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac). 
 
@@ -317,7 +317,7 @@ CombinedSalaries
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D025-R1NV&topic=R&cohort=LT21
 
@@ -332,7 +332,7 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 *  Genevieve has a Portobello Mushroom & Truffle (£10), and water to drink.
 *  Genevieve and Amal also share a Nutella Pizza ring for dessert (£5.5). 
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop1/Images/pizzaP.jpg?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/pizzaP.jpg?raw=true)
 
 
 1)  Make a variable for each friend that is the sum of their order (e.g. Roger would be 11 + 2)

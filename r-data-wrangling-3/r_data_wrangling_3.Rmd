@@ -455,7 +455,7 @@ imdb_bechdel %>%
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 **Add survey link here**
 
@@ -510,13 +510,17 @@ df2 %>%
 
 We have used dplyr for aggregation here, but there are two other options: the base r `aggregate()` function, or using the data.table package. We have shown some examples here so you are able to compare.
 
-First, we have a look at the base r `aggregate()` function. The main disadvantage of `aggregate` over dplyr is you have less control. It runs an aggregate across your whole dataset, which causes a lot of NA values for all your non-numerical variables. This might be what you want occasionally, but not all the time!
+First, we have a look at the base r `aggregate()` function. The main disadvantage to aggregate over dplyr is it is harder to read. 
 
 ```{r warning=FALSE, message=FALSE}
 # one group aggregate 
-aggregate(df2, by = list(df2$key), FUN = mean, na.rm = TRUE)
+aggregate(df2[, c("num1", "num2", "num3")], 
+          by = list(df2$key), 
+          FUN = mean, na.rm = TRUE)
 # two group aggregate
-aggregate(df2, by = list(df2$key, df2$key2), FUN = mean, na.rm = TRUE)
+aggregate(df2[, c("num1", "num2", "num3")], 
+          by = list(df2$key, df2$key2), 
+          FUN = mean, na.rm = TRUE)
 ```
 
 The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets.

@@ -142,8 +142,8 @@ When summing the whole matrix, this is done *columnwise*, this means that the su
 
 Using the `dat` vector provided, try the following exercises:
 
-1)  make a matrix called my_mat with three columns, print the outcome to view your matrix
-2)  change the column and row names of your matrix. Your column names should be col_1, col_2 etc. and your row names should be row_1, row_2 etc. *hint: this can be automated by using paste and seq functions: paste0("text", seq(1:5)*
+1)  Make a matrix called my_mat with three columns, print the outcome to view your matrix
+2)  Change the column and row names of your matrix. Your column names should be col_1, col_2 etc. and your row names should be row_1, row_2 etc. *hint: this can be automated by using paste and seq functions: paste0("text", seq(1:5)*
 3)  Print your matrix again to see your new col and row names
 4)  Calculate the mean of all the values in your matrix, watch out for the NA value!
 5)  Find the mean of the third column of your matrix
@@ -209,7 +209,7 @@ df <- df[, !colnames(df) %in% rem_col]
 head(df)
 ```
 
-Note that this is made a bit easier with the tidyverse. We can use the tibble package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
+Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
 
 To convert our data frame to a matrix, we use the `as.matrix()` function. By naming the columns and rows, it is easier to read once converted.
 
@@ -258,7 +258,7 @@ df_cor
 df_cor$int
 ```
 
-## Converting matricies exercise
+## Converting matrices exercise
 
 In this exercise you will be debugging my code!
 
@@ -329,22 +329,20 @@ A list is a vector that can contain different data types. This makes lists very 
 
 Why is it important to learn about how to work with lists in R? There are two key reasons.
 
--   First is you'll find when using statistics packages in R the model and model information are stored in lists once the model is run, so learning how to access lists is vital to getting that information
+-   First is you'll find when using statistics packages in R, the model and model information are stored in lists once the model is run, so learning how to access lists is vital to getting that information
 -   Second, if you have a lot of data you want to load into R at once, such as several data frames, R will put all of these into a list when loaded into R.
 
-Generally is is always easier to work with data, such as a data frame, outside of a list. However, it is useful to be able to store information in lists and learn how to access the information in them.
+Generally it is easier to work with data, such as a data frame, outside of a list. However, it is useful to be able to store information in lists and learn how to access the information in them.
 
 To construct lists in R we use the `list()` function. As you can see it can hold any data type.
-
 ```{r}
 list_info1 <- list("Andrew", 31, TRUE, c("Stegosaurs", "Allosaurus", "diplodocus"))
 list_info1
 ```
 
-When we print the list each element is printed with its index. Notice that some have double square brackets. But what does that mean? This effects how we index them and what the output is.
+When we print the list each element is printed with its index. Notice that some have double square brackets, but what does that mean? This effects how we index them and what the output is.
 
 In the example list (list_info1) the 4th element is a vector of strings. If we access that element using single square brackets we get back a list. Run the example below to test this out.
-
 ```{r}
 # access 4th element of list
 list_info1[4]
@@ -355,7 +353,6 @@ str(dino_list)
 ```
 
 If we want to get access to the 4th element as a vector, instead of a list, we have to use double square brackets to access it. Test out the code below, where we extract the 4th element to make it a vector.
-
 ```{r}
 # access 4th element of list
 list_info1[[4]]
@@ -366,7 +363,6 @@ str(dinos)
 ```
 
 To access the different elements of a vector in a list we need to add more square brackets after the double square brackets (yes, it is a lot of brackets!).
-
 ```{r}
 # index elements 2 and 3
 list_info1[[4]][2:3]
@@ -377,7 +373,6 @@ list_info1[[4]][1]
 We can also add names to the elements in our list. This makes the elements easier to access and identify what each element is.
 
 There are two ways of doing this. The first option uses the `names()` function. The second option adds names to elements when adding them to the list. See how to do both in the example below.
-
 ```{r}
 # using names function
 names(list_info1) <- c("name", "age", "like_dinosaurs", "fav_dinosaurs")
@@ -389,7 +384,6 @@ list_info1
 ```
 
 We can now use the dollar sign `$` to access the names of the elements in our list, which means a lot less brackets. We can also use double square brackets with the name.
-
 ```{r}
 # index vector
 list_info1$fav_dinosaurs
@@ -400,7 +394,6 @@ list_info1[["fav_dinosaurs"]]
 ```
 
 We can also add and remove elements from a list.
-
 ```{r}
 # add another element to the list
 list_info1[5] <- "New element"
@@ -414,7 +407,6 @@ list_info1
 ```
 
 If we want to add a vector, we need to use the double square brackets. Or we can use the dollar sign to name the new element in the list.
-
 ```{r}
 # add vector to a list (need double brackets)
 list_info1[[5]] <- seq(0, 60, by = 6)
@@ -426,7 +418,6 @@ list_info1
 ```
 
 We can also add information to elements within the list. This is made easier and clearer by naming.
-
 ```{r}
 # add another dinosaur to our vector within the list
 list_info1$fav_dinosaurs[4] <- "Utahraptor"
@@ -490,9 +481,12 @@ str(list_all)
 ```
 
 We didn't name the lists within the lists we just made, so they will be 1, 2, 3 and 4 if we want to index them.
+```{r}
+list_all[[2]]
+```
+
 
 Just like when we made a list previously we can name each list in the list to make them more accessible. Again, there are two methods.
-
 ```{r}
 # naming in the list
 list_all <- list(person1 = list_info1, person2 = list_info2, person3 = list_info3, dino_data = dino_df)
@@ -504,17 +498,15 @@ str(list_all)
 
 How do we index lists and elements in lists of lists? If we have named the lists we have the option to use the dollar sign again, use square brackets, or both together.
 
-Below are examples of three different ways to access a list within a list.
-
+Below are examples of three different ways to access the same list within a list from `list_all`.
 ```{r}
 # different ways to access lists
-list_all[["person1"]]
-list_all[[1]]
-list_all$person1
+list_all[["person2"]]
+list_all[[2]]
+list_all$person2
 ```
 
 We can add another dollar sign or double square brackets to access elements within the list of lists. In this case we are looking in the person3 list, and accessing the fav_dinosaurs element.
-
 ```{r}
 # access elements of list of lists
 list_all[["person3"]][["fav_dinosaurs"]]
@@ -522,7 +514,6 @@ list_all$person3$fav_dinosaurs
 ```
 
 To access specific data within those elements we need to use single square brackets
-
 ```{r}
 # access elements of data within the lists
 list_all[["person3"]][["fav_dinosaurs"]][1]
@@ -530,7 +521,6 @@ list_all$person3$fav_dinosaurs[1]
 ```
 
 Dealing with data frames in a list is the same concept. We have a sequence of double square bracket calls or dollar signs to get information.
-
 ```{r}
 # index data frame from list
 list_all[["dino_data"]]
@@ -538,7 +528,6 @@ list_all$dino_data
 ```
 
 To index a column we can name it using the dollar sign or double square brackets.
-
 ```{r}
 # index column in data frame
 list_all$dino_data$dinosaur
@@ -546,7 +535,6 @@ list_all[["dino_data"]][["dinosaur"]]
 ```
 
 Index a row using the square brackets with row and column index, like we did earlier with matrices. In the example we are indexing the second row and all columns.
-
 ```{r}
 # index row in data frame
 list_all$dino_data[2, ]
@@ -554,7 +542,6 @@ list_all[["dino_data"]][2, ]
 ```
 
 Indexing rows and columns by using square brackets again, but entering names for the column index.
-
 ```{r}
 # index column and row from data frame
 list_all$dino_data[2, c("dinosaur", "scary")]
@@ -562,7 +549,6 @@ list_all[["dino_data"]][2, c("dinosaur", "scary")]
 ```
 
 We can also do operations or calculations to elements of the data frame within a list.
-
 ```{r}
 # convert scary to numeric
 list_all$dino_data$scary <- as.numeric(list_all$dino_data$scary)
@@ -628,12 +614,61 @@ legend("topleft", legend = levels(dino_class),
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 **Add survey here**
 
 # Individual take home challenge
 
-Possibly task that combines using lists and matrices?
+In this coding challenge we will use a matrix we made earlier to make heatmaps! R comes with a function called `heatmap()` which only access a matrix.
+
+To make a matrix you add your matrix to the function, you can also add a title. 
+```{r}
+heatmap(df_mat,
+        main = "Example heatmap")
+```
+
+To remove the dendrograms you add `Rowv` and `Colv` arguments with NA. 
+```{r}
+heatmap(df_mat, 
+        main = "Example heatmap",
+        Rowv = NA, Colv = NA)
+```
+
+
+Using the *ronaldo_mat* matrix we made in the converting matrices exercise: 
+
+1) Make a heatmap with the title *Ronaldo career heatmap*, that does not have the dendrograms
+2) You will need to increase the margins of the heatmap to view your columns. Use the margins argument to increase them. *hint: a margin of would work well c(10,5)*
+3) The heatmap also needs to be scaled by your columns (by default it uses rows). Add the scale argument, and scale by column. *hint: to scale by row you use scale = "row"*
+4) Change the colour of your heatmap! First, install and load the RColorBrewer package
+5) Use the col argument to change the colour of your heatmap. For example, to change your colours to purple col = brewer.pal(n = 8, "Purples") would do the trick. Have a look at other colour palettes from the RColurBrewer package here: <https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html>
+
+```{r}
+# your code here
+
+# make heatmap
+heatmap(ronaldo_mat,
+        Rowv = NA, Colv = NA,
+        main = "Ronaldo career heatmap")
+
+# scale by columns, increase margins
+heatmap(ronaldo_mat,
+        Rowv = NA, Colv = NA,
+        margins = c(10,5),
+        scale = "column",
+        main = "Ronaldo career heatmap")
+
+# change colour scale
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+
+heatmap(ronaldo_mat, 
+        Rowv = NA, Colv = NA,
+        scale = "column",
+        main = "Ronaldo career heatmap",
+        col = RColorBrewer::brewer.pal(n = 8, "Purples")) 
+
+```
 
 ------------------------------------------------------------------------

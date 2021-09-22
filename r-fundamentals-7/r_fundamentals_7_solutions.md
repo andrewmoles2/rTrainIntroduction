@@ -3,7 +3,7 @@ title: "R Fundamentals 7 - Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "20 August, 2021"
+date: "21 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -323,8 +323,8 @@ When summing the whole matrix, this is done *columnwise*, this means that the su
 
 Using the `dat` vector provided, try the following exercises:
 
-1)  make a matrix called my_mat with three columns, print the outcome to view your matrix
-2)  change the column and row names of your matrix. Your column names should be col_1, col_2 etc. and your row names should be row_1, row_2 etc. *hint: this can be automated by using paste and seq functions: paste0("text", seq(1:5)*
+1)  Make a matrix called my_mat with three columns, print the outcome to view your matrix
+2)  Change the column and row names of your matrix. Your column names should be col_1, col_2 etc. and your row names should be row_1, row_2 etc. *hint: this can be automated by using paste and seq functions: paste0("text", seq(1:5)*
 3)  Print your matrix again to see your new col and row names
 4)  Calculate the mean of all the values in your matrix, watch out for the NA value!
 5)  Find the mean of the third column of your matrix
@@ -343,16 +343,16 @@ my_mat
 
 ```
 ##       [,1] [,2] [,3]
-##  [1,]   29   19    9
-##  [2,]    6    2   10
-##  [3,]   11   21   23
-##  [4,]   24   16   27
-##  [5,]   18   17   20
-##  [6,]    7   25   22
-##  [7,]   26   28   14
-##  [8,]   15    8    1
-##  [9,]   NA   13    4
-## [10,]    3   12    5
+##  [1,]   11   25   17
+##  [2,]   19   28   13
+##  [3,]   21   16    9
+##  [4,]    3    2    8
+##  [5,]   22   20   18
+##  [6,]    1   10    6
+##  [7,]   15   26    5
+##  [8,]   NA   23    4
+##  [9,]   14   12   29
+## [10,]   27    7   24
 ```
 
 ```r
@@ -365,16 +365,16 @@ my_mat
 
 ```
 ##        col_1 col_2 col_3
-## row_1     29    19     9
-## row_2      6     2    10
-## row_3     11    21    23
-## row_4     24    16    27
-## row_5     18    17    20
-## row_6      7    25    22
-## row_7     26    28    14
-## row_8     15     8     1
-## row_9     NA    13     4
-## row_10     3    12     5
+## row_1     11    25    17
+## row_2     19    28    13
+## row_3     21    16     9
+## row_4      3     2     8
+## row_5     22    20    18
+## row_6      1    10     6
+## row_7     15    26     5
+## row_8     NA    23     4
+## row_9     14    12    29
+## row_10    27     7    24
 ```
 
 ```r
@@ -392,7 +392,7 @@ mean(my_mat[, "col_3"], na.rm = TRUE)
 ```
 
 ```
-## [1] 13.5
+## [1] 13.3
 ```
 
 ```r
@@ -401,7 +401,7 @@ paste("The mean of the first 5 rows, and col 1 and 2 is:", mean(my_mat[5, 1:2], 
 ```
 
 ```
-## [1] "The mean of the first 5 rows, and col 1 and 2 is: 17.5"
+## [1] "The mean of the first 5 rows, and col 1 and 2 is: 21"
 ```
 
 # Converting data into and from matricies
@@ -431,9 +431,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  5 16 19 3 12 4 7 10 2 11
-##  $ rand  : num  6.56 9.81 3.12 2.97 6.48 ...
-##  $ rand2 : num  4.67 3.19 4.8 5.62 2.66 ...
+##  $ samp  : int  18 12 11 17 5 6 15 16 8 20
+##  $ rand  : num  2.25 3.46 1.06 6.92 5.43 ...
+##  $ rand2 : num  4.33 5.79 8.38 4.1 2.54 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -453,15 +453,15 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1    5 6.559507 4.665950
-## string2   2   16 9.812655 3.186029
-## string3   3   19 3.121976 4.801341
-## string4   4    3 2.965566 5.622138
-## string5   5   12 6.483855 2.656978
-## string6   6    4 5.258851 3.735684
+## string1   1   18 2.247522 4.331454
+## string2   2   12 3.463592 5.791477
+## string3   3   11 1.056622 8.377923
+## string4   4   17 6.921704 4.100650
+## string5   5    5 5.434201 2.535542
+## string6   6    6 1.576485 5.610995
 ```
 
-Note that this is made a bit easier with the tidyverse. We can use the tibble package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
+Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
 
 To convert our data frame to a matrix, we use the `as.matrix()` function. By naming the columns and rows, it is easier to read once converted.
 
@@ -474,12 +474,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1    5 6.559507 4.665950
-## string2   2   16 9.812655 3.186029
-## string3   3   19 3.121976 4.801341
-## string4   4    3 2.965566 5.622138
-## string5   5   12 6.483855 2.656978
-## string6   6    4 5.258851 3.735684
+## string1   1   18 2.247522 4.331454
+## string2   2   12 3.463592 5.791477
+## string3   3   11 1.056622 8.377923
+## string4   4   17 6.921704 4.100650
+## string5   5    5 5.434201 2.535542
+## string6   6    6 1.576485 5.610995
 ```
 
 ```r
@@ -502,9 +502,9 @@ calc
 
 ```
 ##    string1    string2    string3    string4    string5    string6    string7 
-## 0.32797536 1.57002480 0.59317548 0.08896697 0.77806262 0.21035403 0.56196142 
+## 0.40455391 0.41563100 0.11622845 1.17668975 0.27171003 0.09458909 0.18930539 
 ##    string8    string9   string10 
-## 0.13735939 0.03066345 1.04735709
+## 0.24717524 0.55802219 1.68846500
 ```
 
 ```r
@@ -515,16 +515,16 @@ df_mat
 
 ```
 ##          int samp     rand     rand2       calc
-## string1    1    5 6.559507 4.6659496 0.32797536
-## string2    2   16 9.812655 3.1860290 1.57002480
-## string3    3   19 3.121976 4.8013414 0.59317548
-## string4    4    3 2.965566 5.6221381 0.08896697
-## string5    5   12 6.483855 2.6569775 0.77806262
-## string6    6    4 5.258851 3.7356838 0.21035403
-## string7    7    7 8.028020 3.1249270 0.56196142
-## string8    8   10 1.373594 5.8491432 0.13735939
-## string9    9    2 1.533173 9.0522845 0.03066345
-## string10  10   11 9.521428 0.5256993 1.04735709
+## string1    1   18 2.247522 4.3314537 0.40455391
+## string2    2   12 3.463592 5.7914766 0.41563100
+## string3    3   11 1.056622 8.3779227 0.11622845
+## string4    4   17 6.921704 4.1006504 1.17668975
+## string5    5    5 5.434201 2.5355424 0.27171003
+## string6    6    6 1.576485 5.6109949 0.09458909
+## string7    7   15 1.262036 4.6024851 0.18930539
+## string8    8   16 1.544845 9.0133963 0.24717524
+## string9    9    8 6.975277 0.5714554 0.55802219
+## string10  10   20 8.442325 4.9948539 1.68846500
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -537,12 +537,12 @@ df_cor
 ```
 
 ```
-##               int       samp       rand       rand2       calc
-## int    1.00000000 -0.2734024 -0.1529119  0.02109928 -0.2147457
-## samp  -0.27340237  1.0000000  0.2995395 -0.43623252  0.7076964
-## rand  -0.15291188  0.2995395  1.0000000 -0.83629505  0.8213231
-## rand2  0.02109928 -0.4362325 -0.8362951  1.00000000 -0.6936674
-## calc  -0.21474575  0.7076964  0.8213231 -0.69366739  1.0000000
+##               int       samp       rand      rand2       calc
+## int    1.00000000 0.03512601  0.4061292 -0.1683799  0.3568737
+## samp   0.03512601 1.00000000  0.1368236  0.2933873  0.5928270
+## rand   0.40612924 0.13682355  1.0000000 -0.6198640  0.8372315
+## rand2 -0.16837992 0.29338727 -0.6198640  1.0000000 -0.2371213
+## calc   0.35687374 0.59282696  0.8372315 -0.2371213  1.0000000
 ```
 
 ```r
@@ -552,12 +552,12 @@ df_cor
 ```
 
 ```
-##          int   samp   rand  rand2   calc
-## int    1.000 -0.273 -0.153  0.021 -0.215
-## samp  -0.273  1.000  0.300 -0.436  0.708
-## rand  -0.153  0.300  1.000 -0.836  0.821
-## rand2  0.021 -0.436 -0.836  1.000 -0.694
-## calc  -0.215  0.708  0.821 -0.694  1.000
+##          int  samp   rand  rand2   calc
+## int    1.000 0.035  0.406 -0.168  0.357
+## samp   0.035 1.000  0.137  0.293  0.593
+## rand   0.406 0.137  1.000 -0.620  0.837
+## rand2 -0.168 0.293 -0.620  1.000 -0.237
+## calc   0.357 0.593  0.837 -0.237  1.000
 ```
 
 ```r
@@ -581,12 +581,12 @@ df_cor
 ```
 
 ```
-##          int   samp   rand  rand2   calc
-## int    1.000 -0.273 -0.153  0.021 -0.215
-## samp  -0.273  1.000  0.300 -0.436  0.708
-## rand  -0.153  0.300  1.000 -0.836  0.821
-## rand2  0.021 -0.436 -0.836  1.000 -0.694
-## calc  -0.215  0.708  0.821 -0.694  1.000
+##          int  samp   rand  rand2   calc
+## int    1.000 0.035  0.406 -0.168  0.357
+## samp   0.035 1.000  0.137  0.293  0.593
+## rand   0.406 0.137  1.000 -0.620  0.837
+## rand2 -0.168 0.293 -0.620  1.000 -0.237
+## calc   0.357 0.593  0.837 -0.237  1.000
 ```
 
 ```r
@@ -594,10 +594,10 @@ df_cor$int
 ```
 
 ```
-## [1]  1.000 -0.273 -0.153  0.021 -0.215
+## [1]  1.000  0.035  0.406 -0.168  0.357
 ```
 
-## Converting matricies exercise
+## Converting matrices exercise
 
 In this exercise you will be debugging my code!
 
@@ -772,13 +772,12 @@ A list is a vector that can contain different data types. This makes lists very 
 
 Why is it important to learn about how to work with lists in R? There are two key reasons.
 
--   First is you'll find when using statistics packages in R the model and model information are stored in lists once the model is run, so learning how to access lists is vital to getting that information
+-   First is you'll find when using statistics packages in R, the model and model information are stored in lists once the model is run, so learning how to access lists is vital to getting that information
 -   Second, if you have a lot of data you want to load into R at once, such as several data frames, R will put all of these into a list when loaded into R.
 
-Generally is is always easier to work with data, such as a data frame, outside of a list. However, it is useful to be able to store information in lists and learn how to access the information in them.
+Generally it is easier to work with data, such as a data frame, outside of a list. However, it is useful to be able to store information in lists and learn how to access the information in them.
 
 To construct lists in R we use the `list()` function. As you can see it can hold any data type.
-
 
 ```r
 list_info1 <- list("Andrew", 31, TRUE, c("Stegosaurs", "Allosaurus", "diplodocus"))
@@ -799,10 +798,9 @@ list_info1
 ## [1] "Stegosaurs" "Allosaurus" "diplodocus"
 ```
 
-When we print the list each element is printed with its index. Notice that some have double square brackets. But what does that mean? This effects how we index them and what the output is.
+When we print the list each element is printed with its index. Notice that some have double square brackets, but what does that mean? This effects how we index them and what the output is.
 
 In the example list (list_info1) the 4th element is a vector of strings. If we access that element using single square brackets we get back a list. Run the example below to test this out.
-
 
 ```r
 # access 4th element of list
@@ -828,7 +826,6 @@ str(dino_list)
 
 If we want to get access to the 4th element as a vector, instead of a list, we have to use double square brackets to access it. Test out the code below, where we extract the 4th element to make it a vector.
 
-
 ```r
 # access 4th element of list
 list_info1[[4]]
@@ -851,7 +848,6 @@ str(dinos)
 
 To access the different elements of a vector in a list we need to add more square brackets after the double square brackets (yes, it is a lot of brackets!).
 
-
 ```r
 # index elements 2 and 3
 list_info1[[4]][2:3]
@@ -873,7 +869,6 @@ list_info1[[4]][1]
 We can also add names to the elements in our list. This makes the elements easier to access and identify what each element is.
 
 There are two ways of doing this. The first option uses the `names()` function. The second option adds names to elements when adding them to the list. See how to do both in the example below.
-
 
 ```r
 # using names function
@@ -917,7 +912,6 @@ list_info1
 
 We can now use the dollar sign `$` to access the names of the elements in our list, which means a lot less brackets. We can also use double square brackets with the name.
 
-
 ```r
 # index vector
 list_info1$fav_dinosaurs
@@ -946,7 +940,6 @@ list_info1[["fav_dinosaurs"]]
 ```
 
 We can also add and remove elements from a list.
-
 
 ```r
 # add another element to the list
@@ -995,7 +988,6 @@ list_info1
 
 If we want to add a vector, we need to use the double square brackets. Or we can use the dollar sign to name the new element in the list.
 
-
 ```r
 # add vector to a list (need double brackets)
 list_info1[[5]] <- seq(0, 60, by = 6)
@@ -1027,7 +1019,6 @@ list_info1
 ```
 
 We can also add information to elements within the list. This is made easier and clearer by naming.
-
 
 ```r
 # add another dinosaur to our vector within the list
@@ -1162,8 +1153,23 @@ str(list_all)
 
 We didn't name the lists within the lists we just made, so they will be 1, 2, 3 and 4 if we want to index them.
 
-Just like when we made a list previously we can name each list in the list to make them more accessible. Again, there are two methods.
+```r
+list_all[[2]]
+```
 
+```
+## $name
+## [1] "Margaret"
+## 
+## $age
+## [1] 22
+## 
+## $like_dinosaurs
+## [1] FALSE
+```
+
+
+Just like when we made a list previously we can name each list in the list to make them more accessible. Again, there are two methods.
 
 ```r
 # naming in the list
@@ -1200,84 +1206,55 @@ str(list_all)
 
 How do we index lists and elements in lists of lists? If we have named the lists we have the option to use the dollar sign again, use square brackets, or both together.
 
-Below are examples of three different ways to access a list within a list.
-
+Below are examples of three different ways to access the same list within a list from `list_all`.
 
 ```r
 # different ways to access lists
-list_all[["person1"]]
+list_all[["person2"]]
 ```
 
 ```
 ## $name
-## [1] "Andrew"
+## [1] "Margaret"
 ## 
 ## $age
-## [1] 31
+## [1] 22
 ## 
 ## $like_dinosaurs
-## [1] TRUE
-## 
-## $fav_dinosaurs
-## [1] "Stegosaurs" "Allosaurus" "diplodocus" "Utahraptor"
-## 
-## [[5]]
-##  [1]  0  6 12 18 24 30 36 42 48 54 60
-## 
-## $four_times_table
-##  [1]  0  4  8 12 16 20 24 28 32 36 40
+## [1] FALSE
 ```
 
 ```r
-list_all[[1]]
+list_all[[2]]
 ```
 
 ```
 ## $name
-## [1] "Andrew"
+## [1] "Margaret"
 ## 
 ## $age
-## [1] 31
+## [1] 22
 ## 
 ## $like_dinosaurs
-## [1] TRUE
-## 
-## $fav_dinosaurs
-## [1] "Stegosaurs" "Allosaurus" "diplodocus" "Utahraptor"
-## 
-## [[5]]
-##  [1]  0  6 12 18 24 30 36 42 48 54 60
-## 
-## $four_times_table
-##  [1]  0  4  8 12 16 20 24 28 32 36 40
+## [1] FALSE
 ```
 
 ```r
-list_all$person1
+list_all$person2
 ```
 
 ```
 ## $name
-## [1] "Andrew"
+## [1] "Margaret"
 ## 
 ## $age
-## [1] 31
+## [1] 22
 ## 
 ## $like_dinosaurs
-## [1] TRUE
-## 
-## $fav_dinosaurs
-## [1] "Stegosaurs" "Allosaurus" "diplodocus" "Utahraptor"
-## 
-## [[5]]
-##  [1]  0  6 12 18 24 30 36 42 48 54 60
-## 
-## $four_times_table
-##  [1]  0  4  8 12 16 20 24 28 32 36 40
+## [1] FALSE
 ```
 
 We can add another dollar sign or double square brackets to access elements within the list of lists. In this case we are looking in the person3 list, and accessing the fav_dinosaurs element.
-
 
 ```r
 # access elements of list of lists
@@ -1298,7 +1275,6 @@ list_all$person3$fav_dinosaurs
 
 To access specific data within those elements we need to use single square brackets
 
-
 ```r
 # access elements of data within the lists
 list_all[["person3"]][["fav_dinosaurs"]][1]
@@ -1317,7 +1293,6 @@ list_all$person3$fav_dinosaurs[1]
 ```
 
 Dealing with data frames in a list is the same concept. We have a sequence of double square bracket calls or dollar signs to get information.
-
 
 ```r
 # index data frame from list
@@ -1344,7 +1319,6 @@ list_all$dino_data
 
 To index a column we can name it using the dollar sign or double square brackets.
 
-
 ```r
 # index column in data frame
 list_all$dino_data$dinosaur
@@ -1363,7 +1337,6 @@ list_all[["dino_data"]][["dinosaur"]]
 ```
 
 Index a row using the square brackets with row and column index, like we did earlier with matrices. In the example we are indexing the second row and all columns.
-
 
 ```r
 # index row in data frame
@@ -1386,7 +1359,6 @@ list_all[["dino_data"]][2, ]
 
 Indexing rows and columns by using square brackets again, but entering names for the column index.
 
-
 ```r
 # index column and row from data frame
 list_all$dino_data[2, c("dinosaur", "scary")]
@@ -1407,7 +1379,6 @@ list_all[["dino_data"]][2, c("dinosaur", "scary")]
 ```
 
 We can also do operations or calculations to elements of the data frame within a list.
-
 
 ```r
 # convert scary to numeric
@@ -1516,16 +1487,81 @@ legend("topleft", legend = levels(dino_class),
        col = c("orange", "blue", "green", "purple")[1:length(dino_class)], pch = 19)
 ```
 
-![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-38-1.png)<!-- -->
+![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-39-1.png)<!-- -->
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 **Add survey here**
 
 # Individual take home challenge
 
-Possibly task that combines using lists and matrices?
+In this coding challenge we will use a matrix we made earlier to make heatmaps! R comes with a function called `heatmap()` which only access a matrix.
+
+To make a matrix you add your matrix to the function, you can also add a title. 
+
+```r
+heatmap(df_mat,
+        main = "Example heatmap")
+```
+
+![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-40-1.png)<!-- -->
+
+To remove the dendrograms you add `Rowv` and `Colv` arguments with NA. 
+
+```r
+heatmap(df_mat, 
+        main = "Example heatmap",
+        Rowv = NA, Colv = NA)
+```
+
+![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-41-1.png)<!-- -->
+
+
+Using the *ronaldo_mat* matrix we made in the converting matrices exercise: 
+
+1) Make a heatmap with the title *Ronaldo career heatmap*, that does not have the dendrograms
+2) You will need to increase the margins of the heatmap to view your columns. Use the margins argument to increase them. *hint: a margin of would work well c(10,5)*
+3) The heatmap also needs to be scaled by your columns (by default it uses rows). Add the scale argument, and scale by column. *hint: to scale by row you use scale = "row"*
+4) Change the colour of your heatmap! First, install and load the RColorBrewer package
+5) Use the col argument to change the colour of your heatmap. For example, to change your colours to purple col = brewer.pal(n = 8, "Purples") would do the trick. Have a look at other colour palettes from the RColurBrewer package here: <https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html>
+
+
+```r
+# your code here
+
+# make heatmap
+heatmap(ronaldo_mat,
+        Rowv = NA, Colv = NA,
+        main = "Ronaldo career heatmap")
+```
+
+![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-42-1.png)<!-- -->
+
+```r
+# scale by columns, increase margins
+heatmap(ronaldo_mat,
+        Rowv = NA, Colv = NA,
+        margins = c(10,5),
+        scale = "column",
+        main = "Ronaldo career heatmap")
+```
+
+![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-42-2.png)<!-- -->
+
+```r
+# change colour scale
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+
+heatmap(ronaldo_mat, 
+        Rowv = NA, Colv = NA,
+        scale = "column",
+        main = "Ronaldo career heatmap",
+        col = RColorBrewer::brewer.pal(n = 8, "Purples")) 
+```
+
+![](r_fundamentals_7_solutions_files/figure-html/unnamed-chunk-42-3.png)<!-- -->
 
 ------------------------------------------------------------------------

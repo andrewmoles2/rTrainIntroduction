@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "16 August, 2021"
+date: "21 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -11,7 +11,6 @@ output:
     keep_md: yes
     code_download: true
     toc: true
-    number_sections: true
     toc_float: 
       collapsed: false
 ---
@@ -313,7 +312,7 @@ You decided to track your total monthly expenditures for the year to find out mo
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D046-R2VFI&topic=R&cohort=LT21&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EVNFGAtJwIlKje6Q0JS8EGwBB6v-RfIlC5X4ADXzGJEq4w?e=GcjfyO
 

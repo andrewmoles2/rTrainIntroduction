@@ -1,9 +1,9 @@
 ---
-title: "R Data Wrangling 7 - Data wrangling with dplyr continued"
+title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "23 August, 2021"
+date: "21 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -812,10 +812,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       8       1       4    dog
-## 2   Hello       9       2       5    cat
-## 3   Hello       1       3       6    cat
-## 4   Hello       6       4       7    dog
+## 1   Hello       5       1       4    dog
+## 2   Hello       1       2       5    cat
+## 3   Hello       8       3       6    cat
+## 4   Hello       2       4       7    dog
 ```
 
 ```r
@@ -888,10 +888,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      3        1       4    dog
-## 2  Hello     10        2       5    cat
-## 3  Hello      8        3       6    cat
-## 4  Hello      1        4       7    dog
+## 1  Hello      4        1       4    dog
+## 2  Hello      1        2       5    cat
+## 3  Hello      5        3       6    cat
+## 4  Hello     10        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -1151,7 +1151,7 @@ data_frame(default = names(pokemon),
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 **Add survey link here**
 

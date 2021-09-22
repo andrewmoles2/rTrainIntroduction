@@ -1,5 +1,5 @@
 ---
-title: "R Data Wrangling 7 - Data wrangling with dplyr continued"
+title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
@@ -553,7 +553,7 @@ data_frame(default = names(pokemon),
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 **Add survey link here**
 

@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "17 August, 2021"
+date: "21 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -284,9 +284,8 @@ df[df$x < 20, ]
 
 ```
 ##    x  y
-## 2 12  6
-## 5 11 62
-## 9  4 46
+## 9  2 57
+## 10 3 41
 ```
 
 ```r
@@ -297,18 +296,16 @@ df2
 
 ```
 ##     x  y
-## 1  41 80
-## 3  70 35
-## 4  67 72
-## 6  37 65
-## 7  73 82
-## 8  86 33
-## 10 59 53
-## 11 66 21
-## 12 72 31
-## 13 40 13
-## 14 71 16
-## 15 44 26
+## 1  70 70
+## 2  62  8
+## 3  80 67
+## 5  42 85
+## 6  74 72
+## 7  58 46
+## 11 59 17
+## 12 49 16
+## 13 91 61
+## 14 97  6
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -319,21 +316,19 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 2  12  6
-## 3  70 35
-## 8  86 33
-## 11 66 21
-## 12 72 31
-## 13 40 13
-## 14 71 16
-## 15 44 26
+## 2  62  8
+## 4  25 25
+## 11 59 17
+## 12 49 16
+## 14 97  6
+## 15 34 30
 ```
 
 ## Subsetting exercise
 
 In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing. 
 
-1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/Workshop4b/data/pokemonGen1.csv
+1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv
 2) Get information on your loaded data using the `str()`, `head()` and `View()` functions. 
 3) Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
 4) Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
@@ -432,11 +427,8 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y  z     exp
-## 2 person_b  9 53 11 control
-## 3 person_c 12 54 13    test
-## 4 person_d 70 14  2    test
-## 9 person_i 76 25  5    test
+##          id  x  y z  exp
+## 10 person_j 75 99 3 test
 ```
 
 ```r
@@ -455,10 +447,10 @@ subset(df3, id %in% val_match)
 ```
 
 ```
-##          id  x  y  z  exp
-## 8  person_h 90 97 59 test
-## 9  person_i 76 25  5 test
-## 10 person_j 67 40 29 test
+##          id  x  y  z     exp
+## 8  person_h 99 43 90 control
+## 9  person_i 37 82 54    test
+## 10 person_j 75 99  3    test
 ```
 
 ```r
@@ -552,16 +544,16 @@ df3[, c('x','cat')]
 
 ```
 ##     x    cat
-## 1  71   high
-## 2   9    low
-## 3  12    low
-## 4  70   high
-## 5  51 medium
-## 6  94   high
-## 7  82   high
-## 8  90   high
-## 9  76   high
-## 10 67   high
+## 1  46 medium
+## 2  25    low
+## 3  61 medium
+## 4  39 medium
+## 5  68   high
+## 6  42 medium
+## 7  22    low
+## 8  99   high
+## 9  37 medium
+## 10 75   high
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -579,7 +571,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 
 # Final task - Please give us your individual feedback!
 
-This is the first time that we are exploring a remote learning format for our workshops and we would be grateful if you could take 2 mins before the end of the workshop to get your feedback!
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
 https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21
 
