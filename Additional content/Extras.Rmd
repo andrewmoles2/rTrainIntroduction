@@ -298,4 +298,38 @@ str(data_files)
 
 Note you can do this with any file type, such as a csv files you have saved in a folder of your computer. See this stackoverflow thread for examples: <https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once>
 
+# Why is data visualisation important?
+
+```{r}
+library(datasauRus)
+library(ggplot2)
+library(dplyr)
+
+datasaurus_dozen %>%
+  filter(dataset == "dino") %>%
+ggplot(aes(x, y)) +
+  geom_point()
+
+(avg <- datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarise(mean_x = mean(x),
+            mean_y = mean(y)))
+
+datasaurus_dozen %>%
+  ggplot(aes(x, y)) +
+  geom_point() +
+  facet_wrap("dataset") +
+  geom_hline(yintercept = avg$mean_y, colour = "grey") +
+  geom_vline(xintercept = avg$mean_y, colour = "grey")
+
+datasaurus_dozen %>%
+  filter(dataset == "dino" | dataset == "star" | 
+           dataset == "dots" | dataset == "circle") %>%
+  ggplot(aes(x, y)) +
+  geom_point() +
+  facet_wrap("dataset") + 
+  geom_hline(yintercept = avg$mean_y, colour = "grey") +
+  geom_vline(xintercept = avg$mean_y, colour = "grey")
+```
+
 

@@ -147,7 +147,7 @@ To open and review your projects in future you will see them in a drop down menu
 
 1)  Set up a project for this workshop using the steps above.
 2)  Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac).
-3)  Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
+3)  Put your r_fundamentals_5.Rmd file in your project directory (if you have not do so already).
 4)  Add a new file called data, and add in the data files for the session ().
 5)  Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made.
 6)  If you have not already, open the rWorkshop4b.Rmd file.

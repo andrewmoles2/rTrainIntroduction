@@ -1,0 +1,52 @@
+---
+title: "R Data Visualistion 2 - box plots and time series"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# What this workshop will cover
+
+- An introduction to the ggplot2 package
+- How to make scatter plots with ggplot2
+- How to make bar plots with ggplot2
+
+## Why this style?
+
+-   Online training is tiring so keeping the sessions to one hour
+-   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
+-   Trainer support to guide through process of learning
+
+## We will be working in pairs:
+
+-   Option to work together on worksheet or to work individually
+-   If possible have your camera on and introduce yourself to each other
+
+## What to do when getting stuck:
+
+1)  Ask your team members
+2)  Search online:
+
+-   The answer box on the top of Google's results page
+-   stackoverflow.com (for task-specific solutions)
+-   <https://www.r-bloggers.com/> (topic based tutorials)
+
+3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
+
+------------------------------------------------------------------------
+
+
+# Ideas
+
+<https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/>
+
+<https://www.cedricscherer.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/>

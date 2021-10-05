@@ -608,7 +608,7 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-Add survey link here
+https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 1: Pipes and introduction to dplyr  &topic=R&link=&prog=DS&version=21-22
 
 The solutions we be available from a link at the end of the survey.
 

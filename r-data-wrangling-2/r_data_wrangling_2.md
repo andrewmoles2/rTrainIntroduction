@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "28 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -667,10 +667,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       1       1       4    dog
-## 2   Hello       9       2       5    cat
-## 3   Hello       2       3       6    cat
-## 4   Hello       6       4       7    dog
+## 1   Hello       3       1       4    dog
+## 2   Hello       6       2       5    cat
+## 3   Hello      10       3       6    cat
+## 4   Hello       5       4       7    dog
 ```
 
 ```r
@@ -743,10 +743,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      5        1       4    dog
-## 2  Hello      4        2       5    cat
-## 3  Hello      1        3       6    cat
-## 4  Hello      2        4       7    dog
+## 1  Hello      4        1       4    dog
+## 2  Hello      7        2       5    cat
+## 3  Hello      6        3       6    cat
+## 4  Hello      8        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -948,7 +948,7 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-**Add survey link here**
+https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=&prog=DS&version=21-22
 
 The solutions we be available from a link at the end of the survey.
 
@@ -963,7 +963,7 @@ We will be using data from the pokemon games, making some subsets from that data
 3)  Clean up the column names using janitor. Try and use pipes like we did in the examples earlier in the workshop
 4)  Using mutate, change all data that is a character in `pokemon` to a factor
 5)  In the same mutate, add columns for speed_rank and hp_rank. Use the `min_rank()` function on speed and hp to calculate the rankings
-6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to generation 4. You should end up with the legendary column all being false and generations being 1-4
+6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to generation 4. You should end up with the legendary column all being false and generation being 1-4
 7)  Pipe to another filter function, subsetting total to be greater than or equal to 500
 8)  Assign the result of this subset to `pokemon_500`
 9)  Make four different subsets called: slow, fast, high_hp, and low_hp. Pipe your `pokemon_500` data to slice_max or slice_min functions to find the top 10 fastest/slowest pokemon, and the top 10 highest/lowest hp pokemon. For example, `slow <- pokemon_500 %>% slice_min(speed_rank, n = 10)`

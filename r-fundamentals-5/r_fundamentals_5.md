@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "27 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -117,7 +117,7 @@ sessionInfo()
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.27     R6_2.5.1          jsonlite_1.7.2    magrittr_2.0.1   
-##  [5] evaluate_0.14     rlang_0.4.11      stringi_1.7.3     jquerylib_0.1.4  
+##  [5] evaluate_0.14     rlang_0.4.11      stringi_1.7.4     jquerylib_0.1.4  
 ##  [9] bslib_0.2.5.1     rmarkdown_2.10    tools_4.1.0       stringr_1.4.0    
 ## [13] xfun_0.25         yaml_2.2.1        compiler_4.1.0    htmltools_0.5.1.1
 ## [17] knitr_1.33        sass_0.4.0
@@ -175,7 +175,7 @@ To open and review your projects in future you will see them in a drop down menu
 
 1)  Set up a project for this workshop using the steps above.
 2)  Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac).
-3)  Put your rWorkshop4b.Rmd file in your project directory (if you have not do so already).
+3)  Put your r_fundamentals_5.Rmd file in your project directory (if you have not do so already).
 4)  Add a new file called data, and add in the data files for the session ().
 5)  Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made.
 6)  If you have not already, open the rWorkshop4b.Rmd file.

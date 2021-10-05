@@ -3,7 +3,7 @@ title: "R Fundamentals 7 - Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "28 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -343,16 +343,16 @@ my_mat
 
 ```
 ##       [,1] [,2] [,3]
-##  [1,]   11   25   17
-##  [2,]   19   28   13
-##  [3,]   21   16    9
-##  [4,]    3    2    8
-##  [5,]   22   20   18
-##  [6,]    1   10    6
-##  [7,]   15   26    5
-##  [8,]   NA   23    4
-##  [9,]   14   12   29
-## [10,]   27    7   24
+##  [1,]   27   13   14
+##  [2,]   21   NA   18
+##  [3,]   28   23    4
+##  [4,]    8   24   20
+##  [5,]   17   19   25
+##  [6,]    1   15    6
+##  [7,]   26   11   12
+##  [8,]   29   16    2
+##  [9,]    7    9    5
+## [10,]    3   10   22
 ```
 
 ```r
@@ -365,16 +365,16 @@ my_mat
 
 ```
 ##        col_1 col_2 col_3
-## row_1     11    25    17
-## row_2     19    28    13
-## row_3     21    16     9
-## row_4      3     2     8
-## row_5     22    20    18
-## row_6      1    10     6
-## row_7     15    26     5
-## row_8     NA    23     4
-## row_9     14    12    29
-## row_10    27     7    24
+## row_1     27    13    14
+## row_2     21    NA    18
+## row_3     28    23     4
+## row_4      8    24    20
+## row_5     17    19    25
+## row_6      1    15     6
+## row_7     26    11    12
+## row_8     29    16     2
+## row_9      7     9     5
+## row_10     3    10    22
 ```
 
 ```r
@@ -392,7 +392,7 @@ mean(my_mat[, "col_3"], na.rm = TRUE)
 ```
 
 ```
-## [1] 13.3
+## [1] 12.8
 ```
 
 ```r
@@ -401,7 +401,7 @@ paste("The mean of the first 5 rows, and col 1 and 2 is:", mean(my_mat[5, 1:2], 
 ```
 
 ```
-## [1] "The mean of the first 5 rows, and col 1 and 2 is: 21"
+## [1] "The mean of the first 5 rows, and col 1 and 2 is: 18"
 ```
 
 # Converting data into and from matricies
@@ -431,9 +431,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  18 12 11 17 5 6 15 16 8 20
-##  $ rand  : num  2.25 3.46 1.06 6.92 5.43 ...
-##  $ rand2 : num  4.33 5.79 8.38 4.1 2.54 ...
+##  $ samp  : int  1 9 4 15 11 17 13 16 3 7
+##  $ rand  : num  4.32 4.1 7.94 4.55 8.13 ...
+##  $ rand2 : num  8.2 6.78 1.05 3.66 4.57 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -453,12 +453,12 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   18 2.247522 4.331454
-## string2   2   12 3.463592 5.791477
-## string3   3   11 1.056622 8.377923
-## string4   4   17 6.921704 4.100650
-## string5   5    5 5.434201 2.535542
-## string6   6    6 1.576485 5.610995
+## string1   1    1 4.321476 8.198232
+## string2   2    9 4.098148 6.780397
+## string3   3    4 7.940937 1.048207
+## string4   4   15 4.545137 3.663297
+## string5   5   11 8.132269 4.570860
+## string6   6   17 1.526012 8.723851
 ```
 
 Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
@@ -474,12 +474,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   18 2.247522 4.331454
-## string2   2   12 3.463592 5.791477
-## string3   3   11 1.056622 8.377923
-## string4   4   17 6.921704 4.100650
-## string5   5    5 5.434201 2.535542
-## string6   6    6 1.576485 5.610995
+## string1   1    1 4.321476 8.198232
+## string2   2    9 4.098148 6.780397
+## string3   3    4 7.940937 1.048207
+## string4   4   15 4.545137 3.663297
+## string5   5   11 8.132269 4.570860
+## string6   6   17 1.526012 8.723851
 ```
 
 ```r
@@ -502,9 +502,9 @@ calc
 
 ```
 ##    string1    string2    string3    string4    string5    string6    string7 
-## 0.40455391 0.41563100 0.11622845 1.17668975 0.27171003 0.09458909 0.18930539 
+## 0.04321476 0.36883331 0.31763748 0.68177055 0.89454957 0.25942212 0.85065916 
 ##    string8    string9   string10 
-## 0.24717524 0.55802219 1.68846500
+## 0.79955778 0.19340275 0.38005417
 ```
 
 ```r
@@ -514,17 +514,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand     rand2       calc
-## string1    1   18 2.247522 4.3314537 0.40455391
-## string2    2   12 3.463592 5.7914766 0.41563100
-## string3    3   11 1.056622 8.3779227 0.11622845
-## string4    4   17 6.921704 4.1006504 1.17668975
-## string5    5    5 5.434201 2.5355424 0.27171003
-## string6    6    6 1.576485 5.6109949 0.09458909
-## string7    7   15 1.262036 4.6024851 0.18930539
-## string8    8   16 1.544845 9.0133963 0.24717524
-## string9    9    8 6.975277 0.5714554 0.55802219
-## string10  10   20 8.442325 4.9948539 1.68846500
+##          int samp     rand      rand2       calc
+## string1    1    1 4.321476  8.1982315 0.04321476
+## string2    2    9 4.098148  6.7803973 0.36883331
+## string3    3    4 7.940937  1.0482070 0.31763748
+## string4    4   15 4.545137  3.6632967 0.68177055
+## string5    5   11 8.132269  4.5708602 0.89454957
+## string6    6   17 1.526012  8.7238511 0.25942212
+## string7    7   13 6.543532  5.2250893 0.85065916
+## string8    8   16 4.997236  7.5574726 0.79955778
+## string9    9    3 6.446758 -0.5593913 0.19340275
+## string10  10    7 5.429345  5.3988888 0.38005417
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -537,12 +537,12 @@ df_cor
 ```
 
 ```
-##               int       samp       rand      rand2       calc
-## int    1.00000000 0.03512601  0.4061292 -0.1683799  0.3568737
-## samp   0.03512601 1.00000000  0.1368236  0.2933873  0.5928270
-## rand   0.40612924 0.13682355  1.0000000 -0.6198640  0.8372315
-## rand2 -0.16837992 0.29338727 -0.6198640  1.0000000 -0.2371213
-## calc   0.35687374 0.59282696  0.8372315 -0.2371213  1.0000000
+##              int       samp       rand       rand2       calc
+## int    1.0000000  0.2309972  0.1029873 -0.21329416 0.24795662
+## samp   0.2309972  1.0000000 -0.3867509  0.42409207 0.65726919
+## rand   0.1029873 -0.3867509  1.0000000 -0.68492858 0.37423420
+## rand2 -0.2132942  0.4240921 -0.6849286  1.00000000 0.02823769
+## calc   0.2479566  0.6572692  0.3742342  0.02823769 1.00000000
 ```
 
 ```r
@@ -552,12 +552,12 @@ df_cor
 ```
 
 ```
-##          int  samp   rand  rand2   calc
-## int    1.000 0.035  0.406 -0.168  0.357
-## samp   0.035 1.000  0.137  0.293  0.593
-## rand   0.406 0.137  1.000 -0.620  0.837
-## rand2 -0.168 0.293 -0.620  1.000 -0.237
-## calc   0.357 0.593  0.837 -0.237  1.000
+##          int   samp   rand  rand2  calc
+## int    1.000  0.231  0.103 -0.213 0.248
+## samp   0.231  1.000 -0.387  0.424 0.657
+## rand   0.103 -0.387  1.000 -0.685 0.374
+## rand2 -0.213  0.424 -0.685  1.000 0.028
+## calc   0.248  0.657  0.374  0.028 1.000
 ```
 
 ```r
@@ -581,12 +581,12 @@ df_cor
 ```
 
 ```
-##          int  samp   rand  rand2   calc
-## int    1.000 0.035  0.406 -0.168  0.357
-## samp   0.035 1.000  0.137  0.293  0.593
-## rand   0.406 0.137  1.000 -0.620  0.837
-## rand2 -0.168 0.293 -0.620  1.000 -0.237
-## calc   0.357 0.593  0.837 -0.237  1.000
+##          int   samp   rand  rand2  calc
+## int    1.000  0.231  0.103 -0.213 0.248
+## samp   0.231  1.000 -0.387  0.424 0.657
+## rand   0.103 -0.387  1.000 -0.685 0.374
+## rand2 -0.213  0.424 -0.685  1.000 0.028
+## calc   0.248  0.657  0.374  0.028 1.000
 ```
 
 ```r
@@ -594,7 +594,7 @@ df_cor$int
 ```
 
 ```
-## [1]  1.000  0.035  0.406 -0.168  0.357
+## [1]  1.000  0.231  0.103 -0.213  0.248
 ```
 
 ## Converting matrices exercise
@@ -1493,7 +1493,7 @@ legend("topleft", legend = levels(dino_class),
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-**Add survey here**
+https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 7: Lists and Matrices  &topic=R&link=&prog=DS&version=21-22
 
 # Individual take home challenge
 

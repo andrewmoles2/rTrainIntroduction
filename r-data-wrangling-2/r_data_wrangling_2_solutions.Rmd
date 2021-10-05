@@ -555,7 +555,7 @@ data_frame(default = names(pokemon),
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-**Add survey link here**
+https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=&prog=DS&version=21-22
 
 The solutions we be available from a link at the end of the survey.
 
@@ -570,7 +570,7 @@ We will be using data from the pokemon games, making some subsets from that data
 3)  Clean up the column names using janitor. Try and use pipes like we did in the examples earlier in the workshop
 4)  Using mutate, change all data that is a character in `pokemon` to a factor
 5)  In the same mutate, add columns for speed_rank and hp_rank. Use the `min_rank()` function on speed and hp to calculate the rankings
-6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to gen 4. You should end up with the legendary column all being false and gen being 1-4
+6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to generation 4. You should end up with the legendary column all being false and generation being 1-4
 7)  Pipe to another filter function, subsetting total to be greater than or equal to 500
 8)  Assign the result of this subset to `pokemon_500`
 9)  Make four different subsets called: slow, fast, high_hp, and low_hp. Pipe your `pokemon_500` data to slice_max or slice_min functions to find the top 10 fastest/slowest pokemon, and the top 10 highest/lowest hp pokemon. For example, `slow <- pokemon_500 %>% slice_min(speed_rank, n = 10)`
@@ -593,7 +593,7 @@ pokemon_500 <- pokemon %>%
   mutate(across(where(is.character), as.factor),
          speed_rank = min_rank(speed),
          hp_rank = min_rank(hp)) %>%
-  filter(legendary == FALSE & gen <= 4) %>%
+  filter(legendary == FALSE & generation <= 4) %>%
   filter(total >= 500)
 
 # subsets for speed and hp

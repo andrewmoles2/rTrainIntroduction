@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "28 September, 2021"
 output: 
   html_document: 
     theme: readable
@@ -174,7 +174,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 6.2"
+## [1] "Mean value of y is 5.65"
 ```
 
 ```r
@@ -183,7 +183,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 6.2"
+## [1] "Mean value of y is 5.65"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -205,7 +205,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.85"
+## [1] "Mean value of x is 6.15"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -227,7 +227,7 @@ z_mean
 ```
 
 ```
-## [1] 5.2
+## [1] 6.2
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -1028,11 +1028,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          57    58   2014 FC Barcelona  27              10
-## 2          49    41   2015 FC Barcelona  28               6
-## 3          55    53   2010 FC Barcelona  23              12
-## 4          53    47   2009 FC Barcelona  22               8
-## 5          46    41   2013 FC Barcelona  26               8
+## 1          50    60   2012 FC Barcelona  25               8
+## 2          40    16   2007 FC Barcelona  20               6
+## 3          51    38   2008 FC Barcelona  21               9
+## 4          54    45   2017 FC Barcelona  30               6
+## 5          44    31   2019 FC Barcelona  32               3
 ```
 
 ```r
@@ -1043,10 +1043,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          60    73   2011 FC Barcelona  24              14
-## 2          44    31   2019 FC Barcelona  32               3
-## 3          36    17   2006 FC Barcelona  19               1
-## 4          52    54   2016 FC Barcelona  29              11
+## 1          36    17   2006 FC Barcelona  19               1
+## 2          53    47   2009 FC Barcelona  22               8
+## 3          49    41   2015 FC Barcelona  28               6
+## 4          50    60   2012 FC Barcelona  25               8
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
@@ -1146,7 +1146,7 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-Add survey link here
+https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 1: Pipes and introduction to dplyr  &topic=R&link=&prog=DS&version=21-22
 
 The solutions we be available from a link at the end of the survey.
 

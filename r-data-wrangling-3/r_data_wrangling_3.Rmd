@@ -1,5 +1,5 @@
 ---
-title: "R Data Wrangling 8 - Joining and aggregation"
+title: "R Data Wrangling 3 - Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
@@ -224,6 +224,13 @@ df1 %>%
 table(df1$city == "Cambridge")
 ```
 
+An additional nice feature of the count function is you can change the name of the filtered column. Notice in the last example we had *city == "Cambridge"* which is hard to read. We can add a variable name with `count(name = variable)`. In the below example we add *is_cambridge* to change the column name to something more readable.  
+```{r}
+df1 %>%
+  count(is_cambridge = city == "Cambridge")
+```
+
+
 We can also make two way frequency tables to compare two variables next to each other. Notice the difference between the two functions. Count provides the table in a data frame structure, which is easy to work with should you need to, but table is perhaps easier to read initially.
 
 ```{r}
@@ -249,7 +256,7 @@ table(df1$city, df1$tourist_rating)[, c(1, 5)]
 Using your `imdb_bechdel` data you just made, do the following cross tabulations using dplyr's `count` function. If you have time, you can also do the same with the base r `table` function.
 
 1)  Use count on the rating column in your imdb_bechdel data, which rating has the most results?
-2)  Using count on the rating column again, conditionally select ratings greater than 2 *hint: try and do this within the count function*.
+2)  Using count on the rating column again, conditionally select ratings greater than 2, and change the column name output to rating_less_two *hint: do this within the count function*.
 3)  Create a two way cross tabulation with year and rating columns. Filter for the years 1966 or 1996.
 
 ```{r}
@@ -266,7 +273,8 @@ Frequency tables, like we just use are simple aggregations. They count how many 
 
 When doing aggregation with dplyr we use the `group_by()` and `summarise()` functions together. We first *group* our data by a categorical variable, in the below example is three groups (A, B, and C). We then call `summarise()` to perform a function on a column in our data, in this case we sum the num1 column. You get a summary table with the sum per group.
 
-You will notice that there are NA values in the num1 column. In order to get our sum function to ignore these we have to add the `na.rm = TRUE` parameter to the `sum()` function. 
+You will notice that there are NA values in the num1 column. In order to get our sum function to ignore these we have to add the `na.rm = TRUE` parameter to the `sum()` function.
+
 ```{r}
 # make some random data
 df2 <- data.frame(
@@ -321,6 +329,25 @@ df2 %>%
 
 ```
 
+If you want to extract a single element from an aggregation the `pull()` function is very helpful. It is useful if you make a large aggregation table but only need one column at the moment for a visualisation. You can also add a name from another column, for example we might want to add the key as the name as we did in the example below. 
+```{r}
+# save our aggregation as agg
+agg <- df2 %>%
+  group_by(key) %>%
+  summarise(sum1 = sum(num1, na.rm = TRUE), 
+            sum2 = sum(num2, na.rm = TRUE),
+            count_n = n()) %>%
+  mutate(rel_freq = count_n / sum(count_n))
+
+# extract sum2 column
+agg %>%
+  pull(sum2)
+
+# extract sum2 column and give name
+agg %>%
+  pull(sum2, key)
+```
+
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
 
 ![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/Aggregation_twogroup.png?raw=true){width="600"}
@@ -372,8 +399,8 @@ Using the examples above, we are going to create three aggregations from our `im
 1)  Group your imdb_bechdel data by rating, and use summarise to find the avg_vote per rating, and the frequency of each group. Use `median()` to calculate the average.
 2)  Filter for years greater than 2015 and group by year. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Use `median()` to calculate the average.
 3)  Filter for years greater than 2015 and group by year and rating. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Finally, pipe to a mutate function, and calculate the relative frequency of each year. Use `median()` to calculate the average.
-4)  Filter for years greater than 2015 and group by rating. Summarise the median reviews_from_users and the median reviews_from_critics. Why are their NA values and how do should you fix them? 
-
+4)  Filter for years greater than 2015 and group by rating. Summarise the median reviews_from_users and the median reviews_from_critics. Why are their NA values and how do should you fix them?
+5)  Using your code from part 2, use the pull function to extract the avg_duration, and use the year column as the name. 
 ```{r}
 # your code here
 
@@ -457,7 +484,7 @@ imdb_bechdel %>%
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-**Add survey link here**
+https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 3: Joining and aggregation &topic=R&link=&prog=DS&version=21-22
 
 The solutions we be available from a link at the end of the survey.
 
