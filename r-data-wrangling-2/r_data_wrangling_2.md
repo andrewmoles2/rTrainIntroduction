@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "28 September, 2021"
+date: "05 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -45,6 +45,8 @@ output:
 # The mutate function
 
 The mutate function is from the dplyr library, and is for making, modifying, or deleting columns in your dataset. Similar to what we have done in previous sessions, mutate allows you to make a new column from a calculation you have made.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_mutate.png?raw=true){width="516"}
 
 The main difference between using mutate and making new columns in base R, is that mutate is smarter. You can create a new column based on a new column you have just made within mutate, which you can't do in base R. Lets look at some examples with our messi data we used in the last session.
 
@@ -667,10 +669,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       3       1       4    dog
-## 2   Hello       6       2       5    cat
-## 3   Hello      10       3       6    cat
-## 4   Hello       5       4       7    dog
+## 1   Hello       1       1       4    dog
+## 2   Hello       4       2       5    cat
+## 3   Hello       6       3       6    cat
+## 4   Hello       3       4       7    dog
 ```
 
 ```r
@@ -743,9 +745,9 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      4        1       4    dog
-## 2  Hello      7        2       5    cat
-## 3  Hello      6        3       6    cat
+## 1  Hello      6        1       4    dog
+## 2  Hello      3        2       5    cat
+## 3  Hello      5        3       6    cat
 ## 4  Hello      8        4       7    dog
 ```
 

@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "28 September, 2021"
+date: "05 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -174,7 +174,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 5.65"
+## [1] "Mean value of y is 5.4"
 ```
 
 ```r
@@ -183,7 +183,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 5.65"
+## [1] "Mean value of y is 5.4"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -205,7 +205,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 6.15"
+## [1] "Mean value of x is 6.55"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -227,7 +227,7 @@ z_mean
 ```
 
 ```
-## [1] 6.2
+## [1] 5.35
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -267,6 +267,8 @@ temperature <- c(10, 16, 12, 15, 14, 15, 20)
 Dplyr is a package that is built for data manipulation, using functions that describe what they do. For example, the `select()` function selects columns you want, or don't want, from a data frame.
 
 The dplyr package has a lot of functions built into the package, each has it's own very helpful documentation page with examples - <https://dplyr.tidyverse.org/reference/index.html>
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
 
 Dplyr functions work with and without pipes and you'll see both when searching online. If using a pipe, you call your data then pipe that to a function, such as `data %>% mean()`. If you are not using a pipe, you call your data within the function, such as `mean(data)`.
 
@@ -913,6 +915,8 @@ The filter function allows you to subset rows based on conditions, using conditi
 
 Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
+
 Run the examples below and review the outputs.
 
 
@@ -1028,11 +1032,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          50    60   2012 FC Barcelona  25               8
-## 2          40    16   2007 FC Barcelona  20               6
-## 3          51    38   2008 FC Barcelona  21               9
-## 4          54    45   2017 FC Barcelona  30               6
-## 5          44    31   2019 FC Barcelona  32               3
+## 1          52    54   2016 FC Barcelona  29              11
+## 2          50    51   2018 FC Barcelona  31              12
+## 3          36    17   2006 FC Barcelona  19               1
+## 4          60    73   2011 FC Barcelona  24              14
+## 5          57    58   2014 FC Barcelona  27              10
 ```
 
 ```r
@@ -1043,10 +1047,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          36    17   2006 FC Barcelona  19               1
-## 2          53    47   2009 FC Barcelona  22               8
-## 3          49    41   2015 FC Barcelona  28               6
-## 4          50    60   2012 FC Barcelona  25               8
+## 1          40    16   2007 FC Barcelona  20               6
+## 2          60    73   2011 FC Barcelona  24              14
+## 3          36    17   2006 FC Barcelona  19               1
+## 4          57    58   2014 FC Barcelona  27              10
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 

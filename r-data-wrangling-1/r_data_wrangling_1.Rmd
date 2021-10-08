@@ -209,6 +209,8 @@ Dplyr is a package that is built for data manipulation, using functions that des
 
 The dplyr package has a lot of functions built into the package, each has it's own very helpful documentation page with examples - <https://dplyr.tidyverse.org/reference/index.html>
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
+
 Dplyr functions work with and without pipes and you'll see both when searching online. If using a pipe, you call your data then pipe that to a function, such as `data %>% mean()`. If you are not using a pipe, you call your data within the function, such as `mean(data)`.
 
 We will focus on two key dplyr functions for now: `select()` and `filter()`. We will use the messi_career data for the examples. Run the code chunk below to get the data into r and have a look at it.
@@ -427,6 +429,8 @@ The filter function allows you to subset rows based on conditions, using conditi
 | `X %in% Y` | is X in Y                |
 
 Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
 
 Run the examples below and review the outputs.
 

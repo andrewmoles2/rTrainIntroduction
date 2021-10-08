@@ -46,6 +46,8 @@ output:
 
 The mutate function is from the dplyr library, and is for making, modifying, or deleting columns in your dataset. Similar to what we have done in previous sessions, mutate allows you to make a new column from a calculation you have made.
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_mutate.png?raw=true){width="516"}
+
 The main difference between using mutate and making new columns in base R, is that mutate is smarter. You can create a new column based on a new column you have just made within mutate, which you can't do in base R. Lets look at some examples with our messi data we used in the last session.
 
 In our previous workshops, we calculated Messi's goals per game (goals/appearances). We can do this with mutate. Notice the syntax, we give the name we want to call our new column first, then =, then what we want to do (e.g. a calculation);  `mutate(new_column = x/y)`.

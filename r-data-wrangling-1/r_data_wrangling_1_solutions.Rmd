@@ -214,6 +214,8 @@ Dplyr is a package that is built for data manipulation, using functions that des
 
 The dplyr package has a lot of functions built into the package, each has it's own very helpful documentation page with examples - <https://dplyr.tidyverse.org/reference/index.html>
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
+
 Dplyr functions work with and without pipes and you'll see both when searching online. If using a pipe, you call your data then pipe that to a function, such as `data %>% mean()`. If you are not using a pipe, you call your data within the function, such as `mean(data)`.
 
 We will focus on two key dplyr functions for now: `select()` and `filter()`. We will use the messi_career data for the examples. Run the code chunk below to get the data into r and have a look at it.
@@ -458,6 +460,8 @@ The filter function allows you to subset rows based on conditions, using conditi
 
 Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
+
 Run the examples below and review the outputs.
 
 ```{r}
@@ -523,7 +527,7 @@ You might have noticed that the country column has some strings that are split b
 
 Other than conditional subsetting of data using `filter()`, dplyr has other functions we can use to subset our data: `slice`, `sample`, and `distinct.`
 
-The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions. 
+The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions.
 
 ```{r}
 # sample 5 rows
@@ -535,7 +539,8 @@ messi_career %>%
   sample_frac(0.25)
 ```
 
-The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
+The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment.
+
 ```{r}
 # select rows 4, 5, and 6
 messi_career %>%
@@ -545,7 +550,8 @@ messi_career %>%
 messi_career[4:6, ]
 ```
 
-The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column. 
+The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column.
+
 ```{r}
 # extract rows with top three Goals
 messi_career %>%
@@ -561,9 +567,9 @@ messi_career %>%
 
 ## Filtering continued exercise
 
-In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.  
+In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.
 
-If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run! 
+If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run!
 
 ```{r eval=FALSE}
 # your code here
@@ -584,7 +590,6 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
 
 ```
 
-
 ```{r}
 # your code here
 top_votes_USA <- imdb_sub %>%
@@ -603,12 +608,11 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
      ylab = "Average vote") 
 ```
 
-
 # Final task - Please give us your individual feedback!
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 1: Pipes and introduction to dplyr  &topic=R&link=&prog=DS&version=21-22
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R> Data Wrangling 1: Pipes and introduction to dplyr &topic=R&link=&prog=DS&version=21-22
 
 The solutions we be available from a link at the end of the survey.
 

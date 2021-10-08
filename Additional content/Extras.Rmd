@@ -332,4 +332,15 @@ datasaurus_dozen %>%
   geom_vline(xintercept = avg$mean_y, colour = "grey")
 ```
 
+# Getting plot with all shapes for vis
 
+```{r}
+# all the shapes ggplot can use (maybe save output and use image)
+d=data.frame(p=c(0:25,32:127))
+(shapes <- ggplot() +
+  scale_y_continuous(name="") +
+  scale_x_continuous(name="") +
+  scale_shape_identity() +
+  geom_point(data=d, mapping=aes(x=p%%16, y=p%/%16, shape=p), size=5, fill="red") +
+  geom_text(data=d, mapping=aes(x=p%%16, y=p%/%16+0.25, label=p), size=3))
+```

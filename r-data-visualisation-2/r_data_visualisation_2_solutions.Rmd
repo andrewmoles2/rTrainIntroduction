@@ -16,9 +16,10 @@ output:
 
 # What this workshop will cover
 
-- An introduction to the ggplot2 package
-- How to make scatter plots with ggplot2
-- How to make bar plots with ggplot2
+-   How to make box plots with ggplot2
+-   Other options to bar and box plots
+-   Working with dates with the lubridate package
+-   How to make time series line plots
 
 ## Why this style?
 
@@ -44,6 +45,31 @@ output:
 
 ------------------------------------------------------------------------
 
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-visualisation-1/images/ggplot2_masterpiece.png?raw=true){width="541"}
+
+# Box plots 
+
+Use pokemon data again
+
+## box plots exercise
+
+Olympics data again
+
+# Beyond box and bar plots
+
+## Beyond box and bar plots
+
+# Working with the date data type with lubridate
+
+Can make example data for examples
+
+## lubridate exercise
+
+Need good example data with dates for this and the time series
+
+# Time series plots
+
+## Time series plots exercise
 
 # Ideas
 
