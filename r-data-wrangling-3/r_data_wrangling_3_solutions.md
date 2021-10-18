@@ -3,7 +3,7 @@ title: "R Data Wrangling 3 - Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "28 September, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -475,26 +475,26 @@ df1
 
 ```
 ##          city tourist_rating
-## 1   Cambridge              3
-## 2  Birmingham              4
-## 3  Manchester              4
-## 4   Cambridge              4
-## 5  Birmingham              4
+## 1     Bristol              2
+## 2  Manchester              3
+## 3  Birmingham              4
+## 4  Birmingham              4
+## 5   Cambridge              3
 ## 6     Bristol              1
 ## 7  Manchester              3
-## 8     Bristol              3
-## 9  Birmingham              5
-## 10    Bristol              4
-## 11    Bristol              5
-## 12 Birmingham              2
+## 8     Bristol              4
+## 9  Manchester              2
+## 10  Cambridge              2
+## 11    Bristol              4
+## 12    Bristol              2
 ## 13  Cambridge              5
-## 14 Manchester              2
+## 14 Birmingham              4
 ## 15  Cambridge              4
-## 16 Manchester              2
-## 17  Cambridge              4
-## 18    Bristol              2
-## 19  Cambridge              3
-## 20    Bristol              3
+## 16 Manchester              3
+## 17 Manchester              5
+## 18 Manchester              2
+## 19 Birmingham              1
+## 20 Birmingham              1
 ```
 
 ```r
@@ -505,10 +505,10 @@ df1 %>%
 
 ```
 ##         city n
-## 1 Birmingham 4
-## 2    Bristol 6
-## 3  Cambridge 6
-## 4 Manchester 4
+## 1 Birmingham 5
+## 2    Bristol 5
+## 3  Cambridge 4
+## 4 Manchester 6
 ```
 
 ```r
@@ -518,7 +518,7 @@ table(df1$city)
 ```
 ## 
 ## Birmingham    Bristol  Cambridge Manchester 
-##          4          6          6          4
+##          5          5          4          6
 ```
 
 We can expand this by using conditional operators in the count or table functions.
@@ -532,8 +532,8 @@ df1 %>%
 
 ```
 ##   city == "Cambridge"  n
-## 1               FALSE 14
-## 2                TRUE  6
+## 1               FALSE 16
+## 2                TRUE  4
 ```
 
 ```r
@@ -543,7 +543,7 @@ table(df1$city == "Cambridge")
 ```
 ## 
 ## FALSE  TRUE 
-##    14     6
+##    16     4
 ```
 
 An additional nice feature of the count function is you can change the name of the filtered column. Notice in the last example we had *city == "Cambridge"* which is hard to read. We can add a variable name with `count(name = variable)`. In the below example we add *is_cambridge* to change the column name to something more readable.  
@@ -555,8 +555,8 @@ df1 %>%
 
 ```
 ##   is_cambridge  n
-## 1        FALSE 14
-## 2         TRUE  6
+## 1        FALSE 16
+## 2         TRUE  4
 ```
 
 
@@ -571,20 +571,18 @@ df1 %>%
 
 ```
 ##          city tourist_rating n
-## 1  Birmingham              2 1
-## 2  Birmingham              4 2
-## 3  Birmingham              5 1
-## 4     Bristol              1 1
-## 5     Bristol              2 1
-## 6     Bristol              3 2
-## 7     Bristol              4 1
-## 8     Bristol              5 1
-## 9   Cambridge              3 2
-## 10  Cambridge              4 3
-## 11  Cambridge              5 1
-## 12 Manchester              2 2
-## 13 Manchester              3 1
-## 14 Manchester              4 1
+## 1  Birmingham              1 2
+## 2  Birmingham              4 3
+## 3     Bristol              1 1
+## 4     Bristol              2 2
+## 5     Bristol              4 2
+## 6   Cambridge              2 1
+## 7   Cambridge              3 1
+## 8   Cambridge              4 1
+## 9   Cambridge              5 1
+## 10 Manchester              2 2
+## 11 Manchester              3 3
+## 12 Manchester              5 1
 ```
 
 ```r
@@ -594,10 +592,10 @@ table(df1$city, df1$tourist_rating)
 ```
 ##             
 ##              1 2 3 4 5
-##   Birmingham 0 1 0 2 1
-##   Bristol    1 1 2 1 1
-##   Cambridge  0 0 2 3 1
-##   Manchester 0 2 1 1 0
+##   Birmingham 2 0 0 3 0
+##   Bristol    1 2 0 2 0
+##   Cambridge  0 1 1 1 1
+##   Manchester 0 2 3 0 1
 ```
 
 We can also apply filtering using count or table functions. With count we use dplyr's filter function, with table we use base r indexing.
@@ -611,10 +609,10 @@ df1 %>%
 
 ```
 ##         city tourist_rating n
-## 1 Birmingham              5 1
+## 1 Birmingham              1 2
 ## 2    Bristol              1 1
-## 3    Bristol              5 1
-## 4  Cambridge              5 1
+## 3  Cambridge              5 1
+## 4 Manchester              5 1
 ```
 
 ```r
@@ -624,10 +622,10 @@ table(df1$city, df1$tourist_rating)[, c(1, 5)]
 ```
 ##             
 ##              1 5
-##   Birmingham 0 1
-##   Bristol    1 1
+##   Birmingham 2 0
+##   Bristol    1 0
 ##   Cambridge  0 1
-##   Manchester 0 0
+##   Manchester 0 1
 ```
 
 ## Cross tabluation exercise
@@ -751,12 +749,12 @@ head(df2)
 
 ```
 ##   key key2 num1     num2     num3
-## 1   C    X    3 6.866109 3.807873
-## 2   C    X    6 8.392251 7.780764
-## 3   C    Y    2 8.024065 4.655397
-## 4   C    X    3 8.140016 2.882461
-## 5   A    Y    1 5.008627 6.385361
-## 6   A    X   NA 1.883968 4.854785
+## 1   B    X    3 4.840341 6.537661
+## 2   A    X   10 3.689698 3.823437
+## 3   C    X    1 3.980127 3.379389
+## 4   C    Y    1 4.558162 5.417566
+## 5   B    X    7 6.629630 7.034601
+## 6   A    X   10 2.763922 2.416974
 ```
 
 ```r
@@ -771,8 +769,8 @@ df2 %>%
 ##   key    sum1
 ##   <fct> <int>
 ## 1 A        NA
-## 2 B        22
-## 3 C        NA
+## 2 B        23
+## 3 C        27
 ```
 
 ```r
@@ -786,9 +784,9 @@ df2 %>%
 ## # A tibble: 3 × 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A        32
-## 2 B        22
-## 3 C        31
+## 1 A        44
+## 2 B        23
+## 3 C        27
 ```
 
 The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
@@ -814,9 +812,9 @@ df2 %>%
 ## # A tibble: 3 × 3
 ##   key    sum1  sum2
 ##   <fct> <int> <dbl>
-## 1 A        32  34.9
-## 2 B        22  15.1
-## 3 C        31  56.6
+## 1 A        44  29.4
+## 2 B        23  29.9
+## 3 C        27  48.4
 ```
 
 We can take this a bit further by adding the `n()` function, which counts how many of each category in our grouped variable there are. If you want to add in a relative frequency, we can then pipe to a `mutate` function. We then divide our count by the sum of our count.
@@ -836,9 +834,9 @@ df2 %>%
 ## # A tibble: 3 × 5
 ##   key    sum1  sum2 count_n rel_freq
 ##   <fct> <int> <dbl>   <int>    <dbl>
-## 1 A        32  34.9       9     0.45
-## 2 B        22  15.1       3     0.15
-## 3 C        31  56.6       8     0.4
+## 1 A        44  29.4       7     0.35
+## 2 B        23  29.9       5     0.25
+## 3 C        27  48.4       8     0.4
 ```
 
 If you want to extract a single element from an aggregation the `pull()` function is very helpful. It is useful if you make a large aggregation table but only need one column at the moment for a visualisation. You can also add a name from another column, for example we might want to add the key as the name as we did in the example below. 
@@ -858,7 +856,7 @@ agg %>%
 ```
 
 ```
-## [1] 34.89856 15.07104 56.62757
+## [1] 29.43862 29.86060 48.41116
 ```
 
 ```r
@@ -869,7 +867,7 @@ agg %>%
 
 ```
 ##        A        B        C 
-## 34.89856 15.07104 56.62757
+## 29.43862 29.86060 48.41116
 ```
 
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
@@ -898,12 +896,12 @@ df2 %>%
 ## # Groups:   key [3]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        21 13.9        4    0.444
-## 2 A     Y        11 21.0        5    0.556
-## 3 B     X         7  9.98       1    0.333
-## 4 B     Y        15  5.09       2    0.667
-## 5 C     X        23 41.3        6    0.75 
-## 6 C     Y         8 15.3        2    0.25
+## 1 A     X        38 23.4        6    0.857
+## 2 A     Y         6  5.99       1    0.143
+## 3 B     X        17 13.1        3    0.6  
+## 4 B     Y         6 16.7        2    0.4  
+## 5 C     X         7 18.7        3    0.375
+## 6 C     Y        20 29.7        5    0.625
 ```
 
 ```r
@@ -925,12 +923,12 @@ df2 %>%
 ## # Groups:   key2 [2]
 ##   key2  key    sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 X     A        21 13.9        4   0.364 
-## 2 X     B         7  9.98       1   0.0909
-## 3 X     C        23 41.3        6   0.545 
-## 4 Y     A        11 21.0        5   0.556 
-## 5 Y     B        15  5.09       2   0.222 
-## 6 Y     C         8 15.3        2   0.222
+## 1 X     A        38 23.4        6    0.5  
+## 2 X     B        17 13.1        3    0.25 
+## 3 X     C         7 18.7        3    0.25 
+## 4 Y     A         6  5.99       1    0.125
+## 5 Y     B         6 16.7        2    0.25 
+## 6 Y     C        20 29.7        5    0.625
 ```
 
 You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result.
@@ -950,12 +948,12 @@ df2 %>%
 ## # A tibble: 6 × 6
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        21 13.9        4     0.2 
-## 2 A     Y        11 21.0        5     0.25
-## 3 B     X         7  9.98       1     0.05
-## 4 B     Y        15  5.09       2     0.1 
-## 5 C     X        23 41.3        6     0.3 
-## 6 C     Y         8 15.3        2     0.1
+## 1 A     X        38 23.4        6     0.3 
+## 2 A     Y         6  5.99       1     0.05
+## 3 B     X        17 13.1        3     0.15
+## 4 B     Y         6 16.7        2     0.1 
+## 5 C     X         7 18.7        3     0.15
+## 6 C     Y        20 29.7        5     0.25
 ```
 
 ```r
@@ -973,12 +971,12 @@ df2 %>%
 ## # Groups:   key, key2 [6]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        21 13.9        4        1
-## 2 A     Y        11 21.0        5        1
-## 3 B     X         7  9.98       1        1
-## 4 B     Y        15  5.09       2        1
-## 5 C     X        23 41.3        6        1
-## 6 C     Y         8 15.3        2        1
+## 1 A     X        38 23.4        6        1
+## 2 A     Y         6  5.99       1        1
+## 3 B     X        17 13.1        3        1
+## 4 B     Y         6 16.7        2        1
+## 5 C     X         7 18.7        3        1
+## 6 C     Y        20 29.7        5        1
 ```
 
 ## Aggregation exercise
@@ -1119,12 +1117,12 @@ head(df2)
 
 ```
 ##   key key2 num1     num2     num3
-## 1   C    X    3 6.866109 3.807873
-## 2   C    X    6 8.392251 7.780764
-## 3   C    Y    2 8.024065 4.655397
-## 4   C    X    3 8.140016 2.882461
-## 5   A    Y    1 5.008627 6.385361
-## 6   A    X   NA 1.883968 4.854785
+## 1   B    X    3 4.840341 6.537661
+## 2   A    X   10 3.689698 3.823437
+## 3   C    X    1 3.980127 3.379389
+## 4   C    Y    1 4.558162 5.417566
+## 5   B    X    7 6.629630 7.034601
+## 6   A    X   10 2.763922 2.416974
 ```
 
 ```r
@@ -1138,26 +1136,26 @@ df2 %>%
 ## # A tibble: 20 × 1
 ##    total_avg
 ##        <dbl>
-##  1      4.56
-##  2      7.39
-##  3      4.89
-##  4      4.67
-##  5      4.13
-##  6      3.37
-##  7      7.59
-##  8      7.63
-##  9      6.58
-## 10      4.00
-## 11      5.92
-## 12      4.38
-## 13      3.21
-## 14      5.09
-## 15      6.73
-## 16      5.83
-## 17      4.36
-## 18      7.60
-## 19      5.41
-## 20      4.69
+##  1      4.79
+##  2      5.84
+##  3      2.79
+##  4      3.66
+##  5      6.89
+##  6      5.06
+##  7      6.23
+##  8      4.23
+##  9      2.69
+## 10      5.20
+## 11      3.76
+## 12      3.77
+## 13      5.08
+## 14      2.66
+## 15      4.83
+## 16      5.26
+## 17      7.46
+## 18      5.67
+## 19      7.14
+## 20      5.36
 ```
 
 ```r
@@ -1171,26 +1169,26 @@ df2 %>%
 ## # A tibble: 20 × 1
 ##    total_avg
 ##        <dbl>
-##  1      4.56
-##  2      7.39
-##  3      4.89
-##  4      4.67
-##  5      4.13
-##  6      3.37
-##  7      7.59
-##  8      7.63
-##  9      6.58
-## 10      4.00
-## 11      5.92
-## 12      4.38
-## 13      3.21
-## 14      5.09
-## 15      6.73
-## 16      5.83
-## 17      4.36
-## 18      7.60
-## 19      5.41
-## 20      4.69
+##  1      4.79
+##  2      5.84
+##  3      2.79
+##  4      3.66
+##  5      6.89
+##  6      5.06
+##  7      6.23
+##  8      4.23
+##  9      2.69
+## 10      5.20
+## 11      3.76
+## 12      3.77
+## 13      5.08
+## 14      2.66
+## 15      4.83
+## 16      5.26
+## 17      7.46
+## 18      5.67
+## 19      7.14
+## 20      5.36
 ```
 
 If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns.
@@ -1206,28 +1204,28 @@ df2 %>%
 ```
 ## # A tibble: 20 × 6
 ## # Rowwise: 
-##    key   key2   num1  num2  num3 total_avg
-##    <fct> <fct> <int> <dbl> <dbl>     <dbl>
-##  1 C     X         3  6.87 3.81       4.56
-##  2 C     X         6  8.39 7.78       7.39
-##  3 C     Y         2  8.02 4.66       4.89
-##  4 C     X         3  8.14 2.88       4.67
-##  5 A     Y         1  5.01 6.39       4.13
-##  6 A     X        NA  1.88 4.85       3.37
-##  7 A     X        10  4.16 8.61       7.59
-##  8 B     X         7  9.98 5.92       7.63
-##  9 C     X        NA  9.38 3.79       6.58
-## 10 A     Y         8  2.75 1.24       4.00
-## 11 A     X         6  5.99 5.76       5.92
-## 12 A     Y         2  2.64 8.51       4.38
-## 13 C     X         5  3.77 0.874      3.21
-## 14 A     Y        NA  1.03 9.15       5.09
-## 15 B     Y        10  3.86 6.33       6.73
-## 16 C     Y         6  7.26 4.24       5.83
-## 17 B     Y         5  1.22 6.87       4.36
-## 18 A     Y        NA  9.57 5.63       7.60
-## 19 C     X         6  4.80 5.43       5.41
-## 20 A     X         5  1.88 7.18       4.69
+##    key   key2   num1  num2   num3 total_avg
+##    <fct> <fct> <int> <dbl>  <dbl>     <dbl>
+##  1 B     X         3  4.84  6.54       4.79
+##  2 A     X        10  3.69  3.82       5.84
+##  3 C     X         1  3.98  3.38       2.79
+##  4 C     Y         1  4.56  5.42       3.66
+##  5 B     X         7  6.63  7.03       6.89
+##  6 A     X        10  2.76  2.42       5.06
+##  7 B     Y         5  7.43  6.27       6.23
+##  8 A     X        NA  3.34  5.13       4.23
+##  9 A     X         1  3.29  3.77       2.69
+## 10 C     Y         2  8.12  5.48       5.20
+## 11 C     X         5  6.38 -0.107      3.76
+## 12 C     Y         4  1.96  5.34       3.77
+## 13 A     Y         6  5.99  3.24       5.08
+## 14 B     X         7  1.65 -0.669      2.66
+## 15 C     X         1  8.34  5.14       4.83
+## 16 A     X         8  6.23  1.55       5.26
+## 17 C     Y         6  8.84  7.54       7.46
+## 18 A     X         9  4.13  3.86       5.67
+## 19 C     Y         7  6.22  8.20       7.14
+## 20 B     Y         1  9.30  5.79       5.36
 ```
 
 An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`.
@@ -1240,27 +1238,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_avg
-## 1    C    X    3 6.866109 3.8078725  4.557994
-## 2    C    X    6 8.392251 7.7807642  7.391005
-## 3    C    Y    2 8.024065 4.6553966  4.893154
-## 4    C    X    3 8.140016 2.8824607  4.674159
-## 5    A    Y    1 5.008627 6.3853607  4.131329
-## 6    A    X   NA 1.883968 4.8547847  3.369376
-## 7    A    X   10 4.159542 8.6145642  7.591369
-## 8    B    X    7 9.984745 5.9163666  7.633704
-## 9    C    X   NA 9.378758 3.7867740  6.582766
-## 10   A    Y    8 2.745688 1.2418529  3.995847
-## 11   A    X    6 5.989771 5.7649218  5.918231
-## 12   A    Y    2 2.635739 8.5140340  4.383258
-## 13   C    X    5 3.770524 0.8738238  3.214783
-## 14   A    Y   NA 1.030810 9.1525227  5.091666
-## 15   B    Y   10 3.862597 6.3331172  6.731905
-## 16   C    Y    6 7.258317 4.2377092  5.832009
-## 17   B    Y    5 1.223699 6.8686453  4.364115
-## 18   A    Y   NA 9.567222 5.6304005  7.598811
-## 19   C    X    6 4.797528 5.4308239  5.409451
-## 20   A    X    5 1.877197 7.1790634  4.685420
+##    key key2 num1     num2       num3 total_avg
+## 1    B    X    3 4.840341  6.5376606  4.792667
+## 2    A    X   10 3.689698  3.8234365  5.837711
+## 3    C    X    1 3.980127  3.3793890  2.786505
+## 4    C    Y    1 4.558162  5.4175657  3.658576
+## 5    B    X    7 6.629630  7.0346010  6.888077
+## 6    A    X   10 2.763922  2.4169737  5.060298
+## 7    B    Y    5 7.432053  6.2664064  6.232820
+## 8    A    X   NA 3.339042  5.1291433  4.234093
+## 9    A    X    1 3.289649  3.7701009  2.686583
+## 10   C    Y    2 8.123734  5.4836552  5.202463
+## 11   C    X    5 6.380033 -0.1068932  3.757713
+## 12   C    Y    4 1.963375  5.3388622  3.767413
+## 13   A    Y    6 5.991976  3.2412580  5.077745
+## 14   B    X    7 1.654920 -0.6687658  2.662051
+## 15   C    X    1 8.343054  5.1375060  4.826853
+## 16   A    X    8 6.229716  1.5548812  5.261532
+## 17   C    Y    6 8.838672  7.5405737  7.459749
+## 18   A    X    9 4.134621  3.8606189  5.665080
+## 19   C    Y    7 6.224006  8.2020885  7.142032
+## 20   B    Y    1 9.303656  5.7866719  5.363443
 ```
 
 ```r
@@ -1270,27 +1268,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_avg
-## 1    C    X    3 6.866109 3.8078725  4.557994
-## 2    C    X    6 8.392251 7.7807642  7.391005
-## 3    C    Y    2 8.024065 4.6553966  4.893154
-## 4    C    X    3 8.140016 2.8824607  4.674159
-## 5    A    Y    1 5.008627 6.3853607  4.131329
-## 6    A    X   NA 1.883968 4.8547847  3.369376
-## 7    A    X   10 4.159542 8.6145642  7.591369
-## 8    B    X    7 9.984745 5.9163666  7.633704
-## 9    C    X   NA 9.378758 3.7867740  6.582766
-## 10   A    Y    8 2.745688 1.2418529  3.995847
-## 11   A    X    6 5.989771 5.7649218  5.918231
-## 12   A    Y    2 2.635739 8.5140340  4.383258
-## 13   C    X    5 3.770524 0.8738238  3.214783
-## 14   A    Y   NA 1.030810 9.1525227  5.091666
-## 15   B    Y   10 3.862597 6.3331172  6.731905
-## 16   C    Y    6 7.258317 4.2377092  5.832009
-## 17   B    Y    5 1.223699 6.8686453  4.364115
-## 18   A    Y   NA 9.567222 5.6304005  7.598811
-## 19   C    X    6 4.797528 5.4308239  5.409451
-## 20   A    X    5 1.877197 7.1790634  4.685420
+##    key key2 num1     num2       num3 total_avg
+## 1    B    X    3 4.840341  6.5376606  4.792667
+## 2    A    X   10 3.689698  3.8234365  5.837711
+## 3    C    X    1 3.980127  3.3793890  2.786505
+## 4    C    Y    1 4.558162  5.4175657  3.658576
+## 5    B    X    7 6.629630  7.0346010  6.888077
+## 6    A    X   10 2.763922  2.4169737  5.060298
+## 7    B    Y    5 7.432053  6.2664064  6.232820
+## 8    A    X   NA 3.339042  5.1291433  4.234093
+## 9    A    X    1 3.289649  3.7701009  2.686583
+## 10   C    Y    2 8.123734  5.4836552  5.202463
+## 11   C    X    5 6.380033 -0.1068932  3.757713
+## 12   C    Y    4 1.963375  5.3388622  3.767413
+## 13   A    Y    6 5.991976  3.2412580  5.077745
+## 14   B    X    7 1.654920 -0.6687658  2.662051
+## 15   C    X    1 8.343054  5.1375060  4.826853
+## 16   A    X    8 6.229716  1.5548812  5.261532
+## 17   C    Y    6 8.838672  7.5405737  7.459749
+## 18   A    X    9 4.134621  3.8606189  5.665080
+## 19   C    Y    7 6.224006  8.2020885  7.142032
+## 20   B    Y    1 9.303656  5.7866719  5.363443
 ```
 
 If you want to do a sum calculation, you should use the `rowSums()` function.
@@ -1303,27 +1301,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_sum
-## 1    C    X    3 6.866109 3.8078725 13.673982
-## 2    C    X    6 8.392251 7.7807642 22.173015
-## 3    C    Y    2 8.024065 4.6553966 14.679462
-## 4    C    X    3 8.140016 2.8824607 14.022476
-## 5    A    Y    1 5.008627 6.3853607 12.393988
-## 6    A    X   NA 1.883968 4.8547847  6.738753
-## 7    A    X   10 4.159542 8.6145642 22.774107
-## 8    B    X    7 9.984745 5.9163666 22.901112
-## 9    C    X   NA 9.378758 3.7867740 13.165532
-## 10   A    Y    8 2.745688 1.2418529 11.987541
-## 11   A    X    6 5.989771 5.7649218 17.754693
-## 12   A    Y    2 2.635739 8.5140340 13.149773
-## 13   C    X    5 3.770524 0.8738238  9.644348
-## 14   A    Y   NA 1.030810 9.1525227 10.183333
-## 15   B    Y   10 3.862597 6.3331172 20.195714
-## 16   C    Y    6 7.258317 4.2377092 17.496026
-## 17   B    Y    5 1.223699 6.8686453 13.092344
-## 18   A    Y   NA 9.567222 5.6304005 15.197623
-## 19   C    X    6 4.797528 5.4308239 16.228352
-## 20   A    X    5 1.877197 7.1790634 14.056261
+##    key key2 num1     num2       num3 total_sum
+## 1    B    X    3 4.840341  6.5376606 14.378001
+## 2    A    X   10 3.689698  3.8234365 17.513134
+## 3    C    X    1 3.980127  3.3793890  8.359516
+## 4    C    Y    1 4.558162  5.4175657 10.975728
+## 5    B    X    7 6.629630  7.0346010 20.664231
+## 6    A    X   10 2.763922  2.4169737 15.180895
+## 7    B    Y    5 7.432053  6.2664064 18.698459
+## 8    A    X   NA 3.339042  5.1291433  8.468185
+## 9    A    X    1 3.289649  3.7701009  8.059750
+## 10   C    Y    2 8.123734  5.4836552 15.607389
+## 11   C    X    5 6.380033 -0.1068932 11.273140
+## 12   C    Y    4 1.963375  5.3388622 11.302238
+## 13   A    Y    6 5.991976  3.2412580 15.233234
+## 14   B    X    7 1.654920 -0.6687658  7.986154
+## 15   C    X    1 8.343054  5.1375060 14.480560
+## 16   A    X    8 6.229716  1.5548812 15.784597
+## 17   C    Y    6 8.838672  7.5405737 22.379246
+## 18   A    X    9 4.134621  3.8606189 16.995240
+## 19   C    Y    7 6.224006  8.2020885 21.426095
+## 20   B    Y    1 9.303656  5.7866719 16.090328
 ```
 
 ## Rowwise aggregation exercise
@@ -1422,7 +1420,7 @@ imdb_bechdel %>%
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 3: Joining and aggregation &topic=R&link=&prog=DS&version=21-22
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 3: Joining and aggregation &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Ev72JK9UjRhMgv0YHNkJZHsBjGHzydNtK5aBqHgc4Otr4g?e=FcSbDl&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 
@@ -1600,44 +1598,44 @@ df2 %>%
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 21 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> 44% </td>
+   <td style="text-align:right;"> 38 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> 86% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> 56% </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 14% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> X </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> 60% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> Y </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 40% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> X </td>
    <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 33% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 15 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 67% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> C </td>
-   <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 23 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> 75% </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> 38% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 25% </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 62% </td>
   </tr>
 </tbody>
 </table>
@@ -1660,9 +1658,9 @@ aggregate(df2[, c("num1", "num2", "num3")],
 
 ```
 ##   Group.1     num1     num2     num3
-## 1       A 5.333333 3.877618 6.370834
-## 2       B 7.333333 5.023680 6.372710
-## 3       C 4.428571 7.078446 4.181953
+## 1       A 7.333333 4.205518 3.399487
+## 2       B 4.600000 5.972120 4.991315
+## 3       C 3.375000 6.051395 5.049093
 ```
 
 ```r
@@ -1674,12 +1672,12 @@ aggregate(df2[, c("num1", "num2", "num3")],
 
 ```
 ##   Group.1 Group.2     num1     num2     num3
-## 1       A       X 7.000000 3.477620 6.603334
-## 2       B       X 7.000000 9.984745 5.916367
-## 3       C       X 4.600000 6.890864 4.093753
-## 4       A       Y 3.666667 4.197617 6.184834
-## 5       B       Y 7.500000 2.543148 6.600881
-## 6       C       Y 4.000000 7.641191 4.446553
+## 1       A       X 7.600000 3.907775 3.425859
+## 2       B       X 5.666667 4.374963 4.301165
+## 3       C       X 2.333333 6.234405 2.803334
+## 4       A       Y 6.000000 5.991976 3.241258
+## 5       B       Y 3.000000 8.367854 6.026539
+## 6       C       Y 4.000000 5.941590 6.396549
 ```
 
 The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets.
@@ -1709,9 +1707,9 @@ df2[, .(avg_num1 = median(num1, na.rm = TRUE),
 
 ```
 ##    key avg_num1 avg_num2 avg_num3
-## 1:   C      5.0 7.641191 4.022791
-## 2:   A      5.5 2.745688 6.385361
-## 3:   B      7.0 3.862597 6.333117
+## 1:   B      5.0 6.629630 6.266406
+## 2:   A      8.5 3.689698 3.770101
+## 3:   C      3.0 6.302020 5.378214
 ```
 
 ```r
@@ -1721,13 +1719,13 @@ df2[num1 >= 5, .(avg_num2 = median(num2, na.rm = TRUE),
 ```
 
 ```
-##    key key2 avg_num2 avg_num3
-## 1:   C    X 4.797528 5.430824
-## 2:   A    X 4.159542 7.179063
-## 3:   B    X 9.984745 5.916367
-## 4:   A    Y 2.745688 1.241853
-## 5:   B    Y 2.543148 6.600881
-## 6:   C    Y 7.258317 4.237709
+##    key key2 avg_num2   avg_num3
+## 1:   A    X 3.912159  3.1202051
+## 2:   B    X 4.142275  3.1829176
+## 3:   B    Y 7.432053  6.2664064
+## 4:   C    X 6.380033 -0.1068932
+## 5:   A    Y 5.991976  3.2412580
+## 6:   C    Y 7.531339  7.8713311
 ```
 
 If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>.

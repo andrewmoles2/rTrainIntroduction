@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -258,7 +258,7 @@ sum(z < 50)
 ```
 
 ```
-## [1] 10
+## [1] 13
 ```
 
 ```r
@@ -266,7 +266,7 @@ sum(z >= 50)
 ```
 
 ```
-## [1] 10
+## [1] 7
 ```
 
 ```r
@@ -354,11 +354,8 @@ df[df$x < 20, ]
 
 ```
 ##     x  y
-## 1   1 65
-## 8  19 52
-## 12 17 96
-## 13 15 83
-## 15  4 38
+## 10 17 25
+## 15 12 66
 ```
 
 ```r
@@ -369,16 +366,15 @@ df2
 
 ```
 ##     x  y
-## 2  38 62
-## 3  89 37
-## 4  77 71
-## 5  45 54
-## 6  64 41
-## 7  53  3
-## 9  92 20
-## 10 54 42
-## 11 84 99
-## 14 99 74
+## 2  51 44
+## 3  58 76
+## 4  44 99
+## 5  78  6
+## 6  65 47
+## 7  43 15
+## 8  99  3
+## 12 68  4
+## 14 59 41
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -389,10 +385,13 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 3  89 37
-## 7  53  3
-## 9  92 20
-## 15  4 38
+## 5  78  6
+## 7  43 15
+## 8  99  3
+## 9  20  2
+## 10 17 25
+## 12 68  4
+## 13 28 17
 ```
 
 ## Subsetting exercise
@@ -672,9 +671,8 @@ df3[df3$y >= 70 & df3$z >= 70,]
 ```
 
 ```
-##         id  x  y  z  exp
-## 2 person_b 41 79 75 test
-## 5 person_e 48 85 77 test
+##         id  x  y  z     exp
+## 4 person_d 76 90 96 control
 ```
 
 ```r
@@ -682,11 +680,10 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 ```
 
 ```
-##         id  x  y  z     exp
-## 1 person_a 66 10 11    test
-## 3 person_c 19 82  6 control
-## 4 person_d 53 61  4    test
-## 8 person_h 11 18 81 control
+##          id  x  y  z  exp
+## 2  person_b 31  3 43 test
+## 5  person_e 13 85 12 test
+## 10 person_j 56  9 91 test
 ```
 
 ```r
@@ -694,9 +691,8 @@ subset(df3, y < 60 & exp == 'control')
 ```
 
 ```
-##          id  x  y  z     exp
-## 8  person_h 11 18 81 control
-## 10 person_j 52 28 25 control
+##         id  x  y  z     exp
+## 1 person_a 32 19 93 control
 ```
 
 # %in% operator
@@ -713,10 +709,9 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y  z     exp
-## 1 person_a 66 10 11    test
-## 3 person_c 19 82  6 control
-## 4 person_d 53 61  4    test
+##         id  x  y  z  exp
+## 3 person_c 57 95 20 test
+## 5 person_e 13 85 12 test
 ```
 
 ```r
@@ -735,10 +730,10 @@ subset(df3, id %in% val_match)
 ```
 
 ```
-##          id  x  y  z     exp
-## 8  person_h 11 18 81 control
-## 9  person_i 42 98 34    test
-## 10 person_j 52 28 25 control
+##          id   x  y  z  exp
+## 8  person_h 100 97 42 test
+## 9  person_i  80 33 62 test
+## 10 person_j  56  9 91 test
 ```
 
 ```r
@@ -924,17 +919,17 @@ df3[, c('x','cat')]
 ```
 
 ```
-##     x    cat
-## 1  66 medium
-## 2  41 medium
-## 3  19    low
-## 4  53 medium
-## 5  48 medium
-## 6  95   high
-## 7  18    low
-## 8  11    low
-## 9  42 medium
-## 10 52 medium
+##      x    cat
+## 1   32    low
+## 2   31    low
+## 3   57 medium
+## 4   76   high
+## 5   13    low
+## 6   51 medium
+## 7   62 medium
+## 8  100   high
+## 9   80   high
+## 10  56 medium
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -1004,7 +999,7 @@ table(pokemon$SpeedTier, pokemon$Type.1)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 6: Conditionals and Logic &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
 
 # Individual take home challenge 
 

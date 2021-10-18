@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -284,8 +284,11 @@ df[df$x < 20, ]
 
 ```
 ##    x  y
-## 9  2 57
-## 10 3 41
+## 1 17 58
+## 4  3 43
+## 5  2 66
+## 7  1 48
+## 9 19  4
 ```
 
 ```r
@@ -296,16 +299,13 @@ df2
 
 ```
 ##     x  y
-## 1  70 70
-## 2  62  8
-## 3  80 67
-## 5  42 85
-## 6  74 72
-## 7  58 46
-## 11 59 17
-## 12 49 16
-## 13 91 61
-## 14 97  6
+## 2  55 37
+## 6  77 81
+## 8  98 95
+## 11 66 40
+## 12 48 62
+## 14 69 22
+## 15 49 55
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -316,12 +316,11 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 2  62  8
-## 4  25 25
-## 11 59 17
-## 12 49 16
-## 14 97  6
-## 15 34 30
+## 2  55 37
+## 9  19  4
+## 11 66 40
+## 13 24  8
+## 14 69 22
 ```
 
 ## Subsetting exercise
@@ -427,8 +426,10 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##          id  x  y z  exp
-## 10 person_j 75 99 3 test
+##         id  x  y  z     exp
+## 1 person_a 70 30 18    test
+## 6 person_f 74 82  7    test
+## 8 person_h 80  4  8 control
 ```
 
 ```r
@@ -448,9 +449,9 @@ subset(df3, id %in% val_match)
 
 ```
 ##          id  x  y  z     exp
-## 8  person_h 99 43 90 control
-## 9  person_i 37 82 54    test
-## 10 person_j 75 99  3    test
+## 8  person_h 80  4  8 control
+## 9  person_i 18 33 75    test
+## 10 person_j 12 31 28 control
 ```
 
 ```r
@@ -543,17 +544,17 @@ df3[, c('x','cat')]
 ```
 
 ```
-##     x    cat
-## 1  46 medium
-## 2  25    low
-## 3  61 medium
-## 4  39 medium
-## 5  68   high
-## 6  42 medium
-## 7  22    low
-## 8  99   high
-## 9  37 medium
-## 10 75   high
+##     x  cat
+## 1  70 high
+## 2  93 high
+## 3  96 high
+## 4  76 high
+## 5  73 high
+## 6  74 high
+## 7  82 high
+## 8  80 high
+## 9  18  low
+## 10 12  low
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -573,7 +574,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 6: Conditionals and Logic &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
 
 # Individual take home challenge 
 

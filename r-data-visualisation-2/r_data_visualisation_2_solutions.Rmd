@@ -1,5 +1,5 @@
 ---
-title: "R Data Visualistion 2 - box plots and time series"
+title: "R Data Visualistion 2 - Box, histogram, and line plots"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
@@ -18,6 +18,7 @@ output:
 
 -   How to make box plots with ggplot2
 -   Other options to bar and box plots
+-   How to make histograms with ggplot2
 -   Working with dates with the lubridate package
 -   How to make time series line plots
 

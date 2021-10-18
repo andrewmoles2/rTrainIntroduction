@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "05 October, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -814,10 +814,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello      10       1       4    dog
-## 2   Hello       7       2       5    cat
-## 3   Hello       2       3       6    cat
-## 4   Hello       1       4       7    dog
+## 1   Hello       2       1       4    dog
+## 2   Hello       9       2       5    cat
+## 3   Hello       4       3       6    cat
+## 4   Hello       3       4       7    dog
 ```
 
 ```r
@@ -890,10 +890,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      6        1       4    dog
-## 2  Hello      2        2       5    cat
+## 1  Hello     10        1       4    dog
+## 2  Hello      3        2       5    cat
 ## 3  Hello      1        3       6    cat
-## 4  Hello      8        4       7    dog
+## 4  Hello      5        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -989,6 +989,8 @@ data_frame(default = names(messy_cols),
 ```
 ## Warning: `data_frame()` was deprecated in tibble 1.1.0.
 ## Please use `tibble()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 ```
@@ -1155,7 +1157,7 @@ data_frame(default = names(pokemon),
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=&prog=DS&version=21-22
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=pZvPhB&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 

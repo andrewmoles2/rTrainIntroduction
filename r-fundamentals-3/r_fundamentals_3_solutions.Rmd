@@ -332,7 +332,7 @@ my_order
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D048-R3SFTC&topic=R&cohort=LT21>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 3: Strings, Factors, and Type Conversion &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElrN79ulZINElxjPz6Tx4VMBo1NWK7TEaket80nhJMPUwg?e=EjSyVn&prog=DS&version=21-22>
 
 # Individual take home challenge 1
 

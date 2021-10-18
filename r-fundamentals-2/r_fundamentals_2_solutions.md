@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -461,7 +461,7 @@ MaxMin
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D046-R2VFI&topic=R&cohort=LT21>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 2: Vectors, Functions, and Indexing &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EmUo-IOFzsxFjPujn5poqp4BKnYT46Eg1qoA5o1fSHr6Lw?e=ClUXO2&prog=DS&version=21-22>
 
 # Individual coding challenge 1
 

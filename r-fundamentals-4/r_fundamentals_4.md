@@ -3,7 +3,7 @@ title: "R Fundamentals 4 - Data Frames"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "21 September, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -496,7 +496,7 @@ We will index the `messi_career` data we have using to do some calculations, sub
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D0550R4aDF1&topic=R&cohort=LT21>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 4: Data Frames &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=izxDVe&prog=DS&version=21-22>
 
 # Individual take home challenge
 

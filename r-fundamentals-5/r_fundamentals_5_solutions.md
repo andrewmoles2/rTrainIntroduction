@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "27 September, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -104,12 +104,12 @@ sessionInfo()
 ```
 
 ```
-## R version 4.1.0 (2021-05-18)
+## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
@@ -122,14 +122,14 @@ sessionInfo()
 ## [1] writexl_1.4.0 readxl_1.3.1  readr_1.4.0  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.7        knitr_1.33        magrittr_2.0.1    hms_1.1.0        
-##  [5] R6_2.5.1          rlang_0.4.11      fansi_0.5.0       stringr_1.4.0    
-##  [9] tools_4.1.0       xfun_0.25         utf8_1.2.2        jquerylib_0.1.4  
-## [13] htmltools_0.5.1.1 ellipsis_0.3.2    yaml_2.2.1        digest_0.6.27    
-## [17] tibble_3.1.4      lifecycle_1.0.0   crayon_1.4.1      sass_0.4.0       
-## [21] vctrs_0.3.8       evaluate_0.14     rmarkdown_2.10    stringi_1.7.4    
-## [25] cellranger_1.1.0  compiler_4.1.0    bslib_0.2.5.1     pillar_1.6.2     
-## [29] jsonlite_1.7.2    pkgconfig_2.0.3
+##  [1] Rcpp_1.0.7       knitr_1.36       magrittr_2.0.1   hms_1.1.0       
+##  [5] R6_2.5.1         rlang_0.4.11     fastmap_1.1.0    fansi_0.5.0     
+##  [9] stringr_1.4.0    tools_4.1.1      xfun_0.26        utf8_1.2.2      
+## [13] jquerylib_0.1.4  htmltools_0.5.2  ellipsis_0.3.2   yaml_2.2.1      
+## [17] digest_0.6.28    tibble_3.1.5     lifecycle_1.0.1  crayon_1.4.1    
+## [21] sass_0.4.0       vctrs_0.3.8      evaluate_0.14    rmarkdown_2.11  
+## [25] stringi_1.7.5    cellranger_1.1.0 compiler_4.1.1   bslib_0.3.1     
+## [29] pillar_1.6.3     jsonlite_1.7.2   pkgconfig_2.0.3
 ```
 
 # Introduction to directories
@@ -719,7 +719,7 @@ write_xlsx(tflSubset, "data/tflSubset.xlsx")
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 5: Loading data and packages &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
 
 # Individual take home challenge
 

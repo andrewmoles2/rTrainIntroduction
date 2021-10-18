@@ -300,7 +300,7 @@ write_xlsx(tflSubset, "data/tflSubset.xlsx")
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_77M35cq1arxNcj3?course=D065:R4aDF2&topic=R&cohort=LT21>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 5: Loading data and packages &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
 
 # Individual take home challenge
 

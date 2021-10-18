@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "05 October, 2021"
+date: "18 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -669,10 +669,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       1       1       4    dog
-## 2   Hello       4       2       5    cat
-## 3   Hello       6       3       6    cat
-## 4   Hello       3       4       7    dog
+## 1   Hello       4       1       4    dog
+## 2   Hello       8       2       5    cat
+## 3   Hello       7       3       6    cat
+## 4   Hello       6       4       7    dog
 ```
 
 ```r
@@ -745,10 +745,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      6        1       4    dog
-## 2  Hello      3        2       5    cat
-## 3  Hello      5        3       6    cat
-## 4  Hello      8        4       7    dog
+## 1  Hello      1        1       4    dog
+## 2  Hello      8        2       5    cat
+## 3  Hello      4        3       6    cat
+## 4  Hello      7        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -815,6 +815,8 @@ data_frame(default = names(messy_cols),
 ```
 ## Warning: `data_frame()` was deprecated in tibble 1.1.0.
 ## Please use `tibble()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 ```
@@ -950,7 +952,7 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=&prog=DS&version=21-22
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=pZvPhB&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 
