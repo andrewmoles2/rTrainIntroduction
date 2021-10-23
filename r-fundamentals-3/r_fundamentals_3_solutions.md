@@ -3,7 +3,7 @@ title: "R Fundamentals 3 - Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "20 October, 2021"
 output: 
   html_document: 
     theme: readable
@@ -56,7 +56,7 @@ One hour exercise based session with tutor support. You will be given example co
 
 So far in our previous sessions we have only been working with numbers and integers. Strings are text based data which R calls **characters**.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/22895-NUNWT2.jpg?raw=true){width="50%"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-2/images/22895-NUNWT2.jpg?raw=true){width="50%"}
 
 To code a string you need to use quotation marks. You can use either single or double quotes, depending on your preference. When printing the result, R will always use double quotation marks.
 
@@ -215,7 +215,7 @@ fruit
 
 Sometimes the ordering of the factor levels matter. For example, if you had a question on how fast someone eats ice cream with the possible answers of *slow, medium, and fast*, the order is important. This order reflects how the output will be printed or arranged in a figure.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop3/images/dog_order.jpg?raw=true){width="50%"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-3/images/dog_order.jpg?raw=true){width="50%"}
 
 Run the below example. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
 

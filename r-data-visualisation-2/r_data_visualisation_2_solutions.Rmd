@@ -48,32 +48,168 @@ output:
 
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-visualisation-1/images/ggplot2_masterpiece.png?raw=true){width="541"}
 
+```{r}
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(readr)
+library(janitor)
+library(RColorBrewer)
+```
+
+
 # Box plots 
 
 Use pokemon data again
 
+We will use data from the Pokémon games again for our examples for box plots, which was web scraped from <https://pokemondb.net/pokedex/all>.
+
+```{r message=FALSE}
+# load and clean names
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv") %>%
+  clean_names()
+# review data
+pokemon %>%
+  glimpse()
+```
+
+
+```{r}
+flying_pokemon <- pokemon %>%
+  filter(type1 == "Flying" | type2 == "Flying") %>%
+  mutate(across(where(is.character), as.factor),
+         generation = as.factor(generation))
+
+flying_pokemon %>%
+  ggplot(aes(x = generation, y = total)) +
+  geom_boxplot()
+
+flying_pokemon %>%
+  ggplot(aes(x = generation, y = total)) +
+  geom_boxplot(outlier.shape = 15, outlier.colour = "orange")
+
+flying_pokemon %>%
+  ggplot(aes(x = generation, y = total)) +
+  geom_boxplot(outlier.shape = NA)
+
+flying_pokemon %>%
+  ggplot(aes(x = generation, y = total)) +
+  geom_boxplot() +
+  geom_point()
+
+flying_pokemon %>%
+  ggplot(aes(x = generation, y = total)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(aes(colour = legendary))
+
+# how to create manual jitter?
+flying_pokemon %>%
+  ggplot(aes(x = generation, y = total)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(aes(colour = legendary),
+             position = "jitter")
+```
+
+
+
 ## box plots exercise
 
-Olympics data again
+Use covid data for all exercises. 
+
+Make simple example of converting dates and extracting month or year from a date
+
+<https://github.com/owid/covid-19-data/tree/master/public/data>
+
+```{r}
+covid_owid <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+
+str(covid_owid)
+
+unique(covid_owid$location)
+
+countries <- c("Belgium", "Denmark", "France", "Germany",
+               "Greece", "Italy", "Netherlands", "Portugal",
+               "Spain", "Sweeden", "United Kingdom")
+
+covid_select_countries <- covid_owid %>%
+  filter(location %in% countries) %>%
+  select(iso_code:new_cases, total_deaths:new_deaths,
+         icu_patients, hosp_patients, new_tests:total_tests,
+         positive_rate, total_vaccinations:people_fully_vaccinated,
+         population:median_age)
+
+
+lubridate::month(covid_select_countries$date)
+lubridate::year(covid_select_countries$date)
+lubridate::day(covid_select_countries$date)
+```
+
+```{r}
+covid_select_countries %>%
+  ggplot(aes(x = location, y = people_fully_vaccinated)) +
+  geom_boxplot()
+```
 
 # Beyond box and bar plots
 
 ## Beyond box and bar plots
 
+# Histograms 
+
+## Histograms exercise
+
 # Working with the date data type with lubridate
 
-Can make example data for examples
+```{r}
+library(dplyr)
+library(lubridate)
+
+df <- data.frame(
+  date = seq(as.Date("2019-01-01"), as.Date("2021-12-01"), by = "days"),
+  hours_sleep = round(rnorm(1066, mean = 9, sd = 1.5)),
+  steps = round(rnorm(1066, mean = 8000, sd = 2000))
+)
+
+df <- df %>%
+  mutate(year = year(date),
+         month = month(date),
+         day = day(date),
+         week_day = wday(date, label = TRUE))
+
+df
+
+df %>%
+  count(hours_sleep)
+
+df %>%
+  ggplot(aes(x = week_day, y = hours_sleep)) +
+  geom_point() +
+  stat_summary(fun = mean, geom = "point",
+               shape = 95, size = 20)
+
+
+df %>%
+  ggplot(aes(x = week_day, y = steps)) + 
+  geom_point() +
+  stat_summary(fun = mean, geom = "point",
+               shape = 95, size = 20)
+```
+
 
 ## lubridate exercise
 
-Need good example data with dates for this and the time series
+
+
 
 # Time series plots
 
 ## Time series plots exercise
+
 
 # Ideas
 
 <https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/>
 
 <https://www.cedricscherer.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/>
+
+

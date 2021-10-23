@@ -8,7 +8,7 @@ output:
   html_document: 
     theme: readable
     highlight: pygments
-    keep_md: yes
+    keep_md: no
     code_download: true
     toc: TRUE
     toc_float: TRUE
@@ -219,7 +219,7 @@ ggplot(pokemon, aes(x = hp, y = speed, colour = legendary, size = total)) +
 
 View the image with the visual markdown editor to see what number represents what shape, letter, or number.
 
-![](images/shapes.png){width="800" height="900"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-visualisation-1/images/shapes.png?raw=true){width="800" height="900"}
 
 Finally we can add a title and save our plot! We've done two things in order to achieve this. To add a title, and change axis labels, we have used the `labs()` function. We add arguments for what we want to change, such as `title = "Pokemon Hit Points vs Speed"`. To change the legend labels we use colour and size, as we used these to define our legend in the `aes()` function.
 
