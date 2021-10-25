@@ -56,7 +56,7 @@ One hour exercise based session with tutor support. You will be given example co
 
 R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/tiobe-index.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/tiobe-index.png?raw=true)
 
 It has lots of strengths:
 
@@ -67,6 +67,26 @@ It has lots of strengths:
 -   Makes pretty and complex data visualisations (see below)
 
 ![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp.gif?raw=true)
+
+------------------------------------------------------------------------
+
+# Introduction to RStudio
+
+RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/rstudioEnv.png?raw=true)
+
+When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/scripts.png?raw=true)
+
+# Using R markdown
+
+For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/RMarkdown.png?raw=true)
+
+To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
 ------------------------------------------------------------------------
 
@@ -320,7 +340,7 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 -   Genevieve has a Portobello Mushroom & Truffle (£10), and water to drink.
 -   Genevieve and Amal also share a Nutella Pizza ring for dessert (£5.5).
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/pizzaP.jpg?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/pizzaP.jpg?raw=true)
 
 1)  Make a variable for each friend that is the sum of their order (e.g. Roger would be 11 + 2)
 2)  Make a variable for the shared food

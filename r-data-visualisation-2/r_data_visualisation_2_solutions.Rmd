@@ -8,7 +8,7 @@ output:
   html_document: 
     theme: readable
     highlight: pygments
-    keep_md: yes
+    keep_md: no
     code_download: true
     toc: TRUE
     toc_float: TRUE
@@ -17,8 +17,7 @@ output:
 # What this workshop will cover
 
 -   How to make box plots with ggplot2
--   Other options to bar and box plots
--   How to make histograms with ggplot2
+-   Displaying distributions with histograms
 -   Working with dates with the lubridate package
 -   How to make time series line plots
 
@@ -46,9 +45,21 @@ output:
 
 ------------------------------------------------------------------------
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-visualisation-1/images/ggplot2_masterpiece.png?raw=true){width="541"}
+In this data visualisation workshop we will be building on the concepts learnt in the first workshop of how to construct visualisations using the `ggplot2` library. 
 
-```{r}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-visualisation-1/images/ggplot2_masterpiece.png?raw=true){width="541"}
+
+We will be using one new package called *lubridate*, a tidyverse package which is designed to make working with dates and times easier; this will help us in making time series visualisations. **The the code below to install lubridate**. 
+
+```{r eval=FALSE}
+# install lubridate
+install.packages("lubridate")
+```
+
+Before we start we will need to load the libraries we will be using during this session. **Run the code below to load your libraries**. 
+
+```{r message=FALSE, warning=FALSE}
+# libraries we will be using
 library(ggplot2)
 library(dplyr)
 library(lubridate)
@@ -57,10 +68,19 @@ library(janitor)
 library(RColorBrewer)
 ```
 
+# Box plots
 
-# Box plots 
+Box plots are designed to compare the differences of a categorical variable (samples or groups). They do this by displaying the summary statistics of a continuous variable (e.g. numeric) for each categorical variable. 
 
-Use pokemon data again
+The summary statistics shown are: 
+
+- The median (middle value)
+- Interquartile range, known as IQR, which has values from 25% to 75% (or 25th to 75th percentile)
+- First quartile, known as Q1, which has a value of 25%
+- Second quartile, known as Q3, which has a value of 75%
+- "minimum" value, calculated as `Q1 + 1.5*IQR`
+- "maximum" value, calculated as `Q3 + 1.5*IQR`
+- Outlier, which are values that fall outside of the maximum or minimum values
 
 We will use data from the Pokémon games again for our examples for box plots, which was web scraped from <https://pokemondb.net/pokedex/all>.
 
@@ -73,90 +93,148 @@ pokemon %>%
   glimpse()
 ```
 
+For these examples we will just look at one type of Pokémon, the electric type; the most famous of which is Pikachu! First we extract just the electric type Pokémon, and make relevant columns factors. 
 
 ```{r}
-flying_pokemon <- pokemon %>%
-  filter(type1 == "Flying" | type2 == "Flying") %>%
-  mutate(across(where(is.character), as.factor),
-         generation = as.factor(generation))
+# select columns to convert to factor
+to_factor <- c("type1", "type2", "generation")
 
-flying_pokemon %>%
-  ggplot(aes(x = generation, y = total)) +
+# extract just electric pokemon and make cols factors
+electric_pokemon <- pokemon %>%
+  filter(type1 == "Electric" | type2 == "Electric") %>%
+  mutate(across(all_of(to_factor), factor))
+```
+
+To make a box plot in ggplot we use the `geom_boxplot()` geom function. One of our axis variables has to be categorical and the other has to be numeric. In the below example we will use generation (categorical) and total (numeric). 
+
+```{r}
+# generation by total
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
   geom_boxplot()
+```
 
-flying_pokemon %>%
-  ggplot(aes(x = generation, y = total)) +
-  geom_boxplot(outlier.shape = 15, outlier.colour = "orange")
+From the output we see a few things. First is that each box has a line through the middle which indicates the median; the box itself is our interquartile range. The lines above and below the boxes (know as whiskers) are the maximum and minimum values. The black dots indicate outliers, which have fallen outside our max and min values. 
 
-flying_pokemon %>%
-  ggplot(aes(x = generation, y = total)) +
-  geom_boxplot(outlier.shape = NA)
+Just like with scatter and bar plots we can change the colours! You can use either fill or colour arguments with box plots, but fill tends to look better. 
 
-flying_pokemon %>%
-  ggplot(aes(x = generation, y = total)) +
-  geom_boxplot() +
+We will use the colour of Pikachu to colour our boxes. We used the pokemon colour picker to get the colour of pikachu: <https://pokepalettes.com/#pikachu>
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652")
+```
+
+Sometimes it is useful to remove the outliers. To do so you add in the `outlier.shape = NA` argument. 
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA)
+```
+
+Displaying outliers is usually a good idea so we will keep them, and change the colour and shape of them. To adjust these we use `outlier.colour` and `outlier.shape`. We've used the colour of Pikachu's cheeks as the outlier colour. 
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.colour = "#c52018",
+               outlier.shape = 15)
+```
+
+## Box plots exercise 
+
+
+# Improving your box plots
+
+The main issue with box plots, in a similar way to bar plots, is they can hide data. We can fix this by adding a scatter plot over the top of the boxes so we can see the full distribution of the data. 
+
+When adding in a scatter plot, we won't need our outlier colours. We will need to remove them using the `outlier.shape = NA` argument. 
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
   geom_point()
+```
 
-flying_pokemon %>%
-  ggplot(aes(x = generation, y = total)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_point(aes(colour = legendary))
+Some of our data points are overlapping which makes it a little hard to see all the data. We can fix this by changing the position of our points using the `position = "jitter"` argument. We can also use `geom_jitter()` which is a short hand for `geom_point(position = "jitter")`; we will use `geom_jitter()` as it is less typing. 
 
-# how to create manual jitter?
-flying_pokemon %>%
-  ggplot(aes(x = generation, y = total)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_point(aes(colour = legendary),
-             position = "jitter")
+```{r}
+# change position in geom_point
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_point(position = "jitter")
+
+# using geom_jitter
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter()
+```
+
+We can also add in a colour grouping to our points to make them more meaningful. We add the colour aesthetic to our `geom_jitter` function. In the example we are colouring our points by if a pokemon is legendary or not. 
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter(aes(colour = legendary))
+```
+
+Finally we can change the colours of our points, which in this case we have done manually. 
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter(aes(colour = legendary)) +
+  scale_colour_manual(values = c("#c52018", "#41414a"))
+```
+
+Now we can add a title and save the plot! When saving the plot we have manually adjusted the width of the plot. You can also change the height. 
+
+```{r}
+electric_pokemon_box <- ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter(aes(colour = legendary)) +
+  scale_colour_manual(values = c("#c52018", "#41414a")) +
+  labs(title = "Summary of electric pokemon for each generation") +
+  theme_bw()
+
+electric_pokemon_box
+
+ggsave("electric_pokemon_box.png", electric_pokemon_box,
+       width = 5.5)
 ```
 
 
+## Improving your box plots exercise
 
-## box plots exercise
-
-Use covid data for all exercises. 
-
-Make simple example of converting dates and extracting month or year from a date
+Use covid data for all exercises.
 
 <https://github.com/owid/covid-19-data/tree/master/public/data>
 
-```{r}
-covid_owid <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
-
-str(covid_owid)
-
-unique(covid_owid$location)
-
-countries <- c("Belgium", "Denmark", "France", "Germany",
-               "Greece", "Italy", "Netherlands", "Portugal",
-               "Spain", "Sweeden", "United Kingdom")
-
-covid_select_countries <- covid_owid %>%
-  filter(location %in% countries) %>%
-  select(iso_code:new_cases, total_deaths:new_deaths,
-         icu_patients, hosp_patients, new_tests:total_tests,
-         positive_rate, total_vaccinations:people_fully_vaccinated,
-         population:median_age)
-
-
-lubridate::month(covid_select_countries$date)
-lubridate::year(covid_select_countries$date)
-lubridate::day(covid_select_countries$date)
-```
+Vaccine data and explanation of the variables are found here: <https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations>
 
 ```{r}
+covid_vaccinations <- read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv")
+
+summary(covid_vaccinations)
+
+high_low_gdp <- c("Sierra Leone", "Madagascar", "Ethiopia","Yemen", 
+                  "Zambia", "Nepal", "Switzerland", "Sweden", "Australia",
+                  "Saudi Arabia", "Germany", "United Kingdom")
+
+covid_select_countries <- covid_vaccinations %>%
+  filter(location %in% high_low_gdp) %>%
+  mutate(location = factor(location, levels = high_low_gdp))
+
 covid_select_countries %>%
-  ggplot(aes(x = location, y = people_fully_vaccinated)) +
+  ggplot(aes(location, daily_vaccinations_per_million)) +
+  geom_boxplot()
+
+covid_select_countries %>%
+  ggplot(aes(location, people_fully_vaccinated)) +
   geom_boxplot()
 ```
 
-# Beyond box and bar plots
 
-## Beyond box and bar plots
 
-# Histograms 
+# Displaying distributions with histograms
 
-## Histograms exercise
+## Displaying distributions exercise
 
 # Working with the date data type with lubridate
 
@@ -195,16 +273,18 @@ df %>%
                shape = 95, size = 20)
 ```
 
-
 ## lubridate exercise
 
-
+```{r}
+lubridate::month(covid_select_countries$date)
+lubridate::year(covid_select_countries$date)
+lubridate::day(covid_select_countries$date)
+```
 
 
 # Time series plots
 
 ## Time series plots exercise
-
 
 # Ideas
 
@@ -212,4 +292,14 @@ df %>%
 
 <https://www.cedricscherer.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/>
 
-
+```{r}
+# annotate plot to show where Pikachu is
+electric_pokemon %>%
+  ggplot(aes(x = as.numeric(generation), y = total)) +
+  geom_point() +
+  annotate(geom = "curve", x = 3, y = 230, xend = 1.1, yend = 320,
+           curvature = 0.15, arrow = arrow(length = unit(2, "mm"))) +
+  annotate(geom = "text", x = 3, y = 230, 
+           label = "Pikachu", hjust = "left") +
+  annotate(geom = "point", x = 1, y = 320, colour = "Yellow", size = 3)
+```

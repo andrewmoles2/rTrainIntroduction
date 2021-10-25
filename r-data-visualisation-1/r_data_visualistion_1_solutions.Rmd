@@ -53,7 +53,6 @@ There are a lot of different options for data visualistion with R. You can use t
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-visualisation-1/images/ggplot2_exploratory.png?raw=true){width="437"}
 
 In this data visualisation series we will be mainly focussing on ggplot, as well as plotly. While the visualistion tools that come with R are useful, ggplot and plotly are generally easier to use and make great visualisations with. For this tutorial we will be using the below packages: ggplot2, dplyr, readr, janitor. Run the code below to install the packages if you don't have them installed already.
-
 ```{r eval=FALSE}
 # install packages
 install <- c("ggplot2", "dplyr", "readr",
@@ -64,7 +63,6 @@ install.packages(install)
 ```
 
 Then we need to load them into our session. Run the code chunk below to load all the libraries you will need.
-
 ```{r message=FALSE}
 # load packages
 library(ggplot2)
@@ -82,7 +80,6 @@ ggplot2 is a package for producing graphics that works by combining independent 
 It is also important to note that ggplot can only use data frames. If your data is in another format you will need to transform it into a data frame in order to use ggplot.
 
 In order to understand how the layers work we will first load in some data for our examples. We will use data from the Pokémon games, which was web scraped from <https://pokemondb.net/pokedex/all>.
-
 ```{r message=FALSE}
 # load and clean names
 pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv") %>%
