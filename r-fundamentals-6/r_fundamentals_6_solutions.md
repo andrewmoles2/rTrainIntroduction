@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -258,7 +258,7 @@ sum(z < 50)
 ```
 
 ```
-## [1] 13
+## [1] 12
 ```
 
 ```r
@@ -266,7 +266,7 @@ sum(z >= 50)
 ```
 
 ```
-## [1] 7
+## [1] 8
 ```
 
 ```r
@@ -354,8 +354,11 @@ df[df$x < 20, ]
 
 ```
 ##     x  y
-## 10 17 25
-## 15 12 66
+## 2  13 75
+## 3  14 91
+## 6   8 46
+## 9   1 64
+## 14 18 92
 ```
 
 ```r
@@ -366,15 +369,14 @@ df2
 
 ```
 ##     x  y
-## 2  51 44
-## 3  58 76
-## 4  44 99
-## 5  78  6
-## 6  65 47
-## 7  43 15
-## 8  99  3
-## 12 68  4
-## 14 59 41
+## 1  90 21
+## 4  91  9
+## 5  44 94
+## 7  97 97
+## 11 72 88
+## 12 50 49
+## 13 76 60
+## 15 62 95
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -385,20 +387,16 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 5  78  6
-## 7  43 15
-## 8  99  3
-## 9  20  2
-## 10 17 25
-## 12 68  4
-## 13 28 17
+## 1  90 21
+## 4  91  9
+## 10 32 40
 ```
 
 ## Subsetting exercise
 
 In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing. 
 
-1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv
+1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv
 2) Get information on your loaded data using the `str()`, `head()` and `View()` functions. 
 3) Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
 4) Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
@@ -413,7 +411,7 @@ library(readr)
 
 # your code here
 # load in data
-pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv")
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv")
 ```
 
 ```
@@ -671,8 +669,9 @@ df3[df3$y >= 70 & df3$z >= 70,]
 ```
 
 ```
-##         id  x  y  z     exp
-## 4 person_d 76 90 96 control
+##          id  x  y  z     exp
+## 2  person_b 58 85 76 control
+## 10 person_j 12 86 89 control
 ```
 
 ```r
@@ -680,10 +679,11 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 ```
 
 ```
-##          id  x  y  z  exp
-## 2  person_b 31  3 43 test
-## 5  person_e 13 85 12 test
-## 10 person_j 56  9 91 test
+##          id  x  y  z     exp
+## 1  person_a 79  8 38 control
+## 4  person_d  8 20 43    test
+## 6  person_f  5 49 59 control
+## 10 person_j 12 86 89 control
 ```
 
 ```r
@@ -692,7 +692,9 @@ subset(df3, y < 60 & exp == 'control')
 
 ```
 ##         id  x  y  z     exp
-## 1 person_a 32 19 93 control
+## 1 person_a 79  8 38 control
+## 6 person_f  5 49 59 control
+## 9 person_i 18 26 91 control
 ```
 
 # %in% operator
@@ -710,8 +712,7 @@ df3[df3$z %in% 1:20, ]
 
 ```
 ##         id  x  y  z  exp
-## 3 person_c 57 95 20 test
-## 5 person_e 13 85 12 test
+## 7 person_g 84 48 15 test
 ```
 
 ```r
@@ -730,10 +731,10 @@ subset(df3, id %in% val_match)
 ```
 
 ```
-##          id   x  y  z  exp
-## 8  person_h 100 97 42 test
-## 9  person_i  80 33 62 test
-## 10 person_j  56  9 91 test
+##          id  x  y  z     exp
+## 8  person_h 64 95 66 control
+## 9  person_i 18 26 91 control
+## 10 person_j 12 86 89 control
 ```
 
 ```r
@@ -919,17 +920,17 @@ df3[, c('x','cat')]
 ```
 
 ```
-##      x    cat
-## 1   32    low
-## 2   31    low
-## 3   57 medium
-## 4   76   high
-## 5   13    low
-## 6   51 medium
-## 7   62 medium
-## 8  100   high
-## 9   80   high
-## 10  56 medium
+##     x    cat
+## 1  79   high
+## 2  58 medium
+## 3  48 medium
+## 4   8    low
+## 5  72   high
+## 6   5    low
+## 7  84   high
+## 8  64 medium
+## 9  18    low
+## 10 12    low
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -999,7 +1000,7 @@ table(pokemon$SpeedTier, pokemon$Type.1)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 6: Conditionals and Logic &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%206:%20Conditionals%20and%20Logic%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
 
 # Individual take home challenge 
 

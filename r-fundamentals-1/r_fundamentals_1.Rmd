@@ -94,17 +94,17 @@ To run code in a code chunk either press the green play button or press Ctrl + E
 
 RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/rstudioEnv.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/rstudioEnv.png?raw=true)
 
 When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/scripts.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/scripts.png?raw=true)
 
 # Using R markdown
 
 For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-1/Images/RMarkdown.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/RMarkdown.png?raw=true)
 
 To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
@@ -325,7 +325,7 @@ Charlie_hoursPerWeek <- 35
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 1: Numerical Variables &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%201:%20Numerical%20Variables%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 

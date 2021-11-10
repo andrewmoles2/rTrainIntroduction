@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -180,7 +180,7 @@ We are on a walking exercise plan, where we increase our step count by a thousan
 
 Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, the index determines the book, or books you pick from the shelf.
 
-![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop2/images/6714.jpg?raw=true){width="30%"}
+![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-2/images/6714.jpg?raw=true){width="30%"}
 
 To index in R you use the square brackets `[]` after you type the name of the vector to index from. You then put the numerical position of the elements you want to index in the square brackets. For example, if I wanted to select the first element from my vector I would do something like `data[1]`; data is my data, and 1 is the element I want to index.
 
@@ -314,7 +314,7 @@ You decided to track your total monthly expenditures for the year to find out mo
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 2: Vectors, Functions, and Indexing &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EmUo-IOFzsxFjPujn5poqp4BKnYT46Eg1qoA5o1fSHr6Lw?e=ClUXO2&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%202:%20Vectors,%20Functions,%20and%20Indexing%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EmUo-IOFzsxFjPujn5poqp4BKnYT46Eg1qoA5o1fSHr6Lw?e=ClUXO2&prog=DS&version=21-22>
 
 The solutions will be available from a link at the end of the survey.
 

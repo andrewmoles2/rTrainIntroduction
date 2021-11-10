@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -58,7 +58,7 @@ Packages are collections of functions, code, and sample data put together by the
 
 To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network).
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4a/images/CRAN.png?raw=true){width="30%"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-4/images/CRAN.png?raw=true){width="30%"}
 
 There are two ways of doing this, using code (recommended and easiest) or using the menus (`Tools > Install Packages`).
 
@@ -123,13 +123,13 @@ sessionInfo()
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.7       knitr_1.36       magrittr_2.0.1   hms_1.1.0       
-##  [5] R6_2.5.1         rlang_0.4.11     fastmap_1.1.0    fansi_0.5.0     
+##  [5] R6_2.5.1         rlang_0.4.12     fastmap_1.1.0    fansi_0.5.0     
 ##  [9] stringr_1.4.0    tools_4.1.1      xfun_0.26        utf8_1.2.2      
 ## [13] jquerylib_0.1.4  htmltools_0.5.2  ellipsis_0.3.2   yaml_2.2.1      
 ## [17] digest_0.6.28    tibble_3.1.5     lifecycle_1.0.1  crayon_1.4.1    
 ## [21] sass_0.4.0       vctrs_0.3.8      evaluate_0.14    rmarkdown_2.11  
 ## [25] stringi_1.7.5    cellranger_1.1.0 compiler_4.1.1   bslib_0.3.1     
-## [29] pillar_1.6.3     jsonlite_1.7.2   pkgconfig_2.0.3
+## [29] pillar_1.6.4     jsonlite_1.7.2   pkgconfig_2.0.3
 ```
 
 # Introduction to directories
@@ -157,7 +157,7 @@ A project is a centralised place to keep all your files for a study, piece of wo
 
 # How to set up a project?
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4b/images/RStudio_projects.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-5/images/RStudio_projects.png?raw=true)
 
 1)  File `>` New Project...
 2)  Select new directory (or existing directory if you have already set up a file)
@@ -185,9 +185,9 @@ To open and review your projects in future you will see them in a drop down menu
 1)  Set up a project for this workshop using the steps above.
 2)  Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac).
 3)  Put your r_fundamentals_5.Rmd file in your project directory (if you have not do so already).
-4)  Add a new file called data, and add in the data files for the session ().
+4)  Add a new folder called data, and add in the data files for the session.
 5)  Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made.
-6)  If you have not already, open the rWorkshop4b.Rmd file.
+6)  If you have not already, open the r_fundamentals_5.Rmd file.
 7)  In the code chunk below run `getwd()`. You should get your new project file system as the output.
 
 
@@ -576,19 +576,19 @@ str(tflJourneyType)
 ```
 
 ```
-## spec_tbl_df [148 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Period and Financial year    : chr [1:148] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
-##  $ Reporting Period             : num [1:148] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Days in period               : num [1:148] 31 28 28 28 28 28 28 28 28 28 ...
-##  $ Period beginning             : chr [1:148] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
-##  $ Period ending                : chr [1:148] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
-##  $ Bus journeys (m)             : num [1:148] 189 182 176 183 160 ...
-##  $ Underground journeys (m)     : num [1:148] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
-##  $ DLR Journeys (m)             : num [1:148] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
-##  $ Tram Journeys (m)            : num [1:148] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
-##  $ Overground Journeys (m)      : num [1:148] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
-##  $ Emirates Airline Journeys (m): num [1:148] NA NA NA NA NA NA NA NA NA NA ...
-##  $ TfL Rail Journeys (m)        : num [1:148] NA NA NA NA NA NA NA NA NA NA ...
+## spec_tbl_df [150 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Period and Financial year    : chr [1:150] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
+##  $ Reporting Period             : num [1:150] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Days in period               : num [1:150] 31 28 28 28 28 28 28 28 28 28 ...
+##  $ Period beginning             : chr [1:150] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
+##  $ Period ending                : chr [1:150] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
+##  $ Bus journeys (m)             : num [1:150] 189 182 176 183 160 ...
+##  $ Underground journeys (m)     : num [1:150] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
+##  $ DLR Journeys (m)             : num [1:150] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
+##  $ Tram Journeys (m)            : num [1:150] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
+##  $ Overground Journeys (m)      : num [1:150] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
+##  $ Emirates Airline Journeys (m): num [1:150] NA NA NA NA NA NA NA NA NA NA ...
+##  $ TfL Rail Journeys (m)        : num [1:150] NA NA NA NA NA NA NA NA NA NA ...
 ##  - attr(*, "spec")=
 ##   .. cols(
 ##   ..   `Period and Financial year` = col_character(),
@@ -612,37 +612,37 @@ summary(tflJourneyType)
 
 ```
 ##  Period and Financial year Reporting Period Days in period Period beginning  
-##  Length:148                Min.   : 1.000   Min.   :26.0   Length:148        
+##  Length:150                Min.   : 1.000   Min.   :26.0   Length:150        
 ##  Class :character          1st Qu.: 4.000   1st Qu.:28.0   Class :character  
 ##  Mode  :character          Median : 7.000   Median :28.0   Mode  :character  
-##                            Mean   : 6.865   Mean   :28.1                     
+##                            Mean   : 6.859   Mean   :28.1                     
 ##                            3rd Qu.:10.000   3rd Qu.:28.0                     
 ##                            Max.   :13.000   Max.   :31.0                     
-##                                                                              
+##                            NA's   :1        NA's   :1                        
 ##  Period ending      Bus journeys (m) Underground journeys (m) DLR Journeys (m)
-##  Length:148         Min.   : 30.2    Min.   :  5.70           Min.   : 1.200  
-##  Class :character   1st Qu.:160.9    1st Qu.: 88.47           1st Qu.: 6.400  
-##  Mode  :character   Median :176.4    Median : 97.25           Median : 8.200  
-##                     Mean   :164.0    Mean   : 90.60           Mean   : 7.702  
-##                     3rd Qu.:183.8    3rd Qu.:105.92           3rd Qu.: 9.300  
-##                     Max.   :207.5    Max.   :118.20           Max.   :10.600  
-##                                                                               
+##  Length:150         Min.   : 30.2    Min.   :  5.70           Min.   : 1.20   
+##  Class :character   1st Qu.:160.4    1st Qu.: 87.80           1st Qu.: 6.40   
+##  Mode  :character   Median :176.3    Median : 97.20           Median : 8.20   
+##                     Mean   :163.7    Mean   : 90.38           Mean   : 7.69   
+##                     3rd Qu.:183.8    3rd Qu.:105.90           3rd Qu.: 9.30   
+##                     Max.   :207.5    Max.   :118.20           Max.   :10.60   
+##                     NA's   :1        NA's   :1                NA's   :1       
 ##  Tram Journeys (m) Overground Journeys (m) Emirates Airline Journeys (m)
 ##  Min.   :0.400     Min.   : 1.00           Min.   :0.0000               
 ##  1st Qu.:2.000     1st Qu.: 8.70           1st Qu.:0.1000               
-##  Median :2.200     Median :11.10           Median :0.1000               
-##  Mean   :2.078     Mean   :11.15           Mean   :0.1102               
-##  3rd Qu.:2.325     3rd Qu.:14.40           3rd Qu.:0.1000               
+##  Median :2.200     Median :11.05           Median :0.1000               
+##  Mean   :2.073     Mean   :11.14           Mean   :0.1108               
+##  3rd Qu.:2.300     3rd Qu.:14.40           3rd Qu.:0.1000               
 ##  Max.   :2.800     Max.   :17.80           Max.   :0.5000               
-##                    NA's   :7               NA's   :29                   
+##  NA's   :1         NA's   :8               NA's   :30                   
 ##  TfL Rail Journeys (m)
 ##  Min.   :0.600        
-##  1st Qu.:2.925        
+##  1st Qu.:2.950        
 ##  Median :3.700        
-##  Mean   :3.468        
+##  Mean   :3.463        
 ##  3rd Qu.:4.200        
 ##  Max.   :5.700        
-##  NA's   :66
+##  NA's   :67
 ```
 
 # Exporting data
@@ -675,21 +675,21 @@ str(tflJourneyType)
 ```
 
 ```
-## spec_tbl_df [148 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Period and Financial year    : chr [1:148] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
-##  $ Reporting Period             : num [1:148] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Days in period               : num [1:148] 31 28 28 28 28 28 28 28 28 28 ...
-##  $ Period beginning             : chr [1:148] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
-##  $ Period ending                : chr [1:148] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
-##  $ Bus journeys (m)             : num [1:148] 189 182 176 183 160 ...
-##  $ Underground journeys (m)     : num [1:148] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
-##  $ DLR Journeys (m)             : num [1:148] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
-##  $ Tram Journeys (m)            : num [1:148] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
-##  $ Overground Journeys (m)      : num [1:148] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
-##  $ Emirates Airline Journeys (m): num [1:148] NA NA NA NA NA NA NA NA NA NA ...
-##  $ TfL Rail Journeys (m)        : num [1:148] NA NA NA NA NA NA NA NA NA NA ...
-##  $ BusTube                      : num [1:148] 280 266 260 270 243 ...
-##  $ DLR_Tram                     : num [1:148] 8.6 8 7.9 8.2 7.8 7.5 8.6 8.9 8.7 6.6 ...
+## spec_tbl_df [150 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Period and Financial year    : chr [1:150] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
+##  $ Reporting Period             : num [1:150] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Days in period               : num [1:150] 31 28 28 28 28 28 28 28 28 28 ...
+##  $ Period beginning             : chr [1:150] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
+##  $ Period ending                : chr [1:150] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
+##  $ Bus journeys (m)             : num [1:150] 189 182 176 183 160 ...
+##  $ Underground journeys (m)     : num [1:150] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
+##  $ DLR Journeys (m)             : num [1:150] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
+##  $ Tram Journeys (m)            : num [1:150] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
+##  $ Overground Journeys (m)      : num [1:150] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
+##  $ Emirates Airline Journeys (m): num [1:150] NA NA NA NA NA NA NA NA NA NA ...
+##  $ TfL Rail Journeys (m)        : num [1:150] NA NA NA NA NA NA NA NA NA NA ...
+##  $ BusTube                      : num [1:150] 280 266 260 270 243 ...
+##  $ DLR_Tram                     : num [1:150] 8.6 8 7.9 8.2 7.8 7.5 8.6 8.9 8.7 6.6 ...
 ##  - attr(*, "spec")=
 ##   .. cols(
 ##   ..   `Period and Financial year` = col_character(),
@@ -719,7 +719,7 @@ write_xlsx(tflSubset, "data/tflSubset.xlsx")
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 5: Loading data and packages &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%205:%20Loading%20data%20and%20packages%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
 
 # Individual take home challenge
 

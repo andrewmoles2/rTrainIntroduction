@@ -3,7 +3,7 @@ title: "R Fundamentals 1: Numerical Variables"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "25 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -457,7 +457,7 @@ CombinedSalaries
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-\<<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R> Fundamentals 1: Numerical Variables &topic=R&link=<https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp&prog=DS&version=21-22>\>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%201:%20Numerical%20Variables%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp&prog=DS&version=21-22>
 
 # Individual coding challenge
 

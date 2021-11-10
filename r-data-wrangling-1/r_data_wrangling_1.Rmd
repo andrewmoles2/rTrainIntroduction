@@ -46,7 +46,7 @@ output:
 
 # What is the tidyverse?
 
-![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/tidyverse.jpeg?raw=true)
+![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/tidyverse.jpeg?raw=true)
 
 The tidyverse is a collection of R packages that are designed for data science. These packages share design, syntax, and philosophy. These packages cover the import of data (`readr` and `haven`), manipulation and transformation of data (`dplyr`, `tidyr`, `stringr`, `purrr`, `forcats`, and `lubridate`), visualisation (`ggplot` and it's extensions), and analysis (`tidymodels`).
 
@@ -86,7 +86,7 @@ messy_df <- data.frame(
 messy_df
 ```
 
-![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/tidydata_2.jpeg?raw=true)
+![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/tidydata_2.jpeg?raw=true)
 
 See this excellent article, which has lots of nice images, for a summary :-<https://www.openscapes.org/blog/2020/10/12/tidy-data/>
 
@@ -209,7 +209,7 @@ Dplyr is a package that is built for data manipulation, using functions that des
 
 The dplyr package has a lot of functions built into the package, each has it's own very helpful documentation page with examples - <https://dplyr.tidyverse.org/reference/index.html>
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
 
 Dplyr functions work with and without pipes and you'll see both when searching online. If using a pipe, you call your data then pipe that to a function, such as `data %>% mean()`. If you are not using a pipe, you call your data within the function, such as `mean(data)`.
 
@@ -298,7 +298,7 @@ library(readr)
 library(dplyr)
 
 # load data
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/IMDb%20movies.csv")
 
 # use glimpse to review data (tidyverse version of str())
 movies_imdb %>% glimpse()
@@ -430,7 +430,7 @@ The filter function allows you to subset rows based on conditions, using conditi
 
 Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
 
 Run the examples below and review the outputs.
 
@@ -549,7 +549,7 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 1: Pipes and introduction to dplyr  &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EkNl1TlFgF9ApLsKSP-lqTUBiMCNlzcqB8pY0W3IJI3WYQ?e=Si2I9B&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Wrangling%201:%20Pipes%20and%20introduction%20to%20dplyr%C2%A0%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EkNl1TlFgF9ApLsKSP-lqTUBiMCNlzcqB8pY0W3IJI3WYQ?e=Si2I9B&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 

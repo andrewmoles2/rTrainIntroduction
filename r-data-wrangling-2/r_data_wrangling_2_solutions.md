@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -46,7 +46,7 @@ output:
 
 The mutate function is from the dplyr library, and is for making, modifying, or deleting columns in your dataset. Similar to what we have done in previous sessions, mutate allows you to make a new column from a calculation you have made.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_mutate.png?raw=true){width="516"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_mutate.png?raw=true){width="516"}
 
 The main difference between using mutate and making new columns in base R, is that mutate is smarter. You can create a new column based on a new column you have just made within mutate, which you can't do in base R. Lets look at some examples with our messi data we used in the last session.
 
@@ -202,7 +202,7 @@ library(readr)
 library(dplyr)
 
 # load data
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/IMDb%20movies.csv")
 
 # use glimpse to review data (tidyverse version of str())
 movies_imdb %>% glimpse()
@@ -814,10 +814,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       2       1       4    dog
-## 2   Hello       9       2       5    cat
-## 3   Hello       4       3       6    cat
-## 4   Hello       3       4       7    dog
+## 1   Hello       4       1       4    dog
+## 2   Hello       3       2       5    cat
+## 3   Hello       1       3       6    cat
+## 4   Hello       6       4       7    dog
 ```
 
 ```r
@@ -890,10 +890,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello     10        1       4    dog
-## 2  Hello      3        2       5    cat
-## 3  Hello      1        3       6    cat
-## 4  Hello      5        4       7    dog
+## 1  Hello      3        1       4    dog
+## 2  Hello      7        2       5    cat
+## 3  Hello      2        3       6    cat
+## 4  Hello      1        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -1111,7 +1111,7 @@ data.frame(
 As the movies_imdb data we are using already has cleaned names, we will load in another dataset as an example: the pokemon dataset we have used in previous workshops. 
 
 1)  Load in the `janitor` and `readr` librarys
-2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv">. Call your data pokemon
+2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv">. Call your data pokemon
 3)  Use `read_csv()` to load in the same pokemon dataset the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
 4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
 5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
@@ -1123,11 +1123,11 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 library(janitor)
 library(readr)
 
-pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv") 
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv") 
 
-pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv") %>% clean_names()
+pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv")  %>% clean_names()
 
-pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv") %>% clean_names(case = "upper_camel")
+pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv")  %>% clean_names(case = "upper_camel")
 
 data_frame(default = names(pokemon),
            cleaned = names(pokemon_cleaned),
@@ -1157,7 +1157,7 @@ data_frame(default = names(pokemon),
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 2: Data wrangling with dplyr continued  &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=pZvPhB&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Wrangling%202:%20Data%20wrangling%20with%20dplyr%20continued%C2%A0%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=pZvPhB&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 

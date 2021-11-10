@@ -58,7 +58,7 @@ Packages are collections of functions, code, and sample data put together by the
 
 To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network).
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4a/images/CRAN.png?raw=true){width="30%"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-4/images/CRAN.png?raw=true){width="30%"}
 
 There are two ways of doing this, using code (recommended and easiest) or using the menus (`Tools > Install Packages`).
 
@@ -118,7 +118,7 @@ A project is a centralised place to keep all your files for a study, piece of wo
 
 # How to set up a project?
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/Workshop4b/images/RStudio_projects.png?raw=true)
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-5/images/RStudio_projects.png?raw=true)
 
 1)  File `>` New Project...
 2)  Select new directory (or existing directory if you have already set up a file)
@@ -146,9 +146,9 @@ To open and review your projects in future you will see them in a drop down menu
 1)  Set up a project for this workshop using the steps above.
 2)  Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac).
 3)  Put your r_fundamentals_5.Rmd file in your project directory (if you have not do so already).
-4)  Add a new file called data, and add in the data files for the session ().
+4)  Add a new folder called data, and add in the data files for the session.
 5)  Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made.
-6)  If you have not already, open the rWorkshop4b.Rmd file.
+6)  If you have not already, open the r_fundamentals_5.Rmd file.
 7)  In the code chunk below run `getwd()`. You should get your new project file system as the output.
 
 ```{r}
@@ -270,7 +270,7 @@ library(writexl)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 5: Loading data and packages &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%205:%20Loading%20data%20and%20packages%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
 
 # Individual take home challenge
 

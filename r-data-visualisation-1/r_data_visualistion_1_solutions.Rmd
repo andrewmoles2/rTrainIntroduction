@@ -19,6 +19,7 @@ output:
 -   An introduction to the ggplot2 package
 -   How to make scatter plots with ggplot2
 -   How to make bar plots with ggplot2
+-   How to change colours and other features in your visualisations  
 
 ## Why this style?
 
@@ -50,7 +51,7 @@ Data visualisation is a way of looking at your data using graphics, which provid
 
 There are a lot of different options for data visualistion with R. You can use the visualisation tools that come with R, ggplot and all its extensions, or for interactive visualisations there is the plotly library.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-visualisation-1/images/ggplot2_exploratory.png?raw=true){width="437"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-visualisation-1/images/ggplot2_exploratory.png?raw=true){width="437"}
 
 In this data visualisation series we will be mainly focussing on ggplot, as well as plotly. While the visualistion tools that come with R are useful, ggplot and plotly are generally easier to use and make great visualisations with. For this tutorial we will be using the below packages: ggplot2, dplyr, readr, janitor. Run the code below to install the packages if you don't have them installed already.
 ```{r eval=FALSE}
@@ -248,26 +249,20 @@ ggsave("hp_vs_speed.PNG", hp_vs_speed,
 
 For the exercises in this workshop we will use data from the Olympics that includes all Olympic games from 1896 through to 2016. More information on the dataset can be found here <https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-07-27/readme.md>. Run the code provided to load the libraries and data into R.
 
-We will make two scatter plots from the Olympics data. For both plots we will use dplyr to filter the information we are interested in.
+We will make two scatter plots from the Olympics data. For both plots we will use dplyr to filter the information we are interested in, which has been done for you in this exercise. 
 
-1)  Make a scatter plot of Olympic gymnasts heights (x axis) and weights (y axis).
+1)  Using the provided `scatter_plot1` data, make a scatter plot of Olympic gymnasts heights (x axis) and weights (y axis).
 
 -   Change the colour and shape arguments to tell us what sex the gymnasts are.
 -   Change the colour palette by making a manual one or using RColorBrewer.
 -   Be sure to give your plot a title, and save your plot.
 
-*hint: you will need to filter for sport == "Gymnastics"*
+2)  Using the provided `scatter_plot2` data, make a scatter plot of the age (y axis) of gymnastic medal winners by year (x axis). 
 
-2)  Make a scatter plot of the age (y axis) of gymnastic medal winners by year (x axis). You should filter out all gymnasts who did not win a medal. *hint: use filter(!is.na(medal)) to remove non-medal winning gymnasts*
-
--   Colour your plot by medal.
--   Make a manual colour palette and colour the medals by their colour.
+-   Colour your plot by medal by making a manual colour palette. *hint: the hex codes for gold, silver and bronze are: "#FFD700", "#C0C0C0", "#CD7F32"*
 -   Use shape to tell us what sex the gymnasts were.
 -   Be sure to give your plot a title, and save your plot.
 
-*hint: the medal order will be wrong (you'll want gold, silver, bronze), change it to the right order using factor levels on the medal column, e.g. factor(olymics\$medal, levels = c("Gold", "Silver", "Bronze")*
-
-*hint: the hex codes for gold, silver and bronze are: "\#FFD700", "\#C0C0C0", "\#CD7F32"*
 
 ```{r}
 # make sure libraries are loaded
@@ -281,12 +276,20 @@ olympics <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytues
 
 olympics %>% glimpse()
 
+# data cleaning for first scatter plot
+scatter_plot1 <- olympics %>%
+  filter(sport == "Gymnastics")
+
+# data cleaning for second scatter plot
+scatter_plot2 <- olympics %>%
+  filter(sport == "Gymnastics") %>%
+  filter(!is.na(medal)) %>%
+  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze")))
+
 # your code here
 
 # all gymnastics by weight and height ----
-gym_wt_vs_h <- olympics %>%
-  filter(sport == "Gymnastics") %>%
-  ggplot(aes(x = height, y = weight, colour = sex, shape = sex)) +
+gym_wt_vs_h <- ggplot(scatter_plot1, aes(x = height, y = weight, colour = sex, shape = sex)) +
   geom_point(size = 3) +
   scale_colour_brewer(palette = "Set1") +
   labs(title = "Olympic Gymnasts weights and heights",
@@ -297,15 +300,10 @@ gym_wt_vs_h
 ggsave("gym_wt_vs_h.PNG", gym_wt_vs_h)
 
 # age of medal winners per year ----
-# filter commands and factor levels
-gym_age_medal <- olympics %>%
-  filter(sport == "Gymnastics" & !is.na(medal)) %>%
-  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze")))
-
 # make manual medal colours
 medal_colours <- c("#FFD700", "#C0C0C0", "#CD7F32")
 
-age_medel <- ggplot(gym_age_medal, aes(x = year, y = age, colour = medal, shape = sex)) +
+age_medel <- ggplot(scatter_plot2, aes(x = year, y = age, colour = medal, shape = sex)) +
   geom_point(size = 2.5) +
   scale_colour_manual(values = medal_colours) +
   labs(title = "Age of Gymnastic medal winners by year",
@@ -399,6 +397,7 @@ Make a visualisation of USA athletes ages vs heights, showing the difference bet
 -   Add a geom_point function and add the aesthetics there rather than in `ggplot()`
 
 ```{r}
+# your code here
 olympics %>%
   filter(noc == "USA") %>%
   ggplot() +
@@ -578,12 +577,12 @@ Using the examples above, make a visualisation of the frequency of ski jump meda
 
 Try to include:
 
--   Setting a new theme using `theme_set()`\
--   Order the x axis by the frequency in reverse order\
--   Colour the medals like we did in the last exercise\
--   Decide if position stack, dodge or fill work best with this visualisation\
--   Add a title and labels\
--   Save your visualisation
+-   Setting a new theme using `theme_set()`.
+-   Order the x axis by the frequency in reverse order. *hint: remember the forcats package*
+-   Make medals a factor, re-order them, and then colour them like we did in the last exercise.
+-   Decide if position stack, dodge or fill work best with this visualisation.
+-   Add a title and labels.
+-   Save your visualisation.
 
 ```{r}
 # your code here
@@ -851,17 +850,17 @@ gbr_medals_point
 ggsave("gbr_medals_point.PNG", gbr_medals_point)
 ```
 
-# Final task
+# Final task - Please give us your individual feedback!
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-*add survey here*
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Visualisation%201:%20Data%20viz%20with%20ggplot2&topic=R&link=https://lsecloud.sharepoint.com/sites/TEAM_APD-DSL-Digital-Skills-Trainers/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FTEAM%5FAPD%2DDSL%2DDigital%2DSkills%2DTrainers%2FShared%20Documents%2FPiloting%20Online%20Data%20Science%20Workshops%2FR%20sessions%2FR%2Ddata%2Dvisualisation%2D1%2Fsolutions&p=true&ct=1635786727420&or=OWA%2DNT&cid=85cd0863%2D8711%2Daf69%2D0529%2D26fecf865ad7&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 
 # Individual coding challenge
 
-For the individual coding challenge we will be using the food consumption data from tidy tuesday: <https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md>.
+For the individual coding challenge we will be using the food consumption data from tidy Tuesday: <https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md>.
 
 Use what we have covered in this workshop to make two visualisations of this dataset:
 

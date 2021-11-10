@@ -92,7 +92,7 @@ Dplyr has several functions for joining data, which are based on SQL syntax:
 -   `right_join` includes all of the data from the right data frame, and matches from the left
 -   `full_join` includes all data from both data frames
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/inner_join.png?raw=true){width="700"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/inner_join.png?raw=true){width="700"}
 
 *To view images, either switch to visual markdown editor, or knit document to html*
 
@@ -126,7 +126,7 @@ inner_join(Person_Info, Food_Info, by = "ID")
 
 Next up is the left join, which includes all data from our Person_Info data frame and matches from the Food_Info data frame, anything that doesn't match is scored as a NA.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/left_join.png?raw=true){width="700"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/left_join.png?raw=true){width="700"}
 
 ```{r}
 # left join 
@@ -135,7 +135,7 @@ left_join(Person_Info, Food_Info, by = "ID")
 
 The right join is the opposite of the left join. We get everything from Food_Info, and just the matches from Person_Info. Again, anything that doesn't match is given NA. Notice this is the first time that id 7 has appeared as it is not in the Person_Info data.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/right_join.png?raw=true){width="700"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/right_join.png?raw=true){width="700"}
 
 ```{r}
 # right join
@@ -144,7 +144,7 @@ right_join(Person_Info, Food_Info, by = "ID")
 
 Finally, the full join brings all the data of both data frames together. Anything that doesn't match is given NA. We can see quite clearly here that despite there being a person who wasn't in the `Person_Info` data frame, their data has been joined up as it was in the `Fav_food` data frame, with Na's given for Name and Age.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/full_join.png?raw=true){width="700"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/full_join.png?raw=true){width="700"}
 
 ```{r}
 # full join
@@ -160,15 +160,16 @@ For this workshop you'll be using the imdb data we used in the previous workshop
 The Bechdel test is a measure of the representation of women in fiction. Scoring has three criteria which films are scored on: 1) Film has at least two women in it 2) The two, or more, women talk to each other 3) The two, or more, women talk about something besides a man. Films are scored 0 to 3. They score 0 if they don't meet any of the criteria, and 3 if they meet all of them.
 
 Lets jump in, and load our data using the code provided.
+
 ```{r warning=FALSE, message=FALSE}
 # load libraries
 library(readr)
 library(dplyr)
 
 # load imdb and bechdel
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/IMDb%20movies.csv")
 
-bechdel <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/raw_bechdel.csv")
+bechdel <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/raw_bechdel.csv")
 
 # get glimpse of data
 movies_imdb %>% glimpse()
@@ -177,10 +178,10 @@ bechdel %>% glimpse()
 
 To join the data we have to make sure the IDs we will be using to join the data match. With these two datasets we have two issues we need to fix before we join the datasets. First, we change the column name in the movie_imdb dataset so it matches that of the bechdel data. We also have to remove the text from the imdb data `imdb_title_id` column so it is in the same format as the bechdel dataset. For example, *tt0000574* should be *574*.
 
-1)  Using the `rename` function, change the `imdb_title_id` column in movies_imdb to `imdb_id`. Make sure to save the result back to movies_imdb
-2)  We now need to fix the ids in the movies_imdb dataset. Type the following code to fix the ids: `movies_imdb$imdb_id <- parse_number(movies_imdb$imdb_id)`. The `parse_number()` function is from the readr library, and removes text from strings, which is exactly what we need in this case
-3)  Before joining the data we should test for duplicate ids in both datasets. Using the example above, check the duplicates in the imdb_id column in movies_imdb and bechdel datasets. 
-4)  We have some duplicates in the bechdel data! Use `filter()`, `duplicated()` and the `!` (not) operator to remove them. 
+1)  We first need to fix the ids in the movies_imdb dataset. Type the following code to fix the ids: `movies_imdb$imdb_title_id <- parse_number(movies_imdb$imdb_title_id)`. The `parse_number()` function is from the readr library, and removes text from strings, which is exactly what we need in this case
+2)  Using the `rename` function, change the `imdb_title_id` column in movies_imdb to `imdb_id`. Make sure to save the result back to movies_imdb
+3)  Before joining the data we should test for duplicate ids in both datasets. Using the example above, check the duplicates in the imdb_id column in movies_imdb and bechdel datasets.
+4)  We have some duplicates in the bechdel data! Use `filter()`, `duplicated()` and the `!` (not) operator to remove them.
 5)  Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
 6)  Using the `full_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
 7)  Have a look at both your newly joined up data frames using head, glimpse or View. Do you notice how when we used inner_join we filtered out all data that isn't in our bechdel test dataset?
@@ -224,12 +225,12 @@ df1 %>%
 table(df1$city == "Cambridge")
 ```
 
-An additional nice feature of the count function is you can change the name of the filtered column. Notice in the last example we had *city == "Cambridge"* which is hard to read. We can add a variable name with `count(name = variable)`. In the below example we add *is_cambridge* to change the column name to something more readable.  
+An additional nice feature of the count function is you can change the name of the filtered column. Notice in the last example we had *city == "Cambridge"* which is hard to read. We can add a variable name with `count(name = variable)`. In the below example we add *is_cambridge* to change the column name to something more readable.
+
 ```{r}
 df1 %>%
   count(is_cambridge = city == "Cambridge")
 ```
-
 
 We can also make two way frequency tables to compare two variables next to each other. Notice the difference between the two functions. Count provides the table in a data frame structure, which is easy to work with should you need to, but table is perhaps easier to read initially.
 
@@ -305,7 +306,7 @@ The grouping concept can be a little confusing, and the below illustrations hope
 3)  Perform a function, such as a mean or sum function, based on those split subsets of data
 4)  Combine the split subsets back together to make a summary table
 
-![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/Aggregation.png?raw=true){width="600"}
+![Single group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/Aggregation.png?raw=true){width="600"}
 
 You can also aggregate more than one variable. In the below example, we will run sum on the num1 and num2 variables.
 
@@ -329,7 +330,8 @@ df2 %>%
 
 ```
 
-If you want to extract a single element from an aggregation the `pull()` function is very helpful. It is useful if you make a large aggregation table but only need one column at the moment for a visualisation. You can also add a name from another column, for example we might want to add the key as the name as we did in the example below. 
+If you want to extract a single element from an aggregation the `pull()` function is very helpful. It is useful if you make a large aggregation table but only need one column at the moment for a visualisation. You can also add a name from another column, for example we might want to add the key as the name as we did in the example below.
+
 ```{r}
 # save our aggregation as agg
 agg <- df2 %>%
@@ -350,7 +352,7 @@ agg %>%
 
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
 
-![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-3/images/Aggregation_twogroup.png?raw=true){width="600"}
+![Two group aggregation](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/Aggregation_twogroup.png?raw=true){width="600"}
 
 To do so, we add an extra categorical column to our `group_by()` function. The ordering of the groups matters. Have a look at both examples with the groups in a different order.
 
@@ -400,7 +402,8 @@ Using the examples above, we are going to create three aggregations from our `im
 2)  Filter for years greater than 2015 and group by year. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Use `median()` to calculate the average.
 3)  Filter for years greater than 2015 and group by year and rating. Summarise the avg_vote per year, average duration per year, and the frequency of each group. Finally, pipe to a mutate function, and calculate the relative frequency of each year. Use `median()` to calculate the average.
 4)  Filter for years greater than 2015 and group by rating. Summarise the median reviews_from_users and the median reviews_from_critics. Why are their NA values and how do should you fix them?
-5)  Using your code from part 2, use the pull function to extract the avg_duration, and use the year column as the name. 
+5)  Using your code from part 2, use the pull function to extract the avg_duration, and use the year column as the name.
+
 ```{r}
 # your code here
 
@@ -479,12 +482,11 @@ imdb_bechdel %>%
   mutate(total_reviews = sum(across(reviews_from_users:reviews_from_critics)))
 ```
 
-
 # Final task - Please give us your individual feedback!
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 3: Joining and aggregation &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Ev72JK9UjRhMgv0YHNkJZHsBjGHzydNtK5aBqHgc4Otr4g?e=FcSbDl&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Wrangling%203:%20Joining%20and%20aggregation%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Ev72JK9UjRhMgv0YHNkJZHsBjGHzydNtK5aBqHgc4Otr4g?e=FcSbDl&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 
@@ -537,7 +539,7 @@ df2 %>%
 
 We have used dplyr for aggregation here, but there are two other options: the base r `aggregate()` function, or using the data.table package. We have shown some examples here so you are able to compare.
 
-First, we have a look at the base r `aggregate()` function. The main disadvantage to aggregate over dplyr is it is harder to read. 
+First, we have a look at the base r `aggregate()` function. The main disadvantage to aggregate over dplyr is it is harder to read.
 
 ```{r warning=FALSE, message=FALSE}
 # one group aggregate 
@@ -553,11 +555,13 @@ aggregate(df2[, c("num1", "num2", "num3")],
 The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets.
 
 In order to run this example you will have to have data.table installed.
+
 ```{r eval=FALSE}
 install.packages("data.table")
 ```
 
-To explain the data.table code, we have to transform our imdb_bechdel dataset into a data.table object. The data.table syntax is similar to the base r indexing `[row_index , coloum_index]` but it has extra features like being able to add a `by` argument for aggregation. For those familiar with Python, this is similar to how you would aggregate with the Pandas library (which was designed based on R syntax). 
+To explain the data.table code, we have to transform our imdb_bechdel dataset into a data.table object. The data.table syntax is similar to the base r indexing `[row_index , coloum_index]` but it has extra features like being able to add a `by` argument for aggregation. For those familiar with Python, this is similar to how you would aggregate with the Pandas library (which was designed based on R syntax).
+
 ```{r message=FALSE, warning=FALSE}
 # load in data.table
 library(data.table)
@@ -576,4 +580,3 @@ df2[num1 >= 5, .(avg_num2 = median(num2, na.rm = TRUE),
 ```
 
 If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>.
-

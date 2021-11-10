@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -283,12 +283,12 @@ df[df$x < 20, ]
 ```
 
 ```
-##    x  y
-## 1 17 58
-## 4  3 43
-## 5  2 66
-## 7  1 48
-## 9 19  4
+##     x  y
+## 3  17  1
+## 8   3 62
+## 10 12 44
+## 12  2 83
+## 14 16 69
 ```
 
 ```r
@@ -299,13 +299,15 @@ df2
 
 ```
 ##     x  y
-## 2  55 37
-## 6  77 81
-## 8  98 95
-## 11 66 40
-## 12 48 62
-## 14 69 22
-## 15 49 55
+## 1  84 79
+## 2  54 59
+## 4  62 21
+## 5  86 32
+## 6  63 34
+## 9  72 92
+## 11 51 90
+## 13 69 89
+## 15 44 39
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -316,18 +318,18 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 2  55 37
-## 9  19  4
-## 11 66 40
-## 13 24  8
-## 14 69 22
+## 3  17  1
+## 4  62 21
+## 5  86 32
+## 6  63 34
+## 15 44 39
 ```
 
 ## Subsetting exercise
 
 In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing. 
 
-1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-fundamentals-5/data/pokemonGen1.csv
+1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv
 2) Get information on your loaded data using the `str()`, `head()` and `View()` functions. 
 3) Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
 4) Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
@@ -427,9 +429,10 @@ df3[df3$z %in% 1:20, ]
 
 ```
 ##         id  x  y  z     exp
-## 1 person_a 70 30 18    test
-## 6 person_f 74 82  7    test
-## 8 person_h 80  4  8 control
+## 2 person_b  1 36 19 control
+## 3 person_c 79 32 18    test
+## 6 person_f 22 77  2 control
+## 8 person_h 33 59  7    test
 ```
 
 ```r
@@ -449,9 +452,9 @@ subset(df3, id %in% val_match)
 
 ```
 ##          id  x  y  z     exp
-## 8  person_h 80  4  8 control
-## 9  person_i 18 33 75    test
-## 10 person_j 12 31 28 control
+## 8  person_h 33 59  7    test
+## 9  person_i 27 84 42 control
+## 10 person_j 76 78 21    test
 ```
 
 ```r
@@ -544,17 +547,17 @@ df3[, c('x','cat')]
 ```
 
 ```
-##     x  cat
-## 1  70 high
-## 2  93 high
-## 3  96 high
-## 4  76 high
-## 5  73 high
-## 6  74 high
-## 7  82 high
-## 8  80 high
-## 9  18  low
-## 10 12  low
+##     x    cat
+## 1  60 medium
+## 2   1    low
+## 3  79   high
+## 4  15    low
+## 5  62 medium
+## 6  22    low
+## 7  93   high
+## 8  33    low
+## 9  27    low
+## 10 76   high
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -574,7 +577,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 6: Conditionals and Logic &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%206:%20Conditionals%20and%20Logic%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
 
 # Individual take home challenge 
 

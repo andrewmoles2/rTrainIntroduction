@@ -56,7 +56,7 @@ One hour exercise based session with tutor support. You will be given example co
 
 So far in our previous sessions we have only been working with numbers and integers. Strings are text based data which R calls **characters**.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-2/images/22895-NUNWT2.jpg?raw=true){width="50%"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-2/images/22895-NUNWT2.jpg?raw=true){width="50%"}
 
 To code a string you need to use quotation marks. You can use either single or double quotes, depending on your preference. When printing the result, R will always use double quotation marks.
 
@@ -142,7 +142,7 @@ fruit
 
 Sometimes the ordering of the factor levels matter. For example, if you had a question on how fast someone eats ice cream with the possible answers of *slow, medium, and fast*, the order is important. This order reflects how the output will be printed or arranged in a figure.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-3/images/dog_order.jpg?raw=true){width="50%"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-3/images/dog_order.jpg?raw=true){width="50%"}
 
 Run the below example. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
 
@@ -332,7 +332,7 @@ my_order
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Fundamentals 3: Strings, Factors, and Type Conversion &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElrN79ulZINElxjPz6Tx4VMBo1NWK7TEaket80nhJMPUwg?e=EjSyVn&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%203:%20Strings,%20Factors,%20and%20Type%20Conversion%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElrN79ulZINElxjPz6Tx4VMBo1NWK7TEaket80nhJMPUwg?e=EjSyVn&prog=DS&version=21-22>
 
 # Individual take home challenge 1
 

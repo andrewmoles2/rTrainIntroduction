@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "18 October, 2021"
+date: "10 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -46,7 +46,7 @@ output:
 
 # What is the tidyverse?
 
-![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/tidyverse.jpeg?raw=true)
+![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/tidyverse.jpeg?raw=true)
 
 The tidyverse is a collection of R packages that are designed for data science. These packages share design, syntax, and philosophy. These packages cover the import of data (`readr` and `haven`), manipulation and transformation of data (`dplyr`, `tidyr`, `stringr`, `purrr`, `forcats`, and `lubridate`), visualisation (`ggplot` and it's extensions), and analysis (`tidymodels`).
 
@@ -114,7 +114,7 @@ messy_df
 ## 12  6 calico
 ```
 
-![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/tidydata_2.jpeg?raw=true)
+![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/tidydata_2.jpeg?raw=true)
 
 See this excellent article, which has lots of nice images, for a summary :-<https://www.openscapes.org/blog/2020/10/12/tidy-data/>
 
@@ -173,7 +173,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 5.2"
+## [1] "Mean value of y is 5.1"
 ```
 
 ```r
@@ -182,7 +182,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 5.2"
+## [1] "Mean value of y is 5.1"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -204,7 +204,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 6.05"
+## [1] "Mean value of x is 5.85"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -226,7 +226,7 @@ z_mean
 ```
 
 ```
-## [1] 5.15
+## [1] 5.75
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -284,7 +284,7 @@ Dplyr is a package that is built for data manipulation, using functions that des
 
 The dplyr package has a lot of functions built into the package, each has it's own very helpful documentation page with examples - <https://dplyr.tidyverse.org/reference/index.html>
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
 
 Dplyr functions work with and without pipes and you'll see both when searching online. If using a pipe, you call your data then pipe that to a function, such as `data %>% mean()`. If you are not using a pipe, you call your data within the function, such as `mean(data)`.
 
@@ -560,7 +560,7 @@ library(readr)
 library(dplyr)
 
 # load data
-movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/master/r-data-wrangling-1/data/IMDb%20movies.csv")
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/IMDb%20movies.csv")
 
 # use glimpse to review data (tidyverse version of str())
 movies_imdb %>% glimpse()
@@ -1093,7 +1093,7 @@ The filter function allows you to subset rows based on conditions, using conditi
 
 Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
 
 Run the examples below and review the outputs.
 
@@ -1246,11 +1246,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          57    58   2014 FC Barcelona  27              10
-## 2          25     8   2005 FC Barcelona  18               1
-## 3          49    41   2015 FC Barcelona  28               6
-## 4          55    53   2010 FC Barcelona  23              12
-## 5          50    60   2012 FC Barcelona  25               8
+## 1          51    38   2008 FC Barcelona  21               9
+## 2          57    58   2014 FC Barcelona  27              10
+## 3          50    60   2012 FC Barcelona  25               8
+## 4          46    41   2013 FC Barcelona  26               8
+## 5          36    17   2006 FC Barcelona  19               1
 ```
 
 ```r
@@ -1261,9 +1261,9 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1           9     1   2004 FC Barcelona  17               0
-## 2          53    47   2009 FC Barcelona  22               8
-## 3          54    45   2017 FC Barcelona  30               6
+## 1          25     8   2005 FC Barcelona  18               1
+## 2          46    41   2013 FC Barcelona  26               8
+## 3          44    31   2019 FC Barcelona  32               3
 ## 4          57    58   2014 FC Barcelona  27              10
 ```
 
@@ -1414,7 +1414,7 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R Data Wrangling 1: Pipes and introduction to dplyr  &topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EkNl1TlFgF9ApLsKSP-lqTUBiMCNlzcqB8pY0W3IJI3WYQ?e=Si2I9B&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Wrangling%201:%20Pipes%20and%20introduction%20to%20dplyr%C2%A0%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EkNl1TlFgF9ApLsKSP-lqTUBiMCNlzcqB8pY0W3IJI3WYQ?e=Si2I9B&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 
