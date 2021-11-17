@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2021"
+date: "16 November, 2021"
 output: 
   html_document: 
     theme: readable
@@ -123,14 +123,14 @@ See this excellent article, which has lots of nice images, for a summary :-<http
 
 In this workshop we will be using three packages: magrittr, dplyr, and readr.
 
-Using the code chunk below, install all three of these packages. *note that dplyr is large and might take a minute or so to install*
+Using the code chunk below, install all three of these packages. Note that dplyr is large and might take a minute or so to install, we have added the `Ncpus = 6` argument which should speed things up a bit. 
 
 
 ```r
 # your code here
-install.packages("")
-install.packages("")
-install.packages("")
+install.packages("", Ncpus = 6)
+install.packages("", Ncpus = 6)
+install.packages("", Ncpus = 6)
 ```
 
 *Also note that you can install the whole tidyverse with install.packages("tidyverse")! This takes a while though, so for this workshop we will just install individual packages.*
@@ -174,7 +174,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 4.5"
+## [1] "Mean value of y is 4.7"
 ```
 
 ```r
@@ -183,7 +183,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 4.5"
+## [1] "Mean value of y is 4.7"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -205,7 +205,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.45"
+## [1] "Mean value of x is 5.3"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -227,7 +227,7 @@ z_mean
 ```
 
 ```
-## [1] 5.5
+## [1] 5.9
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -1032,11 +1032,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          49    41   2015 FC Barcelona  28               6
-## 2          25     8   2005 FC Barcelona  18               1
-## 3          51    38   2008 FC Barcelona  21               9
-## 4          52    54   2016 FC Barcelona  29              11
-## 5          60    73   2011 FC Barcelona  24              14
+## 1          52    54   2016 FC Barcelona  29              11
+## 2          46    41   2013 FC Barcelona  26               8
+## 3           9     1   2004 FC Barcelona  17               0
+## 4          53    47   2009 FC Barcelona  22               8
+## 5          50    51   2018 FC Barcelona  31              12
 ```
 
 ```r
@@ -1047,10 +1047,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          51    38   2008 FC Barcelona  21               9
-## 2          25     8   2005 FC Barcelona  18               1
-## 3          46    41   2013 FC Barcelona  26               8
-## 4          55    53   2010 FC Barcelona  23              12
+## 1          40    16   2007 FC Barcelona  20               6
+## 2          50    60   2012 FC Barcelona  25               8
+## 3          50    51   2018 FC Barcelona  31              12
+## 4          57    58   2014 FC Barcelona  27              10
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 

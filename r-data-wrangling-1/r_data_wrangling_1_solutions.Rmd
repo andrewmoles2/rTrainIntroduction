@@ -94,13 +94,13 @@ See this excellent article, which has lots of nice images, for a summary :-<http
 
 In this workshop we will be using three packages: magrittr, dplyr, and readr.
 
-Using the code chunk below, install all three of these packages. *note that dplyr is large and might take a minute or so to install*
+Using the code chunk below, install all three of these packages. Note that dplyr is large and might take a minute or so to install, we have added the `Ncpus = 6` argument which should speed things up a bit. 
 
 ```{r eval=FALSE}
 # your code here
-install.packages("")
-install.packages("")
-install.packages("")
+install.packages("", Ncpus = 6)
+install.packages("", Ncpus = 6)
+install.packages("", Ncpus = 6)
 ```
 
 *Also note that you can install the whole tidyverse with install.packages("tidyverse")! This takes a while though, so for this workshop we will just install individual packages.*

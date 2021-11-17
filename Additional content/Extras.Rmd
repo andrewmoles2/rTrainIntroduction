@@ -344,3 +344,25 @@ d=data.frame(p=c(0:25,32:127))
   geom_point(data=d, mapping=aes(x=p%%16, y=p%/%16, shape=p), size=5, fill="red") +
   geom_text(data=d, mapping=aes(x=p%%16, y=p%/%16+0.25, label=p), size=3))
 ```
+
+# content for functions workshop
+
+Example of how to use a function to find odd numbers and even numbers. 
+```{r}
+a <- 1:50
+
+odds <- function(x){
+  subset(x, x %% 2 == 1)
+}
+
+evens <- function(x){
+  subset(x, x %% 2 == 0)
+}
+
+odds(a)
+evens(a)
+
+# short hand versions
+odds <- function(x) subset(x, x %% 2 == 1)
+evens <- function(x) subset(x, x %% 2 == 0)
+```
