@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -15,32 +15,18 @@ output:
       collapsed: true
 ---
 
+# Objective of workshop
+
+To use conditional operators and logic to filter data, as well as using if else statements in R. 
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to use boolean and conditional operators to work with data in R. We will be covering:
 
 *  Boolean operators 
 *  Conditional operators
 *  Conditional logic
 *  If else statements
-
-## Why this style?
-
-*  Online training is tiring so keeping the sessions to one hour
-*  No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
-*  Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
-*  Option to work together on worksheet or to work individually
-*  If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-  *  The answer box on the top of Google's results page 
-  *  stackoverflow.com (for task-specific solutions)
-  *  https://www.r-bloggers.com/ (topic based tutorials)
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ***
 
@@ -284,11 +270,10 @@ df[df$x < 20, ]
 
 ```
 ##     x  y
-## 3  17  1
-## 8   3 62
-## 10 12 44
-## 12  2 83
-## 14 16 69
+## 6  15 63
+## 7  12 95
+## 9  14 37
+## 12  2 79
 ```
 
 ```r
@@ -299,15 +284,15 @@ df2
 
 ```
 ##     x  y
-## 1  84 79
-## 2  54 59
-## 4  62 21
-## 5  86 32
-## 6  63 34
-## 9  72 92
-## 11 51 90
-## 13 69 89
-## 15 44 39
+## 1  91 62
+## 2  64 58
+## 3  96 49
+## 4  95 12
+## 10 70 19
+## 11 93  8
+## 13 82 20
+## 14 77 39
+## 15 87 11
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -318,11 +303,15 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 3  17  1
-## 4  62 21
-## 5  86 32
-## 6  63 34
-## 15 44 39
+## 4  95 12
+## 5  28 28
+## 8  22  2
+## 9  14 37
+## 10 70 19
+## 11 93  8
+## 13 82 20
+## 14 77 39
+## 15 87 11
 ```
 
 ## Subsetting exercise
@@ -429,10 +418,9 @@ df3[df3$z %in% 1:20, ]
 
 ```
 ##         id  x  y  z     exp
-## 2 person_b  1 36 19 control
-## 3 person_c 79 32 18    test
-## 6 person_f 22 77  2 control
-## 8 person_h 33 59  7    test
+## 1 person_a 11 29 14 control
+## 2 person_b  9 83 19 control
+## 9 person_i 68 96 13    test
 ```
 
 ```r
@@ -451,10 +439,10 @@ subset(df3, id %in% val_match)
 ```
 
 ```
-##          id  x  y  z     exp
-## 8  person_h 33 59  7    test
-## 9  person_i 27 84 42 control
-## 10 person_j 76 78 21    test
+##          id  x  y  z  exp
+## 8  person_h 62 53 68 test
+## 9  person_i 68 96 13 test
+## 10 person_j  3 71 36 test
 ```
 
 ```r
@@ -548,16 +536,16 @@ df3[, c('x','cat')]
 
 ```
 ##     x    cat
-## 1  60 medium
-## 2   1    low
-## 3  79   high
-## 4  15    low
-## 5  62 medium
-## 6  22    low
-## 7  93   high
-## 8  33    low
-## 9  27    low
-## 10 76   high
+## 1  11    low
+## 2   9    low
+## 3  72   high
+## 4   5    low
+## 5  56 medium
+## 6   6    low
+## 7  22    low
+## 8  62 medium
+## 9  68   high
+## 10  3    low
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 

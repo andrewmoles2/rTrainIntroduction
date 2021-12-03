@@ -14,35 +14,19 @@ output:
     toc_float: TRUE
 ---
 
+# Objective of workshop
+
+To create histograms box, and time series plots using the ggplot2 package. 
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to work with dates in plots, and use histograms and box plots. We will be covering: 
 
 -   How to make box plots with ggplot2
 -   Displaying distributions with histograms
 -   Working with dates with the lubridate package
 -   How to make time series line plots
 -   How to split your data into facet grids
-
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ------------------------------------------------------------------------
 
@@ -79,7 +63,7 @@ The summary statistics shown are:
 - Interquartile range, known as IQR, which has values from 25% to 75% (or 25th to 75th percentile)
 - First quartile, known as Q1, which has a value of 25%
 - Second quartile, known as Q3, which has a value of 75%
-- "minimum" value, calculated as `Q1 + 1.5*IQR`
+- "minimum" value, calculated as `Q1 - 1.5*IQR`
 - "maximum" value, calculated as `Q3 + 1.5*IQR`
 - Outlier, which are values that fall outside of the maximum or minimum values
 
@@ -647,7 +631,7 @@ First, you will need to install the aRtsy package.
 install.packages("aRtsy")
 ```
 
-Then you will need to laod it! 
+Then you will need to load it! 
 ```{r}
 # load aRtsy
 library(aRtsy)

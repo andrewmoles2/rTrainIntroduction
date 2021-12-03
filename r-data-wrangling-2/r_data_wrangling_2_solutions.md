@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -14,31 +14,17 @@ output:
     toc_float: TRUE
 ---
 
+# Objective of workshop
+
+To manipulate and create new columns using the mutate function from dplyr, as well as cleaning column names.
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to perform data wrangling tasks on columns using dplyr. We will be covering:
 
 -  Data manipulation with mutate from dplyr
 -  Renaming columns 
 -  Cleaning up column names with janitor
-
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ------------------------------------------------------------------------
 
@@ -814,10 +800,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       4       1       4    dog
-## 2   Hello       3       2       5    cat
-## 3   Hello       1       3       6    cat
-## 4   Hello       6       4       7    dog
+## 1   Hello       2       1       4    dog
+## 2   Hello       7       2       5    cat
+## 3   Hello       9       3       6    cat
+## 4   Hello       8       4       7    dog
 ```
 
 ```r
@@ -890,10 +876,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      3        1       4    dog
-## 2  Hello      7        2       5    cat
-## 3  Hello      2        3       6    cat
-## 4  Hello      1        4       7    dog
+## 1  Hello      4        1       4    dog
+## 2  Hello      9        2       5    cat
+## 3  Hello      5        3       6    cat
+## 4  Hello      6        4       7    dog
 ```
 
 ## Rename columns exercise

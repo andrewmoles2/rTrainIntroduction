@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "16 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -14,33 +14,17 @@ output:
     toc_float: true
 ---
 
+# Objective of workshop
+
+To start using the dplyr package from the tidyverse to select columns and filter data. 
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to start working with the key library from the tidyverse, dplyr. We will be covering:
 
 -   Introduce the use of pipes
 -   Indexing with the select function from dplyr
 -   Conditional indexing of data with the filter function from dplyr
-
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ------------------------------------------------------------------------
 
@@ -174,7 +158,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 4.7"
+## [1] "Mean value of y is 6.35"
 ```
 
 ```r
@@ -183,7 +167,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 4.7"
+## [1] "Mean value of y is 6.35"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -205,7 +189,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.3"
+## [1] "Mean value of x is 5.9"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -227,7 +211,7 @@ z_mean
 ```
 
 ```
-## [1] 5.9
+## [1] 4.45
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -1032,11 +1016,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          52    54   2016 FC Barcelona  29              11
-## 2          46    41   2013 FC Barcelona  26               8
-## 3           9     1   2004 FC Barcelona  17               0
-## 4          53    47   2009 FC Barcelona  22               8
-## 5          50    51   2018 FC Barcelona  31              12
+## 1          57    58   2014 FC Barcelona  27              10
+## 2          51    38   2008 FC Barcelona  21               9
+## 3          60    73   2011 FC Barcelona  24              14
+## 4          55    53   2010 FC Barcelona  23              12
+## 5          25     8   2005 FC Barcelona  18               1
 ```
 
 ```r
@@ -1047,10 +1031,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          40    16   2007 FC Barcelona  20               6
-## 2          50    60   2012 FC Barcelona  25               8
-## 3          50    51   2018 FC Barcelona  31              12
-## 4          57    58   2014 FC Barcelona  27              10
+## 1          50    60   2012 FC Barcelona  25               8
+## 2          53    47   2009 FC Barcelona  22               8
+## 3          44    31   2019 FC Barcelona  32               3
+## 4          52    54   2016 FC Barcelona  29              11
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 

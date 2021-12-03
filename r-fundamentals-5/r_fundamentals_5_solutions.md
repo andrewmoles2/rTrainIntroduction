@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -15,6 +15,10 @@ output:
       collapsed: true
 ---
 
+# Objective of workshop
+
+To load and export data into and out of R, and start using RStudio projects to manage file paths. 
+
 # What will this workshop cover?
 
 In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:
@@ -23,32 +27,6 @@ In this workshop, the aim is to cover how to load and work with data frames, as 
 -   Introduction to directories and projects
 -   Loading in data
 -   Exporting data
-
-# Information on how the session is run
-
-One hour exercise based session with tutor support. You will be given example code for a problem, then given a related exercise to complete.
-
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ------------------------------------------------------------------------
 
@@ -119,17 +97,17 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] writexl_1.4.0 readxl_1.3.1  readr_1.4.0  
+## [1] writexl_1.4.0 readxl_1.3.1  readr_2.1.0  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.7       knitr_1.36       magrittr_2.0.1   hms_1.1.0       
+##  [1] Rcpp_1.0.7       knitr_1.36       magrittr_2.0.1   hms_1.1.1       
 ##  [5] R6_2.5.1         rlang_0.4.12     fastmap_1.1.0    fansi_0.5.0     
-##  [9] stringr_1.4.0    tools_4.1.1      xfun_0.26        utf8_1.2.2      
+##  [9] stringr_1.4.0    tools_4.1.1      xfun_0.28        utf8_1.2.2      
 ## [13] jquerylib_0.1.4  htmltools_0.5.2  ellipsis_0.3.2   yaml_2.2.1      
-## [17] digest_0.6.28    tibble_3.1.5     lifecycle_1.0.1  crayon_1.4.1    
-## [21] sass_0.4.0       vctrs_0.3.8      evaluate_0.14    rmarkdown_2.11  
-## [25] stringi_1.7.5    cellranger_1.1.0 compiler_4.1.1   bslib_0.3.1     
-## [29] pillar_1.6.4     jsonlite_1.7.2   pkgconfig_2.0.3
+## [17] digest_0.6.29    tibble_3.1.6     lifecycle_1.0.1  crayon_1.4.2    
+## [21] tzdb_0.2.0       sass_0.4.0       vctrs_0.3.8      evaluate_0.14   
+## [25] rmarkdown_2.11   stringi_1.7.6    cellranger_1.1.0 compiler_4.1.1  
+## [29] bslib_0.3.1      pillar_1.6.4     jsonlite_1.7.2   pkgconfig_2.0.3
 ```
 
 # Introduction to directories
@@ -262,22 +240,20 @@ tflJourneyType <- read_csv("data/tfl-journeys-type.csv")
 ```
 
 ```
-## 
+## Rows: 137 Columns: 12
+```
+
+```
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   `Period and Financial year` = col_character(),
-##   `Reporting Period` = col_double(),
-##   `Days in period` = col_double(),
-##   `Period beginning` = col_character(),
-##   `Period ending` = col_character(),
-##   `Bus journeys (m)` = col_double(),
-##   `Underground journeys (m)` = col_double(),
-##   `DLR Journeys (m)` = col_double(),
-##   `Tram Journeys (m)` = col_double(),
-##   `Overground Journeys (m)` = col_double(),
-##   `Emirates Airline Journeys (m)` = col_double(),
-##   `TfL Rail Journeys (m)` = col_double()
-## )
+## Delimiter: ","
+## chr (3): Period and Financial year, Period beginning, Period ending
+## dbl (9): Reporting Period, Days in period, Bus journeys (m), Underground jou...
+```
+
+```
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ```r
@@ -314,6 +290,7 @@ str(tflJourneyType)
 ##   ..   `Emirates Airline Journeys (m)` = col_double(),
 ##   ..   `TfL Rail Journeys (m)` = col_double()
 ##   .. )
+##  - attr(*, "problems")=<externalptr>
 ```
 
 ```r
@@ -552,22 +529,20 @@ tflJourneyType <- read_csv("https://data.london.gov.uk/download/public-transport
 ```
 
 ```
-## 
+## Rows: 150 Columns: 12
+```
+
+```
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   `Period and Financial year` = col_character(),
-##   `Reporting Period` = col_double(),
-##   `Days in period` = col_double(),
-##   `Period beginning` = col_character(),
-##   `Period ending` = col_character(),
-##   `Bus journeys (m)` = col_double(),
-##   `Underground journeys (m)` = col_double(),
-##   `DLR Journeys (m)` = col_double(),
-##   `Tram Journeys (m)` = col_double(),
-##   `Overground Journeys (m)` = col_double(),
-##   `Emirates Airline Journeys (m)` = col_double(),
-##   `TfL Rail Journeys (m)` = col_double()
-## )
+## Delimiter: ","
+## chr (3): Period and Financial year, Period beginning, Period ending
+## dbl (9): Reporting Period, Days in period, Bus journeys (m), Underground jou...
+```
+
+```
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ```r
@@ -604,6 +579,7 @@ str(tflJourneyType)
 ##   ..   `Emirates Airline Journeys (m)` = col_double(),
 ##   ..   `TfL Rail Journeys (m)` = col_double()
 ##   .. )
+##  - attr(*, "problems")=<externalptr>
 ```
 
 ```r
@@ -612,37 +588,37 @@ summary(tflJourneyType)
 
 ```
 ##  Period and Financial year Reporting Period Days in period Period beginning  
-##  Length:150                Min.   : 1.000   Min.   :26.0   Length:150        
-##  Class :character          1st Qu.: 4.000   1st Qu.:28.0   Class :character  
-##  Mode  :character          Median : 7.000   Median :28.0   Mode  :character  
-##                            Mean   : 6.859   Mean   :28.1                     
-##                            3rd Qu.:10.000   3rd Qu.:28.0                     
-##                            Max.   :13.000   Max.   :31.0                     
-##                            NA's   :1        NA's   :1                        
+##  Length:150                Min.   : 1.00    Min.   :26.0   Length:150        
+##  Class :character          1st Qu.: 4.00    1st Qu.:28.0   Class :character  
+##  Mode  :character          Median : 7.00    Median :28.0   Mode  :character  
+##                            Mean   : 6.86    Mean   :28.1                     
+##                            3rd Qu.:10.00    3rd Qu.:28.0                     
+##                            Max.   :13.00    Max.   :31.0                     
+##                                                                              
 ##  Period ending      Bus journeys (m) Underground journeys (m) DLR Journeys (m)
-##  Length:150         Min.   : 30.2    Min.   :  5.70           Min.   : 1.20   
-##  Class :character   1st Qu.:160.4    1st Qu.: 87.80           1st Qu.: 6.40   
-##  Mode  :character   Median :176.3    Median : 97.20           Median : 8.20   
-##                     Mean   :163.7    Mean   : 90.38           Mean   : 7.69   
-##                     3rd Qu.:183.8    3rd Qu.:105.90           3rd Qu.: 9.30   
-##                     Max.   :207.5    Max.   :118.20           Max.   :10.60   
-##                     NA's   :1        NA's   :1                NA's   :1       
+##  Length:150         Min.   : 30.2    Min.   :  5.70           Min.   : 1.200  
+##  Class :character   1st Qu.:159.9    1st Qu.: 87.80           1st Qu.: 6.400  
+##  Mode  :character   Median :176.2    Median : 97.15           Median : 8.200  
+##                     Mean   :163.5    Mean   : 90.24           Mean   : 7.686  
+##                     3rd Qu.:183.8    3rd Qu.:105.88           3rd Qu.: 9.300  
+##                     Max.   :207.5    Max.   :118.20           Max.   :10.600  
+##                                                                               
 ##  Tram Journeys (m) Overground Journeys (m) Emirates Airline Journeys (m)
 ##  Min.   :0.400     Min.   : 1.00           Min.   :0.0000               
 ##  1st Qu.:2.000     1st Qu.: 8.70           1st Qu.:0.1000               
-##  Median :2.200     Median :11.05           Median :0.1000               
-##  Mean   :2.073     Mean   :11.14           Mean   :0.1108               
+##  Median :2.200     Median :11.00           Median :0.1000               
+##  Mean   :2.071     Mean   :11.13           Mean   :0.1107               
 ##  3rd Qu.:2.300     3rd Qu.:14.40           3rd Qu.:0.1000               
 ##  Max.   :2.800     Max.   :17.80           Max.   :0.5000               
-##  NA's   :1         NA's   :8               NA's   :30                   
+##                    NA's   :7               NA's   :29                   
 ##  TfL Rail Journeys (m)
 ##  Min.   :0.600        
-##  1st Qu.:2.950        
+##  1st Qu.:2.975        
 ##  Median :3.700        
-##  Mean   :3.463        
+##  Mean   :3.465        
 ##  3rd Qu.:4.200        
 ##  Max.   :5.700        
-##  NA's   :67
+##  NA's   :66
 ```
 
 # Exporting data
@@ -705,6 +681,7 @@ str(tflJourneyType)
 ##   ..   `Emirates Airline Journeys (m)` = col_double(),
 ##   ..   `TfL Rail Journeys (m)` = col_double()
 ##   .. )
+##  - attr(*, "problems")=<externalptr>
 ```
 
 ```r

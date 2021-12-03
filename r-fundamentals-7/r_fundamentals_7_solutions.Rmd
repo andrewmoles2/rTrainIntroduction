@@ -15,7 +15,13 @@ output:
       collapsed: false
 ---
 
+# Objective of workshop
+
+To create and manage the matrix and list data types in R.
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to use matrices and lists in R. We will be covering:
 
 -   What a matrix is and how to use it
 -   Using a matrix for calculations
@@ -23,35 +29,13 @@ output:
 -   How to work with list of lists
 -   Converting lists and matrices to other data types
 
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
 ------------------------------------------------------------------------
 
 # Introduction to matrices
 
 A matrix is a two dimensional data structure that is organised in a tabular layout, very similar to a data frame.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-7/images/matrix-code.jpeg?raw=true){width="500"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-7/images/matrix-code.jpeg?raw=true){width="500"}
 
 What is the difference between a matrix and a data frame? Matrices can have only **one data type**, whereas a data frame can have several so long as they are in separate columns. If you have come from Python, this is similar to a NumPy array.
 
@@ -325,7 +309,7 @@ ronaldo_best
 
 A list is a vector that can contain different data types. This makes lists very useful for storing information in a compact format, as they can hold any information.
 
-![credit: poorlydrawnlines](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-7/images/to-do-list.jpeg?raw=true){width="286"}
+![credit: poorlydrawnlines](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-7/images/to-do-list.jpeg?raw=true){width="286"}
 
 Why is it important to learn about how to work with lists in R? There are two key reasons.
 

@@ -3,7 +3,7 @@ title: "R Fundamentals 7 - Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "01 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -15,7 +15,13 @@ output:
       collapsed: false
 ---
 
+# Objective of workshop
+
+To create and manage the matrix and list data types in R.
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to use matrices and lists in R. We will be covering:
 
 -   What a matrix is and how to use it
 -   Using a matrix for calculations
@@ -23,35 +29,13 @@ output:
 -   How to work with list of lists
 -   Converting lists and matrices to other data types
 
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
 ------------------------------------------------------------------------
 
 # Introduction to matrices
 
 A matrix is a two dimensional data structure that is organised in a tabular layout, very similar to a data frame.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-7/images/matrix-code.jpeg?raw=true){width="500"}
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-7/images/matrix-code.jpeg?raw=true){width="500"}
 
 What is the difference between a matrix and a data frame? Matrices can have only **one data type**, whereas a data frame can have several so long as they are in separate columns. If you have come from Python, this is similar to a NumPy array.
 
@@ -365,9 +349,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  11 18 5 4 2 14 19 13 3 17
-##  $ rand  : num  4.45 5.74 9.43 9.9 2.96 ...
-##  $ rand2 : num  2.87 2.58 4.16 2.53 5.61 ...
+##  $ samp  : int  11 9 5 12 18 10 17 4 20 16
+##  $ rand  : num  7.87 2.01 2.35 3.64 6.7 ...
+##  $ rand2 : num  3.87 3.84 5.25 4.19 7.15 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -387,12 +371,12 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   11 4.448373 2.866585
-## string2   2   18 5.743998 2.578852
-## string3   3    5 9.426823 4.157436
-## string4   4    4 9.901672 2.532802
-## string5   5    2 2.962781 5.611707
-## string6   6   14 4.527730 4.912848
+## string1   1   11 7.871604 3.872397
+## string2   2    9 2.008867 3.843668
+## string3   3    5 2.350885 5.248093
+## string4   4   12 3.639347 4.191639
+## string5   5   18 6.701158 7.148134
+## string6   6   10 9.534817 5.126528
 ```
 
 Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
@@ -408,12 +392,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   11 4.448373 2.866585
-## string2   2   18 5.743998 2.578852
-## string3   3    5 9.426823 4.157436
-## string4   4    4 9.901672 2.532802
-## string5   5    2 2.962781 5.611707
-## string6   6   14 4.527730 4.912848
+## string1   1   11 7.871604 3.872397
+## string2   2    9 2.008867 3.843668
+## string3   3    5 2.350885 5.248093
+## string4   4   12 3.639347 4.191639
+## string5   5   18 6.701158 7.148134
+## string6   6   10 9.534817 5.126528
 ```
 
 ```r
@@ -435,10 +419,10 @@ calc
 ```
 
 ```
-##    string1    string2    string3    string4    string5    string6    string7 
-## 0.48932100 1.03391971 0.47134117 0.39606687 0.05925563 0.63388220 0.91138462 
-##    string8    string9   string10 
-## 1.02774637 0.24139940 1.69504006
+##   string1   string2   string3   string4   string5   string6   string7   string8 
+## 0.8658765 0.1807980 0.1175442 0.4367217 1.2062085 0.9534817 1.6582637 0.1594540 
+##   string9  string10 
+## 1.3213808 0.8308751
 ```
 
 ```r
@@ -448,17 +432,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand    rand2       calc
-## string1    1   11 4.448373 2.866585 0.48932100
-## string2    2   18 5.743998 2.578852 1.03391971
-## string3    3    5 9.426823 4.157436 0.47134117
-## string4    4    4 9.901672 2.532802 0.39606687
-## string5    5    2 2.962781 5.611707 0.05925563
-## string6    6   14 4.527730 4.912848 0.63388220
-## string7    7   19 4.796761 8.378167 0.91138462
-## string8    8   13 7.905741 7.514851 1.02774637
-## string9    9    3 8.046647 4.614207 0.24139940
-## string10  10   17 9.970824 7.565811 1.69504006
+##          int samp     rand    rand2      calc
+## string1    1   11 7.871604 3.872397 0.8658765
+## string2    2    9 2.008867 3.843668 0.1807980
+## string3    3    5 2.350885 5.248093 0.1175442
+## string4    4   12 3.639347 4.191639 0.4367217
+## string5    5   18 6.701158 7.148134 1.2062085
+## string6    6   10 9.534817 5.126528 0.9534817
+## string7    7   17 9.754493 1.371159 1.6582637
+## string8    8    4 3.986351 3.607670 0.1594540
+## string9    9   20 6.606904 7.698995 1.3213808
+## string10  10   16 5.192969 5.836512 0.8308751
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -471,12 +455,12 @@ df_cor
 ```
 
 ```
-##             int       samp        rand       rand2      calc
-## int   1.0000000  0.1281581  0.31629199  0.76580596 0.3907148
-## samp  0.1281581  1.0000000 -0.14398543  0.39387899 0.8226830
-## rand  0.3162920 -0.1439854  1.00000000 -0.01501676 0.3351436
-## rand2 0.7658060  0.3938790 -0.01501676  1.00000000 0.4794658
-## calc  0.3907148  0.8226830  0.33514363  0.47946583 1.0000000
+##             int      samp       rand       rand2       calc
+## int   1.0000000 0.4172743  0.2464370  0.25843045 0.38645799
+## samp  0.4172743 1.0000000  0.5099910  0.37381114 0.85383976
+## rand  0.2464370 0.5099910  1.0000000 -0.10546560 0.85588205
+## rand2 0.2584305 0.3738111 -0.1054656  1.00000000 0.09136092
+## calc  0.3864580 0.8538398  0.8558821  0.09136092 1.00000000
 ```
 
 ```r
@@ -486,12 +470,12 @@ df_cor
 ```
 
 ```
-##         int   samp   rand  rand2  calc
-## int   1.000  0.128  0.316  0.766 0.391
-## samp  0.128  1.000 -0.144  0.394 0.823
-## rand  0.316 -0.144  1.000 -0.015 0.335
-## rand2 0.766  0.394 -0.015  1.000 0.479
-## calc  0.391  0.823  0.335  0.479 1.000
+##         int  samp   rand  rand2  calc
+## int   1.000 0.417  0.246  0.258 0.386
+## samp  0.417 1.000  0.510  0.374 0.854
+## rand  0.246 0.510  1.000 -0.105 0.856
+## rand2 0.258 0.374 -0.105  1.000 0.091
+## calc  0.386 0.854  0.856  0.091 1.000
 ```
 
 ```r
@@ -515,12 +499,12 @@ df_cor
 ```
 
 ```
-##         int   samp   rand  rand2  calc
-## int   1.000  0.128  0.316  0.766 0.391
-## samp  0.128  1.000 -0.144  0.394 0.823
-## rand  0.316 -0.144  1.000 -0.015 0.335
-## rand2 0.766  0.394 -0.015  1.000 0.479
-## calc  0.391  0.823  0.335  0.479 1.000
+##         int  samp   rand  rand2  calc
+## int   1.000 0.417  0.246  0.258 0.386
+## samp  0.417 1.000  0.510  0.374 0.854
+## rand  0.246 0.510  1.000 -0.105 0.856
+## rand2 0.258 0.374 -0.105  1.000 0.091
+## calc  0.386 0.854  0.856  0.091 1.000
 ```
 
 ```r
@@ -528,7 +512,7 @@ df_cor$int
 ```
 
 ```
-## [1] 1.000 0.128 0.316 0.766 0.391
+## [1] 1.000 0.417 0.246 0.258 0.386
 ```
 
 ## Converting matrices exercise
@@ -632,7 +616,7 @@ ronaldo_best
 
 A list is a vector that can contain different data types. This makes lists very useful for storing information in a compact format, as they can hold any information.
 
-![credit: poorlydrawnlines](https://github.com/andrewmoles2/rTrainIntroduction/blob/master/r-fundamentals-7/images/to-do-list.jpeg?raw=true){width="286"}
+![credit: poorlydrawnlines](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-7/images/to-do-list.jpeg?raw=true){width="286"}
 
 Why is it important to learn about how to work with lists in R? There are two key reasons.
 

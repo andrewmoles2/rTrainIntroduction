@@ -15,6 +15,10 @@ output:
       collapsed: false
 ---
 
+# Objective of workshop
+
+To get acquainted with R and RStudio, and do calculations using R.
+
 # What will this workshop cover?
 
 The goal of this session is to get to started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
@@ -23,90 +27,6 @@ The goal of this session is to get to started using RStudio, learn how to use va
 -   Using r as a calculator
 -   Assigning variables
 -   Numerical variables
-
-# Information on how the session is run
-
-One hour exercise based session with tutor support. You will be given example code for a problem, then given a related exercise to complete.
-
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   One shares the screen and the other requests remote control.
--   Take turns on who types for each exercise.
--   Share markdown file at end of session via chat
--   If possible have your camera on when doing the paired work.
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-
-# Why R
-
-R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/tiobe-index.png?raw=true)
-
-It has lots of strengths:
-
--   Excellent at handling data
--   Very good for statistics
--   Open source
--   You can do almost anything in R due to community written 'packages'
--   Makes pretty and complex data visualisations (see below)
-
-![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp.gif?raw=true)
-
-------------------------------------------------------------------------
-
-# Introduction to RStudio
-
-RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/rstudioEnv.png?raw=true)
-
-When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/scripts.png?raw=true)
-
-# Using R markdown
-
-For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/RMarkdown.png?raw=true)
-
-To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
-
-------------------------------------------------------------------------
-
-# Introduction to RStudio
-
-RStudio by default has four main quadrants as shown below. The layout is customisable, as is the background.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/rstudioEnv.png?raw=true)
-
-When you load RStudio the syntax editor will not be open. Try and open one just like as shown below.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/scripts.png?raw=true)
-
-# Using R markdown
-
-For these workshops we will be using R Markdown. It allows you to have text (with simple formatting) and chunks of R code.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/RMarkdown.png?raw=true)
-
-To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
 ------------------------------------------------------------------------
 

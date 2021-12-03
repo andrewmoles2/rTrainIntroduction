@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -15,32 +15,18 @@ output:
       collapsed: true
 ---
 
+# Objective of workshop
+
+To use conditional operators and logic to filter data, as well as using if else statements in R. 
+
 # What this workshop will cover
+
+In this workshop, the aim is to cover how to use boolean and conditional operators to work with data in R. We will be covering:
 
 *  Boolean operators 
 *  Conditional operators
 *  Conditional logic
 *  If else statements
-
-## Why this style?
-
-*  Online training is tiring so keeping the sessions to one hour
-*  No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
-*  Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
-*  Option to work together on worksheet or to work individually
-*  If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-  *  The answer box on the top of Google's results page 
-  *  stackoverflow.com (for task-specific solutions)
-  *  https://www.r-bloggers.com/ (topic based tutorials)
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ***
 
@@ -258,7 +244,7 @@ sum(z < 50)
 ```
 
 ```
-## [1] 12
+## [1] 10
 ```
 
 ```r
@@ -266,7 +252,7 @@ sum(z >= 50)
 ```
 
 ```
-## [1] 8
+## [1] 10
 ```
 
 ```r
@@ -354,11 +340,7 @@ df[df$x < 20, ]
 
 ```
 ##     x  y
-## 2  13 75
-## 3  14 91
-## 6   8 46
-## 9   1 64
-## 14 18 92
+## 14 17 75
 ```
 
 ```r
@@ -369,14 +351,17 @@ df2
 
 ```
 ##     x  y
-## 1  90 21
-## 4  91  9
-## 5  44 94
-## 7  97 97
-## 11 72 88
-## 12 50 49
-## 13 76 60
-## 15 62 95
+## 1  53 51
+## 2  42 70
+## 5  52 97
+## 6  57 27
+## 7  56 57
+## 8  44 30
+## 9  63 15
+## 10 87 84
+## 11 45 24
+## 12 35 52
+## 15 50 50
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -387,9 +372,12 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 1  90 21
-## 4  91  9
-## 10 32 40
+## 4  23 34
+## 6  57 27
+## 8  44 30
+## 9  63 15
+## 11 45 24
+## 13 32 31
 ```
 
 ## Subsetting exercise
@@ -415,23 +403,20 @@ pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntrod
 ```
 
 ```
-## 
+## Rows: 151 Columns: 13
+```
+
+```
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   Number = col_double(),
-##   Name = col_character(),
-##   Type.1 = col_character(),
-##   Type.2 = col_character(),
-##   Total = col_double(),
-##   HP = col_double(),
-##   Attack = col_double(),
-##   Defense = col_double(),
-##   Sp..Atk = col_double(),
-##   Sp..Def = col_double(),
-##   Speed = col_double(),
-##   Generation = col_double(),
-##   Legendary = col_character()
-## )
+## Delimiter: ","
+## chr (4): Name, Type.1, Type.2, Legendary
+## dbl (9): Number, Total, HP, Attack, Defense, Sp..Atk, Sp..Def, Speed, Genera...
+```
+
+```
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ```r
@@ -487,6 +472,7 @@ str(pokemon)
 ##   ..   Generation = col_double(),
 ##   ..   Legendary = col_character()
 ##   .. )
+##  - attr(*, "problems")=<externalptr>
 ```
 
 ```r
@@ -669,9 +655,8 @@ df3[df3$y >= 70 & df3$z >= 70,]
 ```
 
 ```
-##          id  x  y  z     exp
-## 2  person_b 58 85 76 control
-## 10 person_j 12 86 89 control
+##         id  x  y  z  exp
+## 2 person_b 42 86 97 test
 ```
 
 ```r
@@ -679,11 +664,9 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 ```
 
 ```
-##          id  x  y  z     exp
-## 1  person_a 79  8 38 control
-## 4  person_d  8 20 43    test
-## 6  person_f  5 49 59 control
-## 10 person_j 12 86 89 control
+##         id  x  y  z  exp
+## 3 person_c 82  8 53 test
+## 9 person_i 43 19  5 test
 ```
 
 ```r
@@ -691,10 +674,10 @@ subset(df3, y < 60 & exp == 'control')
 ```
 
 ```
-##         id  x  y  z     exp
-## 1 person_a 79  8 38 control
-## 6 person_f  5 49 59 control
-## 9 person_i 18 26 91 control
+##          id  x  y  z     exp
+## 1  person_a 16 18 31 control
+## 5  person_e 49 21 92 control
+## 10 person_j 25 50 95 control
 ```
 
 # %in% operator
@@ -711,8 +694,8 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y  z  exp
-## 7 person_g 84 48 15 test
+##         id  x  y z  exp
+## 9 person_i 43 19 5 test
 ```
 
 ```r
@@ -732,9 +715,9 @@ subset(df3, id %in% val_match)
 
 ```
 ##          id  x  y  z     exp
-## 8  person_h 64 95 66 control
-## 9  person_i 18 26 91 control
-## 10 person_j 12 86 89 control
+## 8  person_h 55 48 77    test
+## 9  person_i 43 19  5    test
+## 10 person_j 25 50 95 control
 ```
 
 ```r
@@ -921,16 +904,16 @@ df3[, c('x','cat')]
 
 ```
 ##     x    cat
-## 1  79   high
-## 2  58 medium
-## 3  48 medium
-## 4   8    low
-## 5  72   high
-## 6   5    low
-## 7  84   high
-## 8  64 medium
-## 9  18    low
-## 10 12    low
+## 1  16    low
+## 2  42 medium
+## 3  82   high
+## 4  33    low
+## 5  49 medium
+## 6  75   high
+## 7  51 medium
+## 8  55 medium
+## 9  43 medium
+## 10 25    low
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 

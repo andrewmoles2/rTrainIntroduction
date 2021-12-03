@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 November, 2021"
+date: "03 December, 2021"
 output: 
   html_document: 
     theme: readable
@@ -15,6 +15,10 @@ output:
       collapsed: true
 ---
 
+# Objective of workshop
+
+To load and export data into and out of R, and start using RStudio projects to manage file paths. 
+
 # What will this workshop cover?
 
 In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:
@@ -23,32 +27,6 @@ In this workshop, the aim is to cover how to load and work with data frames, as 
 -   Introduction to directories and projects
 -   Loading in data
 -   Exporting data
-
-# Information on how the session is run
-
-One hour exercise based session with tutor support. You will be given example code for a problem, then given a related exercise to complete.
-
-## Why this style?
-
--   Online training is tiring so keeping the sessions to one hour
--   No or limited demonstrations provided in order to provide more real world experience - you have a problem and you look up how to solve it, adapting example code
--   Trainer support to guide through process of learning
-
-## We will be working in pairs:
-
--   Option to work together on worksheet or to work individually
--   If possible have your camera on and introduce yourself to each other
-
-## What to do when getting stuck:
-
-1)  Ask your team members
-2)  Search online:
-
--   The answer box on the top of Google's results page
--   stackoverflow.com (for task-specific solutions)
--   <https://www.r-bloggers.com/> (topic based tutorials)
-
-3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
 
 ------------------------------------------------------------------------
 
@@ -116,10 +94,10 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.28   R6_2.5.1        jsonlite_1.7.2  magrittr_2.0.1 
-##  [5] evaluate_0.14   rlang_0.4.12    stringi_1.7.5   jquerylib_0.1.4
+##  [1] digest_0.6.29   R6_2.5.1        jsonlite_1.7.2  magrittr_2.0.1 
+##  [5] evaluate_0.14   rlang_0.4.12    stringi_1.7.6   jquerylib_0.1.4
 ##  [9] bslib_0.3.1     rmarkdown_2.11  tools_4.1.1     stringr_1.4.0  
-## [13] xfun_0.26       yaml_2.2.1      fastmap_1.1.0   compiler_4.1.1 
+## [13] xfun_0.28       yaml_2.2.1      fastmap_1.1.0   compiler_4.1.1 
 ## [17] htmltools_0.5.2 knitr_1.36      sass_0.4.0
 ```
 
