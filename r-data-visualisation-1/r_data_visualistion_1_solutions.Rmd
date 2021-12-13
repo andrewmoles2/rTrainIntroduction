@@ -838,7 +838,7 @@ ggsave("gbr_medals_point.PNG", gbr_medals_point)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Visualisation%201:%20Data%20viz%20with%20ggplot2&topic=R&link=https://lsecloud.sharepoint.com/sites/TEAM_APD-DSL-Digital-Skills-Trainers/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FTEAM%5FAPD%2DDSL%2DDigital%2DSkills%2DTrainers%2FShared%20Documents%2FPiloting%20Online%20Data%20Science%20Workshops%2FR%20sessions%2FR%2Ddata%2Dvisualisation%2D1%2Fsolutions&p=true&ct=1635786727420&or=OWA%2DNT&cid=85cd0863%2D8711%2Daf69%2D0529%2D26fecf865ad7&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Visualisation%201:%20Data%20viz%20with%20ggplot2&topic=R&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EZL76JyCBYNNgHFW_u32KOIByuKPprbxXXaBDicDtEqbMQ&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 

@@ -1,0 +1,38 @@
+---
+title: "R Data Wrangling 4 - Data transformation with tidyr"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: true
+    toc_float: true
+---
+
+# Objective of workshop
+
+To start using the tidyr package from the tidyverse to perform long and wide transformations data, and learn how to deal with missing values. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to start working with the tidyr library from the tidyverse. We will be covering:
+
+-   How to transform data from long to wide
+-   How to transform data from wide to long
+-   General approaches to handling missing values using tidyr
+
+------------------------------------------------------------------------
+
+Ideas:
+
+- For examples, use dummy data I used for drop in for long and wide data conversion
+- Need good example dataset to use for a long and a wide conversion
+- Un-nesting and separate data using example from drop in
+- Handling weird missing values (-99 etc.)
+- General tips on what to do with missing values (remove, impute, ignore)
+

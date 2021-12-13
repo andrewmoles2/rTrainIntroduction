@@ -590,7 +590,7 @@ Data preparation:
 
 1) Make a vector called *sel_country* that includes United Kingdom, India, Nepal, Israel, Germany, and Australia
 2) Filter your covid data to include only locations that are in your sel_country vector, and filter for the year to be equal to 2021. Assign your filtered data to a variable called *weekly_vax.* 
-3) Aggregate your *weekly_vax* data by week and location to find the sum of the `people_vaccinated_per_hundred` column. Assign the result back to *weekly_vax*
+3) Aggregate your *weekly_vax* data by week and location to find the mean of the `people_vaccinated_per_hundred` column. Assign the result back to *weekly_vax*
 4) Make the week and location columns of *weekly_vax* factors
  
 Plotting:
@@ -615,7 +615,7 @@ Hint: if your x axis is looking squashed or cramped, try adding in `scale_x_disc
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Visualisation%202:%20Box,%20histogram,%20and%20line%20plots&topic=R&link=https://lsecloud.sharepoint.com/sites/TEAM_APD-DSL-Digital-Skills-Trainers/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FTEAM%5FAPD%2DDSL%2DDigital%2DSkills%2DTrainers%2FShared%20Documents%2FPiloting%20Online%20Data%20Science%20Workshops%2FR%20sessions%2FR%2Ddata%2Dvisualisation%2D2%2Fsolutions&p=true&ct=1635786756925&or=OWA%2DNT&cid=159b01f8%2Dc806%2D0d54%2D8891%2D89ae40ef18b6&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Visualisation%202:%20Box,%20histogram,%20and%20line%20plots&topic=R&link=https://lsecloud.sharepoint.com/:u:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ERDaMePD5XBKgxuOMtN94YoB4aDZ5dxXqgPXBDdzWFxYSQ&prog=DS&version=21-22>
 
 The solutions we be available from a link at the end of the survey.
 
