@@ -1,0 +1,636 @@
+---
+title: "R Fundamentals 5 & 6: Fast-track"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: true
+---
+
+# R Fundamentals 5 - Objective of workshop
+
+To load and export data into and out of R, and start using RStudio projects to manage file paths. 
+
+# What will this workshop cover?
+
+In this workshop, the aim is to cover how to load and work with data frames, as well as an introduction to packages. We will be covering:
+
+-   Introduction to packages
+-   Introduction to directories and projects
+-   Loading in data
+-   Exporting data
+
+------------------------------------------------------------------------
+
+# Introduction to packages
+
+Packages are collections of functions, code, and sample data put together by the R community. Packages are one of the main benefits of R. As R is open source there can be lots of contributors who have made functions to do complex tasks, such as data cleaning, specific types of data analysis, or exciting data visualisation.
+
+To install these packages onto your computer you have to download them from CRAN (The Comprehensive R Archive Network).
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-4/images/CRAN.png?raw=true){width="30%"}
+
+There are two ways of doing this, using code (recommended and easiest) or using the menus (`Tools > Install Packages`).
+
+Using code involves using the install packages function, which looks like: `install.packages("package name")`. To install the package you would type something like:`install.packages("readr")`.
+
+Once installed, you will not need to do this again unless you install a newer version of R.
+
+## Installing packages exercise
+
+Try installing the following packages:`readr`, `readxl`, and `writexl` using the `install.packages()` function. We will be using these in today's session.
+
+```{r eval=FALSE}
+# your code here
+install.packages('readr')
+install.packages('readxl')
+install.packages('writexl')
+```
+
+# Loading packages
+
+Now you have installed the packages, you need to load them in order to use them. **Each time you load R you will need to re-load the packages you want to use**.
+
+To load a package you need to use the `library()` function. For example, if I wanted to load the `readr` package I would type `library(readr)`.
+
+## Loading packages exercise
+
+Using `library()` load in the packages you just installed: `readr`, `readxl`, and `writexl`.
+
+```{r}
+# your code here
+
+```
+
+If you are not sure what packages are loaded, you can use `sessionInfo()`. Run the code below to test it out. Under *other attached packages* you should see readr, readxl, and writexl.
+
+```{r}
+sessionInfo()
+```
+
+# Introduction to directories
+
+A directory is a file path on your computer. In R we use working directories and file paths to tell R where to find files to load or save out of R. Directories work in a top down hierarchical manner.
+
+To find out where your working directory is in R you can use `getwd()`. This gives prints out a file path.
+
+Run the code below, the output should be the file your r_fundamentals_5.Rmd is saved in.
+
+```{r}
+getwd()
+```
+
+# Introduction to RStudio Projects
+
+A project is a centralised place to keep all your files for a study, piece of work, or 'project'. When you start a new Project it sets up a working directory in a fresh R session. Because the project sets up the working directory and keeps all your project related files in one place, it makes managing your files and analysis much easier, and helps you to share your code with collaborators or supervisors.
+
+*note: you can also change your working directory using the setwd() function, but in the long run it can be difficult to manage. E.g. if a file moves or gets deleted*
+
+# How to set up a project?
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-5/images/RStudio_projects.png?raw=true)
+
+1)  File `>` New Project...
+2)  Select new directory (or existing directory if you have already set up a file)
+
+**Setting up a project in a new directory:**
+
+1)  Select new project
+2)  Give your directory a name, e.g. "r-workshop"
+3)  Select browse and find the directory you want to start your project
+4)  Press Create Project
+5)  Your new project should open
+
+**Setting up a project in a existing directory:**
+
+1)  Select browse and find the directory you want to start your project
+2)  Press Create Project
+3)  Your new project should open
+
+To open and review your projects in future you will see them in a drop down menu in the top right corner of RStudio.
+
+## Project exercise
+
+*note: making a new project opens a new RStudio window, you can go back to your original window by selecting close project from the project drop down list in the top right corner.*
+
+1)  Set up a project for this workshop using the steps above.
+2)  Go to your newly created project folder in either File Explorer (Windows) or Finder (Mac).
+3)  Put your r_fundamentals_5.Rmd file in your project directory (if you have not do so already).
+4)  Add a new folder called data, and add in the data files for the session.
+5)  Come back to RStudio and make sure you're project is open (*will see in top right corner your project name*), in the RStudio file explorer (bottom right) you should see the changes you've made.
+6)  If you have not already, open the r_fundamentals_5.Rmd file.
+7)  In the code chunk below run `getwd()`. You should get your new project file system as the output.
+
+```{r}
+# your code here
+
+```
+
+# Loading in data from your computer
+
+Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta.
+
+To check your folders or data files are where you expect them to be, you can use the `list.files()` function. You should see your r_fundamentals_5.Rmd and your data file.
+
+```{r}
+list.files()
+```
+
+RStudio helpfully has auto-completion for directories to help you build file paths.
+
+To get this working use speech marks with a function, like `list.files()`. Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want. Repeat the process till you get to where you want to be.
+
+## List files exercise
+
+1)  Using speech marks and tab, as outlined above, list the files in your data file. You should get something like: `list.files("data/")`
+2)  Run the code, the output should be the data files you put in the data file in step 4 of the project task.
+
+```{r}
+# your code here
+
+```
+
+# Loading csv and Excel (.xlsx) files
+
+Now you know how to access files, we can load them into R!
+
+We are going to load in a .csv file and a .xlsx file, two of the most common file types to be loaded into R. To load data into R we use a read function.
+
+First we will load a csv file. To load a csv we can use either `read.csv()` that comes with R by default, or we can use `read_csv()` that comes with the readr package. `read_csv()` is preferable as it loads in large datasets faster than `read.csv()`.
+
+Just like making vectors or data frames in the previous workshops, you need to assign a name to your data that is being loaded. For example, if I was loading a dataset called *dataset.csv* stored in the data folder I would use: `data <- read_csv("data/dataset.csv")`.
+
+## Loading csv files exercise
+
+1)  Load in the *tfl-journeys-type.csv* using the `read_csv()` function from readr. Make sure to give the data a meaningful name, such as tflJourneyType.
+2)  Get some information on your loaded data frame using functions such as `str()`, `head()`, or `summary()`.
+3)  From the information, when does the dataset start and end recording data? *hint: head and tail functions will help*
+
+```{r}
+# make sure readr is loaded
+library(readr)
+# your code here
+
+```
+
+**Great work, you've loaded your first dataset!**
+
+## Loading Excel (.xlsx) files exercise
+
+Now lets have a go at reading data from an Excel file (.xlsx) using the tfl-daily-cycle-hires.xlsx file.
+
+Excel files can come with multiple worksheets, such as the example we will use. To handle this the read_xlsx function has a sheet option. By default it will load sheet 1. For example, if I wanted to load in the third worksheet of an .xlsx file I would use: `data <- read_xlsx("data/datafile.xlsx", sheet = 3)`
+
+1)  Using the `read_xlsx()` function, load worksheet 2 of the tfl-daily-cycle-hires.xlsx file, call your loaded data tflCycle.
+2)  Get information on your data like you did for the csv task.
+3)  Find out the mean, max, and min for the "Number of Bicycle Hires...2" column.
+
+*note: we will tidy this dataframe up in the individual coding challenge*
+
+```{r}
+# make sure readxl is loaded
+library(readxl)
+# your code here
+
+```
+
+# Loading in data from the internet
+
+Loading data from the internet can be useful for datasets that regularly update, such as the tfl dataset we loaded earlier. By using the URL for the dataset, we don't need to regularly download and store the data on our computer.
+
+We load the data in a very similar way to how we load in files from our computer, but instead of giving the file path, we give the URL to where the raw data is stored online. For example, we would write something like: `data <- read_csv("link to data")`.
+
+## Loading data from the internet exercise
+
+1)  Go to the following website: <https://data.london.gov.uk/dataset/public-transport-journeys-type-transport>
+2)  Find the csv file (yellow colour with around 8 or 9 kB). Use the download drop down menu and copy the *'copy link to file'* link provided.
+3)  Using `read_csv()`, load in the data using the link you just copied. Call it `tflJourneyType` again.
+4)  Run commands such as `str()` and `summary()` to make sure the data has loaded correctly.
+
+```{r}
+# your code here
+
+```
+
+# Exporting data
+
+You've learned how to load in data from computer files and the internet, now lets save some data. We will have a go at writing to both csv and xlsx (using `writexl`). The concept is very much the same as reading in data. We provide the write function with our data, then give it a file path and file name.
+
+For example, if I wanted to save a csv file to my data folder: `write_csv(data, "data/data.csv")`.
+
+## Exporting data exercise
+
+Using the tflJourneyType dataset follow the steps:
+
+1)  First lets do some calculations. Make a new column called BusTube that is the sum of bus journeys and tube journeys, for example `data$newcol <- data$col1 + data$col2`.
+2)  Make another new column called DLR_Tram that is the sum of DLR journeys and Tram journeys.
+3)  Make a new dataset called tflSubset that contains the first column, and both your new columns (BusTube & DLR_Tram) *hint: use indexing [ , ]*
+4)  Using `write_csv()` write your tflSubset data to your data file. Call it tflSubset.csv.
+5)  Using `write_xlsx()` write your tflSubset data to your data file. Call it tflSubset.xlsx.
+6)  Have a look at the csv and xlsx files you have created in finder or windows explorer.
+
+```{r}
+# make sure writexl is loaded
+library(writexl)
+# your code here
+
+```
+
+# Individual take home challenge
+
+In this coding challenge you will need to re-organise the code to get it to run. The tfl cycles dataset is a bit messy, the first two columns are the raw data, the rest is aggregated data. We are going to separate it out into separate data frames to make it easier to read. Then write out the most interesting data.
+
+You should end up with an output of *"The highest highest average cycle hire time per month was 36 minutes, on the 2020-04-01 with total hires of 591058 which is just after lockdown started!"*, and the by month xlsx file in your data file.
+
+*note: you might need to change the file paths to match your system*
+
+```{r error=TRUE}
+# Take out raw data (hire by day)
+tflCycleByDay <- tflCycle[,1:2]
+
+# most popular day, months and year
+maxDay <- tflCycleByDay[which.max(tflCycleByDay$`Number of Bicycle Hires...2`),]
+maxMonth <- tflCycleByMonth[which.max(tflCycleByMonth$`Number of Bicycle Hires...5`),]
+maxHire <- tflCycleByMonth[which.max(tflCycleByMonth$`Average Hire Time (mins)`),]
+maxYear <- tflCycleByYear[which.max(tflCycleByYear$`Number of Bicycle Hires...8`),]
+
+# load in tfl cycle data (might need to change file path)
+tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2) 
+
+# hire by month and ave hire time
+tflCycleByMonth <- tflCycle[,c("Month...4","Number of Bicycle Hires...5","Average Hire Time (mins)")]
+
+# making month a character for paste
+maxHire$Month...4 <- as.character(maxHire$Month...4)
+
+# pasting an output
+paste("The highest highest average cycle hire time per month was", maxHire[1,3], 
+      "minutes, on the", maxHire[1,1],"with total hires of", maxHire[1,2],
+      "which is just after lockdown started!")
+
+# hire by year
+tflCycleByYear <- tflCycle[1:10,c("Year", "Number of Bicycle Hires...8")]
+
+# write the tfl cycle by month data (most interesting)
+write_xlsx(tflCycleByMonth, "data/tflCycleHire_byMonth.xlsx")
+
+# load libraries
+library(readxl)
+library(writexl)
+```
+
+# Other options for loading data
+
+It is useful to mention the `data.table` package, which is the fastest option when loading large csv files by using the `fread()` function.
+
+------------------------------------------------------------------------
+
+# R Fundamentals 6 - Objective of workshop
+
+To use conditional operators and logic to filter data, as well as using if else statements in R. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to use boolean and conditional operators to work with data in R. We will be covering:
+
+*  Boolean operators 
+*  Conditional operators
+*  Conditional logic
+*  If else statements
+
+------------------------------------------------------------------------
+
+# Boolean operators
+
+In these workshops we have covered numeric, string, and factorised data types. The one data type we have not yet covered in this workshop is the logical data type. The logical data type is boolean; boolean is a binary variable that can have one of two possible values, 0 (false) or 1 (true).
+
+To use boolean in R we capitalise true and false. Run the code below to test this out. 
+```{r}
+trueFalse <- c(TRUE, FALSE, TRUE, FALSE)
+class(trueFalse)
+```
+
+We can also convert binary into boolean. R will make a 1 true and a 0 false. Run the code below to test this out. 
+```{r}
+binary <- c(1,0,0,0,1,1,1,0)
+as.logical(binary)
+```
+
+Why is this useful? Using boolean allows us to set *conditions* that can either be true or false. Meaning we can test variables against each other on the basis of a condition being met with the outcome being determined by the test. 
+
+## Boolean exercise
+
+1) Make data frame called pizza. For the first column use the topping vector provided. For the second column call it Good_topping, and use 1's and 0's to indicate a good or bad topping (1 = good, 0 = bad)
+2) Convert your good topping column to logical using `as.logical`
+3) Run `str()` and `head()` to view your data. Good_topping should now be logical (true and false). 
+
+```{r}
+Topping <- c('Mozzarella', 'Pepperoni','Pinapple', 'Pepper', 'Sweetcorn')
+
+# your code here
+
+```
+
+# Conditional Operators
+
+In order to test conditions we need conditional operators. Below is a table of conditional operators. During this session we will have examples and tasks using them in various contexts. 
+
+| Operator   | Meaning                  |
+|------------|--------------------------|
+| `>`        | Greater than             |
+| `>=`       | Greater than or equal to |
+| `<`        | Less than                |
+| `<=`       | Less than or equal to    |
+| `==`       | Equal to                 |
+| `!=`       | Not equal to             |
+| `!X`       | NOT X                    |
+| `X`        | Y                        |
+| `X & Y`    | X AND Y                  |
+| `X %in% Y` | is X in Y                |
+
+The greater than (`>`), or greater than or equal to (`>=`) operators test if variable x is greater than y; less than (`<`), or less than or equal to (`<=`) test if x is less than, or equal to, y. The output is always boolean.
+
+
+Run the code below to test this out. 
+```{r}
+18 > 18
+18 >= 18
+18 < 17
+```
+
+Why is `18 > 18` false? Any value below 18 would be true, but 18 is not greater than 18. To include 18 into the test we have to use the greater than or equal to operator. 
+
+You're most likely to use these tests on data frames or vectors. Run the code below to test out using equals to and not equal to on two columns in a data frame. 
+```{r}
+# data frame to test on
+df <- data.frame(
+  x = c(rep(20,5),rep(40,2),rep(60,3)),
+  y = c(rep(20,3),rep(40,5),rep(60,2))
+)
+# view data
+df
+
+# where is x equal to y
+df$x == df$y
+
+# where is x not equal to y
+df$x != df$y
+
+# we can also count the true cases
+sum(df$x == df$y)
+```
+
+The *equal to* test tells us where x and y have the same data, *not equal to* does the opposite. We can also use conditional operators on strings. Run the code below to test this out. 
+```{r}
+"pizza" == "bad"
+"pizza" == "pizza"
+```
+
+## Conditional operator exercise 
+
+Using conditional operators work out the following:
+
+1) Is 70 less than or equal to 11?
+2) Using the following vector, `z <- sample(1:100, 20)`, count how many elements in *z* are less than (`<`) 50, and how many are greater then or equal to (>=) 50. 
+3) Using the following vector, `pets <- c(rep('cat',5), rep('fish',11), rep('dog',6))`, count how many fish there are.
+4) Using the same pets vector, how many pets are not fish?
+
+```{r}
+# your code here
+
+```
+
+# Indexing using conditional operators (subsetting)
+
+Indexing using conditional operators is the same as we learned in previous sessions. Instead of calling the index of vector or data frame, we call a condition to test and find data. 
+
+We might want to find specific data, in the example below we are subsetting data from the pets vector that is equal to cat. Run the code to test it out. 
+```{r}
+# pet data
+pets <- c(rep('cat',5), rep('fish',13), rep('dog',6))
+pets
+# pull out cats
+cats <- pets[pets == 'cat']
+# view subsetted data
+cats
+```
+
+In the above example we passed our logic `pets == 'cat' directly into our square brackets. We can also make a vector first with our boolean logic, then pass that to our square brackets for indexing. 
+```{r}
+# boolean vector
+logic_var <- pets != 'fish'
+logic_var
+# index using boolean vector
+not_fish <- pets[logic_var]
+not_fish
+```
+
+When doing the same with data frames you will need to include a comma. The condition goes in the row index (left hand of comma); Remember `data[row index, col index]`. Run the code below to test it out on data frames. 
+```{r}
+# data frame with numbers randomly pulled from 1 to 100 for x & y
+df <- data.frame(
+  x = sample(1:100, 15),
+  y = sample(1:100, 15)
+)
+# showing data where x is less than 20
+df[df$x < 20, ]
+# subsetting data into df2 that are >= 35
+df2 <- df[df$x >= 35, ]
+df2
+```
+
+In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
+```{r}
+subset(df, y <= 40)
+```
+
+## Subsetting exercise
+
+In this task we are going to load in data from a URL and do some subsetting with it. The dataset is from the Pokémon games, and includes only the original game Pokémon (Pikachu, Mewtwo etc.). We will use this data for the rest of the tasks. Each row in the data is a different Pokémon, with their various statistics and typing. 
+
+1) Using `read_csv()` from the `readr` library load in the data from the following URL, calling the data pokemon: https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv
+2) Get information on your loaded data using the `str()`, `head()` and `View()` functions. 
+3) Using `subset()` make a new data frame called highHP and subset pokemon with a HP greater than or equal to 80. *HP stands for hit points*
+4) Run `summary()` on your highHP data frame to see the statistics of pokemon with high hit points (HP)
+5) There are some very low stats for Attack, Defense, and Speed. Use `which.min()` to find out which pokemon have these stats. *hint: data[which.min(data$col),]*. 
+6) The attack stat seems to have the highest mean (other than HP). Using `sum()` find out how many of your high HP pokemon have an Attack stat greater than or equal to 100.
+7) Finally, find out who those pokemon are. *hint: use subsetting*
+
+```{r}
+# load in readr (install using install.packages('readr') if you don't have it
+library(readr)
+
+# your code here
+
+```
+
+# Using AND OR and %in%
+
+So far we have only been using one condition. By using the AND/OR operators we can thread together multiple conditional tests to make our code more efficient. 
+
+Both statements behave slightly differently. When using AND you must satisfy both conditional tests, when using OR you can satisfy either of your conditional tests. Therefore, *AND is strict*, while *OR is lenient*. 
+
+For example, we have the 7 times table from -70 to 140 and we want to find what numbers are below 20 but above 0. AND works really well for this as it is strict, however OR doesn't work so well and includes everything. OR is better used if we wanted to find numbers less than 0 OR over 70. 
+```{r}
+# 7 times table number sequence 
+s <- seq(-70, 140, by = 7)
+s
+# AND 
+s[s < 20 & s > 0]
+
+# OR
+s[s < 20 | s > 0]
+
+# OR finding each end of seq
+s[s < 0 | s > 70]
+```
+
+## AND OR exercise
+
+Using the df3 data frame provided run the following tests. Be sure to run the tests using square brackets or the `subset()` function so you see the data as the output. 
+
+1) Subset data where y is greater than or equal to 70 and z is also greater than or equal to 70
+2) Subset data where x, y, or z are all less than 15
+3) Subset data where y is less than 60 and exp is equal to control
+```{r}
+# test data frame
+df3 <- data.frame(
+  id = paste0("person_",letters[1:10]),
+  x = sample(1:100, 10),
+  y = sample(1:100, 10),
+  z = sample(1:100, 10),
+  exp = sample(c(rep("control",50),rep("test",50)),10)
+)
+
+# your code here
+
+```
+
+# %in% operator
+
+The %in% operator is for value matching. It is a really handy way of comparing vectors of different lengths to see if elements of one vector match at least one element in another. 
+
+The length of output will be equal to the length of the vector being compared (the first one). This is different to equal to (==) which compares if two vectors or variables are *exactly equal*. 
+
+Run the examples of %in% below using the df3 data we just used for the task. First, we compare if numbers 1 to 20 are present in column z. Second, we make a vector with some id's, then we compare those id's to the id column in df3. 
+```{r error=TRUE}
+# comparing if 1-20 are in col z
+df3[df3$z %in% 1:20, ]
+
+# make a table to compare against
+val_match <- paste0("person_",letters[8:10])
+val_match
+# compare your id column to your val_match vector
+subset(df3, id %in% val_match)
+
+# trying to do the same with ==
+subset(df3, id == val_match)
+```
+
+## AND OR %in% exercise
+
+Will be using the Pokemon dataset again for this exercise. 
+
+1) Make a vector called Types with the following data: Water, Fire, Grass
+2) Using the %in% operator, match your Types vector to the Type.1 or Type.2 column to subset out that data. Call your data poke_wfg (or similar)
+3) You should now have a dataset with pokemon that are either fire, water, or grass in the Type.1 or Type.2 columns. Run `summary()` to review your data.
+4) It would be interesting to see how many of each pokemon type there are in your subsetted data. First we have to make Type.1 and Type.2 into factors. Using `factor()` make the Type.1 and Type.2 columns into factors.
+5) Run `summary()` again on your dataset, you will see counts for your Type 1 & 2 columns. 
+6) Now run `table()` function on the Type.1 and Type.2 columns, should should see the same result. *hint: table(data$col)*
+7) Now, using subsetting, find out which of your fire, grass or water pokemon have a Speed and Attack stat greater than or equal to 90
+8) Test out the same conditions but use OR instead. 
+```{r}
+# your code here
+
+```
+*note: the table() function makes counts of categorical data (factors)* 
+
+# The If statement
+
+The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means running a test to determine which operation or output is given, controlling the flow of your code. They work as follows: If statement is true, do this, else do something else. 
+
+If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens. 
+```{r}
+# pizza variables
+pizza_price <- 10
+bank_balance <- 10
+
+# if statement
+if (bank_balance > pizza_price) {
+  paste("Yes I can afford pizza")
+} else if (bank_balance == pizza_price) {
+  paste("Spend all my money on pizza!")
+} else {
+  paste("No pizza for you")
+}
+```
+
+If you have a vector with multiple elements you can use the built in `ifelse()` function. 
+
+The make up of this function is: `ifelse(condition, outcome if true, outcome if false)`. This function will compare each element for you. `ifelse()` and is generally easier to use than the if statement, and has the same functionally. 
+```{r}
+# pizza variables
+pizza_price <- c(7, 11, 9, 10.5)
+bank_balance <- 10
+
+# ifelse function
+ifelse(bank_balance >= pizza_price, "Yes I can afford pizza!", "No pizza for you")
+```
+
+We can nest if statements together if we have several different conditions (or else ifs). 
+
+In this example we are setting a category of low, medium and high from our x column in the df3 data frame. All values less then or equal to 33 are low, any value between 33 and 66 is medium and the rest are high. Run the code to test it out. 
+```{r}
+# nested if else
+df3$cat <- ifelse(df3$x <= 33, "low",
+                  ifelse(df3$x > 33 & df3$x <= 66, 'medium', 
+                         'high'))
+# view x and cat cols
+df3[, c('x','cat')]
+```
+When nesting if statements like this, *else* becomes the next ifelse statement. 
+
+## ifelse exercise
+
+1) Using `ifelse()` on the Speed column in the pokemon data use the following condition: if speed is greater than or equal to 100 they are fast, otherwise they are slow. 
+2) We need a bit more classification. This time make a new column called *SpeedTier*, using `ifelse()` on the following conditions: if Speed >= 110, very fast, if Speed < 110 & >= 90, fast, if Speed < 90 & >= 70, not so fast, else slow. *hint: use a nested ifelse()*
+3) Make Type.1 a factor, and make SpeedTier a factor with a level order of: very fast, fast,not so fast, and slow.
+4) Using `table()` compare SpeedTier with Type.1. You will be able to see counts of which speed tier different types of pokemon are in. *hint: table(data$col1, data$col2)*
+
+```{r}
+# your code here
+
+
+```
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%206:%20Conditionals%20and%20Logic%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
+
+# Individual take home challenge 
+
+In this coding challenge we are going to keep looking at the pokemon data. In the Pokemon tv show, the main character (Ash) had a team of Pokemon, we want to see how good they would be in the games, and how they compare to other pokemon. 
+
+1) First, make a vector with Ash's pokemon: Pikachu, Butterfree, Pidgeot, Bulbasaur, Charizard, Squirtle
+2) Next we need to make a dataset called ash, and subset out all his pokemon using %in% as shown above
+3) Now using `mean()` compare the mean Total for Ash's pokemon and the rest in the pokemon data *hint: putting both mean functions in a c function will allow you to see them side by side*
+4) Looks like Ash's pokemon on average are worse, but by how much? Work out the difference between the total of Ash's pokemon and the other pokemon.
+5) Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. *hint: table(data$name, data$total >= mean(data2$total))*
+6) Having stats over or equal to 100 seems important. Using subsetting and OR statements, find out how many of Ash's pokemon have stats in HP,Attack,Defense,Sp..Atk,Sp..Def, and Speed over or equal to 100.   
+
+```{r}
+# your code here
+
+```
+
+

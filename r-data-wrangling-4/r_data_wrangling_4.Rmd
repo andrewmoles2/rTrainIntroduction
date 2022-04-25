@@ -28,6 +28,7 @@ In this workshop, the aim is to cover how to start working with the tidyr librar
 
 ------------------------------------------------------------------------
 
+
 Ideas:
 
 - For examples, use dummy data I used for drop in for long and wide data conversion

@@ -16,7 +16,7 @@ output:
 
 # Objective of workshop
 
-To create histograms box, and time series plots using the ggplot2 package. 
+To create histograms, box, and time series plots using the ggplot2 package. 
 
 # What this workshop will cover
 

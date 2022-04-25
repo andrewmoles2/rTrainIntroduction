@@ -1,0 +1,641 @@
+---
+title: "R Fundamentals 3 & 4: Fast-track"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: true
+---
+
+# R Fundamentals 3 - Objective of workshop
+
+To start working with text (strings) and categorical (factors) data in R. 
+
+# What will this workshop cover?
+
+In this workshop, the aim is to cover strings and sting manipulation, introduce factors, and type conversion. We will be covering:
+
+-   String variables
+-   Introduction to factors, also known as dummy variables (represent categorical and ordered/un-ordered data)
+-   Converting types of data (strings, factors, integers, and numeric)
+-   String manipulation with Paste
+
+# Strings
+
+So far in our previous sessions we have only been working with numbers and integers. Strings are text based data which R calls **characters**.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-2/images/22895-NUNWT2.jpg?raw=true){width="50%"}
+
+To code a string you need to use quotation marks. You can use either single or double quotes, depending on your preference. When printing the result, R will always use double quotation marks.
+
+```{r}
+instrument <- "Violin"
+instrument
+instruments <- c('Violin', 'Cello', 'Viola')
+instruments
+```
+
+You can use both types of quotation marks in conjunction to add grammar to strings.
+
+```{r}
+day <- "It's a 'lovely' day"
+day
+```
+
+## Is this a string or a number?
+
+You can find out what type data your variable/vector is using the `class()` function.
+
+```{r}
+name <- 'Claudia'
+class(name)
+age <- 42
+class(age)
+```
+
+## String indexing exercise
+
+1)  Make a vector called orangeVeg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
+2)  Use the `class()` function to see what data type orangeVeg is
+3)  From orangeVeg select everything but carrot using indexing
+4)  From orangeVeg select just Pumpkin and Butternut Squash using indexing
+
+```{r}
+# your code here
+
+```
+
+# Introduction to factors
+
+Factors in R are a way to represent and work with categorical data. Categorical data has fixed values, for example, the months of the year (January, February etc.). Factors allow you to do analysis with strings by categorising them, this gives you values you can do an analysis on.
+
+In the examples below we are going to categorise a vector that contains the strings carrot and potato. There are a few different ways to make a factor in R, the primary function to do this is `factor()`.
+
+```{r}
+veg <- c("carrot", "potato", "carrot", "carrot", "potato", "carrot")
+veg <- factor(veg)
+veg
+```
+
+We created the vector then made it into a factor. We can also just add the values straight into `factor()`.
+
+```{r}
+veg <- factor(c("carrot", "potato", "potato", "potato", "potato", "carrot"))
+veg
+```
+
+To interpret the output, the first line shows all the variables in the veg vector, the second line (*levels:*) gives you the categories. In this case we have two: carrot and potato. This is helpful as it tells us that in the vector veg, the two categories we have are potatoes or carrots; these categories are represented as levels in the output.
+
+Why make strings into factors? Other than being easier to work with, factors help you to avoid typos (will give error) and can be sorted in helpful and meaningful ways which is particularly helpful when visualising data.
+
+## Factors exercise
+
+In this debugging exercise, get the below code to run to make the fruit vector a factor. There are three errors in the code. Run the code and use the printed error message to help you find the errors.
+
+```{r error=TRUE}
+fruit <- Factor(c('apple' 'pear', 'grape', 'apple', 'banana', grape))
+fruit
+```
+
+
+# Ordering factors
+
+Sometimes the ordering of the factor levels matter. For example, if you had a question on how fast someone eats ice cream with the possible answers of *slow, medium, and fast*, the order is important. This order reflects how the output will be printed or arranged in a figure.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-3/images/dog_order.jpg?raw=true){width="50%"}
+
+Run the below example. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
+
+```{r}
+iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+                     'medium','slow','medium', 'slow'))
+iceCream
+```
+
+Factors by default are ordered alphabetically. There are a few ways of changing this, the simplest of which is to include the `levels` argument in the `factor()` function.
+
+Using our example above we add the *levels* argument after the variables (`factor(variables, levels = )`).
+
+```{r}
+iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+                     'medium','slow','medium', 'slow'), 
+                   levels = c('slow','medium','fast'))
+iceCream
+```
+
+We can also add the levels after the factor has been created, by reassigning it and adding the levels argument.
+
+```{r}
+iceCream <- factor(iceCream, levels = c('slow','medium','fast'))
+iceCream
+```
+
+Finally, you can pre-define the levels in a vector before adding them as levels.
+
+```{r}
+qlevels <- c('slow','medium','fast')
+
+iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+                     'medium','slow','medium', 'slow'), 
+                   levels = qlevels)
+iceCream
+```
+
+## Factor levels task
+
+1)  Make the sizes vector below into a factor, making sure to put the sizes in the following order: low, medium, high.
+2)  Print the newly factorised sizes vector to see the outcome
+3)  Now try and reverse the factor order to: high, medium, low and save the variable
+4)  Print the reversed variable
+
+```{r}
+sizes <- c('high', 'low', 'medium', 'low', 'high')
+
+# your code here
+
+```
+
+# Type conversions
+
+In the workshops so far we have covered several types of data including strings, numeric, integer, and factors. Sometimes when working with data it is necessary to convert the type of data so you can work with it in a different way.
+
+For example, here we will convert numbers to characters using the `as.character()` function. Notice after conversion the speech marks around each number indicating it is a character. The most common type conversion functions are: `as.numeric()`, `as.integer()`, `as.factor()`, `as.character()`.
+
+A simple example of why type conversion is useful is when a number is accidentally coded as a string. In order to do calculations on that data you need to convert it.
+
+```{r error=TRUE}
+# numbers as characters
+numbers <- c("1", "2", "3", "4", "5", "6", "7")
+numbers
+# calculate sum (doesn't work)
+sum(numbers)
+# convert to numeric and try sum again
+numbers <- as.numeric(numbers)
+sum(numbers)
+```
+
+## Type conversion exercise
+
+Using the meditation_time variable defined below:
+
+1)  Use the mean function on the `meditation_time` variable
+2)  Why did it not work?
+3)  Which function do you need to change the meditation_time vector to be numeric?
+4)  Once you've changed meditation_time to numeric, run mean on it again
+
+```{r error=TRUE}
+meditation_time <- c(10, 17, 5, 16, '8', 22, 9)
+
+# your code here
+
+```
+
+The syntax for type conversions in R always start with `as.` then whatever you're converting to, such as `numeric`.
+
+# Basic string manipulation
+
+R comes with several useful functions for manipulating strings, today we will just look at `paste()`, `paste0()`.
+
+The paste functions are useful for producing nice outputs for reports or an analysis. They concatenate strings and variables to make outputs more readable. They are also really helpful to creating data, or making reproducible examples of data.
+
+The most basic use of paste is just adding strings to the function to combine them into one string.
+
+```{r}
+# printing strings hello and world
+paste("hello",  "world")
+
+# Making a string variable more readable
+Name <- "Rose"
+my_name <- paste("My name is", Name)
+my_name
+```
+
+We can combine paste with other functions such as rep or seq to make new vectors. This is really handy if you want or need to make some string based data.
+
+```{r}
+# repeat hello 
+hello <- rep(paste("Hello,", "nice to see you"), 3)
+hello
+# person id 1 to 5
+person <- paste("person", "id", seq(1:5))
+person
+```
+
+The `paste()` function has two extra arguments, `sep` and `collapse.` What do sep and collapse do? They tell paste how to separate the elements. Collapse is used when you give paste a vector, sep is for when you have single values (variables). You have to provide the symbols used to separate the elements, such as a comma.
+
+Some examples of paste with and without the sep or collapse arguments:
+
+```{r}
+# Using sep
+paste("Hi", "there")
+paste("Hi", "there", sep = ", ")
+paste("person", "id", seq(1:5), sep = "_")
+# using collapse
+trees <- c('Oak', 'Willow', 'Redwood')
+paste(trees)
+paste(trees, collapse = " and ")
+paste(trees, collapse = ", ")
+```
+
+The difference between `paste` and `paste0` is that `paste0` by default has no separation between strings. Run the example below to see the difference.
+
+```{r}
+paste("paste", "seperation", seq(1:3))
+paste0("paste", "seperation", seq(1:3))
+```
+
+With `paste0` you can add the separation you want after the string instead of as a sep arguement.
+
+```{r}
+paste0("paste_", "seperation_", seq(1:3))
+```
+
+You can't change the `sep` value for `paste0`, but collapse can be changed.
+
+```{r}
+pizzaEaten <- 4
+paste0("This week I ate ", pizzaEaten, " pizzas...")
+paste0(trees, collapse = " & ")
+```
+
+As you can see paste can make new strings from existing strings and format them into a readable format, as well as make new vectors from strings.
+
+## Paste exercise
+
+1)  Make a vector with the following flowers: sunflowers, echinaceas, dahlias
+2)  Use `paste0` or `paste` to make this string: "sunflowers, echinaceas, dahlias"
+3)  Use rep in conjunction with paste to print out each of your flowers with "I like" before each flower, repeat it four times
+4)  Make a variable called daysRaining with the value 360
+5)  Using `paste0` or `paste` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
+6)  Use `paste0` or `paste` with the seq function to make these strings: "order_1", "order_2", "order_3", "order_4", "order_5". Print out the result
+
+```{r}
+# your code here
+
+```
+
+# Individual take home challenge 1
+
+Type conversion can be helpful with questionnaire data. In this example you've taken a questionnaire how much you agree to certain topics with the following scale: Disagree, Undecided, Agree.
+
+1)  Make a vector called `survey` with the following amount of responses: agree times 5, undecided times 3, disagree times 2. hint: use the `rep()` function.
+2)  Make the survey vector into a factor, with the order levels disagree to agree. You should get *Levels: disagree undecided agree*.
+3)  Convert the survey factor to an integer. Now your factor levels will have values; 1 for disagree to 3 for agree.
+4)  Make a variable called aveSurvey and calculate the mean response.
+5)  Using `paste()` or `paste0()` print the following statement using your aveSurvey variable: "My average agreement was 2.3 out of 3".
+
+```{r}
+# your code here
+
+```
+
+# Individual take home challenge 2
+
+In this challenge get the code below to run, it has been jumbled up so needs to be re-ordered. The code calculates your week wine consumption. When it runs it will print out the following statement *"This week I drank on average 1.71 glasses of wine, 5 red and 2 white"*.
+
+```{r error=TRUE}
+# sum how much red and white wine where drunk
+red <- sum(table(typeWine[grep('red',typeWine)]))
+white <- sum(table(typeWine[grep('white',typeWine)]))
+
+# calculate the average wine, rounding the result to two decimal places
+meanWine <- round(mean(amountWine), digits = 2) 
+
+# type of wine drunk
+typeWine <- factor(c('red', 'red', 'red', 'white', 'white', 'red', 'red'))
+
+# print a nice result of your weekly wine consumption
+paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " red and ", white, " white")
+# total of small glasses you drank
+
+amountWine <- c(1, 1, 2, 1, 3, 1, 3)
+```
+
+*Note:* here we have used the `grep()` and `table()` functions so you can see how they can be used. They will be covered in later sessions. `grep()` is searching the type wine variable for either the string 'red' or 'white'. `table()` does a count on the number of each level of a factor; test out table() on the typeWine variable to see what it does.
+
+------------------------------------------------------------------------
+
+# R Fundamentals 4 - Objective of workshop
+
+To create data frames, and be able to manage them by indexing and adding data.
+
+# What will this workshop cover?
+
+In this workshop, the aim is to introduce you to data frames. We will be covering:
+
+-   Manually making data frames
+-   Adding rows and columns to data frames
+-   Getting information on data frames
+-   Indexing data frames
+
+------------------------------------------------------------------------
+
+# What is a data frame
+
+A data frame is a programming object similar to a table or an Excel spreadsheet.
+
+Data frames are commonplace in data science and are needed for most types of analysis. Generally each row contains individual entries (or observations) and each column corresponds to a feature or characteristic of that entry.
+
+Fundamentally, a data frame can contain a mix of different data types (e.g. column 1 is string, column 2 is integer, column 3 is a factor), but a single column in a data frame must be of the same type (e.g. integers, strings, etc.).
+
+![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true){width="40%"}
+
+# Making a data frame manually
+
+First, lets have a look how to make data frames manually. This will help you understand the make up and structure of data frames.
+
+To make a data frame we use the `data.frame()` function. The one way to do this is to make a vector and add that vector into the data frame. Run the example below and review the output.
+
+```{r}
+# vectors for various data types
+str1 <- paste0("person_", seq(1:5))
+int1 <- seq(1, 5)
+num1 <- c(4,7,2,9,3)
+fac1 <- factor(c("yes","yes","no","yes","no"))
+# adding them into a data frame
+exampleDat <- data.frame(str1, int1, num1, fac1)
+# print the result
+exampleDat
+```
+
+Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals, then your data like: `data.frame(column name = vector)`. Run the example below.
+
+```{r}
+# vectors for various data types
+str1 <- paste0("person_", seq(1:5))
+int1 <- seq(1, 5)
+num1 <- c(4,7,2,9,3)
+fac1 <- factor(c("yes","yes","no","yes","no"))
+# adding them into a data frame
+exampleDat <- data.frame(string = str1, 
+              integer = int1, 
+              number = num1, 
+              factor = fac1)
+# print the result
+exampleDat
+```
+
+## Manual data frame exercise
+
+Lets use the data from a previous workshop looking at Lionel Messi's career. We've got vectors with his goals, club, appearances, and year (season).
+
+Using these vectors make a data frame called `messi_career`. The column names for app and year will have to change to Appearances and Season. You should end up with a data frame that has the column names Appearances, Goals, Season, and Club.
+
+```{r}
+# Vectors with data on Messi's career
+app <- c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44)
+Goals <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
+year <- c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
+            2013,2014,2015,2016,2017,2018,2019)
+Club <- rep("FC Barcelona", length(app))
+
+# your code here
+
+```
+
+# Adding columns to the data frame
+
+When working with data frames you will need to add columns and rows to them in the process of working with the data. There are multiple ways of adding data to a data frame. We will cover the most common for both adding columns and rows.
+
+There are two common ways to add a column to a data frame, these involve using the `cbind()` function or using the `$` operator.
+
+Lets look at the first way using `cbind()`. *It is important to note that the dimensions have to match when using `cbind()` and `rbind()`, so if your data frame has 5 rows, the vector you are binding needs to have 5 rows.*
+
+```{r}
+# make an integer
+integer2 <- seq(5,1)
+# bind to the data
+exampleDat <- cbind(exampleDat, integer2)
+# print result
+exampleDat
+```
+
+The second way, and easiest, is to use the `$`. The dollar sign is a way of indexing columns in a data frame (more on data frame indexing later). We can use this feature to add columns. For example, see the code chunk below for how to index the string column in exampleDat.
+
+```{r}
+exampleDat$string
+```
+
+To add a new column, after the `$` we name the column we want to add, in this example string 2, then assign the data we want to it. Run the example below to test this out.
+
+```{r}
+exampleDat$string2 <- c(rep("Control",2), rep("Experiment", 3))
+exampleDat
+```
+
+## Adding columns exercise
+
+Using the data frame you created in the previous task (`messi_career`):
+
+1)  Make a vector called Age, with integers from 17 to 32. *hint: use the `seq()` function*
+2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
+3)  Now we are going to add Messi's Champions League goals using the `$` sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
+4)  Print out the result. You should see both the new columns of data you just added.
+
+```{r}
+# your code here
+
+```
+
+# Adding rows to a data frame
+
+To add a row to a data frame you use the `rbind()` function. First, you make a data frame with the data you want to add, then you use `rbind()` to add this onto the data frame. Again, the number of columns (and names of the columns) has to match those of the data frame you are joining to.
+
+Run the example below to test this out:
+
+```{r}
+# new row information
+newRow <- data.frame(string = "person_6",
+                     integer = 6,
+                     number = 5,
+                     factor = factor("yes"),
+                     integer2 = 0,
+                     string2 = "Control")
+# binding new row to example data
+exampleDat <- rbind(exampleDat, newRow)
+# print result
+exampleDat
+```
+
+## Adding rows exercise
+
+For this exercise we will use the same `messi_career` data frame, adding data from 2020.
+
+1)  Make a data frame called thisYear (or similar) and add the following data: Appearances: 19, Goals: 10, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 3. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
+2)  Now, using `rbind()` add the new row of data to your messi_career data frame.
+3)  Print the result, you should now see your new row of data!
+
+```{r}
+# your code here
+
+```
+
+# Getting information on a data frame
+
+There are several ways to get information on your data frame. The simplest way is to simply click on the data frame in your global environment, this will bring up a viewer plane in a tab. When you have larger datasets however this is not the best way to view your data.
+
+There are several attributes you will want to find out from your data frame. These include the dimensions (amount of rows and columns), the structure (what data does each column hold), summary information (means, interquartile range etc.), and a visual snapshot of your data.
+
+To demonstrate of these functions we will use exampleDat. Run all the code chunks below to test out the functions.
+
+To understand the dimensions of our data frame we use `dim()`, it returns the rows then columns. We can also use `nrow()` and `ncol()`. For exampleDat we get an output of 6 6 which means 6 rows and 6 columns.
+
+```{r}
+dim(exampleDat)
+```
+
+To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
+
+```{r}
+head(exampleDat)
+```
+
+To find the structure of our data we use the `str()` command. This function gives us information on the column name, what data type that column is, and some of the data in that column.
+
+```{r}
+str(exampleDat)
+```
+
+Finally, to get some basic descriptive statistics we can use `summary()`.
+
+```{r}
+summary(exampleDat)
+```
+
+## Getting information exercise
+
+Use the following commands on the `messi_career` data: `dim()`, `nrow()`, `ncol()`, `head()`, `tail()`, `summary()`, `str()`, and `View()`.
+
+```{r}
+# Your code here
+
+```
+
+# Indexing data frames
+
+When indexing data in R we use square brackets (`[]`). The exact same principle applies to data frames, we can index multiple elements and drop elements.
+
+Data frames have two dimensions in rows and columns, so we need to give indexes for both. The syntax is `data[row index, column index]`, so `data[1,5]` would mean we are indexing the first row and the fifth column.
+
+If you wanted to select all columns or all rows you can leave the column or row index blank. Run the examples below:
+
+```{r}
+exampleDat[3, ]
+exampleDat[ ,4:5]
+```
+
+You can see we get the 3rd row of data for the first example. For the second example we get all rows and columns 4 to 5.
+
+We can also index the the names of the columns, below are are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.
+
+```{r}
+exampleDat[, c("factor", "string2")]
+```
+
+Instead of putting the names we want to index straight into the square brackets, we can make a vector with the names, and use them to index.
+
+```{r}
+my_index <- c("string", "number")
+
+exampleDat[ , my_index]
+```
+
+## Indexing data frames exercise 1
+
+Using the messi_career data, index the columns Goals and Age to print out just those two columns and all the rows. Use the names of the columns as shown in the previous examples.
+
+```{r}
+# your code here
+
+```
+
+# Subsetting and calculations with indexing
+
+We can use these ideas to *subset* our data frame. Subsetting is simply selecting a portion of your data to work with. Lets say from our exampleDat data frame we wanted to just use the first three rows and columns integer, number, and integer2. See the example below for how to do this.
+
+```{r}
+exampleDat2 <- exampleDat[1:3, c("integer","number","integer2")]
+exampleDat2
+```
+
+Another method of indexing is using a function, such as `which.min()` or `which.max()` to index rows. In the below example, we use `which.min()` to find the row with the minimum in the number column, we also selected all columns.
+
+```{r}
+exampleDat3 <- exampleDat[which.min(exampleDat$number), ]
+exampleDat3
+```
+
+This is conditional indexing, which we will cover more in R fundamentals 6 (conditionals and logic).
+
+We can bring together adding a new column with indexing to do calculations. See the examples below.
+
+In the first example, we make a new column called calculation using the `$` operator..Then we do a calculation with indexing, in this case the *integer* column divided by the *number* column.
+
+In the second example, we do the calculations by using only the `$` operator.
+
+```{r}
+# add new column and add calculation to it
+exampleDat$calculation <- exampleDat[,"integer"]/exampleDat[,"number"] 
+
+# add second column using different indexing technique
+exampleDat$calculation2 <- (exampleDat$integer*exampleDat$integer2)/nrow(exampleDat)
+
+# print result
+exampleDat
+```
+
+## Indexing data frames exercise 2
+
+We will index the `messi_career` data we have using to do some calculations, subset, and print a nice result. The final printed result should be: *Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League.*.
+
+1)  Make a new column called goalRatio and, using indexing, divide Goals by Appearances.
+2)  Make another new column called propChampGoal and, using indexing, divide champLeagueGoal by Goals and times by 100.
+3)  Subset the messi_career data. Call the subsetted data messi_careerSub, and keep all rows and the following columns: Season, Age, goalRatio and propChampGoal.
+4)  Using your new messi_careerSub data frame, use `which.max()` to find the row with the best goal ratio. Store this in a data frame called bestGR. *hint: see which.min() example*.
+5)  Use `paste()` or `paste0` to print the result: Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League. *hint: use indexing on the bestGR data frame, e.g. paste("text", round(bestGR[,3],2), "more text")*.
+
+```{r}
+# your code here
+
+```
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%204:%20Data%20Frames%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=izxDVe&prog=DS&version=21-22>
+
+# Individual take home challenge
+
+For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: *Dobby the house elf is very Devoted and has a power to evil ratio of 0.67*. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.
+
+```{r, error=TRUE}
+# Some Harry Potter characters
+HP_Characters <- dataframe(
+  Name = c("Harry Potter", "Luna Lovegood", "Nymphadora Tonks", 
+           "Hermione Granger", "Severus Snape", "Cedric Diggory",
+           "Dobby the house elf"),
+  Trait = ("Brave", "Wise", "Loyal", "Brave", "Cunning", "Loyal", 
+            "Devoted"))
+# Give them a score out of 10 for power
+HP_Char$Power <- sample(1:10, 7)
+# Give them a score out of 10 for Evilness
+HP_Characters$Evilness <- sample(1:10, 7)
+# Give them a power to evil ratio
+HP_Characters$PowEvilRatio <- HP_Characters$Pow/HP_Characters$Evil
+
+# print the result for Dobby
+paste(HP_Characters[1,1], "is very", HP_Characters[7,2], 
+      "and has a power to evil ratio of", round(HP_Characters[7,5],2), sep = "# ")
+```
+
+
+

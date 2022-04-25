@@ -31,7 +31,7 @@ It has lots of strengths:
 
 ![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp.gif?raw=true)
 
-![](https://github.com/andrewmoles2/TidyTuesday/blob/master/elevation_maps/monument_valley.png?raw=true)
+![](https://github.com/andrewmoles2/TidyTuesday/blob/master/elevation_maps/vista-maps/outputs/monument_valley.png?raw=true)
 
 ------------------------------------------------------------------------
 

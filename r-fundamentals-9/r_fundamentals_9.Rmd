@@ -1,0 +1,87 @@
+---
+title: "R Fundamentals 9 - Making your own functions"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: true
+    toc_float: true
+---
+
+# Objective of workshop
+
+To start making your own functions to use for your data cleaning and analysis in R. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to start making your own functions. We will be covering:
+
+-   Introduce the basics of making functions
+-   How to use functions you've made
+-   Some general use cases to get you started
+
+------------------------------------------------------------------------
+
+
+
+Ideas:
+
+- For example or exercise, breathing function. Maybe example is triangle, exercise is adjust to square breathing
+- How to source functions you've made from a script
+- How to comment your functions
+- When to enforce user input to functions, and when to add defaults
+- At end, tidy evaluation to access columns when your functions use tidyverse functions
+
+
+example of making a range function, which is the difference between min and max values. 
+```{r}
+library(palmerpenguins)
+
+range2 <- function(x, rem.na = TRUE) {
+  range <- max(x, na.rm = rem.na) - min(x, na.rm = rem.na)
+  return(range)
+}
+
+range2(penguins$body_mass_g)
+```
+
+
+Function to tell you what *generation* you are in.
+```{r}
+generation <- function(birth_year){
+  if(birth_year >= 1997){
+    gen <- "Gen Z"
+  }
+  else if(birth_year <= 1996 & birth_year >= 1981){
+    gen <- "Millennials"
+  }
+  else if(birth_year <= 1980 & birth_year >= 1965){
+    gen <- "Gen X"
+  }
+  else if(birth_year <= 1964 & birth_year >= 1955){
+    gen <- "Boomers II"
+  }
+  else if(birth_year <= 1954 & birth_year >= 1946){
+    gen <- "Boomers I"
+  }
+  else if(birth_year <= 1945 & birth_year >= 1928){
+    gen <- "Post War"
+  }
+  else if(birth_year <= 1927 & birth_year >= 1922){
+    gen <- "WW II"
+  }
+  else{
+    gen <- "Not sure"
+  }
+  return(gen)
+}
+
+generation(1989)
+```
+
