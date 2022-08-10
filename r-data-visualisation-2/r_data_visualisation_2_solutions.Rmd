@@ -810,3 +810,8 @@ Georgios Karamanis is a data visualisation designer and makes some amazing visua
 
 For ideas about what to do with your data have a look at the R graph gallery <https://www.r-graph-gallery.com/>. 
 
+Recommended watching for opinionated (and accurate) views on data visualisation
+
+* Video: <https://www.rstudio.com/resources/rstudioconf-2020/the-glamour-of-graphics/>
+* Slides: <https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#0>
+
