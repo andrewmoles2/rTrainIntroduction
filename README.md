@@ -2,7 +2,7 @@
 
 The [repository](https://andrewmoles2.github.io/rTrainIntroduction/) is a series of short introduction to R training courses, built for online delivery using RStudio and R Markdown. 
 
-![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/r_first_then.png?raw=true)
+![Artwork by @allison_horst](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/main/rstats-artwork/r_first_then.png)
 
 ## R Fundamentals series
 
@@ -34,5 +34,5 @@ The [repository](https://andrewmoles2.github.io/rTrainIntroduction/) is a series
 
 [R Data Visualisation 2](https://github.com/andrewmoles2/rTrainIntroduction/tree/main/r-data-visualisation-2): Histograms, box plots and time series visualisations
 
-![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true)
+![Artwork by @allison_horst](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/main/rstats-artwork/tidydata_6.jpg)
 
