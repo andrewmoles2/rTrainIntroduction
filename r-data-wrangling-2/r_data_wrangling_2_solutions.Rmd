@@ -25,6 +25,7 @@ In this workshop, the aim is to cover how to perform data wrangling tasks on col
 -  Data manipulation with mutate from dplyr
 -  Renaming columns 
 -  Cleaning up column names with janitor
+-  Vectorised if statements with case_when
 
 ------------------------------------------------------------------------
 
@@ -126,13 +127,19 @@ We can see we get more user reviews than critic reviews, which makes sense; for 
 
 In our second mutate exercise, you will need to de-bug the code to get it running! You may need to re-order some elements of the code as well as checking for other errors. 
 
-We are filtering the movies_imdb data for films that are from the USA before the year 1990, have a duration less than 120 minutes, and an average vote greater than 8.5. We will also be using the user_critic_ratio column to make it into a string for easier reading. 
+We are filtering the movies_imdb data for films that are: 
+
+* From the USA before the year 1990
+* Have a duration less than 120 minutes
+* An average vote greater than 8.5
+
+We will also be using the user_critic_ratio column to make it into a string for easier reading. 
 
 You should end up with a data frame with 6 rows, and 4 columns (title, year, avg_vote, and ratio_string). The final column, ratio_string, should have an output like "Psycho has a user to critic ratio of 5.44". 
 
 ```{r eval=FALSE}
 # your code here
-usa_pre90_high <- movies_imdb |>
+usa_pre90_high <- movies_imdb %%
   mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
          ratio_string = paste(title, "has a user to critic ratio of", userCriticRatio)) %>%
   filter(country == "USA" & year < 1990) 
@@ -234,108 +241,6 @@ usa_early90_high %>%
   select(title, avg_vote, year)
 
 ```
-
-# Ranking and cumulativate calculations using mutate
-
-It can sometimes be helpful to rank your dataset, using mutate and the `min_rank()` or `percent_rank` functions allow you to add a new column with a rank based on a important column. Higher rank or percent rank means a better ranking. 
-
-In this example, we want to make a goal ranking column and a percent raking column. We can then use filter to select rankings we are interested in. 
-```{r}
-messi_career <- messi_career %>%
-  mutate(goal_rank = min_rank(Goals),
-         goal_perc_rank = percent_rank(Goals))
-
-# select rankings over 10
-messi_career %>%
-  filter(goal_rank > 10)
-```
-
-Another useful calculation you can do is to do cumulativate calculations, such as cumulativate sum or mean of a useful variable. For example, in our messi_career data it might be interesting to workout  his cumulativate goals, and average cumulativate appearances. We use the `cumsum()` and `cummean()` functions for these calculations. 
-
-*note: cumulativate calculations are work very well with longitudinal data, like we have for Lionel Messi's career goals and appearances*
-
-```{r}
-messi_career %>%
-  mutate(cumul_goals = cumsum(Goals),
-         mean_cumul_app = cummean(Appearances)) %>%
-  select(Goals, cumul_goals, Appearances, mean_cumul_app)
-```
-
-## Ranking and cumulativate calculations exercise
-
-Using your usa_early90_high data we just made in the last exercise:
-
-1)  Use mutate to make a new column called `duration_rank`, using the `min_rank()` function on the duration column
-2)  In the same mutate statement, make a new column called `perc_duration_rank`, using the `percent_rank()` function on the duration column
-3)  In the same mutate statement, make a new column called `avg_cumul_duration`, using the `cummean()` function on duration. 
-4)  Pipe to a filter function, and filter for perc_duration_rank between 0.5 and 0.6
-5)  Use select to extract the following columns: title, year, duration, avg_vote, duration_rank, perc_duration_rank, and avg_cumul_duration. 
-
-```{r}
-# your code here
-usa_early90_high %>%
-  mutate(duration_rank = min_rank(duration),
-         perc_duration_rank = percent_rank(duration),
-         avg_cumul_duration = cummean(duration)) %>%
-  filter(perc_duration_rank > 0.5 & perc_duration_rank < 0.6) %>%
-  select(title, year, duration, avg_vote, duration_rank:avg_cumul_duration)
-```
-
-# The transmute function
-
-The `transmute()` function in dplyr works in a similar way to `mutate()`, but it drops all columns *except* those it has just made. 
-
-```{r}
-# use transmutate
-messi_career %>%
-  transmute(cumul_goals = cumsum(Goals),
-         mean_cumul_app = cummean(Appearances))
-```
-
-
-The behaviour of transmute can be helpful in certain situations, but if you really want to keep some columns, you can add them into the transmute statement. For example, in the example below I might want to keep the Goals and Appearances columns for comparison with the cumulativate calculations I've made. 
-
-```{r}
-# keep Goals and Appearances
-messi_career %>%
-  transmute(cumul_goals = cumsum(Goals),
-         mean_cumul_app = cummean(Appearances),
-         Goals, 
-         Appearances)
-```
-## Transmute exercise
-
-Let's use transmute to look at the durations of the films in the imdb_movies data. 
-
-1)  Pipe movies_imdb to `transmute()`
-2)  Make a variable called duration_hours, which converts duration to hours *hint: look online for minute to hour conversion*
-3)  In the same `transmute()` make a variable called duration_rank, and use the `min_rank()` function on duration
-4)  Include the year, title, duration, and genre columns. 
-5)  Assign the result to movie_durations
-6)  Using `filter()`, `slice_max()` or `slice_min()`, find out the top 4 and bottom 4 film durations
-
-```{r}
-# your code here
-
-# make movie durations 
-movie_durations <- movies_imdb %>%
-  transmute(duration_hours = duration*0.0166667,
-            duration_rank = min_rank(duration),
-            year,
-            title,
-            duration,
-            genre)
-
-# 4 longest
-movie_durations %>%
-  slice_max(duration_hours, n = 4)
-
-# 4 shortest
-movie_durations %>%
-  filter(duration_rank < 5)
-
-```
-
 
 # Change column names
 
@@ -513,6 +418,8 @@ data.frame(
   clean_names(numerals = "left") 
 ```
 
+As a side note, the `janitor` package has loads of other really useful functions which are neatly summarised (with examples) here: <https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html>
+
 ## Clean names exercise
 As the movies_imdb data we are using already has cleaned names, we will load in another dataset as an example: the pokemon dataset we have used in previous workshops. 
 
@@ -522,7 +429,9 @@ As the movies_imdb data we are using already has cleaned names, we will load in 
 4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
 5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
 
-*Different cases available can be found at this link: <https://rdrr.io/cran/snakecase/man/to_any_case.html>*
+You should end up with a data frame with 3 columns, each column having slightly different column names from the pokemon data. 
+
+*Hint: different cases available can be found at this link: <https://rdrr.io/cran/snakecase/man/to_any_case.html>*
 ```{r message=FALSE}
 # your code here
 library(janitor)
@@ -530,14 +439,89 @@ library(readr)
 
 pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv") 
 
-pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv")  %>% clean_names()
+pokemon_cleaned <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv") %>%
+  clean_names()
 
-pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv")  %>% clean_names(case = "upper_camel")
+pokemon_cleaned_2 <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv") %>%
+  clean_names(case = "upper_camel")
 
-data_frame(default = names(pokemon),
+data.frame(default = names(pokemon),
            cleaned = names(pokemon_cleaned),
            cleaned2 = names(pokemon_cleaned_2))
 ```
+
+# Conditional logic with case_when
+
+In R fundamentals 6 we covered conditional logic, using the `ifelse()` function to categorise data based on certain conditions. This is a useful skill, as in data analysis you will often need to create new variables from other variables based on conditions. 
+
+For example, if we wanted to add Messi's squad status (if he is a key player or backup) we could use his appearances to generate this.
+
+* Key player: over 50 appearances
+* First team: between 40 and 49 appearances
+* Rotation: between 15 and 39 appearances
+* Backup: less than 15 appearances
+
+To do this with `ifelse()` we would do something like the example below. Notice that it is hard to read exactly what is happening when we have lots of conditions. 
+```{r}
+# ifelse example
+messi_career %>%
+  mutate(squad_status = ifelse(Appearances >= 50,"Key Player",
+                               ifelse(Appearances < 50 & Appearances >=40, "First Team",
+                                      ifelse(Appearances < 40 & Appearances > 15, 
+                                             "Rotation", "Backup")))) %>%
+  select(Appearances, squad_status)
+```
+
+The `case_when()` method is easier to write and read. The syntax is as follows `case_when(condition ~ output_value)` or with example data `case_when(a > b ~ "a is large")`. 
+The `TRUE` at the end is the else, for everything that doesn't match the rest of our conditions. 
+```{r}
+# case_when example
+messi_career %>%
+  mutate(squad_status = case_when(
+    Appearances >= 50 ~ "Key Player",
+    Appearances < 50 & Appearances >=40 ~ "First Team",
+    Appearances < 40 & Appearances > 15 ~ "Rotation",
+    TRUE ~ "Backup"
+  )) %>%
+  select(Appearances, squad_status)
+```
+
+As usual, the dplyr documentation is really helpful if you get stuck: <https://dplyr.tidyverse.org/reference/case_when.html>
+
+## Conditional logic with case_when exercise
+
+Using the `pokemon_cleaned` data from the `janitor` exercise:
+
+1) Create a new column called `speed_tier` using `mutate` and `case_when` that has the following conditions:
+  * pokemon with speeds greater than or equal too 110 are classified as very fast
+  * pokemon with speeds less than 110 and greater than or equal to 90 are classified as fast
+  * pokemon with speeds less than 90 and greater than or equal to 70 are classified as middling
+  * All other pokemon are classified as slow
+2) Check your dataset to make sure the classification has been done correctly. For example, Charizard should be classified as fast. 
+3) Make a table to check your results using the `table()` function. Which type has the most slow pokemon?
+
+*Hint:* a nice way of using the `table()` function is to combine it with the `with()` function, which looks something like: `with(data, table(column_1, column_2))`. This saves you having to use the `$` to call columns. 
+
+```{r}
+# your code here
+pokemon_cleaned <- pokemon_cleaned %>%
+  mutate(speed_tier = case_when(
+    speed >= 110 ~ "very fast",
+    speed < 110 & speed >= 90 ~ "fast",
+    speed < 90 & speed >= 70 ~ "middling",
+    TRUE ~ "slow"
+  ))
+
+# counts of speed tiers
+with(pokemon_cleaned, table(type_1, speed_tier))
+
+# proportions of speed tiers using prop.table and table
+with(
+  pokemon_cleaned, 
+  round(prop.table(table(type_1, speed_tier)) * 100, 3)
+     )
+```
+
 
 # Final task - Please give us your individual feedback!
 
@@ -547,7 +531,53 @@ We would be grateful if you could take a minute before the end of the workshop s
 
 The solutions we be available from a link at the end of the survey.
 
-# Individual coding challenge
+# Individual coding challenge 1 - Ranking and cumulativate calculations using mutate
+
+It can sometimes be helpful to rank your dataset, using mutate and the `min_rank()` or `percent_rank()` functions allow you to add a new column with a rank based on a important column. Higher rank or percent rank means a better ranking. 
+
+In this example, we want to make a goal ranking column and a percent raking column. We can then use filter to select rankings we are interested in. 
+```{r}
+messi_career <- messi_career %>%
+  mutate(goal_rank = min_rank(Goals),
+         goal_perc_rank = percent_rank(Goals))
+
+# select rankings over 10
+messi_career %>%
+  filter(goal_rank > 10)
+```
+
+Another useful calculation you can do is to do cumulativate calculations, such as cumulativate sum or mean of a useful variable. For example, in our messi_career data it might be interesting to workout  his cumulativate goals, and average cumulativate appearances. We use the `cumsum()` and `cummean()` functions for these calculations. 
+
+*note: cumulativate calculations are work very well with longitudinal data, like we have for Lionel Messi's career goals and appearances*
+
+```{r}
+messi_career %>%
+  mutate(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances)) %>%
+  select(Goals, cumul_goals, Appearances, mean_cumul_app)
+```
+
+## Ranking and cumulativate calculations exercise
+
+Using your usa_early90_high data we just made in the previous exercises:
+
+1)  Use mutate to make a new column called `duration_rank`, using the `min_rank()` function on the duration column
+2)  In the same mutate statement, make a new column called `perc_duration_rank`, using the `percent_rank()` function on the duration column
+3)  In the same mutate statement, make a new column called `avg_cumul_duration`, using the `cummean()` function on duration. 
+4)  Pipe to a filter function, and filter for perc_duration_rank between 0.5 and 0.6
+5)  Use select to extract the following columns: title, year, duration, avg_vote, duration_rank, perc_duration_rank, and avg_cumul_duration. 
+
+```{r}
+# your code here
+usa_early90_high %>%
+  mutate(duration_rank = min_rank(duration),
+         perc_duration_rank = percent_rank(duration),
+         avg_cumul_duration = cummean(duration)) %>%
+  filter(perc_duration_rank > 0.5 & perc_duration_rank < 0.6) %>%
+  select(title, year, duration, avg_vote, duration_rank:avg_cumul_duration)
+```
+
+# Individual coding challenge 2 - bringing it all together
 
 In this coding challenge we will try and put together what we have learned in this and previous workshops. 
 
@@ -576,12 +606,12 @@ library(janitor)
 pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv") %>%
   clean_names()
 
-# make ranks, and filter
+# make ranks, and filter
 pokemon_500 <- pokemon %>%
   mutate(across(where(is.character), as.factor),
          speed_rank = min_rank(speed),
          hp_rank = min_rank(hp)) %>%
-  filter(legendary == FALSE & generation <= 4) %>%
+  filter(legendary == FALSE & generation <= 2) %>%
   filter(total >= 500)
 
 # subsets for speed and hp
@@ -633,4 +663,59 @@ barplot(height = table(pokemon_500$type1),
 
 If you are wondering how the colouring works, we are using the factor levels of the type1 column. If you type `levels(pokemon_500$type1)` you'll get a vector with the 18 different factor levels, with Bug being 1 and Dark being 2 and so on. The first element in our colour vector therefore matches up with the first level of the type1 factor, which is bug.
 
+# Individual coding challenge 3 - The transmute function
+
+The `transmute()` function in dplyr works in a similar way to `mutate()`, but it drops all columns *except* those it has just made. 
+
+```{r}
+# use transmutate
+messi_career %>%
+  transmute(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances))
+```
+
+
+The behaviour of transmute can be helpful in certain situations, but if you really want to keep some columns, you can add them into the transmute statement. For example, in the example below I might want to keep the Goals and Appearances columns for comparison with the cumulativate calculations I've made. 
+
+```{r}
+# keep Goals and Appearances
+messi_career %>%
+  transmute(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances),
+         Goals, 
+         Appearances)
+```
+
+## Transmute exercise
+
+Let's use transmute to look at the durations of the films in the imdb_movies data. 
+
+1)  Pipe movies_imdb to `transmute()`
+2)  Make a variable called duration_hours, which converts duration to hours *hint: look online for minute to hour conversion*
+3)  In the same `transmute()` make a variable called duration_rank, and use the `min_rank()` function on duration
+4)  Include the year, title, duration, and genre columns. 
+5)  Assign the result to movie_durations
+6)  Using `filter()`, `slice_max()` or `slice_min()`, find out the top 4 and bottom 4 film durations
+
+```{r}
+# your code here
+
+# make movie durations 
+movie_durations <- movies_imdb %>%
+  transmute(duration_hours = duration*0.0166667,
+            duration_rank = min_rank(duration),
+            year,
+            title,
+            duration,
+            genre)
+
+# 4 longest
+movie_durations %>%
+  slice_max(duration_hours, n = 4)
+
+# 4 shortest
+movie_durations %>%
+  filter(duration_rank < 5)
+
+```
 
