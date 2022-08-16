@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "16 August, 2022"
 output: 
   html_document: 
     theme: readable
@@ -118,7 +118,7 @@ install.packages("", Ncpus = 6)
 
 *Also note that you can install the whole tidyverse with install.packages("tidyverse")! This takes a while though, so for this workshop we will just install individual packages.*
 
-# Intro to pipes
+# Introduction to pipes
 
 The pipe operator in R comes from the `magrittr` package, using syntax of `%>%`.
 
@@ -157,7 +157,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 5.35"
+## [1] "Mean value of y is 4.65"
 ```
 
 ```r
@@ -166,7 +166,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 5.35"
+## [1] "Mean value of y is 4.65"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -188,7 +188,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5"
+## [1] "Mean value of x is 4.95"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -210,7 +210,7 @@ z_mean
 ```
 
 ```
-## [1] 5.3
+## [1] 5.65
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -222,7 +222,7 @@ R.version.string
 ```
 
 ```
-## [1] "R version 4.1.1 (2021-08-10)"
+## [1] "R version 4.2.0 (2022-04-22)"
 ```
 
 We will be using the magrittr pipe (`%>%`) for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
@@ -604,222 +604,342 @@ imdb_sub %>% glimpse()
 ## $ reviews_from_critics <dbl> 2, 7, 2, 3, 14, 5, 9, 5, 1, 1, 9, 28, 7, 23, 4, 2…
 ```
 
-# Select helper functions
 
-So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
+# Filter function
 
-One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
+The filter function allows you to subset rows based on conditions, using conditional operators (==, \<=, != etc.). It is similar to the base r `subset()` function which we have used in previous R workshops. The table below is a reminder of the conditional operators you can use.
 
+| Operator   | Meaning                  |
+|------------|--------------------------|
+| `>`        | Greater than             |
+| `>=`       | Greater than or equal to |
+| `<`        | Less than                |
+| `<=`       | Less than or equal to    |
+| `==`       | Equal to                 |
+| `!=`       | Not equal to             |
+| `!X`       | NOT X                    |
+| `X`        | Y                        |
+| `X & Y`    | X AND Y                  |
+| `X %in% Y` | is X in Y                |
 
-```r
-# select by literal string
-messi_career %>% select(contains("Goal"))
-```
+Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
-```
-##    Goals champLeagueGoal
-## 1      1               0
-## 2      8               1
-## 3     17               1
-## 4     16               6
-## 5     38               9
-## 6     47               8
-## 7     53              12
-## 8     73              14
-## 9     60               8
-## 10    41               8
-## 11    58              10
-## 12    41               6
-## 13    54              11
-## 14    45               6
-## 15    51              12
-## 16    31               3
-```
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
 
-Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
+Run the examples below and review the outputs.
 
 
 ```r
-# columns starting with A
-messi_career %>%
-  select(starts_with("A"))
+# filter based on one criteria
+messi_career %>% filter(Goals > 50)
 ```
 
 ```
-##    Appearances Age
-## 1            9  17
-## 2           25  18
-## 3           36  19
-## 4           40  20
-## 5           51  21
-## 6           53  22
-## 7           55  23
-## 8           60  24
-## 9           50  25
-## 10          46  26
-## 11          57  27
-## 12          49  28
-## 13          52  29
-## 14          54  30
-## 15          50  31
-## 16          44  32
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          55    53   2010 FC Barcelona  23              12
+## 2          60    73   2011 FC Barcelona  24              14
+## 3          50    60   2012 FC Barcelona  25               8
+## 4          57    58   2014 FC Barcelona  27              10
+## 5          52    54   2016 FC Barcelona  29              11
+## 6          50    51   2018 FC Barcelona  31              12
 ```
 
 ```r
-# columns ending with s
-messi_career %>%
-  select(ends_with("s"))
+# filter then pipe to select
+messi_career %>% filter(Appearances >= 55) %>%
+  select(Season, Age)
 ```
 
 ```
-##    Appearances Goals
-## 1            9     1
-## 2           25     8
-## 3           36    17
-## 4           40    16
-## 5           51    38
-## 6           53    47
-## 7           55    53
-## 8           60    73
-## 9           50    60
-## 10          46    41
-## 11          57    58
-## 12          49    41
-## 13          52    54
-## 14          54    45
-## 15          50    51
-## 16          44    31
+##   Season Age
+## 1   2010  23
+## 2   2011  24
+## 3   2014  27
 ```
 
 ```r
-# columns not starting with A
-messi_career %>%
-  select(!starts_with("A"))
+# filter on more than one condition
+messi_career %>% filter(Goals > 50 & champLeagueGoal <= 10)
 ```
 
 ```
-##    Goals Season         Club champLeagueGoal
-## 1      1   2004 FC Barcelona               0
-## 2      8   2005 FC Barcelona               1
-## 3     17   2006 FC Barcelona               1
-## 4     16   2007 FC Barcelona               6
-## 5     38   2008 FC Barcelona               9
-## 6     47   2009 FC Barcelona               8
-## 7     53   2010 FC Barcelona              12
-## 8     73   2011 FC Barcelona              14
-## 9     60   2012 FC Barcelona               8
-## 10    41   2013 FC Barcelona               8
-## 11    58   2014 FC Barcelona              10
-## 12    41   2015 FC Barcelona               6
-## 13    54   2016 FC Barcelona              11
-## 14    45   2017 FC Barcelona               6
-## 15    51   2018 FC Barcelona              12
-## 16    31   2019 FC Barcelona               3
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          50    60   2012 FC Barcelona  25               8
+## 2          57    58   2014 FC Barcelona  27              10
 ```
 
-## Select helper exercise
+```r
+# filter on average
+messi_career %>% filter(Goals > mean(Goals, na.rm = TRUE))
+```
 
-Using the imdb_sub dataset you made in the previous exercise:
+```
+##    Appearances Goals Season         Club Age champLeagueGoal
+## 1           53    47   2009 FC Barcelona  22               8
+## 2           55    53   2010 FC Barcelona  23              12
+## 3           60    73   2011 FC Barcelona  24              14
+## 4           50    60   2012 FC Barcelona  25               8
+## 5           46    41   2013 FC Barcelona  26               8
+## 6           57    58   2014 FC Barcelona  27              10
+## 7           49    41   2015 FC Barcelona  28               6
+## 8           52    54   2016 FC Barcelona  29              11
+## 9           54    45   2017 FC Barcelona  30               6
+## 10          50    51   2018 FC Barcelona  31              12
+```
 
-1)  Find columns in imdb_sub that contain "vote"
-2)  Find columns in imdb_sub that start with "d"
-3)  Find columns in imdb_sub that end with "e"
-4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
+To assign the result to a new data frame (subset) we use the assignment operator at the beginning or the end of our code; here we have just shown the beginning, in the pipes section we show both versions.
+
+
+```r
+# assign result to messi_sub
+messi_sub <- messi_career %>%
+  filter(Appearances <= 40) %>%
+  select(Goals, Age)
+
+# view result
+messi_sub
+```
+
+```
+##   Goals Age
+## 1     1  17
+## 2     8  18
+## 3    17  19
+## 4    16  20
+```
+
+## Filter exercise
+
+We are going to filter our subsetted (`imdb_sub`) data to find the best rated films from the USA in the year 1989, and create a subset called USA_1989_high.
+
+1)  Pipe from imdb_sub to filter, filtering for country being equal to USA
+2)  Pipe from your country filter to another filter, filtering for year being equal to 1989
+3)  Pipe from your year filter to another filter. Filter for avg_vote to be greater than or equal to 7.5 and reviews_from_critics to be greater than 10
+4)  Make sure to assign your result to USA_1989_high
+5)  Print the result to see the highest rated films, made in the USA, in 1989.
+6)  Do you think you can put this into one filter command using the & operator?
 
 
 ```r
 # your code here
+# several filters
+USA_1989_high <- imdb_sub %>%
+  filter(country == "USA") %>%
+  filter(year == 1989) %>%
+  filter(avg_vote >= 7.5 & reviews_from_critics > 10)
 
-# cols containing vote
-imdb_sub %>%
-  select(contains("vote"))
+# single filter
+USA_1989_high <- imdb_sub %>%
+  filter(country == "USA" &
+           year == 1989 &
+           avg_vote >= 7.5 &
+           reviews_from_critics > 10)
+
+# print result
+USA_1989_high
 ```
 
 ```
-## # A tibble: 85,855 × 2
-##    avg_vote votes
-##       <dbl> <dbl>
-##  1      5.9   154
-##  2      6.1   589
-##  3      5.8   188
-##  4      5.2   446
-##  5      7    2237
-##  6      5.7   484
-##  7      6.8   753
-##  8      6.2   273
-##  9      6.7   198
-## 10      5.5   225
-## # … with 85,845 more rows
+## # A tibble: 12 × 15
+##    imdb_title_id title       year date_published genre duration country language
+##    <chr>         <chr>      <dbl> <chr>          <chr>    <dbl> <chr>   <chr>   
+##  1 tt0096754     The Abyss   1989 22/12/1989     Adve…      171 USA     English 
+##  2 tt0096874     Back to t…  1989 22/12/1989     Adve…      108 USA     English 
+##  3 tt0097123     Crimes an…  1989 20/02/1990     Come…      104 USA     English…
+##  4 tt0097165     Dead Poet…  1989 29/09/1989     Come…      128 USA     English…
+##  5 tt0097216     Do the Ri…  1989 17/11/1989     Come…      120 USA     English…
+##  6 tt0097351     Field of …  1989 05/05/1989     Dram…      107 USA     English 
+##  7 tt0097441     Glory       1989 16/02/1990     Biog…      122 USA     English 
+##  8 tt0097576     Indiana J…  1989 06/10/1989     Acti…      127 USA     English…
+##  9 tt0097757     The Littl…  1989 06/12/1990     Anim…       83 USA     English…
+## 10 tt0097958     National …  1989 01/12/1989     Come…       97 USA     English 
+## 11 tt0098635     When Harr…  1989 05/01/1990     Come…       95 USA     English 
+## 12 tt0100049     Longtime …  1989 01/05/1990     Dram…       96 USA     English 
+## # … with 7 more variables: director <chr>, writer <chr>, actors <chr>,
+## #   avg_vote <dbl>, votes <dbl>, reviews_from_users <dbl>,
+## #   reviews_from_critics <dbl>
+```
+
+You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
+
+# Other filtering options with dplyr
+
+Other than conditional subsetting of data using `filter()`, dplyr has other functions we can use to subset our data: `slice`, `sample`, and `distinct.`
+
+The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions.
+
+
+```r
+# sample 5 rows
+messi_career %>%
+  sample_n(5)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          54    45   2017 FC Barcelona  30               6
+## 2          49    41   2015 FC Barcelona  28               6
+## 3          57    58   2014 FC Barcelona  27              10
+## 4          53    47   2009 FC Barcelona  22               8
+## 5          52    54   2016 FC Barcelona  29              11
 ```
 
 ```r
-# cols starting with d
-imdb_sub %>%
-  select(starts_with("d"))
+# sample 25% of your data
+messi_career %>%
+  sample_frac(0.25)
 ```
 
 ```
-## # A tibble: 85,855 × 3
-##    date_published duration director                             
-##    <chr>             <dbl> <chr>                                
-##  1 1894-10-09           45 Alexander Black                      
-##  2 26/12/1906           70 Charles Tait                         
-##  3 19/08/1911           53 Urban Gad                            
-##  4 13/11/1912          100 Charles L. Gaskill                   
-##  5 06/03/1911           68 Francesco Bertolini, Adolfo Padovan  
-##  6 1913                 60 Sidney Olcott                        
-##  7 26/11/1919           85 Ernst Lubitsch                       
-##  8 01/03/1913          120 Enrico Guazzoni                      
-##  9 01/09/1912          120 Aristide Demetriade, Grigore Brezeanu
-## 10 15/10/1912           55 André Calmettes, James Keane         
-## # … with 85,845 more rows
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          54    45   2017 FC Barcelona  30               6
+## 2          40    16   2007 FC Barcelona  20               6
+## 3          60    73   2011 FC Barcelona  24              14
+## 4          44    31   2019 FC Barcelona  32               3
+```
+
+The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment.
+
+
+```r
+# select rows 4, 5, and 6
+messi_career %>%
+  slice(4:6)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          40    16   2007 FC Barcelona  20               6
+## 2          51    38   2008 FC Barcelona  21               9
+## 3          53    47   2009 FC Barcelona  22               8
 ```
 
 ```r
-# cols ending with e
-imdb_sub %>%
-  select(ends_with("e"))
+# equivalent in base r
+messi_career[4:6, ]
 ```
 
 ```
-## # A tibble: 85,855 × 4
-##    title                                               genre   language avg_vote
-##    <chr>                                               <chr>   <chr>       <dbl>
-##  1 Miss Jerry                                          Romance None          5.9
-##  2 The Story of the Kelly Gang                         Biogra… None          6.1
-##  3 Den sorte drøm                                      Drama   <NA>          5.8
-##  4 Cleopatra                                           Drama,… English       5.2
-##  5 L'Inferno                                           Advent… Italian       7  
-##  6 From the Manger to the Cross; or, Jesus of Nazareth Biogra… English       5.7
-##  7 Madame DuBarry                                      Biogra… German        6.8
-##  8 Quo Vadis?                                          Drama,… Italian       6.2
-##  9 Independenta Romaniei                               Histor… <NA>          6.7
-## 10 Richard III                                         Drama   English       5.5
-## # … with 85,845 more rows
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 4          40    16   2007 FC Barcelona  20               6
+## 5          51    38   2008 FC Barcelona  21               9
+## 6          53    47   2009 FC Barcelona  22               8
+```
+
+The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column.
+
+
+```r
+# extract rows with top three Goals
+messi_career %>%
+  slice_max(Goals, n = 3)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          60    73   2011 FC Barcelona  24              14
+## 2          50    60   2012 FC Barcelona  25               8
+## 3          57    58   2014 FC Barcelona  27              10
 ```
 
 ```r
-# cols starting with d or ending with r
-imdb_sub %>%
-  select(starts_with("d") | ends_with("r"))
+# this harder and less clear in base r
+messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
 ```
 
 ```
-## # A tibble: 85,855 × 5
-##    date_published duration director                               year writer   
-##    <chr>             <dbl> <chr>                                 <dbl> <chr>    
-##  1 1894-10-09           45 Alexander Black                        1894 Alexande…
-##  2 26/12/1906           70 Charles Tait                           1906 Charles …
-##  3 19/08/1911           53 Urban Gad                              1911 Urban Ga…
-##  4 13/11/1912          100 Charles L. Gaskill                     1912 Victorie…
-##  5 06/03/1911           68 Francesco Bertolini, Adolfo Padovan    1911 Dante Al…
-##  6 1913                 60 Sidney Olcott                          1912 Gene Gau…
-##  7 26/11/1919           85 Ernst Lubitsch                         1919 Norbert …
-##  8 01/03/1913          120 Enrico Guazzoni                        1913 Henryk S…
-##  9 01/09/1912          120 Aristide Demetriade, Grigore Brezeanu  1912 Aristide…
-## 10 15/10/1912           55 André Calmettes, James Keane           1912 James Ke…
-## # … with 85,845 more rows
+##    Appearances Goals Season         Club Age champLeagueGoal
+## 8           60    73   2011 FC Barcelona  24              14
+## 9           50    60   2012 FC Barcelona  25               8
+## 11          57    58   2014 FC Barcelona  27              10
 ```
+
+```r
+# extract rows with bottom three Goals
+messi_career %>%
+  slice_min(Goals, n = 3)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1           9     1   2004 FC Barcelona  17               0
+## 2          25     8   2005 FC Barcelona  18               1
+## 3          40    16   2007 FC Barcelona  20               6
+```
+
+## Filtering continued exercise
+
+In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.
+
+If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run!
+
+
+```r
+# your code here
+top_votes_USA <- imdb_sub %>%
+  filter(duration >= 120 & country = "USA") %>%
+  slicemax(avgvote, n = 20) %>%
+  select(title year, genre, avg_vote)
+
+top_votes_USA
+
+# fun extra, plot the output of your debugging! 
+plot(top_votes_USA$year, top_votes_USA$avg_vote,
+     col = "orange", # point colour
+     pch = 16, # point type
+     cex = 1.5, # point size
+     xlab = "Year",
+     ylab = "Average vote") 
+```
+
+
+```r
+# your code here
+top_votes_USA <- imdb_sub %>%
+  filter(duration >= 120 & country == "USA") %>%
+  slice_max(avg_vote, n = 20) %>%
+  select(title, year, genre, avg_vote)
+
+top_votes_USA
+```
+
+```
+## # A tibble: 20 × 4
+##    title                                           year genre           avg_vote
+##    <chr>                                          <dbl> <chr>              <dbl>
+##  1 The Shawshank Redemption                        1994 Drama                9.3
+##  2 The Godfather                                   1972 Crime, Drama         9.2
+##  3 The Godfather: Part II                          1974 Crime, Drama         9  
+##  4 Schindler's List                                1993 Biography, Dra…      8.9
+##  5 Pulp Fiction                                    1994 Crime, Drama         8.9
+##  6 Forrest Gump                                    1994 Drama, Romance       8.8
+##  7 Metallica & San Francisco Symphony - S&M2       2019 Music                8.8
+##  8 Kill Bill: The Whole Bloody Affair              2011 Action, Crime,…      8.8
+##  9 One Flew Over the Cuckoo's Nest                 1975 Drama                8.7
+## 10 Star Wars: Episode V - The Empire Strikes Back  1980 Action, Advent…      8.7
+## 11 Goodfellas                                      1990 Biography, Cri…      8.7
+## 12 The Matrix                                      1999 Action, Sci-Fi       8.7
+## 13 Spies Are Forever                               2016 Musical              8.7
+## 14 Hamilton                                        2020 Biography, Dra…      8.7
+## 15 It's a Wonderful Life                           1946 Drama, Family,…      8.6
+## 16 Star Wars                                       1977 Action, Advent…      8.6
+## 17 Se7en                                           1995 Crime, Drama, …      8.6
+## 18 The Green Mile                                  1999 Crime, Drama, …      8.6
+## 19 Saving Private Ryan                             1998 Drama, War           8.6
+## 20 George Takei's Allegiance                       2016 Musical              8.6
+```
+
+```r
+# fun extra, plot the output of your debugging! 
+plot(top_votes_USA$year, top_votes_USA$avg_vote,
+     col = "orange", # point colour
+     pch = 16, # point type
+     cex = 1.5, # point size
+     xlab = "Year",
+     ylab = "Average vote") 
+```
+
+![](r_data_wrangling_1_solutions_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 # Using select to change column order
 
@@ -1016,18 +1136,18 @@ imdb_sub %>%
 
 ```
 ## # A tibble: 85,855 × 15
-##     year imdb_title_id title     date_published genre  duration country language
-##    <dbl> <chr>         <chr>     <chr>          <chr>     <dbl> <chr>   <chr>   
-##  1  1894 tt0000009     Miss Jer… 1894-10-09     Roman…       45 USA     None    
-##  2  1906 tt0000574     The Stor… 26/12/1906     Biogr…       70 Austra… None    
-##  3  1911 tt0001892     Den sort… 19/08/1911     Drama        53 German… <NA>    
-##  4  1912 tt0002101     Cleopatra 13/11/1912     Drama…      100 USA     English 
-##  5  1911 tt0002130     L'Inferno 06/03/1911     Adven…       68 Italy   Italian 
-##  6  1912 tt0002199     From the… 1913           Biogr…       60 USA     English 
-##  7  1919 tt0002423     Madame D… 26/11/1919     Biogr…       85 Germany German  
-##  8  1913 tt0002445     Quo Vadi… 01/03/1913     Drama…      120 Italy   Italian 
-##  9  1912 tt0002452     Independ… 01/09/1912     Histo…      120 Romania <NA>    
-## 10  1912 tt0002461     Richard … 15/10/1912     Drama        55 France… English 
+##     year imdb_title_id title      date_published genre duration country language
+##    <dbl> <chr>         <chr>      <chr>          <chr>    <dbl> <chr>   <chr>   
+##  1  1894 tt0000009     Miss Jerry 1894-10-09     Roma…       45 USA     None    
+##  2  1906 tt0000574     The Story… 26/12/1906     Biog…       70 Austra… None    
+##  3  1911 tt0001892     Den sorte… 19/08/1911     Drama       53 German… <NA>    
+##  4  1912 tt0002101     Cleopatra  13/11/1912     Dram…      100 USA     English 
+##  5  1911 tt0002130     L'Inferno  06/03/1911     Adve…       68 Italy   Italian 
+##  6  1912 tt0002199     From the … 1913           Biog…       60 USA     English 
+##  7  1919 tt0002423     Madame Du… 26/11/1919     Biog…       85 Germany German  
+##  8  1913 tt0002445     Quo Vadis? 01/03/1913     Dram…      120 Italy   Italian 
+##  9  1912 tt0002452     Independe… 01/09/1912     Hist…      120 Romania <NA>    
+## 10  1912 tt0002461     Richard I… 15/10/1912     Drama       55 France… English 
 ## # … with 85,845 more rows, and 7 more variables: director <chr>, writer <chr>,
 ## #   actors <chr>, avg_vote <dbl>, votes <dbl>, reviews_from_users <dbl>,
 ## #   reviews_from_critics <dbl>
@@ -1041,358 +1161,22 @@ imdb_sub %>%
 
 ```
 ## # A tibble: 85,855 × 15
-##    imdb_title_id title      year avg_vote date_published genre  duration country
-##    <chr>         <chr>     <dbl>    <dbl> <chr>          <chr>     <dbl> <chr>  
-##  1 tt0000009     Miss Jer…  1894      5.9 1894-10-09     Roman…       45 USA    
-##  2 tt0000574     The Stor…  1906      6.1 26/12/1906     Biogr…       70 Austra…
-##  3 tt0001892     Den sort…  1911      5.8 19/08/1911     Drama        53 German…
-##  4 tt0002101     Cleopatra  1912      5.2 13/11/1912     Drama…      100 USA    
-##  5 tt0002130     L'Inferno  1911      7   06/03/1911     Adven…       68 Italy  
-##  6 tt0002199     From the…  1912      5.7 1913           Biogr…       60 USA    
-##  7 tt0002423     Madame D…  1919      6.8 26/11/1919     Biogr…       85 Germany
-##  8 tt0002445     Quo Vadi…  1913      6.2 01/03/1913     Drama…      120 Italy  
-##  9 tt0002452     Independ…  1912      6.7 01/09/1912     Histo…      120 Romania
-## 10 tt0002461     Richard …  1912      5.5 15/10/1912     Drama        55 France…
+##    imdb_title_id title       year avg_vote date_published genre duration country
+##    <chr>         <chr>      <dbl>    <dbl> <chr>          <chr>    <dbl> <chr>  
+##  1 tt0000009     Miss Jerry  1894      5.9 1894-10-09     Roma…       45 USA    
+##  2 tt0000574     The Story…  1906      6.1 26/12/1906     Biog…       70 Austra…
+##  3 tt0001892     Den sorte…  1911      5.8 19/08/1911     Drama       53 German…
+##  4 tt0002101     Cleopatra   1912      5.2 13/11/1912     Dram…      100 USA    
+##  5 tt0002130     L'Inferno   1911      7   06/03/1911     Adve…       68 Italy  
+##  6 tt0002199     From the …  1912      5.7 1913           Biog…       60 USA    
+##  7 tt0002423     Madame Du…  1919      6.8 26/11/1919     Biog…       85 Germany
+##  8 tt0002445     Quo Vadis?  1913      6.2 01/03/1913     Dram…      120 Italy  
+##  9 tt0002452     Independe…  1912      6.7 01/09/1912     Hist…      120 Romania
+## 10 tt0002461     Richard I…  1912      5.5 15/10/1912     Drama       55 France…
 ## # … with 85,845 more rows, and 7 more variables: language <chr>,
 ## #   director <chr>, writer <chr>, actors <chr>, votes <dbl>,
 ## #   reviews_from_users <dbl>, reviews_from_critics <dbl>
 ```
-
-# Filter function
-
-The filter function allows you to subset rows based on conditions, using conditional operators (==, \<=, != etc.). It is similar to the base r `subset()` function which we have used in previous R workshops. The table below is a reminder of the conditional operators you can use.
-
-| Operator   | Meaning                  |
-|------------|--------------------------|
-| `>`        | Greater than             |
-| `>=`       | Greater than or equal to |
-| `<`        | Less than                |
-| `<=`       | Less than or equal to    |
-| `==`       | Equal to                 |
-| `!=`       | Not equal to             |
-| `!X`       | NOT X                    |
-| `X`        | Y                        |
-| `X & Y`    | X AND Y                  |
-| `X %in% Y` | is X in Y                |
-
-Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
-
-Run the examples below and review the outputs.
-
-
-```r
-# filter based on one criteria
-messi_career %>% filter(Goals > 50)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          55    53   2010 FC Barcelona  23              12
-## 2          60    73   2011 FC Barcelona  24              14
-## 3          50    60   2012 FC Barcelona  25               8
-## 4          57    58   2014 FC Barcelona  27              10
-## 5          52    54   2016 FC Barcelona  29              11
-## 6          50    51   2018 FC Barcelona  31              12
-```
-
-```r
-# filter then pipe to select
-messi_career %>% filter(Appearances >= 55) %>%
-  select(Season, Age)
-```
-
-```
-##   Season Age
-## 1   2010  23
-## 2   2011  24
-## 3   2014  27
-```
-
-```r
-# filter on more than one condition
-messi_career %>% filter(Goals > 50 & champLeagueGoal <= 10)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          50    60   2012 FC Barcelona  25               8
-## 2          57    58   2014 FC Barcelona  27              10
-```
-
-```r
-# filter on average
-messi_career %>% filter(Goals > mean(Goals, na.rm = TRUE))
-```
-
-```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 1           53    47   2009 FC Barcelona  22               8
-## 2           55    53   2010 FC Barcelona  23              12
-## 3           60    73   2011 FC Barcelona  24              14
-## 4           50    60   2012 FC Barcelona  25               8
-## 5           46    41   2013 FC Barcelona  26               8
-## 6           57    58   2014 FC Barcelona  27              10
-## 7           49    41   2015 FC Barcelona  28               6
-## 8           52    54   2016 FC Barcelona  29              11
-## 9           54    45   2017 FC Barcelona  30               6
-## 10          50    51   2018 FC Barcelona  31              12
-```
-
-To assign the result to a new data frame (subset) we use the assignment operator at the beginning or the end of our code; here we have just shown the beginning, in the pipes section we show both versions.
-
-
-```r
-# assign result to messi_sub
-messi_sub <- messi_career %>%
-  filter(Appearances <= 40) %>%
-  select(Goals, Age)
-
-# view result
-messi_sub
-```
-
-```
-##   Goals Age
-## 1     1  17
-## 2     8  18
-## 3    17  19
-## 4    16  20
-```
-
-## Filter exercise
-
-We are going to filter our subsetted (`imdb_sub`) data to find the best rated films from the USA in the year 1989, and create a subset called USA_1989_high.
-
-1)  Pipe from imdb_sub to filter, filtering for country being equal to USA
-2)  Pipe from your country filter to another filter, filtering for year being equal to 1989
-3)  Pipe from your year filter to another filter. Filter for avg_vote to be greater than or equal to 7.5 and reviews_from_critics to be greater than 10
-4)  Make sure to assign your result to USA_1989_high
-5)  Print the result to see the highest rated films, made in the USA, in 1989.
-6)  Do you think you can put this into one filter command using the & operator?
-
-
-```r
-# your code here
-# several filters
-USA_1989_high <- imdb_sub %>%
-  filter(country == "USA") %>%
-  filter(year == 1989) %>%
-  filter(avg_vote >= 7.5 & reviews_from_critics > 10)
-
-# single filter
-USA_1989_high <- imdb_sub %>%
-  filter(country == "USA" &
-           year == 1989 &
-           avg_vote >= 7.5 &
-           reviews_from_critics > 10)
-
-# print result
-USA_1989_high
-```
-
-```
-## # A tibble: 12 × 15
-##    imdb_title_id title     year date_published genre  duration country language 
-##    <chr>         <chr>    <dbl> <chr>          <chr>     <dbl> <chr>   <chr>    
-##  1 tt0096754     The Aby…  1989 22/12/1989     Adven…      171 USA     English  
-##  2 tt0096874     Back to…  1989 22/12/1989     Adven…      108 USA     English  
-##  3 tt0097123     Crimes …  1989 20/02/1990     Comed…      104 USA     English,…
-##  4 tt0097165     Dead Po…  1989 29/09/1989     Comed…      128 USA     English,…
-##  5 tt0097216     Do the …  1989 17/11/1989     Comed…      120 USA     English,…
-##  6 tt0097351     Field o…  1989 05/05/1989     Drama…      107 USA     English  
-##  7 tt0097441     Glory     1989 16/02/1990     Biogr…      122 USA     English  
-##  8 tt0097576     Indiana…  1989 06/10/1989     Actio…      127 USA     English,…
-##  9 tt0097757     The Lit…  1989 06/12/1990     Anima…       83 USA     English,…
-## 10 tt0097958     Nationa…  1989 01/12/1989     Comedy       97 USA     English  
-## 11 tt0098635     When Ha…  1989 05/01/1990     Comed…       95 USA     English  
-## 12 tt0100049     Longtim…  1989 01/05/1990     Drama…       96 USA     English  
-## # … with 7 more variables: director <chr>, writer <chr>, actors <chr>,
-## #   avg_vote <dbl>, votes <dbl>, reviews_from_users <dbl>,
-## #   reviews_from_critics <dbl>
-```
-
-You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
-
-# Other filtering options with dplyr
-
-Other than conditional subsetting of data using `filter()`, dplyr has other functions we can use to subset our data: `slice`, `sample`, and `distinct.`
-
-The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions.
-
-
-```r
-# sample 5 rows
-messi_career %>%
-  sample_n(5)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          44    31   2019 FC Barcelona  32               3
-## 2          53    47   2009 FC Barcelona  22               8
-## 3          36    17   2006 FC Barcelona  19               1
-## 4          46    41   2013 FC Barcelona  26               8
-## 5          49    41   2015 FC Barcelona  28               6
-```
-
-```r
-# sample 25% of your data
-messi_career %>%
-  sample_frac(0.25)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          53    47   2009 FC Barcelona  22               8
-## 2          55    53   2010 FC Barcelona  23              12
-## 3          25     8   2005 FC Barcelona  18               1
-## 4          51    38   2008 FC Barcelona  21               9
-```
-
-The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment.
-
-
-```r
-# select rows 4, 5, and 6
-messi_career %>%
-  slice(4:6)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          40    16   2007 FC Barcelona  20               6
-## 2          51    38   2008 FC Barcelona  21               9
-## 3          53    47   2009 FC Barcelona  22               8
-```
-
-```r
-# equivalent in base r
-messi_career[4:6, ]
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 4          40    16   2007 FC Barcelona  20               6
-## 5          51    38   2008 FC Barcelona  21               9
-## 6          53    47   2009 FC Barcelona  22               8
-```
-
-The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column.
-
-
-```r
-# extract rows with top three Goals
-messi_career %>%
-  slice_max(Goals, n = 3)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          60    73   2011 FC Barcelona  24              14
-## 2          50    60   2012 FC Barcelona  25               8
-## 3          57    58   2014 FC Barcelona  27              10
-```
-
-```r
-# this harder and less clear in base r
-messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
-```
-
-```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 8           60    73   2011 FC Barcelona  24              14
-## 9           50    60   2012 FC Barcelona  25               8
-## 11          57    58   2014 FC Barcelona  27              10
-```
-
-```r
-# extract rows with bottom three Goals
-messi_career %>%
-  slice_min(Goals, n = 3)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1           9     1   2004 FC Barcelona  17               0
-## 2          25     8   2005 FC Barcelona  18               1
-## 3          40    16   2007 FC Barcelona  20               6
-```
-
-## Filtering continued exercise
-
-In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.
-
-If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run!
-
-
-```r
-# your code here
-top_votes_USA <- imdb_sub %>%
-  filter(duration >= 120 & country = "USA") |>
-  slicemax(avgvote, n = 20) %>%
-  select(title year, genre, avg_vote)
-
-top_votes_USA
-
-# fun extra, plot the output of your debugging! 
-plot(top_votes_USA$year, top_votes_USA$avg_vote,
-     col = "orange", # point colour
-     pch = 16, # point type
-     cex = 1.5, # point size
-     xlab = "Year",
-     ylab = "Average vote") 
-```
-
-
-```r
-# your code here
-top_votes_USA <- imdb_sub %>%
-  filter(duration >= 120 & country == "USA") %>%
-  slice_max(avg_vote, n = 20) %>%
-  select(title, year, genre, avg_vote)
-
-top_votes_USA
-```
-
-```
-## # A tibble: 20 × 4
-##    title                                           year genre           avg_vote
-##    <chr>                                          <dbl> <chr>              <dbl>
-##  1 The Shawshank Redemption                        1994 Drama                9.3
-##  2 The Godfather                                   1972 Crime, Drama         9.2
-##  3 The Godfather: Part II                          1974 Crime, Drama         9  
-##  4 Schindler's List                                1993 Biography, Dra…      8.9
-##  5 Pulp Fiction                                    1994 Crime, Drama         8.9
-##  6 Forrest Gump                                    1994 Drama, Romance       8.8
-##  7 Metallica & San Francisco Symphony - S&M2       2019 Music                8.8
-##  8 Kill Bill: The Whole Bloody Affair              2011 Action, Crime,…      8.8
-##  9 One Flew Over the Cuckoo's Nest                 1975 Drama                8.7
-## 10 Star Wars: Episode V - The Empire Strikes Back  1980 Action, Advent…      8.7
-## 11 Goodfellas                                      1990 Biography, Cri…      8.7
-## 12 The Matrix                                      1999 Action, Sci-Fi       8.7
-## 13 Spies Are Forever                               2016 Musical              8.7
-## 14 Hamilton                                        2020 Biography, Dra…      8.7
-## 15 It's a Wonderful Life                           1946 Drama, Family,…      8.6
-## 16 Star Wars                                       1977 Action, Advent…      8.6
-## 17 Se7en                                           1995 Crime, Drama, …      8.6
-## 18 The Green Mile                                  1999 Crime, Drama, …      8.6
-## 19 Saving Private Ryan                             1998 Drama, War           8.6
-## 20 George Takei's Allegiance                       2016 Musical              8.6
-```
-
-```r
-# fun extra, plot the output of your debugging! 
-plot(top_votes_USA$year, top_votes_USA$avg_vote,
-     col = "orange", # point colour
-     pch = 16, # point type
-     cex = 1.5, # point size
-     xlab = "Year",
-     ylab = "Average vote") 
-```
-
-![](r_data_wrangling_1_solutions_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
 
 # Final task - Please give us your individual feedback!
 
@@ -1461,3 +1245,221 @@ filter(Tolkien_Potter, duration < mean(duration))
 ## 7 Harry Potter and the Deathly Hallows: Part 2  2011      8.1      130
 ## 8 The Hobbit: The Battle of the Five Armies     2014      7.4      144
 ```
+
+# Individual coding challenge 2 - Select helper functions
+
+So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
+
+One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
+
+
+```r
+# select by literal string
+messi_career %>% select(contains("Goal"))
+```
+
+```
+##    Goals champLeagueGoal
+## 1      1               0
+## 2      8               1
+## 3     17               1
+## 4     16               6
+## 5     38               9
+## 6     47               8
+## 7     53              12
+## 8     73              14
+## 9     60               8
+## 10    41               8
+## 11    58              10
+## 12    41               6
+## 13    54              11
+## 14    45               6
+## 15    51              12
+## 16    31               3
+```
+
+Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
+
+
+```r
+# columns starting with A
+messi_career %>%
+  select(starts_with("A"))
+```
+
+```
+##    Appearances Age
+## 1            9  17
+## 2           25  18
+## 3           36  19
+## 4           40  20
+## 5           51  21
+## 6           53  22
+## 7           55  23
+## 8           60  24
+## 9           50  25
+## 10          46  26
+## 11          57  27
+## 12          49  28
+## 13          52  29
+## 14          54  30
+## 15          50  31
+## 16          44  32
+```
+
+```r
+# columns ending with s
+messi_career %>%
+  select(ends_with("s"))
+```
+
+```
+##    Appearances Goals
+## 1            9     1
+## 2           25     8
+## 3           36    17
+## 4           40    16
+## 5           51    38
+## 6           53    47
+## 7           55    53
+## 8           60    73
+## 9           50    60
+## 10          46    41
+## 11          57    58
+## 12          49    41
+## 13          52    54
+## 14          54    45
+## 15          50    51
+## 16          44    31
+```
+
+```r
+# columns not starting with A
+messi_career %>%
+  select(!starts_with("A"))
+```
+
+```
+##    Goals Season         Club champLeagueGoal
+## 1      1   2004 FC Barcelona               0
+## 2      8   2005 FC Barcelona               1
+## 3     17   2006 FC Barcelona               1
+## 4     16   2007 FC Barcelona               6
+## 5     38   2008 FC Barcelona               9
+## 6     47   2009 FC Barcelona               8
+## 7     53   2010 FC Barcelona              12
+## 8     73   2011 FC Barcelona              14
+## 9     60   2012 FC Barcelona               8
+## 10    41   2013 FC Barcelona               8
+## 11    58   2014 FC Barcelona              10
+## 12    41   2015 FC Barcelona               6
+## 13    54   2016 FC Barcelona              11
+## 14    45   2017 FC Barcelona               6
+## 15    51   2018 FC Barcelona              12
+## 16    31   2019 FC Barcelona               3
+```
+
+## Select helper exercise
+
+Using the imdb_sub dataset you made in the previous exercises:
+
+1)  Find columns in imdb_sub that contain "vote"
+2)  Find columns in imdb_sub that start with "d"
+3)  Find columns in imdb_sub that end with "e"
+4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
+
+
+```r
+# your code here
+
+# cols containing vote
+imdb_sub %>%
+  select(contains("vote"))
+```
+
+```
+## # A tibble: 85,855 × 2
+##    avg_vote votes
+##       <dbl> <dbl>
+##  1      5.9   154
+##  2      6.1   589
+##  3      5.8   188
+##  4      5.2   446
+##  5      7    2237
+##  6      5.7   484
+##  7      6.8   753
+##  8      6.2   273
+##  9      6.7   198
+## 10      5.5   225
+## # … with 85,845 more rows
+```
+
+```r
+# cols starting with d
+imdb_sub %>%
+  select(starts_with("d"))
+```
+
+```
+## # A tibble: 85,855 × 3
+##    date_published duration director                             
+##    <chr>             <dbl> <chr>                                
+##  1 1894-10-09           45 Alexander Black                      
+##  2 26/12/1906           70 Charles Tait                         
+##  3 19/08/1911           53 Urban Gad                            
+##  4 13/11/1912          100 Charles L. Gaskill                   
+##  5 06/03/1911           68 Francesco Bertolini, Adolfo Padovan  
+##  6 1913                 60 Sidney Olcott                        
+##  7 26/11/1919           85 Ernst Lubitsch                       
+##  8 01/03/1913          120 Enrico Guazzoni                      
+##  9 01/09/1912          120 Aristide Demetriade, Grigore Brezeanu
+## 10 15/10/1912           55 André Calmettes, James Keane         
+## # … with 85,845 more rows
+```
+
+```r
+# cols ending with e
+imdb_sub %>%
+  select(ends_with("e"))
+```
+
+```
+## # A tibble: 85,855 × 4
+##    title                                               genre   language avg_vote
+##    <chr>                                               <chr>   <chr>       <dbl>
+##  1 Miss Jerry                                          Romance None          5.9
+##  2 The Story of the Kelly Gang                         Biogra… None          6.1
+##  3 Den sorte drøm                                      Drama   <NA>          5.8
+##  4 Cleopatra                                           Drama,… English       5.2
+##  5 L'Inferno                                           Advent… Italian       7  
+##  6 From the Manger to the Cross; or, Jesus of Nazareth Biogra… English       5.7
+##  7 Madame DuBarry                                      Biogra… German        6.8
+##  8 Quo Vadis?                                          Drama,… Italian       6.2
+##  9 Independenta Romaniei                               Histor… <NA>          6.7
+## 10 Richard III                                         Drama   English       5.5
+## # … with 85,845 more rows
+```
+
+```r
+# cols starting with d or ending with r
+imdb_sub %>%
+  select(starts_with("d") | ends_with("r"))
+```
+
+```
+## # A tibble: 85,855 × 5
+##    date_published duration director                               year writer   
+##    <chr>             <dbl> <chr>                                 <dbl> <chr>    
+##  1 1894-10-09           45 Alexander Black                        1894 Alexande…
+##  2 26/12/1906           70 Charles Tait                           1906 Charles …
+##  3 19/08/1911           53 Urban Gad                              1911 Urban Ga…
+##  4 13/11/1912          100 Charles L. Gaskill                     1912 Victorie…
+##  5 06/03/1911           68 Francesco Bertolini, Adolfo Padovan    1911 Dante Al…
+##  6 1913                 60 Sidney Olcott                          1912 Gene Gau…
+##  7 26/11/1919           85 Ernst Lubitsch                         1919 Norbert …
+##  8 01/03/1913          120 Enrico Guazzoni                        1913 Henryk S…
+##  9 01/09/1912          120 Aristide Demetriade, Grigore Brezeanu  1912 Aristide…
+## 10 15/10/1912           55 André Calmettes, James Keane           1912 James Ke…
+## # … with 85,845 more rows
+```
+

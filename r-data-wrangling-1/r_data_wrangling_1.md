@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "16 August, 2022"
 output: 
   html_document: 
     theme: readable
@@ -119,7 +119,7 @@ install.packages("", Ncpus = 6)
 
 *Also note that you can install the whole tidyverse with install.packages("tidyverse")! This takes a while though, so for this workshop we will just install individual packages.*
 
-# Intro to pipes
+# Introduction to pipes
 
 The pipe operator in R comes from the `magrittr` package, using syntax of `%>%`.
 
@@ -158,7 +158,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 6.35"
+## [1] "Mean value of y is 4.85"
 ```
 
 ```r
@@ -167,7 +167,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 6.35"
+## [1] "Mean value of y is 4.85"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -211,7 +211,7 @@ z_mean
 ```
 
 ```
-## [1] 4.45
+## [1] 5.95
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -223,7 +223,7 @@ R.version.string
 ```
 
 ```
-## [1] "R version 4.1.1 (2021-08-10)"
+## [1] "R version 4.2.0 (2022-04-22)"
 ```
 
 We will be using the magrittr pipe (`%>%`) for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
@@ -564,131 +564,254 @@ movies_imdb %>% glimpse()
 # your code here
 ```
 
-# Select helper functions
 
-So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
+# Filter function
 
-One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
+The filter function allows you to subset rows based on conditions, using conditional operators (==, \<=, != etc.). It is similar to the base r `subset()` function which we have used in previous R workshops. The table below is a reminder of the conditional operators you can use.
 
+| Operator   | Meaning                  |
+|------------|--------------------------|
+| `>`        | Greater than             |
+| `>=`       | Greater than or equal to |
+| `<`        | Less than                |
+| `<=`       | Less than or equal to    |
+| `==`       | Equal to                 |
+| `!=`       | Not equal to             |
+| `!X`       | NOT X                    |
+| `X`        | Y                        |
+| `X & Y`    | X AND Y                  |
+| `X %in% Y` | is X in Y                |
 
-```r
-# select by literal string
-messi_career %>% select(contains("Goal"))
-```
+Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
 
-```
-##    Goals champLeagueGoal
-## 1      1               0
-## 2      8               1
-## 3     17               1
-## 4     16               6
-## 5     38               9
-## 6     47               8
-## 7     53              12
-## 8     73              14
-## 9     60               8
-## 10    41               8
-## 11    58              10
-## 12    41               6
-## 13    54              11
-## 14    45               6
-## 15    51              12
-## 16    31               3
-```
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
 
-Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
+Run the examples below and review the outputs.
 
 
 ```r
-# columns starting with A
-messi_career %>%
-  select(starts_with("A"))
+# filter based on one criteria
+messi_career %>% filter(Goals > 50)
 ```
 
 ```
-##    Appearances Age
-## 1            9  17
-## 2           25  18
-## 3           36  19
-## 4           40  20
-## 5           51  21
-## 6           53  22
-## 7           55  23
-## 8           60  24
-## 9           50  25
-## 10          46  26
-## 11          57  27
-## 12          49  28
-## 13          52  29
-## 14          54  30
-## 15          50  31
-## 16          44  32
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          55    53   2010 FC Barcelona  23              12
+## 2          60    73   2011 FC Barcelona  24              14
+## 3          50    60   2012 FC Barcelona  25               8
+## 4          57    58   2014 FC Barcelona  27              10
+## 5          52    54   2016 FC Barcelona  29              11
+## 6          50    51   2018 FC Barcelona  31              12
 ```
 
 ```r
-# columns ending with s
-messi_career %>%
-  select(ends_with("s"))
+# filter then pipe to select
+messi_career %>% filter(Appearances >= 55) %>%
+  select(Season, Age)
 ```
 
 ```
-##    Appearances Goals
-## 1            9     1
-## 2           25     8
-## 3           36    17
-## 4           40    16
-## 5           51    38
-## 6           53    47
-## 7           55    53
-## 8           60    73
-## 9           50    60
-## 10          46    41
-## 11          57    58
-## 12          49    41
-## 13          52    54
-## 14          54    45
-## 15          50    51
-## 16          44    31
+##   Season Age
+## 1   2010  23
+## 2   2011  24
+## 3   2014  27
 ```
 
 ```r
-# columns not starting with A
-messi_career %>%
-  select(!starts_with("A"))
+# filter on more than one condition
+messi_career %>% filter(Goals > 50 & champLeagueGoal <= 10)
 ```
 
 ```
-##    Goals Season         Club champLeagueGoal
-## 1      1   2004 FC Barcelona               0
-## 2      8   2005 FC Barcelona               1
-## 3     17   2006 FC Barcelona               1
-## 4     16   2007 FC Barcelona               6
-## 5     38   2008 FC Barcelona               9
-## 6     47   2009 FC Barcelona               8
-## 7     53   2010 FC Barcelona              12
-## 8     73   2011 FC Barcelona              14
-## 9     60   2012 FC Barcelona               8
-## 10    41   2013 FC Barcelona               8
-## 11    58   2014 FC Barcelona              10
-## 12    41   2015 FC Barcelona               6
-## 13    54   2016 FC Barcelona              11
-## 14    45   2017 FC Barcelona               6
-## 15    51   2018 FC Barcelona              12
-## 16    31   2019 FC Barcelona               3
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          50    60   2012 FC Barcelona  25               8
+## 2          57    58   2014 FC Barcelona  27              10
 ```
 
-## Select helper exercise
+```r
+# filter on average
+messi_career %>% filter(Goals > mean(Goals, na.rm = TRUE))
+```
 
-Using the imdb_sub dataset you made in the previous exercise:
+```
+##    Appearances Goals Season         Club Age champLeagueGoal
+## 1           53    47   2009 FC Barcelona  22               8
+## 2           55    53   2010 FC Barcelona  23              12
+## 3           60    73   2011 FC Barcelona  24              14
+## 4           50    60   2012 FC Barcelona  25               8
+## 5           46    41   2013 FC Barcelona  26               8
+## 6           57    58   2014 FC Barcelona  27              10
+## 7           49    41   2015 FC Barcelona  28               6
+## 8           52    54   2016 FC Barcelona  29              11
+## 9           54    45   2017 FC Barcelona  30               6
+## 10          50    51   2018 FC Barcelona  31              12
+```
 
-1)  Find columns in imdb_sub that contain "vote"
-2)  Find columns in imdb_sub that start with "d"
-3)  Find columns in imdb_sub that end with "e"
-4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
+To assign the result to a new data frame (subset) we use the assignment operator at the beginning or the end of our code; here we have just shown the beginning, in the pipes section we show both versions.
+
+
+```r
+# assign result to messi_sub
+messi_sub <- messi_career %>%
+  filter(Appearances <= 40) %>%
+  select(Goals, Age)
+
+# view result
+messi_sub
+```
+
+```
+##   Goals Age
+## 1     1  17
+## 2     8  18
+## 3    17  19
+## 4    16  20
+```
+
+## Filter exercise
+
+We are going to filter our subsetted (`imdb_sub`) data to find the best rated films from the USA in the year 1989, and create a subset called USA_1989_high.
+
+1)  Pipe from imdb_sub to filter, filtering for country being equal to USA
+2)  Pipe from your country filter to another filter, filtering for year being equal to 1989
+3)  Pipe from your year filter to another filter. Filter for avg_vote to be greater than or equal to 7.5 and reviews_from_critics to be greater than 10
+4)  Make sure to assign your result to USA_1989_high
+5)  Print the result to see the highest rated films, made in the USA, in 1989.
+6)  Do you think you can put this into one filter command using the & operator?
 
 
 ```r
 # your code here
+```
+
+You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
+
+# Other filtering options with dplyr
+
+Other than conditional subsetting of data using `filter()`, dplyr has other functions we can use to subset our data: `slice`, `sample`, and `distinct.`
+
+The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions. 
+
+
+```r
+# sample 5 rows
+messi_career %>%
+  sample_n(5)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          52    54   2016 FC Barcelona  29              11
+## 2          50    60   2012 FC Barcelona  25               8
+## 3          36    17   2006 FC Barcelona  19               1
+## 4          51    38   2008 FC Barcelona  21               9
+## 5          57    58   2014 FC Barcelona  27              10
+```
+
+```r
+# sample 25% of your data
+messi_career %>%
+  sample_frac(0.25)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          57    58   2014 FC Barcelona  27              10
+## 2          60    73   2011 FC Barcelona  24              14
+## 3          44    31   2019 FC Barcelona  32               3
+## 4          52    54   2016 FC Barcelona  29              11
+```
+
+The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
+
+```r
+# select rows 4, 5, and 6
+messi_career %>%
+  slice(4:6)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          40    16   2007 FC Barcelona  20               6
+## 2          51    38   2008 FC Barcelona  21               9
+## 3          53    47   2009 FC Barcelona  22               8
+```
+
+```r
+# equivalent in base r
+messi_career[4:6, ]
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 4          40    16   2007 FC Barcelona  20               6
+## 5          51    38   2008 FC Barcelona  21               9
+## 6          53    47   2009 FC Barcelona  22               8
+```
+
+The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column. 
+
+```r
+# extract rows with top three Goals
+messi_career %>%
+  slice_max(Goals, n = 3)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1          60    73   2011 FC Barcelona  24              14
+## 2          50    60   2012 FC Barcelona  25               8
+## 3          57    58   2014 FC Barcelona  27              10
+```
+
+```r
+# this harder and less clear in base r
+messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
+```
+
+```
+##    Appearances Goals Season         Club Age champLeagueGoal
+## 8           60    73   2011 FC Barcelona  24              14
+## 9           50    60   2012 FC Barcelona  25               8
+## 11          57    58   2014 FC Barcelona  27              10
+```
+
+```r
+# extract rows with bottom three Goals
+messi_career %>%
+  slice_min(Goals, n = 3)
+```
+
+```
+##   Appearances Goals Season         Club Age champLeagueGoal
+## 1           9     1   2004 FC Barcelona  17               0
+## 2          25     8   2005 FC Barcelona  18               1
+## 3          40    16   2007 FC Barcelona  20               6
+```
+
+## Filtering continued exercise
+
+In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.  
+
+If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run! 
+
+
+```r
+# your code here
+top_votes_USA <- imdb_sub %>%
+  filter(duration >= 120 & country = "USA") %>%
+  slicemax(avgvote, n = 20) %>%
+  select(title year, genre, avg_vote)
+
+top_votes_USA
+
+# fun extra, plot the output of your debugging! 
+plot(top_votes_USA$year, top_votes_USA$avg_vote,
+     col = "orange", # point colour
+     pch = 16, # point type
+     cex = 1.5, # point size
+     xlab = "Year",
+     ylab = "Average vote") 
 ```
 
 # Using select to change column order
@@ -880,256 +1003,6 @@ Using the examples above:
 # your code here
 ```
 
-# Filter function
-
-The filter function allows you to subset rows based on conditions, using conditional operators (==, \<=, != etc.). It is similar to the base r `subset()` function which we have used in previous R workshops. The table below is a reminder of the conditional operators you can use.
-
-| Operator   | Meaning                  |
-|------------|--------------------------|
-| `>`        | Greater than             |
-| `>=`       | Greater than or equal to |
-| `<`        | Less than                |
-| `<=`       | Less than or equal to    |
-| `==`       | Equal to                 |
-| `!=`       | Not equal to             |
-| `!X`       | NOT X                    |
-| `X`        | Y                        |
-| `X & Y`    | X AND Y                  |
-| `X %in% Y` | is X in Y                |
-
-Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
-
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
-
-Run the examples below and review the outputs.
-
-
-```r
-# filter based on one criteria
-messi_career %>% filter(Goals > 50)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          55    53   2010 FC Barcelona  23              12
-## 2          60    73   2011 FC Barcelona  24              14
-## 3          50    60   2012 FC Barcelona  25               8
-## 4          57    58   2014 FC Barcelona  27              10
-## 5          52    54   2016 FC Barcelona  29              11
-## 6          50    51   2018 FC Barcelona  31              12
-```
-
-```r
-# filter then pipe to select
-messi_career %>% filter(Appearances >= 55) %>%
-  select(Season, Age)
-```
-
-```
-##   Season Age
-## 1   2010  23
-## 2   2011  24
-## 3   2014  27
-```
-
-```r
-# filter on more than one condition
-messi_career %>% filter(Goals > 50 & champLeagueGoal <= 10)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          50    60   2012 FC Barcelona  25               8
-## 2          57    58   2014 FC Barcelona  27              10
-```
-
-```r
-# filter on average
-messi_career %>% filter(Goals > mean(Goals, na.rm = TRUE))
-```
-
-```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 1           53    47   2009 FC Barcelona  22               8
-## 2           55    53   2010 FC Barcelona  23              12
-## 3           60    73   2011 FC Barcelona  24              14
-## 4           50    60   2012 FC Barcelona  25               8
-## 5           46    41   2013 FC Barcelona  26               8
-## 6           57    58   2014 FC Barcelona  27              10
-## 7           49    41   2015 FC Barcelona  28               6
-## 8           52    54   2016 FC Barcelona  29              11
-## 9           54    45   2017 FC Barcelona  30               6
-## 10          50    51   2018 FC Barcelona  31              12
-```
-
-To assign the result to a new data frame (subset) we use the assignment operator at the beginning or the end of our code; here we have just shown the beginning, in the pipes section we show both versions.
-
-
-```r
-# assign result to messi_sub
-messi_sub <- messi_career %>%
-  filter(Appearances <= 40) %>%
-  select(Goals, Age)
-
-# view result
-messi_sub
-```
-
-```
-##   Goals Age
-## 1     1  17
-## 2     8  18
-## 3    17  19
-## 4    16  20
-```
-
-## Filter exercise
-
-We are going to filter our subsetted (`imdb_sub`) data to find the best rated films from the USA in the year 1989, and create a subset called USA_1989_high.
-
-1)  Pipe from imdb_sub to filter, filtering for country being equal to USA
-2)  Pipe from your country filter to another filter, filtering for year being equal to 1989
-3)  Pipe from your year filter to another filter. Filter for avg_vote to be greater than or equal to 7.5 and reviews_from_critics to be greater than 10
-4)  Make sure to assign your result to USA_1989_high
-5)  Print the result to see the highest rated films, made in the USA, in 1989.
-6)  Do you think you can put this into one filter command using the & operator?
-
-
-```r
-# your code here
-```
-
-You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
-
-# Other filtering options with dplyr
-
-Other than conditional subsetting of data using `filter()`, dplyr has other functions we can use to subset our data: `slice`, `sample`, and `distinct.`
-
-The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions. 
-
-
-```r
-# sample 5 rows
-messi_career %>%
-  sample_n(5)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          57    58   2014 FC Barcelona  27              10
-## 2          51    38   2008 FC Barcelona  21               9
-## 3          60    73   2011 FC Barcelona  24              14
-## 4          55    53   2010 FC Barcelona  23              12
-## 5          25     8   2005 FC Barcelona  18               1
-```
-
-```r
-# sample 25% of your data
-messi_career %>%
-  sample_frac(0.25)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          50    60   2012 FC Barcelona  25               8
-## 2          53    47   2009 FC Barcelona  22               8
-## 3          44    31   2019 FC Barcelona  32               3
-## 4          52    54   2016 FC Barcelona  29              11
-```
-
-The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
-
-```r
-# select rows 4, 5, and 6
-messi_career %>%
-  slice(4:6)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          40    16   2007 FC Barcelona  20               6
-## 2          51    38   2008 FC Barcelona  21               9
-## 3          53    47   2009 FC Barcelona  22               8
-```
-
-```r
-# equivalent in base r
-messi_career[4:6, ]
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 4          40    16   2007 FC Barcelona  20               6
-## 5          51    38   2008 FC Barcelona  21               9
-## 6          53    47   2009 FC Barcelona  22               8
-```
-
-The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column. 
-
-```r
-# extract rows with top three Goals
-messi_career %>%
-  slice_max(Goals, n = 3)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          60    73   2011 FC Barcelona  24              14
-## 2          50    60   2012 FC Barcelona  25               8
-## 3          57    58   2014 FC Barcelona  27              10
-```
-
-```r
-# this harder and less clear in base r
-messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
-```
-
-```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 8           60    73   2011 FC Barcelona  24              14
-## 9           50    60   2012 FC Barcelona  25               8
-## 11          57    58   2014 FC Barcelona  27              10
-```
-
-```r
-# extract rows with bottom three Goals
-messi_career %>%
-  slice_min(Goals, n = 3)
-```
-
-```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1           9     1   2004 FC Barcelona  17               0
-## 2          25     8   2005 FC Barcelona  18               1
-## 3          40    16   2007 FC Barcelona  20               6
-```
-
-## Filtering continued exercise
-
-In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.  
-
-If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run! 
-
-
-```r
-# your code here
-top_votes_USA <- imdb_sub %>%
-  filter(duration >= 120 & country = "USA") |>
-  slicemax(avgvote, n = 20) %>%
-  select(title year, genre, avg_vote)
-
-top_votes_USA
-
-# fun extra, plot the output of your debugging! 
-plot(top_votes_USA$year, top_votes_USA$avg_vote,
-     col = "orange", # point colour
-     pch = 16, # point type
-     cex = 1.5, # point size
-     xlab = "Year",
-     ylab = "Average vote") 
-```
-
-
 # Final task - Please give us your individual feedback!
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
@@ -1161,5 +1034,132 @@ Potter <- c("Harry Potter and the Sorcerer's Stone", "Harry Potter and the Chamb
             "Harry Potter and the Order of the Phoenix", "Harry Potter and the Half-Blood Prince",
             "Harry Potter and the Deathly Hallows: Part 1", "Harry Potter and the Deathly Hallows: Part 2")
 
+# your code here
+```
+
+# Individual coding challenge 2 - Select helper functions
+
+So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
+
+One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
+
+
+```r
+# select by literal string
+messi_career %>% select(contains("Goal"))
+```
+
+```
+##    Goals champLeagueGoal
+## 1      1               0
+## 2      8               1
+## 3     17               1
+## 4     16               6
+## 5     38               9
+## 6     47               8
+## 7     53              12
+## 8     73              14
+## 9     60               8
+## 10    41               8
+## 11    58              10
+## 12    41               6
+## 13    54              11
+## 14    45               6
+## 15    51              12
+## 16    31               3
+```
+
+Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
+
+
+```r
+# columns starting with A
+messi_career %>%
+  select(starts_with("A"))
+```
+
+```
+##    Appearances Age
+## 1            9  17
+## 2           25  18
+## 3           36  19
+## 4           40  20
+## 5           51  21
+## 6           53  22
+## 7           55  23
+## 8           60  24
+## 9           50  25
+## 10          46  26
+## 11          57  27
+## 12          49  28
+## 13          52  29
+## 14          54  30
+## 15          50  31
+## 16          44  32
+```
+
+```r
+# columns ending with s
+messi_career %>%
+  select(ends_with("s"))
+```
+
+```
+##    Appearances Goals
+## 1            9     1
+## 2           25     8
+## 3           36    17
+## 4           40    16
+## 5           51    38
+## 6           53    47
+## 7           55    53
+## 8           60    73
+## 9           50    60
+## 10          46    41
+## 11          57    58
+## 12          49    41
+## 13          52    54
+## 14          54    45
+## 15          50    51
+## 16          44    31
+```
+
+```r
+# columns not starting with A
+messi_career %>%
+  select(!starts_with("A"))
+```
+
+```
+##    Goals Season         Club champLeagueGoal
+## 1      1   2004 FC Barcelona               0
+## 2      8   2005 FC Barcelona               1
+## 3     17   2006 FC Barcelona               1
+## 4     16   2007 FC Barcelona               6
+## 5     38   2008 FC Barcelona               9
+## 6     47   2009 FC Barcelona               8
+## 7     53   2010 FC Barcelona              12
+## 8     73   2011 FC Barcelona              14
+## 9     60   2012 FC Barcelona               8
+## 10    41   2013 FC Barcelona               8
+## 11    58   2014 FC Barcelona              10
+## 12    41   2015 FC Barcelona               6
+## 13    54   2016 FC Barcelona              11
+## 14    45   2017 FC Barcelona               6
+## 15    51   2018 FC Barcelona              12
+## 16    31   2019 FC Barcelona               3
+```
+
+## Select helper exercise
+
+Using the imdb_sub dataset you made in the previous exercises:
+
+1)  Find columns in imdb_sub that contain "vote"
+2)  Find columns in imdb_sub that start with "d"
+3)  Find columns in imdb_sub that end with "e"
+4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
+
+
+```r
 # your code here
 ```

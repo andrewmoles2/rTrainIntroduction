@@ -90,7 +90,7 @@ install.packages("", Ncpus = 6)
 
 *Also note that you can install the whole tidyverse with install.packages("tidyverse")! This takes a while though, so for this workshop we will just install individual packages.*
 
-# Intro to pipes
+# Introduction to pipes
 
 The pipe operator in R comes from the `magrittr` package, using syntax of `%>%`.
 
@@ -291,109 +291,6 @@ movies_imdb %>% glimpse()
 
 ```
 
-# Select helper functions
-
-So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
-
-One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
-
-```{r}
-# select by literal string
-messi_career %>% select(contains("Goal"))
-```
-
-Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
-
-```{r}
-# columns starting with A
-messi_career %>%
-  select(starts_with("A"))
-
-# columns ending with s
-messi_career %>%
-  select(ends_with("s"))
-
-# columns not starting with A
-messi_career %>%
-  select(!starts_with("A"))
-```
-
-## Select helper exercise
-
-Using the imdb_sub dataset you made in the previous exercise:
-
-1)  Find columns in imdb_sub that contain "vote"
-2)  Find columns in imdb_sub that start with "d"
-3)  Find columns in imdb_sub that end with "e"
-4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
-
-```{r}
-# your code here
-
-```
-
-# Using select to change column order
-
-It is also helpful to change the order of your columns, and you can use `select` to do this.
-
-If we wanted to move the club column as the first column in our messi_career data, we could do it manually but naming all the columns like the example below.
-
-```{r}
-# manually
-messi_career %>%
-  select(Club, Appearances, Goals, Season, Age, champLeagueGoal)
-```
-
-This could get really messy if you have lots of data. Two helper functions make this much easier: `everything()` and `last_col()`. Everything selects every column not already specified, so is useful if we want to move a column to the first column in the dataset.
-
-```{r}
-# move club to first column
-messi_career %>%
-  select(Club, everything())
-```
-
-Last col calls the last column in your data frame, so we can call `last_col()` to move 'champLeagueGoal' to the first column, then use everything to keep the rest of the columns as they are.
-
-```{r}
-# move last column to first column
-messi_career %>%
-  select(last_col(), everything())
-```
-
-Another option is to use the `relocate()` function. This has the same syntax as select, but has extra functionally for moving columns with the `.after` and `.before` arguments.
-
-By default, relocate will move the column you specify to the first column.
-
-```{r}
-# default moves to first column
-messi_career %>%
-  relocate(Club)
-```
-
-We call `.after` and `.before` like the examples below. We can also move more than one column.
-
-```{r}
-# move club to col after champLeagueGoal
-messi_career %>%
-  relocate(Club, .after = champLeagueGoal)
-
-# move club to col before champLeagueGoal
-messi_career %>%
-  relocate(Club, Goals, .before = champLeagueGoal)
-
-```
-
-## Column ordering exercise
-
-Using the examples above:
-
-1)  Move the `year` column to be the first column in the `imdb_sub` data frame
-2)  Move the `avg_vote` column to be after the `year` column
-
-```{r}
-# your code here
-
-```
 
 # Filter function
 
@@ -512,7 +409,7 @@ If you get it working your `top_votes_USA` data frame should have 20 rows and 4 
 ```{r eval=FALSE}
 # your code here
 top_votes_USA <- imdb_sub %>%
-  filter(duration >= 120 & country = "USA") |>
+  filter(duration >= 120 & country = "USA") %>%
   slicemax(avgvote, n = 20) %>%
   select(title year, genre, avg_vote)
 
@@ -528,6 +425,68 @@ plot(top_votes_USA$year, top_votes_USA$avg_vote,
 
 ```
 
+# Using select to change column order
+
+It is also helpful to change the order of your columns, and you can use `select` to do this.
+
+If we wanted to move the club column as the first column in our messi_career data, we could do it manually but naming all the columns like the example below.
+
+```{r}
+# manually
+messi_career %>%
+  select(Club, Appearances, Goals, Season, Age, champLeagueGoal)
+```
+
+This could get really messy if you have lots of data. Two helper functions make this much easier: `everything()` and `last_col()`. Everything selects every column not already specified, so is useful if we want to move a column to the first column in the dataset.
+
+```{r}
+# move club to first column
+messi_career %>%
+  select(Club, everything())
+```
+
+Last col calls the last column in your data frame, so we can call `last_col()` to move 'champLeagueGoal' to the first column, then use everything to keep the rest of the columns as they are.
+
+```{r}
+# move last column to first column
+messi_career %>%
+  select(last_col(), everything())
+```
+
+Another option is to use the `relocate()` function. This has the same syntax as select, but has extra functionally for moving columns with the `.after` and `.before` arguments.
+
+By default, relocate will move the column you specify to the first column.
+
+```{r}
+# default moves to first column
+messi_career %>%
+  relocate(Club)
+```
+
+We call `.after` and `.before` like the examples below. We can also move more than one column.
+
+```{r}
+# move club to col after champLeagueGoal
+messi_career %>%
+  relocate(Club, .after = champLeagueGoal)
+
+# move club to col before champLeagueGoal
+messi_career %>%
+  relocate(Club, Goals, .before = champLeagueGoal)
+
+```
+
+## Column ordering exercise
+
+Using the examples above:
+
+1)  Move the `year` column to be the first column in the `imdb_sub` data frame
+2)  Move the `avg_vote` column to be after the `year` column
+
+```{r}
+# your code here
+
+```
 
 # Final task - Please give us your individual feedback!
 
@@ -559,6 +518,47 @@ Potter <- c("Harry Potter and the Sorcerer's Stone", "Harry Potter and the Chamb
             "Harry Potter and the Order of the Phoenix", "Harry Potter and the Half-Blood Prince",
             "Harry Potter and the Deathly Hallows: Part 1", "Harry Potter and the Deathly Hallows: Part 2")
 
+# your code here
+
+```
+
+# Individual coding challenge 2 - Select helper functions
+
+So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
+
+One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
+
+```{r}
+# select by literal string
+messi_career %>% select(contains("Goal"))
+```
+
+Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
+
+```{r}
+# columns starting with A
+messi_career %>%
+  select(starts_with("A"))
+
+# columns ending with s
+messi_career %>%
+  select(ends_with("s"))
+
+# columns not starting with A
+messi_career %>%
+  select(!starts_with("A"))
+```
+
+## Select helper exercise
+
+Using the imdb_sub dataset you made in the previous exercises:
+
+1)  Find columns in imdb_sub that contain "vote"
+2)  Find columns in imdb_sub that start with "d"
+3)  Find columns in imdb_sub that end with "e"
+4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
+
+```{r}
 # your code here
 
 ```
