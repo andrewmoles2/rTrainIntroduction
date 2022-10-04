@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -269,11 +269,8 @@ df[df$x < 20, ]
 ```
 
 ```
-##     x  y
-## 6  15 63
-## 7  12 95
-## 9  14 37
-## 12  2 79
+##   x  y
+## 9 2 12
 ```
 
 ```r
@@ -284,15 +281,19 @@ df2
 
 ```
 ##     x  y
-## 1  91 62
-## 2  64 58
-## 3  96 49
-## 4  95 12
-## 10 70 19
-## 11 93  8
-## 13 82 20
-## 14 77 39
-## 15 87 11
+## 1  53 54
+## 2  52 14
+## 4  68 19
+## 5  70 86
+## 6  86  9
+## 7  67 47
+## 8  77 85
+## 10 90 10
+## 11 97 93
+## 12 87 65
+## 13 40  6
+## 14 71 55
+## 15 66 29
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -303,15 +304,14 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 4  95 12
-## 5  28 28
-## 8  22  2
-## 9  14 37
-## 10 70 19
-## 11 93  8
-## 13 82 20
-## 14 77 39
-## 15 87 11
+## 2  52 14
+## 3  24  8
+## 4  68 19
+## 6  86  9
+## 9   2 12
+## 10 90 10
+## 13 40  6
+## 15 66 29
 ```
 
 ## Subsetting exercise
@@ -417,10 +417,9 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y  z     exp
-## 1 person_a 11 29 14 control
-## 2 person_b  9 83 19 control
-## 9 person_i 68 96 13    test
+##          id  x  y z     exp
+## 3  person_c 85 92 5 control
+## 10 person_j 16 35 7 control
 ```
 
 ```r
@@ -439,10 +438,10 @@ subset(df3, id %in% val_match)
 ```
 
 ```
-##          id  x  y  z  exp
-## 8  person_h 62 53 68 test
-## 9  person_i 68 96 13 test
-## 10 person_j  3 71 36 test
+##          id  x  y  z     exp
+## 8  person_h 36 70 26 control
+## 9  person_i 29 59 42    test
+## 10 person_j 16 35  7 control
 ```
 
 ```r
@@ -536,16 +535,16 @@ df3[, c('x','cat')]
 
 ```
 ##     x    cat
-## 1  11    low
-## 2   9    low
-## 3  72   high
-## 4   5    low
-## 5  56 medium
-## 6   6    low
-## 7  22    low
-## 8  62 medium
-## 9  68   high
-## 10  3    low
+## 1  31    low
+## 2  47 medium
+## 3  85   high
+## 4  67   high
+## 5  69   high
+## 6  32    low
+## 7  84   high
+## 8  36 medium
+## 9  29    low
+## 10 16    low
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -565,7 +564,7 @@ When nesting if statements like this, *else* becomes the next ifelse statement.
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%206:%20Conditionals%20and%20Logic%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%6:%Conditionals%and%Logic&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=0ZYnrr>
 
 # Individual take home challenge 
 

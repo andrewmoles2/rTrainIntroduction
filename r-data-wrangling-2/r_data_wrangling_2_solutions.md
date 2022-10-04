@@ -3,7 +3,7 @@ title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "16 August, 2022"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -585,10 +585,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       4       1       4    dog
-## 2   Hello      10       2       5    cat
-## 3   Hello       1       3       6    cat
-## 4   Hello       5       4       7    dog
+## 1   Hello       5       1       4    dog
+## 2   Hello       3       2       5    cat
+## 3   Hello      10       3       6    cat
+## 4   Hello       6       4       7    dog
 ```
 
 ```r
@@ -661,10 +661,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      7        1       4    dog
-## 2  Hello      5        2       5    cat
-## 3  Hello      1        3       6    cat
-## 4  Hello      6        4       7    dog
+## 1  Hello     10        1       4    dog
+## 2  Hello      1        2       5    cat
+## 3  Hello      9        3       6    cat
+## 4  Hello      3        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -1090,7 +1090,7 @@ with(
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Data%20Wrangling%202:%20Data%20wrangling%20with%20dplyr%20continued%C2%A0%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=pZvPhB&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Data%Wrangling%2:%Data%wrangling%with%dplyr%continued&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=4hVS7P>
 
 The solutions we be available from a link at the end of the survey.
 

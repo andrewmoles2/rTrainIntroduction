@@ -3,7 +3,7 @@ title: "R Fundamentals 7 - Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -327,16 +327,16 @@ my_mat
 
 ```
 ##       [,1] [,2] [,3]
-##  [1,]   12   25   10
-##  [2,]   24   29    1
-##  [3,]   14    8    2
-##  [4,]   11   18   19
-##  [5,]   NA   23    4
-##  [6,]   15   16   20
-##  [7,]   13   28    3
-##  [8,]    9   22    6
-##  [9,]    5    7   21
-## [10,]   27   17   26
+##  [1,]   11   NA   21
+##  [2,]    2   14   12
+##  [3,]    6   28   13
+##  [4,]    9   16    8
+##  [5,]    1   19    4
+##  [6,]   22   17    5
+##  [7,]   24   18   20
+##  [8,]   10   15   26
+##  [9,]   25   23   27
+## [10,]   29    7    3
 ```
 
 ```r
@@ -349,16 +349,16 @@ my_mat
 
 ```
 ##        col_1 col_2 col_3
-## row_1     12    25    10
-## row_2     24    29     1
-## row_3     14     8     2
-## row_4     11    18    19
-## row_5     NA    23     4
-## row_6     15    16    20
-## row_7     13    28     3
-## row_8      9    22     6
-## row_9      5     7    21
-## row_10    27    17    26
+## row_1     11    NA    21
+## row_2      2    14    12
+## row_3      6    28    13
+## row_4      9    16     8
+## row_5      1    19     4
+## row_6     22    17     5
+## row_7     24    18    20
+## row_8     10    15    26
+## row_9     25    23    27
+## row_10    29     7     3
 ```
 
 ```r
@@ -376,7 +376,7 @@ mean(my_mat[, "col_3"], na.rm = TRUE)
 ```
 
 ```
-## [1] 11.2
+## [1] 13.9
 ```
 
 ```r
@@ -385,7 +385,7 @@ paste("The mean of the first 5 rows, and col 1 and 2 is:", mean(my_mat[5, 1:2], 
 ```
 
 ```
-## [1] "The mean of the first 5 rows, and col 1 and 2 is: 23"
+## [1] "The mean of the first 5 rows, and col 1 and 2 is: 10"
 ```
 
 # Converting data into and from matricies
@@ -415,9 +415,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  11 6 13 19 5 15 9 4 17 14
-##  $ rand  : num  9.44 9.69 4.88 4.82 2.49 ...
-##  $ rand2 : num  6.22 6.25 7.8 5.09 5.28 ...
+##  $ samp  : int  19 5 2 12 10 1 11 8 3 16
+##  $ rand  : num  5.39 6.62 4.65 6.63 9.74 ...
+##  $ rand2 : num  6.49 3.25 6.68 3.35 4.02 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -437,12 +437,12 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   11 9.441402 6.224271
-## string2   2    6 9.686852 6.246555
-## string3   3   13 4.876301 7.803565
-## string4   4   19 4.819438 5.093019
-## string5   5    5 2.491374 5.278192
-## string6   6   15 9.818711 3.729081
+## string1   1   19 5.392444 6.492124
+## string2   2    5 6.619379 3.249683
+## string3   3    2 4.654720 6.679413
+## string4   4   12 6.629863 3.349457
+## string5   5   10 9.741059 4.019023
+## string6   6    1 9.206864 5.462276
 ```
 
 Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
@@ -458,12 +458,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   11 9.441402 6.224271
-## string2   2    6 9.686852 6.246555
-## string3   3   13 4.876301 7.803565
-## string4   4   19 4.819438 5.093019
-## string5   5    5 2.491374 5.278192
-## string6   6   15 9.818711 3.729081
+## string1   1   19 5.392444 6.492124
+## string2   2    5 6.619379 3.249683
+## string3   3    2 4.654720 6.679413
+## string4   4   12 6.629863 3.349457
+## string5   5   10 9.741059 4.019023
+## string6   6    1 9.206864 5.462276
 ```
 
 ```r
@@ -485,10 +485,10 @@ calc
 ```
 
 ```
-##   string1   string2   string3   string4   string5   string6   string7   string8 
-## 1.0385542 0.5812111 0.6339192 0.9156933 0.1245687 1.4728067 0.3146185 0.2255293 
-##   string9  string10 
-## 0.8093993 0.2490088
+##    string1    string2    string3    string4    string5    string6    string7 
+## 1.02456444 0.33096895 0.09309441 0.79558353 0.97410585 0.09206864 0.59352961 
+##    string8    string9   string10 
+## 0.19311016 0.03223263 0.96418090
 ```
 
 ```r
@@ -498,17 +498,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand    rand2      calc
-## string1    1   11 9.441402 6.224271 1.0385542
-## string2    2    6 9.686852 6.246555 0.5812111
-## string3    3   13 4.876301 7.803565 0.6339192
-## string4    4   19 4.819438 5.093019 0.9156933
-## string5    5    5 2.491374 5.278192 0.1245687
-## string6    6   15 9.818711 3.729081 1.4728067
-## string7    7    9 3.495761 2.534829 0.3146185
-## string8    8    4 5.638233 2.155725 0.2255293
-## string9    9   17 4.761172 6.690906 0.8093993
-## string10  10   14 1.778634 6.421456 0.2490088
+##          int samp     rand     rand2       calc
+## string1    1   19 5.392444 6.4921242 1.02456444
+## string2    2    5 6.619379 3.2496826 0.33096895
+## string3    3    2 4.654720 6.6794130 0.09309441
+## string4    4   12 6.629863 3.3494571 0.79558353
+## string5    5   10 9.741059 4.0190230 0.97410585
+## string6    6    1 9.206864 5.4622755 0.09206864
+## string7    7   11 5.395724 7.7179093 0.59352961
+## string8    8    8 2.413877 7.9701188 0.19311016
+## string9    9    3 1.074421 3.3299099 0.03223263
+## string10  10   16 6.026131 0.1974544 0.96418090
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -521,12 +521,12 @@ df_cor
 ```
 
 ```
-##              int        samp         rand        rand2       calc
-## int    1.0000000  0.13797813 -0.593581821 -0.321130185 -0.3423830
-## samp   0.1379781  1.00000000 -0.038855540  0.367840699  0.6150181
-## rand  -0.5935818 -0.03885554  1.000000000 -0.009590643  0.7151870
-## rand2 -0.3211302  0.36784070 -0.009590643  1.000000000  0.1308636
-## calc  -0.3423830  0.61501812  0.715186990  0.130863580  1.0000000
+##               int        samp        rand      rand2       calc
+## int    1.00000000 -0.06989848 -0.33430810 -0.2632451 -0.1636943
+## samp  -0.06989848  1.00000000  0.08355514 -0.1584231  0.9050639
+## rand  -0.33430810  0.08355514  1.00000000 -0.2063715  0.4273615
+## rand2 -0.26324505 -0.15842310 -0.20637150  1.0000000 -0.3174100
+## calc  -0.16369429  0.90506386  0.42736155 -0.3174100  1.0000000
 ```
 
 ```r
@@ -537,11 +537,11 @@ df_cor
 
 ```
 ##          int   samp   rand  rand2   calc
-## int    1.000  0.138 -0.594 -0.321 -0.342
-## samp   0.138  1.000 -0.039  0.368  0.615
-## rand  -0.594 -0.039  1.000 -0.010  0.715
-## rand2 -0.321  0.368 -0.010  1.000  0.131
-## calc  -0.342  0.615  0.715  0.131  1.000
+## int    1.000 -0.070 -0.334 -0.263 -0.164
+## samp  -0.070  1.000  0.084 -0.158  0.905
+## rand  -0.334  0.084  1.000 -0.206  0.427
+## rand2 -0.263 -0.158 -0.206  1.000 -0.317
+## calc  -0.164  0.905  0.427 -0.317  1.000
 ```
 
 ```r
@@ -566,11 +566,11 @@ df_cor
 
 ```
 ##          int   samp   rand  rand2   calc
-## int    1.000  0.138 -0.594 -0.321 -0.342
-## samp   0.138  1.000 -0.039  0.368  0.615
-## rand  -0.594 -0.039  1.000 -0.010  0.715
-## rand2 -0.321  0.368 -0.010  1.000  0.131
-## calc  -0.342  0.615  0.715  0.131  1.000
+## int    1.000 -0.070 -0.334 -0.263 -0.164
+## samp  -0.070  1.000  0.084 -0.158  0.905
+## rand  -0.334  0.084  1.000 -0.206  0.427
+## rand2 -0.263 -0.158 -0.206  1.000 -0.317
+## calc  -0.164  0.905  0.427 -0.317  1.000
 ```
 
 ```r
@@ -578,7 +578,7 @@ df_cor$int
 ```
 
 ```
-## [1]  1.000  0.138 -0.594 -0.321 -0.342
+## [1]  1.000 -0.070 -0.334 -0.263 -0.164
 ```
 
 ## Converting matrices exercise
@@ -1095,7 +1095,7 @@ In the example code below we make two more lists with information in them and a 
 # make some more lists with information
 list_info2 <- list(name = "Margaret", age = 22, like_dinosaurs = FALSE)
 
-list_info3 <- list(name = "Sofia", age = 19, like_dinosaurs = TRUE, fav_dinosaurs = c("Deinonychus‭", "Ornithomimus"))
+list_info3 <- list(name = "Sofia", age = 19, like_dinosaurs = TRUE, fav_dinosaurs = c("Deinonychus", "Ornithomimus"))
 
 # data frame to put into a list
 dino_df <- data.frame(
@@ -1128,7 +1128,7 @@ str(list_all)
 ##   ..$ name          : chr "Sofia"
 ##   ..$ age           : num 19
 ##   ..$ like_dinosaurs: logi TRUE
-##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus‭" "Ornithomimus"
+##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus" "Ornithomimus"
 ##  $ :'data.frame':	3 obs. of  3 variables:
 ##   ..$ dinosaur: chr [1:3] "Archaeopteryx" "T-Rex" "Triceratops"
 ##   ..$ scary   : logi [1:3] FALSE TRUE TRUE
@@ -1181,7 +1181,7 @@ str(list_all)
 ##   ..$ name          : chr "Sofia"
 ##   ..$ age           : num 19
 ##   ..$ like_dinosaurs: logi TRUE
-##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus‭" "Ornithomimus"
+##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus" "Ornithomimus"
 ##  $ dino_data:'data.frame':	3 obs. of  3 variables:
 ##   ..$ dinosaur: chr [1:3] "Archaeopteryx" "T-Rex" "Triceratops"
 ##   ..$ scary   : logi [1:3] FALSE TRUE TRUE
@@ -1246,7 +1246,7 @@ list_all[["person3"]][["fav_dinosaurs"]]
 ```
 
 ```
-## [1] "Deinonychus‭"  "Ornithomimus"
+## [1] "Deinonychus"  "Ornithomimus"
 ```
 
 ```r
@@ -1254,7 +1254,7 @@ list_all$person3$fav_dinosaurs
 ```
 
 ```
-## [1] "Deinonychus‭"  "Ornithomimus"
+## [1] "Deinonychus"  "Ornithomimus"
 ```
 
 To access specific data within those elements we need to use single square brackets
@@ -1265,7 +1265,7 @@ list_all[["person3"]][["fav_dinosaurs"]][1]
 ```
 
 ```
-## [1] "Deinonychus‭"
+## [1] "Deinonychus"
 ```
 
 ```r
@@ -1273,7 +1273,7 @@ list_all$person3$fav_dinosaurs[1]
 ```
 
 ```
-## [1] "Deinonychus‭"
+## [1] "Deinonychus"
 ```
 
 Dealing with data frames in a list is the same concept. We have a sequence of double square bracket calls or dollar signs to get information.
@@ -1477,7 +1477,7 @@ legend("topleft", legend = levels(dino_class),
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%207:%20Lists%20and%20Matrices%C2%A0%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Et1Q00_hUB9Iv3NaRfEoRzIBXFH_Ui3ZpdEFmbIKdgCCmw?e=vLVYyO&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%7:%Lists%and%Matrices&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Et1Q00_hUB9Iv3NaRfEoRzIBXFH_Ui3ZpdEFmbIKdgCCmw?e=qeYzZ7>
 
 # Individual take home challenge
 

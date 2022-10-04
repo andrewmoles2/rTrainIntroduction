@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -79,13 +79,13 @@ sessionInfo()
 ```
 
 ```
-## R version 4.1.1 (2021-08-10)
+## R version 4.2.0 (2022-04-22)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.7
+## Running under: macOS Big Sur/Monterey 10.16
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
@@ -94,11 +94,12 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.29   R6_2.5.1        jsonlite_1.7.2  magrittr_2.0.1 
-##  [5] evaluate_0.14   rlang_0.4.12    stringi_1.7.6   jquerylib_0.1.4
-##  [9] bslib_0.3.1     rmarkdown_2.11  tools_4.1.1     stringr_1.4.0  
-## [13] xfun_0.28       yaml_2.2.1      fastmap_1.1.0   compiler_4.1.1 
-## [17] htmltools_0.5.2 knitr_1.36      sass_0.4.0
+##  [1] digest_0.6.29   R6_2.5.1        jsonlite_1.8.0  magrittr_2.0.3 
+##  [5] evaluate_0.15   stringi_1.7.8   rlang_1.0.4     cli_3.3.0      
+##  [9] rstudioapi_0.13 jquerylib_0.1.4 bslib_0.3.1     rmarkdown_2.14 
+## [13] tools_4.2.0     stringr_1.4.0   xfun_0.31       yaml_2.3.5     
+## [17] fastmap_1.1.0   compiler_4.2.0  htmltools_0.5.3 knitr_1.39     
+## [21] sass_0.4.1
 ```
 
 # Introduction to directories
@@ -115,7 +116,7 @@ getwd()
 ```
 
 ```
-## [1] "/Users/MOLES/OneDrive - London School of Economics/Code/rTrainIntroduction/r-fundamentals-5"
+## [1] "/Users/MOLES/Library/CloudStorage/OneDrive-LondonSchoolofEconomics/Code/rTrainIntroduction/r-fundamentals-5"
 ```
 
 # Introduction to RStudio Projects
@@ -286,7 +287,7 @@ library(writexl)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%205:%20Loading%20data%20and%20packages%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%5:%Loading%data%and%packages&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=RrIyhO>
 
 # Individual take home challenge
 
@@ -346,12 +347,14 @@ tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2)
 
 ```
 ## New names:
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
-## * `` -> ...3
-## * Month -> Month...4
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
-## * `` -> ...6
-## * ...
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
+## • `` -> `...3`
+## • `Month` -> `Month...4`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
+## • `` -> `...6`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...8`
+## • `` -> `...9`
+## • `Month` -> `Month...10`
 ```
 
 ```r

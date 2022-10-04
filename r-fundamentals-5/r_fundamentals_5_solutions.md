@@ -3,7 +3,7 @@ title: "R Fundamentals 5 - Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -82,13 +82,13 @@ sessionInfo()
 ```
 
 ```
-## R version 4.1.1 (2021-08-10)
+## R version 4.2.0 (2022-04-22)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.7
+## Running under: macOS Big Sur/Monterey 10.16
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
@@ -97,17 +97,18 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] writexl_1.4.0 readxl_1.3.1  readr_2.1.0  
+## [1] writexl_1.4.0 readxl_1.4.0  readr_2.1.2  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.7       knitr_1.36       magrittr_2.0.1   hms_1.1.1       
-##  [5] R6_2.5.1         rlang_0.4.12     fastmap_1.1.0    fansi_0.5.0     
-##  [9] stringr_1.4.0    tools_4.1.1      xfun_0.28        utf8_1.2.2      
-## [13] jquerylib_0.1.4  htmltools_0.5.2  ellipsis_0.3.2   yaml_2.2.1      
-## [17] digest_0.6.29    tibble_3.1.6     lifecycle_1.0.1  crayon_1.4.2    
-## [21] tzdb_0.2.0       sass_0.4.0       vctrs_0.3.8      evaluate_0.14   
-## [25] rmarkdown_2.11   stringi_1.7.6    cellranger_1.1.0 compiler_4.1.1  
-## [29] bslib_0.3.1      pillar_1.6.4     jsonlite_1.7.2   pkgconfig_2.0.3
+##  [1] rstudioapi_0.13  knitr_1.39       magrittr_2.0.3   hms_1.1.1       
+##  [5] R6_2.5.1         rlang_1.0.4      fastmap_1.1.0    fansi_1.0.3     
+##  [9] stringr_1.4.0    tools_4.2.0      xfun_0.31        utf8_1.2.2      
+## [13] cli_3.3.0        jquerylib_0.1.4  htmltools_0.5.3  ellipsis_0.3.2  
+## [17] yaml_2.3.5       digest_0.6.29    tibble_3.1.7     lifecycle_1.0.1 
+## [21] crayon_1.5.1     tzdb_0.3.0       sass_0.4.1       vctrs_0.4.1     
+## [25] glue_1.6.2       evaluate_0.15    rmarkdown_2.14   stringi_1.7.8   
+## [29] cellranger_1.1.0 compiler_4.2.0   bslib_0.3.1      pillar_1.7.0    
+## [33] jsonlite_1.8.0   pkgconfig_2.0.3
 ```
 
 # Introduction to directories
@@ -124,7 +125,7 @@ getwd()
 ```
 
 ```
-## [1] "/Users/MOLES/OneDrive - London School of Economics/Code/rTrainIntroduction/r-fundamentals-5"
+## [1] "/Users/MOLES/Library/CloudStorage/OneDrive-LondonSchoolofEconomics/Code/rTrainIntroduction/r-fundamentals-5"
 ```
 
 # Introduction to RStudio Projects
@@ -241,16 +242,10 @@ tflJourneyType <- read_csv("data/tfl-journeys-type.csv")
 
 ```
 ## Rows: 137 Columns: 12
-```
-
-```
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
 ## chr (3): Period and Financial year, Period beginning, Period ending
 ## dbl (9): Reporting Period, Days in period, Bus journeys (m), Underground jou...
-```
-
-```
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -299,7 +294,7 @@ head(tflJourneyType)
 
 ```
 ## # A tibble: 6 × 12
-##   `Period and Financial year` `Reporting Peri… `Days in period` `Period beginni…
+##   `Period and Financial year` `Reporting Per…` `Days in period` `Period beginn…`
 ##   <chr>                                  <dbl>            <dbl> <chr>           
 ## 1 01_10/11                                   1               31 01-Apr-10       
 ## 2 02_10/11                                   2               28 02-May-10       
@@ -307,10 +302,10 @@ head(tflJourneyType)
 ## 4 04_10/11                                   4               28 27-Jun-10       
 ## 5 05_10/11                                   5               28 25-Jul-10       
 ## 6 06_10/11                                   6               28 22-Aug-10       
-## # … with 8 more variables: Period ending <chr>, Bus journeys (m) <dbl>,
-## #   Underground journeys (m) <dbl>, DLR Journeys (m) <dbl>,
-## #   Tram Journeys (m) <dbl>, Overground Journeys (m) <dbl>,
-## #   Emirates Airline Journeys (m) <dbl>, TfL Rail Journeys (m) <dbl>
+## # … with 8 more variables: `Period ending` <chr>, `Bus journeys (m)` <dbl>,
+## #   `Underground journeys (m)` <dbl>, `DLR Journeys (m)` <dbl>,
+## #   `Tram Journeys (m)` <dbl>, `Overground Journeys (m)` <dbl>,
+## #   `Emirates Airline Journeys (m)` <dbl>, `TfL Rail Journeys (m)` <dbl>
 ```
 
 ```r
@@ -319,7 +314,7 @@ tail(tflJourneyType)
 
 ```
 ## # A tibble: 6 × 12
-##   `Period and Financial year` `Reporting Peri… `Days in period` `Period beginni…
+##   `Period and Financial year` `Reporting Per…` `Days in period` `Period beginn…`
 ##   <chr>                                  <dbl>            <dbl> <chr>           
 ## 1 02_19/20                                   2               28 28-Apr-20       
 ## 2 03_19/20                                   3               28 26-May-20       
@@ -327,10 +322,10 @@ tail(tflJourneyType)
 ## 4 05_19/20                                   5               28 21-Jul-20       
 ## 5 06_19/20                                   6               28 18-Aug-20       
 ## 6 07_19/20                                   7               28 15-Sep-20       
-## # … with 8 more variables: Period ending <chr>, Bus journeys (m) <dbl>,
-## #   Underground journeys (m) <dbl>, DLR Journeys (m) <dbl>,
-## #   Tram Journeys (m) <dbl>, Overground Journeys (m) <dbl>,
-## #   Emirates Airline Journeys (m) <dbl>, TfL Rail Journeys (m) <dbl>
+## # … with 8 more variables: `Period ending` <chr>, `Bus journeys (m)` <dbl>,
+## #   `Underground journeys (m)` <dbl>, `DLR Journeys (m)` <dbl>,
+## #   `Tram Journeys (m)` <dbl>, `Overground Journeys (m)` <dbl>,
+## #   `Emirates Airline Journeys (m)` <dbl>, `TfL Rail Journeys (m)` <dbl>
 ```
 
 ```r
@@ -397,12 +392,14 @@ tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2)
 
 ```
 ## New names:
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
-## * `` -> ...3
-## * Month -> Month...4
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
-## * `` -> ...6
-## * ...
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
+## • `` -> `...3`
+## • `Month` -> `Month...4`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
+## • `` -> `...6`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...8`
+## • `` -> `...9`
+## • `Month` -> `Month...10`
 ```
 
 ```r
@@ -439,9 +436,9 @@ head(tflCycle)
 ## 4 2010-08-02 00:00:00                          6642 NA    2010-10-01 00:00:00
 ## 5 2010-08-03 00:00:00                          7966 NA    2010-11-01 00:00:00
 ## 6 2010-08-04 00:00:00                          7893 NA    2010-12-01 00:00:00
-## # … with 7 more variables: Number of Bicycle Hires...5 <dbl>, ...6 <lgl>,
-## #   Year <chr>, Number of Bicycle Hires...8 <chr>, ...9 <lgl>,
-## #   Month...10 <dttm>, Average Hire Time (mins) <dbl>
+## # … with 7 more variables: `Number of Bicycle Hires...5` <dbl>, ...6 <lgl>,
+## #   Year <chr>, `Number of Bicycle Hires...8` <chr>, ...9 <lgl>,
+## #   Month...10 <dttm>, `Average Hire Time (mins)` <dbl>
 ```
 
 ```r
@@ -457,14 +454,14 @@ summary(tflCycle)
 ##  3rd Qu.:2018-04-08 12:00:00   3rd Qu.:32944                             
 ##  Max.   :2020-10-31 00:00:00   Max.   :73094                             
 ##                                                                          
-##    Month...4                   Number of Bicycle Hires...5   ...6        
-##  Min.   :2010-07-01 00:00:00   Min.   :  12461             Mode:logical  
-##  1st Qu.:2013-01-24 06:00:00   1st Qu.: 597528             NA's:3747     
-##  Median :2015-08-16 12:00:00   Median : 753899                           
-##  Mean   :2015-08-16 16:27:05   Mean   : 787153                           
-##  3rd Qu.:2018-03-08 18:00:00   3rd Qu.: 995338                           
-##  Max.   :2020-10-01 00:00:00   Max.   :1253102                           
-##  NA's   :3623                  NA's   :3623                              
+##    Month...4                      Number of Bicycle Hires...5   ...6        
+##  Min.   :2010-07-01 00:00:00.00   Min.   :  12461             Mode:logical  
+##  1st Qu.:2013-01-24 06:00:00.00   1st Qu.: 597528             NA's:3747     
+##  Median :2015-08-16 12:00:00.00   Median : 753899                           
+##  Mean   :2015-08-16 16:27:05.80   Mean   : 787153                           
+##  3rd Qu.:2018-03-08 18:00:00.00   3rd Qu.: 995338                           
+##  Max.   :2020-10-01 00:00:00.00   Max.   :1253102                           
+##  NA's   :3623                     NA's   :3623                              
 ##      Year           Number of Bicycle Hires...8   ...9        
 ##  Length:3747        Length:3747                 Mode:logical  
 ##  Class :character   Class :character            NA's:3747     
@@ -473,14 +470,14 @@ summary(tflCycle)
 ##                                                               
 ##                                                               
 ##                                                               
-##    Month...10                  Average Hire Time (mins)
-##  Min.   :2010-07-01 00:00:00   Min.   :13.78           
-##  1st Qu.:2013-01-24 06:00:00   1st Qu.:16.82           
-##  Median :2015-08-16 12:00:00   Median :18.70           
-##  Mean   :2015-08-16 16:27:05   Mean   :19.27           
-##  3rd Qu.:2018-03-08 18:00:00   3rd Qu.:21.02           
-##  Max.   :2020-10-01 00:00:00   Max.   :36.00           
-##  NA's   :3623                  NA's   :3623
+##    Month...10                     Average Hire Time (mins)
+##  Min.   :2010-07-01 00:00:00.00   Min.   :13.78           
+##  1st Qu.:2013-01-24 06:00:00.00   1st Qu.:16.82           
+##  Median :2015-08-16 12:00:00.00   Median :18.70           
+##  Mean   :2015-08-16 16:27:05.80   Mean   :19.27           
+##  3rd Qu.:2018-03-08 18:00:00.00   3rd Qu.:21.02           
+##  Max.   :2020-10-01 00:00:00.00   Max.   :36.00           
+##  NA's   :3623                     NA's   :3623
 ```
 
 ```r
@@ -529,17 +526,11 @@ tflJourneyType <- read_csv("https://data.london.gov.uk/download/public-transport
 ```
 
 ```
-## Rows: 150 Columns: 12
-```
-
-```
+## Rows: 161 Columns: 12
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
 ## chr (3): Period and Financial year, Period beginning, Period ending
 ## dbl (9): Reporting Period, Days in period, Bus journeys (m), Underground jou...
-```
-
-```
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -551,19 +542,19 @@ str(tflJourneyType)
 ```
 
 ```
-## spec_tbl_df [150 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Period and Financial year    : chr [1:150] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
-##  $ Reporting Period             : num [1:150] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Days in period               : num [1:150] 31 28 28 28 28 28 28 28 28 28 ...
-##  $ Period beginning             : chr [1:150] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
-##  $ Period ending                : chr [1:150] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
-##  $ Bus journeys (m)             : num [1:150] 189 182 176 183 160 ...
-##  $ Underground journeys (m)     : num [1:150] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
-##  $ DLR Journeys (m)             : num [1:150] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
-##  $ Tram Journeys (m)            : num [1:150] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
-##  $ Overground Journeys (m)      : num [1:150] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
-##  $ Emirates Airline Journeys (m): num [1:150] NA NA NA NA NA NA NA NA NA NA ...
-##  $ TfL Rail Journeys (m)        : num [1:150] NA NA NA NA NA NA NA NA NA NA ...
+## spec_tbl_df [161 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Period and Financial year    : chr [1:161] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
+##  $ Reporting Period             : num [1:161] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Days in period               : num [1:161] 31 28 28 28 28 28 28 28 28 28 ...
+##  $ Period beginning             : chr [1:161] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
+##  $ Period ending                : chr [1:161] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
+##  $ Bus journeys (m)             : num [1:161] 189 182 176 183 160 ...
+##  $ Underground journeys (m)     : num [1:161] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
+##  $ DLR Journeys (m)             : num [1:161] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
+##  $ Tram Journeys (m)            : num [1:161] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
+##  $ Overground Journeys (m)      : num [1:161] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
+##  $ Emirates Airline Journeys (m): num [1:161] NA NA NA NA NA NA NA NA NA NA ...
+##  $ TfL Rail Journeys (m)        : num [1:161] NA NA NA NA NA NA NA NA NA NA ...
 ##  - attr(*, "spec")=
 ##   .. cols(
 ##   ..   `Period and Financial year` = col_character(),
@@ -587,37 +578,37 @@ summary(tflJourneyType)
 ```
 
 ```
-##  Period and Financial year Reporting Period Days in period Period beginning  
-##  Length:150                Min.   : 1.00    Min.   :26.0   Length:150        
-##  Class :character          1st Qu.: 4.00    1st Qu.:28.0   Class :character  
-##  Mode  :character          Median : 7.00    Median :28.0   Mode  :character  
-##                            Mean   : 6.86    Mean   :28.1                     
-##                            3rd Qu.:10.00    3rd Qu.:28.0                     
-##                            Max.   :13.00    Max.   :31.0                     
-##                                                                              
+##  Period and Financial year Reporting Period Days in period  Period beginning  
+##  Length:161                Min.   : 1.000   Min.   :26.00   Length:161        
+##  Class :character          1st Qu.: 4.000   1st Qu.:28.00   Class :character  
+##  Mode  :character          Median : 7.000   Median :28.00   Mode  :character  
+##                            Mean   : 6.876   Mean   :28.09                     
+##                            3rd Qu.:10.000   3rd Qu.:28.00                     
+##                            Max.   :13.000   Max.   :31.00                     
+##                                                                               
 ##  Period ending      Bus journeys (m) Underground journeys (m) DLR Journeys (m)
-##  Length:150         Min.   : 30.2    Min.   :  5.70           Min.   : 1.200  
-##  Class :character   1st Qu.:159.9    1st Qu.: 87.80           1st Qu.: 6.400  
-##  Mode  :character   Median :176.2    Median : 97.15           Median : 8.200  
-##                     Mean   :163.5    Mean   : 90.24           Mean   : 7.686  
-##                     3rd Qu.:183.8    3rd Qu.:105.88           3rd Qu.: 9.300  
-##                     Max.   :207.5    Max.   :118.20           Max.   :10.600  
+##  Length:161         Min.   : 30.2    Min.   :  5.7            Min.   : 1.200  
+##  Class :character   1st Qu.:151.5    1st Qu.: 84.4            1st Qu.: 6.400  
+##  Mode  :character   Median :175.2    Median : 96.4            Median : 7.900  
+##                     Mean   :161.0    Mean   : 88.9            Mean   : 7.609  
+##                     3rd Qu.:183.4    3rd Qu.:105.7            3rd Qu.: 9.200  
+##                     Max.   :207.5    Max.   :118.2            Max.   :10.600  
 ##                                                                               
 ##  Tram Journeys (m) Overground Journeys (m) Emirates Airline Journeys (m)
 ##  Min.   :0.400     Min.   : 1.00           Min.   :0.0000               
-##  1st Qu.:2.000     1st Qu.: 8.70           1st Qu.:0.1000               
-##  Median :2.200     Median :11.00           Median :0.1000               
-##  Mean   :2.071     Mean   :11.13           Mean   :0.1107               
+##  1st Qu.:1.900     1st Qu.: 8.80           1st Qu.:0.1000               
+##  Median :2.200     Median :11.15           Median :0.1000               
+##  Mean   :2.035     Mean   :11.20           Mean   :0.1106               
 ##  3rd Qu.:2.300     3rd Qu.:14.40           3rd Qu.:0.1000               
 ##  Max.   :2.800     Max.   :17.80           Max.   :0.5000               
 ##                    NA's   :7               NA's   :29                   
 ##  TfL Rail Journeys (m)
-##  Min.   :0.600        
-##  1st Qu.:2.975        
-##  Median :3.700        
-##  Mean   :3.465        
-##  3rd Qu.:4.200        
-##  Max.   :5.700        
+##  Min.   : 0.600       
+##  1st Qu.: 3.100       
+##  Median : 3.700       
+##  Mean   : 3.671       
+##  3rd Qu.: 4.250       
+##  Max.   :11.600       
 ##  NA's   :66
 ```
 
@@ -651,21 +642,21 @@ str(tflJourneyType)
 ```
 
 ```
-## spec_tbl_df [150 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Period and Financial year    : chr [1:150] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
-##  $ Reporting Period             : num [1:150] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Days in period               : num [1:150] 31 28 28 28 28 28 28 28 28 28 ...
-##  $ Period beginning             : chr [1:150] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
-##  $ Period ending                : chr [1:150] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
-##  $ Bus journeys (m)             : num [1:150] 189 182 176 183 160 ...
-##  $ Underground journeys (m)     : num [1:150] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
-##  $ DLR Journeys (m)             : num [1:150] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
-##  $ Tram Journeys (m)            : num [1:150] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
-##  $ Overground Journeys (m)      : num [1:150] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
-##  $ Emirates Airline Journeys (m): num [1:150] NA NA NA NA NA NA NA NA NA NA ...
-##  $ TfL Rail Journeys (m)        : num [1:150] NA NA NA NA NA NA NA NA NA NA ...
-##  $ BusTube                      : num [1:150] 280 266 260 270 243 ...
-##  $ DLR_Tram                     : num [1:150] 8.6 8 7.9 8.2 7.8 7.5 8.6 8.9 8.7 6.6 ...
+## spec_tbl_df [161 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Period and Financial year    : chr [1:161] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
+##  $ Reporting Period             : num [1:161] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Days in period               : num [1:161] 31 28 28 28 28 28 28 28 28 28 ...
+##  $ Period beginning             : chr [1:161] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
+##  $ Period ending                : chr [1:161] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
+##  $ Bus journeys (m)             : num [1:161] 189 182 176 183 160 ...
+##  $ Underground journeys (m)     : num [1:161] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
+##  $ DLR Journeys (m)             : num [1:161] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
+##  $ Tram Journeys (m)            : num [1:161] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
+##  $ Overground Journeys (m)      : num [1:161] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
+##  $ Emirates Airline Journeys (m): num [1:161] NA NA NA NA NA NA NA NA NA NA ...
+##  $ TfL Rail Journeys (m)        : num [1:161] NA NA NA NA NA NA NA NA NA NA ...
+##  $ BusTube                      : num [1:161] 280 266 260 270 243 ...
+##  $ DLR_Tram                     : num [1:161] 8.6 8 7.9 8.2 7.8 7.5 8.6 8.9 8.7 6.6 ...
 ##  - attr(*, "spec")=
 ##   .. cols(
 ##   ..   `Period and Financial year` = col_character(),
@@ -696,7 +687,7 @@ write_xlsx(tflSubset, "data/tflSubset.xlsx")
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%205:%20Loading%20data%20and%20packages%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=hPFNlS&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%5:%Loading%data%and%packages&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=RrIyhO>
 
 # Individual take home challenge
 
@@ -743,12 +734,14 @@ tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2)
 
 ```
 ## New names:
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
-## * `` -> ...3
-## * Month -> Month...4
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
-## * `` -> ...6
-## * ...
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
+## • `` -> `...3`
+## • `Month` -> `Month...4`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
+## • `` -> `...6`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...8`
+## • `` -> `...9`
+## • `Month` -> `Month...10`
 ```
 
 ```r
@@ -799,12 +792,14 @@ tflCycle <- read_xlsx("data/tfl-daily-cycle-hires.xlsx", sheet = 2)
 
 ```
 ## New names:
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
-## * `` -> ...3
-## * Month -> Month...4
-## * `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
-## * `` -> ...6
-## * ...
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...2`
+## • `` -> `...3`
+## • `Month` -> `Month...4`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...5`
+## • `` -> `...6`
+## • `Number of Bicycle Hires` -> `Number of Bicycle Hires...8`
+## • `` -> `...9`
+## • `Month` -> `Month...10`
 ```
 
 ```r

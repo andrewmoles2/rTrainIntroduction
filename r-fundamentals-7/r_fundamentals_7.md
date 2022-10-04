@@ -3,7 +3,7 @@ title: "R Fundamentals 7 - Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -349,9 +349,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  11 9 5 12 18 10 17 4 20 16
-##  $ rand  : num  7.87 2.01 2.35 3.64 6.7 ...
-##  $ rand2 : num  3.87 3.84 5.25 4.19 7.15 ...
+##  $ samp  : int  15 16 3 8 7 9 14 4 12 11
+##  $ rand  : num  5.4 8.4 6.14 8.19 7.05 ...
+##  $ rand2 : num  6.04 5 6.24 3 5.65 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -371,12 +371,12 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   11 7.871604 3.872397
-## string2   2    9 2.008867 3.843668
-## string3   3    5 2.350885 5.248093
-## string4   4   12 3.639347 4.191639
-## string5   5   18 6.701158 7.148134
-## string6   6   10 9.534817 5.126528
+## string1   1   15 5.404607 6.043384
+## string2   2   16 8.402783 5.001026
+## string3   3    3 6.135280 6.235763
+## string4   4    8 8.186040 2.996660
+## string5   5    7 7.050192 5.651943
+## string6   6    9 4.066525 7.263813
 ```
 
 Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
@@ -392,12 +392,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   11 7.871604 3.872397
-## string2   2    9 2.008867 3.843668
-## string3   3    5 2.350885 5.248093
-## string4   4   12 3.639347 4.191639
-## string5   5   18 6.701158 7.148134
-## string6   6   10 9.534817 5.126528
+## string1   1   15 5.404607 6.043384
+## string2   2   16 8.402783 5.001026
+## string3   3    3 6.135280 6.235763
+## string4   4    8 8.186040 2.996660
+## string5   5    7 7.050192 5.651943
+## string6   6    9 4.066525 7.263813
 ```
 
 ```r
@@ -419,10 +419,10 @@ calc
 ```
 
 ```
-##   string1   string2   string3   string4   string5   string6   string7   string8 
-## 0.8658765 0.1807980 0.1175442 0.4367217 1.2062085 0.9534817 1.6582637 0.1594540 
-##   string9  string10 
-## 1.3213808 0.8308751
+##    string1    string2    string3    string4    string5    string6    string7 
+## 0.81069098 1.34444523 0.18405841 0.65488322 0.49351342 0.36598721 0.20748272 
+##    string8    string9   string10 
+## 0.06222317 0.55274595 0.66494019
 ```
 
 ```r
@@ -432,17 +432,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand    rand2      calc
-## string1    1   11 7.871604 3.872397 0.8658765
-## string2    2    9 2.008867 3.843668 0.1807980
-## string3    3    5 2.350885 5.248093 0.1175442
-## string4    4   12 3.639347 4.191639 0.4367217
-## string5    5   18 6.701158 7.148134 1.2062085
-## string6    6   10 9.534817 5.126528 0.9534817
-## string7    7   17 9.754493 1.371159 1.6582637
-## string8    8    4 3.986351 3.607670 0.1594540
-## string9    9   20 6.606904 7.698995 1.3213808
-## string10  10   16 5.192969 5.836512 0.8308751
+##          int samp     rand    rand2       calc
+## string1    1   15 5.404607 6.043384 0.81069098
+## string2    2   16 8.402783 5.001026 1.34444523
+## string3    3    3 6.135280 6.235763 0.18405841
+## string4    4    8 8.186040 2.996660 0.65488322
+## string5    5    7 7.050192 5.651943 0.49351342
+## string6    6    9 4.066525 7.263813 0.36598721
+## string7    7   14 1.482019 4.158702 0.20748272
+## string8    8    4 1.555579 2.218915 0.06222317
+## string9    9   12 4.606216 5.073300 0.55274595
+## string10  10   11 6.044911 7.396006 0.66494019
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -455,12 +455,12 @@ df_cor
 ```
 
 ```
-##             int      samp       rand       rand2       calc
-## int   1.0000000 0.4172743  0.2464370  0.25843045 0.38645799
-## samp  0.4172743 1.0000000  0.5099910  0.37381114 0.85383976
-## rand  0.2464370 0.5099910  1.0000000 -0.10546560 0.85588205
-## rand2 0.2584305 0.3738111 -0.1054656  1.00000000 0.09136092
-## calc  0.3864580 0.8538398  0.8558821  0.09136092 1.00000000
+##               int       samp       rand       rand2       calc
+## int    1.00000000 -0.1596204 -0.5057188 -0.02492626 -0.4403370
+## samp  -0.15962038  1.0000000  0.1027407  0.18137970  0.6948704
+## rand  -0.50571879  0.1027407  1.0000000  0.24522243  0.7184422
+## rand2 -0.02492626  0.1813797  0.2452224  1.00000000  0.1950924
+## calc  -0.44033698  0.6948704  0.7184422  0.19509243  1.0000000
 ```
 
 ```r
@@ -470,12 +470,12 @@ df_cor
 ```
 
 ```
-##         int  samp   rand  rand2  calc
-## int   1.000 0.417  0.246  0.258 0.386
-## samp  0.417 1.000  0.510  0.374 0.854
-## rand  0.246 0.510  1.000 -0.105 0.856
-## rand2 0.258 0.374 -0.105  1.000 0.091
-## calc  0.386 0.854  0.856  0.091 1.000
+##          int   samp   rand  rand2   calc
+## int    1.000 -0.160 -0.506 -0.025 -0.440
+## samp  -0.160  1.000  0.103  0.181  0.695
+## rand  -0.506  0.103  1.000  0.245  0.718
+## rand2 -0.025  0.181  0.245  1.000  0.195
+## calc  -0.440  0.695  0.718  0.195  1.000
 ```
 
 ```r
@@ -499,12 +499,12 @@ df_cor
 ```
 
 ```
-##         int  samp   rand  rand2  calc
-## int   1.000 0.417  0.246  0.258 0.386
-## samp  0.417 1.000  0.510  0.374 0.854
-## rand  0.246 0.510  1.000 -0.105 0.856
-## rand2 0.258 0.374 -0.105  1.000 0.091
-## calc  0.386 0.854  0.856  0.091 1.000
+##          int   samp   rand  rand2   calc
+## int    1.000 -0.160 -0.506 -0.025 -0.440
+## samp  -0.160  1.000  0.103  0.181  0.695
+## rand  -0.506  0.103  1.000  0.245  0.718
+## rand2 -0.025  0.181  0.245  1.000  0.195
+## calc  -0.440  0.695  0.718  0.195  1.000
 ```
 
 ```r
@@ -512,7 +512,7 @@ df_cor$int
 ```
 
 ```
-## [1] 1.000 0.417 0.246 0.258 0.386
+## [1]  1.000 -0.160 -0.506 -0.025 -0.440
 ```
 
 ## Converting matrices exercise
@@ -921,7 +921,7 @@ In the example code below we make two more lists with information in them and a 
 # make some more lists with information
 list_info2 <- list(name = "Margaret", age = 22, like_dinosaurs = FALSE)
 
-list_info3 <- list(name = "Sofia", age = 19, like_dinosaurs = TRUE, fav_dinosaurs = c("Deinonychus‭", "Ornithomimus"))
+list_info3 <- list(name = "Sofia", age = 19, like_dinosaurs = TRUE, fav_dinosaurs = c("Deinonychus", "Ornithomimus"))
 
 # data frame to put into a list
 dino_df <- data.frame(
@@ -954,7 +954,7 @@ str(list_all)
 ##   ..$ name          : chr "Sofia"
 ##   ..$ age           : num 19
 ##   ..$ like_dinosaurs: logi TRUE
-##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus‭" "Ornithomimus"
+##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus" "Ornithomimus"
 ##  $ :'data.frame':	3 obs. of  3 variables:
 ##   ..$ dinosaur: chr [1:3] "Archaeopteryx" "T-Rex" "Triceratops"
 ##   ..$ scary   : logi [1:3] FALSE TRUE TRUE
@@ -1007,7 +1007,7 @@ str(list_all)
 ##   ..$ name          : chr "Sofia"
 ##   ..$ age           : num 19
 ##   ..$ like_dinosaurs: logi TRUE
-##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus‭" "Ornithomimus"
+##   ..$ fav_dinosaurs : chr [1:2] "Deinonychus" "Ornithomimus"
 ##  $ dino_data:'data.frame':	3 obs. of  3 variables:
 ##   ..$ dinosaur: chr [1:3] "Archaeopteryx" "T-Rex" "Triceratops"
 ##   ..$ scary   : logi [1:3] FALSE TRUE TRUE
@@ -1072,7 +1072,7 @@ list_all[["person3"]][["fav_dinosaurs"]]
 ```
 
 ```
-## [1] "Deinonychus‭"  "Ornithomimus"
+## [1] "Deinonychus"  "Ornithomimus"
 ```
 
 ```r
@@ -1080,7 +1080,7 @@ list_all$person3$fav_dinosaurs
 ```
 
 ```
-## [1] "Deinonychus‭"  "Ornithomimus"
+## [1] "Deinonychus"  "Ornithomimus"
 ```
 
 To access specific data within those elements we need to use single square brackets
@@ -1091,7 +1091,7 @@ list_all[["person3"]][["fav_dinosaurs"]][1]
 ```
 
 ```
-## [1] "Deinonychus‭"
+## [1] "Deinonychus"
 ```
 
 ```r
@@ -1099,7 +1099,7 @@ list_all$person3$fav_dinosaurs[1]
 ```
 
 ```
-## [1] "Deinonychus‭"
+## [1] "Deinonychus"
 ```
 
 Dealing with data frames in a list is the same concept. We have a sequence of double square bracket calls or dollar signs to get information.
@@ -1265,7 +1265,7 @@ legend("topleft", legend = levels(dino_class),
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%207:%20Lists%20and%20Matrices%C2%A0%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Et1Q00_hUB9Iv3NaRfEoRzIBXFH_Ui3ZpdEFmbIKdgCCmw?e=vLVYyO&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%7:%Lists%and%Matrices&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Et1Q00_hUB9Iv3NaRfEoRzIBXFH_Ui3ZpdEFmbIKdgCCmw?e=qeYzZ7>
 
 # Individual take home challenge
 

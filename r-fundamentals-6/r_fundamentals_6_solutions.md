@@ -3,7 +3,7 @@ title: "R Fundamentals 6 - Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "03 December, 2021"
+date: "04 October, 2022"
 output: 
   html_document: 
     theme: readable
@@ -244,7 +244,7 @@ sum(z < 50)
 ```
 
 ```
-## [1] 10
+## [1] 6
 ```
 
 ```r
@@ -252,7 +252,7 @@ sum(z >= 50)
 ```
 
 ```
-## [1] 10
+## [1] 14
 ```
 
 ```r
@@ -340,7 +340,9 @@ df[df$x < 20, ]
 
 ```
 ##     x  y
-## 14 17 75
+## 11  3 15
+## 14 16 62
+## 15 13  4
 ```
 
 ```r
@@ -350,18 +352,16 @@ df2
 ```
 
 ```
-##     x  y
-## 1  53 51
-## 2  42 70
-## 5  52 97
-## 6  57 27
-## 7  56 57
-## 8  44 30
-## 9  63 15
-## 10 87 84
-## 11 45 24
-## 12 35 52
-## 15 50 50
+##      x  y
+## 1   39 20
+## 2   35 48
+## 3   90 34
+## 7   71 13
+## 8  100  9
+## 9   84 33
+## 10  87 87
+## 12  44 78
+## 13  38 60
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -371,13 +371,14 @@ subset(df, y <= 40)
 ```
 
 ```
-##     x  y
-## 4  23 34
-## 6  57 27
-## 8  44 30
-## 9  63 15
-## 11 45 24
-## 13 32 31
+##      x  y
+## 1   39 20
+## 3   90 34
+## 7   71 13
+## 8  100  9
+## 9   84 33
+## 11   3 15
+## 15  13  4
 ```
 
 ## Subsetting exercise
@@ -404,16 +405,10 @@ pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntrod
 
 ```
 ## Rows: 151 Columns: 13
-```
-
-```
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
 ## chr (4): Name, Type.1, Type.2, Legendary
 ## dbl (9): Number, Total, HP, Attack, Defense, Sp..Atk, Sp..Def, Speed, Genera...
-```
-
-```
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -655,8 +650,8 @@ df3[df3$y >= 70 & df3$z >= 70,]
 ```
 
 ```
-##         id  x  y  z  exp
-## 2 person_b 42 86 97 test
+## [1] id  x   y   z   exp
+## <0 rows> (or 0-length row.names)
 ```
 
 ```r
@@ -664,9 +659,11 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 ```
 
 ```
-##         id  x  y  z  exp
-## 3 person_c 82  8 53 test
-## 9 person_i 43 19  5 test
+##          id  x  y  z     exp
+## 2  person_b 32 11 32    test
+## 3  person_c 14 52 11    test
+## 6  person_f 98 57 13    test
+## 10 person_j 12 34 96 control
 ```
 
 ```r
@@ -675,9 +672,8 @@ subset(df3, y < 60 & exp == 'control')
 
 ```
 ##          id  x  y  z     exp
-## 1  person_a 16 18 31 control
-## 5  person_e 49 21 92 control
-## 10 person_j 25 50 95 control
+## 4  person_d 34 36 16 control
+## 10 person_j 12 34 96 control
 ```
 
 # %in% operator
@@ -694,8 +690,10 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y z  exp
-## 9 person_i 43 19 5 test
+##         id  x  y  z     exp
+## 3 person_c 14 52 11    test
+## 4 person_d 34 36 16 control
+## 6 person_f 98 57 13    test
 ```
 
 ```r
@@ -715,9 +713,9 @@ subset(df3, id %in% val_match)
 
 ```
 ##          id  x  y  z     exp
-## 8  person_h 55 48 77    test
-## 9  person_i 43 19  5    test
-## 10 person_j 25 50 95 control
+## 8  person_h 36 66 52 control
+## 9  person_i 67 89 48 control
+## 10 person_j 12 34 96 control
 ```
 
 ```r
@@ -904,16 +902,16 @@ df3[, c('x','cat')]
 
 ```
 ##     x    cat
-## 1  16    low
-## 2  42 medium
-## 3  82   high
-## 4  33    low
+## 1  71   high
+## 2  32    low
+## 3  14    low
+## 4  34 medium
 ## 5  49 medium
-## 6  75   high
-## 7  51 medium
-## 8  55 medium
-## 9  43 medium
-## 10 25    low
+## 6  98   high
+## 7  19    low
+## 8  36 medium
+## 9  67   high
+## 10 12    low
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -983,7 +981,7 @@ table(pokemon$SpeedTier, pokemon$Type.1)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_eflc2yj4pcryc62?coursename=R%20Fundamentals%206:%20Conditionals%20and%20Logic%C2%A0&topic=R&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=9JhtJ9&prog=DS&version=21-22>
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%6:%Conditionals%and%Logic&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=0ZYnrr>
 
 # Individual take home challenge 
 
