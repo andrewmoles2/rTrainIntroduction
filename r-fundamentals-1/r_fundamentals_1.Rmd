@@ -78,9 +78,9 @@ When calling a variable, be careful to type it exactly (you can also copy it or 
 hieght
 ```
 
-We can do calculations on variables. We first assign the variables, then use them in the calculation.
+We can do calculations on variables. We first assign the variables, and then use them in the calculation.
 
-In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is `42 * 92`, as this is the data scored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
+In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is `42 * 92`, as this is the data stored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
 
 ```{r}
 # test scores
@@ -103,7 +103,7 @@ You will have noticed the hashtags (`#`) with text in the above example. These a
 
 1)  Make a variable called my_height, and assign your height in cm (this can be an estimate if you are not sure)
 2)  Print the output of my_height
-3)  Convert your height in cm to feet. Make a new variable called my_height_feet, and assign the calculation of your height in cm to feet. *hint: there are 0.0328084 feet in 1 cm*
+3)  Convert your height from cm to feet. Make a new variable called my_height_feet, and assign the calculation of your height in cm to feet. *hint: there are 0.0328084 feet in 1 cm*
 4)  Print your my_height_feet variable
 
 ```{r}
@@ -127,7 +127,7 @@ BankBalance <- BankBalance + PayCheck
 BankBalance
 ```
 
-Note that if you run `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
+Note that if you run `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works *sequentially* in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
 
 ```{r}
 # variables
@@ -150,7 +150,7 @@ Try and add another pay check of £50 to the bank balance variable.
 2)  Assign BankBalance, and calculate BankBalance + PayCheck2
 3)  Print the outcome
 4)  You go out for dinner with friends and spend 36.55. Make a variable called dinner with the value of 36.55
-5)  Assign BankBalance, and calculate BankBalance - dinner
+5)  Assign BankBalance, and calculate BankBalance minus dinner
 6)  Print the outcome *hint: if this doesn't work run the code chunk with the bank balance variable*
 
 ```{r}
@@ -160,12 +160,12 @@ Try and add another pay check of £50 to the bank balance variable.
 
 ## Assigning variables exercise 2
 
-Use R to work out a body mass index (BMI) of someone who is 79kg, and 1.77m tall.
+Use R to work out the body mass index (BMI) of someone who is 79kg, and 1.77m tall.
 
-1)  Assign the variables of weight and height
-2)  Assign the variable of BMI, and calculate the BMI based of the weight and height variables
-3)  Print the outcome
-4)  Add comments on what each line of code is doing
+1) Assign the variables of weight and height    
+2) Assign the variable of BMI, and calculate the BMI based on the weight and height variables   
+3) Print the outcome    
+4) Add comments on what each line of code is doing    
 
 ```{r}
 # your code here
@@ -182,7 +182,7 @@ Use R to work out a body mass index (BMI) of someone who is 79kg, and 1.77m tall
 
 ## Overall grade calculation debugging exercise
 
-Debug the code below that is finding the weighted average of a students coursework and exam scores. You should find three errors:
+Debug the code below that is finding the weighted average of a student's coursework and exam scores. You should find three errors:
 
 -   logic (maths) error
 -   syntax error
@@ -214,7 +214,7 @@ They used simple calculations using the following formulas:
 
 (number hours worked per week x hourly rate) x number of weeks worked = annual salary (annual salary ÷ number of weeks in a year) ÷ hours worked per week = hourly rate
 
-Re-arrange the code so the calculations run. You should have both the combined salary and Charlies hourly rate calculations printed.
+Re-arrange the code so the calculations run. You should have both the combined salary and Charlie's hourly rate calculations printed.
 
 ```{r error=TRUE}
 # weeks in year
@@ -251,7 +251,7 @@ The solutions we be available from a link at the end of the survey.
 
 # Individual coding challenge
 
-A take home coding task for you.
+A take-home coding task for you.
 
 Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal and Genevieve.
 
