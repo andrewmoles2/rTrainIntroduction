@@ -1,0 +1,105 @@
+---
+title: "Welcome to the DSL R Workshops"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+urlcolor: red
+---
+
+<style type="text/css">
+  body{
+  font-size: 22pt;
+}
+</style>
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The materials for the R workshops will be hosted on Microsoft Teams. 
+
+## How do I join?
+
+1. Open [Teams](https://info.lse.ac.uk/staff/divisions/dts/essentials/setting-up-microsoft-teams)   
+2. Go to the teams overview on the left hand bar    
+3. Click on **'Join or create team'** button    
+4. Enter the code **7gnl0dm**   
+5. Open the DSL-R-Workshops team page   
+6. Find the relevant document/s by searching the channels on the sidebar
+
+## How do I use the files?
+
+- We will be using `.Rmd` files
+- Download the files that are relevant for the workshop you are working on
+- For example, if you are starting R Fundamentals, download the `r-fundamentals_1.Rmd` from the *R-Fundamentals* channel
+- Load the `.Rmd` files into RStudio
+- Start working through the examples and exercises
+
+<br>
+
+***
+
+## What does R Fundamentals cover?
+
+<font size="5">
+
+**R Fundamentals 1**
+
+Get started with R and RStudio, working with variables to perform calculations 
+
+**R Fundamentals 2**
+
+Start working with vectors to perform summary statistics on data as well as accessing parts of your data (indexing)
+
+**R Fundamentals 3**
+
+An introduction to using text, factors (categorical data), and how to change the data type
+
+**R Fundamentals 4**
+
+Start using data frames which are like Excel spreadsheets in structure. We will cover how to use this important data type to perform summary statistics
+
+**R Fundamentals 5**
+
+Start loading data into R, and in the process learn about packages (extensions to R) and what how to work with pathways/directories
+
+**R Fundamentals 6**
+
+An introduction to conditional operators and logic, which we use to filter and categorise data
+
+**R Fundamentals 7**
+
+Start working with list and matrix data types, where we cover how to make, access data, and their general uses
+
+</font> 
+<br>
+
+***
+
+## What does R Data Wrangling and Visualisation cover?
+
+<font size="5">
+
+**R Data Wrangling 1**
+
+Introduction to the tidyverse through dplyr and piping your workflow. We will be covering how to select columns and filter rows, as well as general tips along the way
+
+**R Data Wrangling 2**
+
+Start manipulating columns of data (creation, modification, or removal of columns) as well as cleaning up your column names. 
+
+**R Data Wrangling 3**
+
+An introduction to relational joins, cross tabulation, and aggregation (split, apply, combine)
+
+**R Data Visualisation 1**
+
+Get started with ggplot2 where you will mark scatter and bar plots to visualise your data
+
+**R Data Visualisation 2**
+
+Continue learning ggplot2 by making box plots, histograms, and time series visualisations
+
+</font> 

@@ -9,10 +9,6 @@ output:
     theme: readable
     highlight: pygments
     keep_md: no
-    code_download: true
-    toc: true
-    toc_float: 
-      collapsed: false
 ---
 
 # Why R
@@ -29,7 +25,7 @@ It has lots of strengths:
 -   You can do almost anything in R due to community written 'packages'
 -   Makes pretty and complex data visualisations (see below)
 
-![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp.gif?raw=true)
+![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp2.gif?raw=true)
 
 ![](https://github.com/andrewmoles2/TidyTuesday/blob/master/elevation_maps/vista-maps/outputs/monument_valley.png?raw=true)
 
