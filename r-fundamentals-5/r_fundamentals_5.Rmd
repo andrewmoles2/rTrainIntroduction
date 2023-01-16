@@ -135,7 +135,7 @@ Now minimize RStudio again and go to the folder which you accessed previously, d
 
 ```{r, echo=FALSE, out.width = '100%',fig.align='center'}
 #Your code here
-knitr::include_graphics("/Users/MOLES/Downloads/r_fundamentals_5.png")
+knitr::include_graphics()
 ```
 
 *note: include_graphics() command is from knitr package. You might have noticed that we have not loaded in knitr at the begging of this lesson. We can actually use commands from packages you have installed but not loaded in using <name-of-the-package>::<command>. It's actually a good practice not to load in entire packages if we're only going to use a single command*
@@ -224,7 +224,7 @@ file.remove(new_folder_path)
 file.remove(file.path(getwd(),"new_folder"))
 ```
 
-**IMPORTANT WARNING: Make sure you check trice before deleting anything from inside the code as unlike deleting with a mouse cursor, deleted files DO NOT land in the bin. Additionally, if you ever search online for deleting files, you might stumble upon `unlink(<directory>,recursive=TRUE)` command. Unlike file.remove() unlink will not return a warning when a folder is empty but will instead delete everything inside it. If you set an argument force=TRUE, you can even make it delete the R markdown file you are using. For this very reason we advice against ever using unlink(), and instead taking time to remove files one by one. On this very rare exception, more code is better.**
+**IMPORTANT WARNING: Make sure you check trice before deleting anything from inside the code as unlike deleting with a mouse cursor, deleted files DO NOT land in the bin. Additionally, if you ever search online for deleting files, you might stumble upon `unlink(<directory>,recursive=TRUE)` command. Unlike file.remove() unlink will not return a warning when a folder is not empty but will instead delete everything inside it. If you set an argument force=TRUE, you can even make it delete the R markdown file you are using. For this very reason we advice against ever using unlink(), and instead taking time to remove files one by one. On this very rare exception, more code is better.**
 
 ## Copying a file exercise
 
@@ -242,7 +242,7 @@ new_folder <-
 # make a new directory if it doesn't already exist in a working directory
 
 
-# copy image file if it exists in working directory
+# copy image file if new and old directories exist
 
 
 ```
