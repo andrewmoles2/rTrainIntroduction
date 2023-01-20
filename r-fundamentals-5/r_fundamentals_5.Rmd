@@ -98,12 +98,14 @@ You can understand a directory as simply a place on your computer's hard drive a
 Now that you know the path of where your r_markdown file is, you can manually locate the file from the desktop.
 
 If you're using Windows:
+
 1. Copy the path you just found without the quotation marks (`shortcut: Ctrl+C`)
 2. Minimize RStudio so that you're on your Desktop 
 3. Open the Windows search menu and paste the path directly (`shortcut: Ctrl+V`)
 4. Click on the folder that appears
 
 If you're using Mac:
+
 1. Copy the path you just found without the quotation marks (`shortcut: Command+C`)
 2. Minimize RStudio so that you're on your Desktop
 3. Open finder. It should be the most left file on your task bar on the bottom of the screen.
@@ -133,7 +135,7 @@ Now minimize RStudio again and go to the folder which you accessed previously, d
 6. Try running the same command but in the `path-to-image-here` insert just the name of the picture `r_fundamentals_5.png`. What error do you get? Why do you think that is?
 
 
-```{r, echo=FALSE, out.width = '100%',fig.align='center'}
+```{r, echo=FALSE, out.width = '100%', fig.align='center', error=TRUE}
 #Your code here
 knitr::include_graphics()
 ```
@@ -161,18 +163,17 @@ It's important to note that when loading in a file, R will not search through al
 1. Move your file to your working directory *you can use `getwd()` again if you forgot where it is*
 2. Run the command below without changing it. If the picture doesn't display correctly make sure you placed the picture in the same file you have `r_fundamentals_5.Rmd`.
 
-```{r, out.width = '100%',fig.align='center'}
+```{r, out.width = '100%',fig.align='center', error=TRUE}
 knitr::include_graphics("r_fundamentals_5.png")
 ```
 
 *You can see that if we have our file in a working directory there is no need to write out an entire path, we can just load a picture using its' name. This is actually true for all types of files, including datasets in .csv, such as the one you're going to load in at the end of this lesson.*
 
-
 3. Run the command below
 
 ```{r}
 # set up pathway
-path <- "image"
+path <- "images"
 
 # make data directory if it doesn't already exist in working directory
 if (dir.exists(path) == FALSE) {
@@ -186,11 +187,13 @@ if (file.exists("r_fundamentals_5.png")) {
 
 ```
 
+*note: we will cover if statements in R Fundamentals 6!*
+
 4. Inspect the working directory, what changed, where is the image now?
 5. Modify the code below so that the picture displays correctly. *You don't need to spell out the entire path like in the `Loading in a Picture` exercise*
 
 
-```{r, out.width = '100%',fig.align='center'}
+```{r, out.width = '100%',fig.align='center', error=TRUE}
 knitr::include_graphics("r_fund/r_fundamentals_5.png")
 ```
 
@@ -405,7 +408,6 @@ It is useful to mention the `data.table` package, which is the fastest option wh
 
 Before now, you probably have moved your files around your computer using your mouse (we call it `drag and drop`). Although this is more than enough in day to day tasks, programmers usually opt for creating and moving files from inside the code. Why? Imagine that you are working in a project, with multiple other analysts, where you are using +100 datasets. Firstly, such large data bases would probably be divided into different folders so that data is easier to find. If you were to load/save and move your files using drag and drop, what would happen if your colleague asks you to send them their work. You would most likely have send them list of instructions of which of the 100 datasets to load in and what variable names to give it so that your code runs smoothly. Lot's of unnecessary additional work. This is why in larger coding projects it's a good practice to have a standard layout and only load/save/move around files from inside the code.
 
-
 In the previous exercise you manually wrote out a path to the file using slashes `/`. As you might be wondering, there is a quicker way of concatenating (chaining) different file paths, without the need to spell out slashes `/`. We do this with a `file.path(<path1>,<path2>,<path3>,...)`. Below is a quick example of how we can use `file.path()` to get an entire path of a file you have loaded in the previously. You can see that we can even chain it with commands like `getwd()`, variables, and spelling out a name manually. This can be especially helpful if you expect someone else using your code on their personal device, as their working directory will differ from yours.
 
 ```{r}
@@ -438,7 +440,7 @@ As you might have seen from the previous exercise we can move any file using `fi
 
 Fill in the code below to copy our image `r_fundamentals_5.png` to a new folder with the name of your choosing. Try avoiding spelling out the path manually, but instead use `file.path()` commands where necessary:
 
-```{r}
+```{r , error=TRUE}
 # set up pathways
 old_folder <- "image"
 image_name <- "r_fundamentals_5.png"

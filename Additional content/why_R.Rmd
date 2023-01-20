@@ -13,17 +13,26 @@ output:
 
 # Why R
 
-R is a popular language, especially in data science, this can be seen in the TIOBE Index for August 2020.
+R is a popular language, especially in data science and statistics.
 
-![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/tiobe-index.png?raw=true)
+This can be seen in the TIOBE Index for August 2020.
 
-It has lots of strengths:
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/tiobe-index.png?raw=true){width="900"}
+
+As well as the PYPL index from 2023.
+
+![](https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-1/Images/PYPL_index_23.png)
+
+R has lots of strengths:
 
 -   Excellent at handling data
 -   Very good for statistics
 -   Open source
 -   You can do almost anything in R due to community written 'packages'
 -   Makes pretty and complex data visualisations (see below)
+-   R Shiny is a great tool for making interactive dashboards and applications
+-   R Markdown/Quarto are document writing tools that allow you to write all your analysis and text in one document
+-   Interacts well with other languages such as JavaScript, Python, and C++
 
 ![](https://github.com/andrewmoles2/TidyTuesday/blob/master/Australia-fires-2020-01-07/Auz_Rain&Temp2.gif?raw=true)
 
@@ -41,7 +50,7 @@ When you load RStudio the syntax editor will not be open. Try and open one just 
 
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/scripts.png?raw=true)
 
-***
+------------------------------------------------------------------------
 
 # Using R markdown
 
@@ -51,7 +60,7 @@ For these workshops we will be using R Markdown. It allows you to have text (wit
 
 To run code in a code chunk either press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
 
-***
+------------------------------------------------------------------------
 
 # Information on how the session is run
 
@@ -81,4 +90,3 @@ One hour exercise based session with tutor support. You will be given example co
 -   <https://www.w3schools.com/r/> (w3 schools short tutorials)
 
 3)  Don't struggle too long looking online, ask the trainer if you can't find a solution!
-

@@ -93,17 +93,20 @@ You should see a text divided with slashes  `/`. If you're on Windows it should 
 We call this a "path" and it tells you what directory the "r_fundamentals_5.Rmd" file is placed in. 
 
 You can understand a directory as simply a place on your computer's hard drive and path as its' name. The simplest example of a directory is a folder. When you right click on your desktop and create a new folder, you create a new directory. Programmers often use the word folder interchangeably with a directory. Although they're almost the same in meaning a directory can also be a specific file in which case the path of a file will be the folder it is in followed by `/<name of the file>.<format such as jpg,txt or Rmd>`.
+
 ## Finding your directory exercise
 
 Now that you know the path of where your r_markdown file is, you can manually locate the file from the desktop.
 
 If you're using Windows:
+
 1. Copy the path you just found without the quotation marks (`shortcut: Ctrl+C`)
 2. Minimize RStudio so that you're on your Desktop 
 3. Open the Windows search menu and paste the path directly (`shortcut: Ctrl+V`)
 4. Click on the folder that appears
 
 If you're using Mac:
+
 1. Copy the path you just found without the quotation marks (`shortcut: Command+C`)
 2. Minimize RStudio so that you're on your Desktop
 3. Open finder. It should be the most left file on your task bar on the bottom of the screen.
@@ -132,8 +135,7 @@ Now minimize RStudio again and go to the folder which you accessed previously, d
 5. Feel free to inspect a picture to get a better understanding of how your computer memory is structured
 6. Try running the same command but in the `path-to-image-here` insert just the name of the picture `r_fundamentals_5.png`. What error do you get? Why do you think that is?
 
-
-```{r, echo=FALSE, out.width = '100%',fig.align='center'}
+```{r, echo=FALSE, out.width = '100%',fig.align='center', error=TRUE}
 #Your code here
 knitr::include_graphics("e.g. C:/Users/<Your Name>/Desktop/New_file/r_fundamentals_5.png")
 #This is an example solution that will not work on your computer, you need to find your own path using the instructions above
@@ -141,7 +143,6 @@ knitr::include_graphics("e.g. C:/Users/<Your Name>/Desktop/New_file/r_fundamenta
 ```
 
 *note: include_graphics() command is from knitr package. You might have noticed that we have not loaded in knitr at the begging of this lesson. We can actually use commands from packages you have installed but not loaded in using <name-of-the-package>::<command>. It's actually a good practice not to load in entire packages if we're only going to use a single command*
-
 
 # Introduction to working directory
 
@@ -163,18 +164,17 @@ It's important to note that when loading in a file, R will not search through al
 1. Move your file to your working directory *you can use `getwd()` again if you forgot where it is*
 2. Run the command below without changing it. If the picture doesn't display correctly make sure you placed the picture in the same file you have `r_fundamentals_5.Rmd`.
 
-```{r, out.width = '100%',fig.align='center'}
+```{r, out.width = '100%',fig.align='center', error=TRUE}
 knitr::include_graphics("r_fundamentals_5.png")
 ```
 
 *You can see that if we have our file in a working directory there is no need to write out an entire path, we can just load a picture using its' name. This is actually true for all types of files, including datasets in .csv, such as the one you're going to load in at the end of this lesson.*
 
-
 3. Run the command below
 
 ```{r}
 # set up pathway
-path <- "image"
+path <- "images"
 
 # make data directory if it doesn't already exist in working directory
 if (dir.exists(path) == FALSE) {
@@ -193,11 +193,10 @@ if (file.exists("r_fundamentals_5.png")) {
 
 
 ```{r, out.width = '100%',fig.align='center'}
-knitr::include_graphics("image/r_fundamentals_5.png")
+knitr::include_graphics("images/r_fundamentals_5.png")
 ```
 
 *note: now that you know what a path is you can speed up your work by using keyboard shortcuts. To quickly get a file path you can click on the file once and press `Shift+A` on Windows or `Command+Option+C` on Mac. This will copy a path to your clipboard which you can then quickly paste with `Ctrl+V` on Windows and `Command+V` on Mac.*
-
 
 # How to set up a project?
 
@@ -504,9 +503,9 @@ As you might have seen from the previous exercise we can move any file using `fi
 
 Fill in the code below to copy our image `r_fundamentals_5.png` to a new folder with the name of your choosing. Try avoiding spelling out the path manually, but instead use `file.path()` commands where necessary:
 
-```{r}
+```{r, eval=FALSE}
 # set up pathways
-old_folder <- "image"
+old_folder <- "images"
 image_name <- "r_fundamentals_5.png"
 new_folder <- "image_copy"
 

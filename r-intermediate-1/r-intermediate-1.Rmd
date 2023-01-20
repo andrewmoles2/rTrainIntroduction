@@ -262,6 +262,59 @@ example_df$generation <- vapply(example_df[,"yob"], generation, FUN.VALUE = "cha
 example_df
 ```
 
+# Using curly-curly
+
+```{r}
+library(dplyr)
+
+dplyr::starwars
+
+starwars_avg <- function(summary_var, group_var = species) {
+
+  dplyr::starwars %>%
+  group_by({{group_var}}) %>%
+  summarise(average := mean({{summary_var}}, na.rm = TRUE)) %>%
+  arrange(desc(average))
+}
+
+starwars_avg(height, species)
+starwars_avg(mass, species)
+starwars_avg(birth_year, species)
+```
+
+
+# Using ... in a function
+
+```{r}
+my_select <- function(...) {
+  select(dplyr::starwars, ...)
+}
+
+my_select(name, birth_year)
+```
+
+
+Using both together can be very useful, and can give us lots of flexibility. Take our function we made earlier, we can adapt it so we can have either one or several grouping arguments. 
+
+```{r}
+library(dplyr)
+
+dplyr::starwars
+
+starwars_avg <- function(summary_var,...) {
+
+  dplyr::starwars %>%
+  group_by(...) %>%
+  summarise(average := mean({{summary_var}}, na.rm = TRUE)) %>%
+  arrange(desc(average)) %>%
+  ungroup()
+}
+
+starwars_avg(mass, species)
+starwars_avg(mass, species, eye_color)
+```
+
+
 # Extra resources and ideas
 
 GitHub is a great resource to store your code for projects or just little snippets of code. GitHub Gists are great for the little snippets of code that might not fit into their own project. Have a look at [this nice blog post](https://ikashnitsky.github.io/2023/gist-snippet/index.html) about how to pull your GitHub Gists into R to save you copy and pasting them from GitHub.
