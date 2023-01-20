@@ -87,7 +87,7 @@ Run the code below and read the output carefully.
 getwd()
 ```
 
-You should see a text divided with slashes  `/`. If you're on Windows it should start with `C:/...` while if you're on Mac you should see `/Users/<your username>/...`.
+You should see a text divided with slashes  `/`. If you're on Windows it should start with `C:/Users/<your username>/...` while if you're on Mac you should see `/Users/<your username>/...`.
 
 We call this a "path" and it tells you what directory the "r_fundamentals_5.Rmd" file is placed in. 
 
@@ -153,7 +153,7 @@ Working directory, as the name suggests, is a directory in which you are current
 
 The second important directory is a subdirectory. The Oxford Language official definition of a subdirectory is "a directory below another directory in a hierarchy". If you create a folder inside your working directory, that folder will constitute a subdirectory of a working directory.
 
-It's important to note that when loading in a file, R will not search through all of the subdirectories, only the working directory. Nonetheless, if you are putting a file in a subdirectory there is no need to spell out the entire file path. When we are looking for a file from a subdirectory of a working directory we can just spell out the file path from the working directory onwards. When telling R to find a file in a subdirectory, you need to reference working directory with a dot e.g. `./MyFolder/MyFile.txt` instead of `C:/Users/Desktop/MyWorkingDirectory/MyFolder/MyFile.txt`.
+It's important to note that when loading in a file, R will not search through all of the subdirectories, only the working directory. Nonetheless, if you are putting a file in a subdirectory there is no need to spell out the entire file path. When we are looking for a file from a subdirectory of a working directory we can just spell out the file path from the working directory onwards. When telling R to find a file in a subdirectory, you need to reference working directory with a dot e.g. `./MyFolder/MyFile.txt` instead of `C:/Users/<your username>/Desktop/MyWorkingDirectory/MyFolder/MyFile.txt`.
 
 
 ## Accessing a file from working directory exercise
@@ -195,58 +195,6 @@ knitr::include_graphics("r_fund/r_fundamentals_5.png")
 ```
 
 *note: now that you know what a path is you can speed up your work by using keyboard shortcuts. To quickly get a file path you can click on the file once and press `Shift+A` on Windows or `Command+Option+C` on Mac. This will copy a path to your clipboard which you can then quickly paste with `Ctrl+V` on Windows and `Command+V` on Mac.*
-
-# Creating new directories and moving them around
-
-Before now, you probably have moved your files around your computer using your mouse (we call it `drag and drop`). Although this might have worked for you up until now, programmers usually create and move files from inside the code. Why? Imagine that you are working in a project, with multiple other analysts, where you are using +100 datasets and were tasked with cleaning some data. Firstly, such large data bases would probably be divided into different folders so that data is easier to find. If you are only using `drag and drop` any time you clean a new dataset, you would need to move the file manually to the working directory, than manually move the output you've saved to the appropriate folder. On top of that imagine now that another analyst tries using your code (as often happens in team projects). You would have to send them instructions on exactly what files to move and where. Lot's of unnecessary work and weird stares from your teammates.
-
-In the previous exercise you manually wrote out a path to the file using slashes `/`. As you might be wondering, there is a quicker way of concatenating (chaining) different file paths, without the need to spell out slashes `/`. We do this with a `file.path(<path1>,<path2>,<path3>,...)`. Below is a quick example of how we can use `file.path()` to get an entire path of a file you have loaded in the previously. You can see that we can even chain it with commands like `getwd()`, variables, and spelling out a name manually. This can be especially helpful if you expect someone else using your code on their personal device, as their working directory will differ from yours.
-
-```{r}
-file.path(getwd(),path,"r_fundamentals_5.png")
-```
-
-With `dir.create(<new folder path>)` we can create new folder. With the `recursive = TRUE` argument we can actually create more than one folder at a time. The command below will create an empty `new_folder` in your working directory and then create another folder inside that folder.
-
-Run the below command and inspect your working directory visually.
-
-```{r}
-new_folder_path <- file.path(getwd(),"new_folder","folder_inside_a_folder")
-dir.create(new_folder_path,recursive=TRUE)
-```
-
-*note: if you re-run the above command you will get a Warning that the folder you're trying to create already exists. This is why we often combine commands for creating folders with an if statements to prevent trying to create a folder if it already exists. You can check whether a folder exists using dir.exists(<path of a folder>) and whether a file exists using file.exists(<path to a file>)*
-
-Just like we can create new folders from inside the code we can also remove them easily. Run the command below to delete empty folder we have just created:
-
-```{r}
-file.remove(new_folder_path)
-file.remove(file.path(getwd(),"new_folder"))
-```
-
-**IMPORTANT WARNING: Make sure you check trice before deleting anything from inside the code as unlike deleting with a mouse cursor, deleted files DO NOT land in the bin. Additionally, if you ever search online for deleting files, you might stumble upon `unlink(<directory>,recursive=TRUE)` command. Unlike file.remove() unlink will not return a warning when a folder is not empty but will instead delete everything inside it. If you set an argument force=TRUE, you can even make it delete the R markdown file you are using. For this very reason we advice against ever using unlink(), and instead taking time to remove files one by one. On this very rare exception, more code is better.**
-
-## Copying a file exercise
-
-As you might have seen from the previous exercise we can move any file using `file.rename(from = <current path>,to = <target file path>)`. Similarly, we can also copy files from inside R. The command `file.copy(from = <current path>,to = <target file path>)` is used for copying files and is used in the same way `file.rename()` would be.
-
-Fill in the code below to copy our image `r_fundamentals_5.png` to a new folder with the name of your choosing. Try avoiding spelling out the path manually, but instead use `file.path()` commands where necessary:
-
-```{r}
-# set up pathways
-old_folder <- "image"
-image_name <- "r_fundamentals_5.png"
-new_folder <- 
-
-
-# make a new directory if it doesn't already exist in a working directory
-
-
-# copy image file if new and old directories exist
-
-
-```
-
 
 
 # Introduction to RStudio Projects
@@ -452,3 +400,59 @@ library(writexl)
 # Other options for loading data
 
 It is useful to mention the `data.table` package, which is the fastest option when loading large csv files by using the `fread()` function.
+
+# Individual take home challenge: Modyfing directories
+
+Before now, you probably have moved your files around your computer using your mouse (we call it `drag and drop`). Although this is more than enough in day to day tasks, programmers usually opt for creating and moving files from inside the code. Why? Imagine that you are working in a project, with multiple other analysts, where you are using +100 datasets. Firstly, such large data bases would probably be divided into different folders so that data is easier to find. If you were to load/save and move your files using drag and drop, what would happen if your colleague asks you to send them their work. You would most likely have send them list of instructions of which of the 100 datasets to load in and what variable names to give it so that your code runs smoothly. Lot's of unnecessary additional work. This is why in larger coding projects it's a good practice to have a standard layout and only load/save/move around files from inside the code.
+
+
+In the previous exercise you manually wrote out a path to the file using slashes `/`. As you might be wondering, there is a quicker way of concatenating (chaining) different file paths, without the need to spell out slashes `/`. We do this with a `file.path(<path1>,<path2>,<path3>,...)`. Below is a quick example of how we can use `file.path()` to get an entire path of a file you have loaded in the previously. You can see that we can even chain it with commands like `getwd()`, variables, and spelling out a name manually. This can be especially helpful if you expect someone else using your code on their personal device, as their working directory will differ from yours.
+
+```{r}
+file.path(getwd(),path,"r_fundamentals_5.png")
+```
+
+With `dir.create(<new folder path>)` we can create new folder. With the `recursive = TRUE` argument we can actually create more than one folder at a time. The command below will create an empty `new_folder` in your working directory and then create another folder inside that folder.
+
+Run the below command and inspect your working directory visually.
+
+```{r}
+new_folder_path <- file.path(getwd(),"new_folder","folder_inside_a_folder")
+dir.create(new_folder_path,recursive=TRUE)
+```
+
+*note: if you re-run the above command you will get a Warning that the folder you're trying to create already exists. This is why we often combine commands for creating folders with an if statements to prevent trying to create a folder if it already exists. You can check whether a folder exists using dir.exists(<path of a folder>) and whether a file exists using file.exists(<path to a file>)*
+
+Just like we can create new folders from inside the code we can also remove them easily. Run the command below to delete empty folder we have just created:
+
+```{r}
+file.remove(new_folder_path)
+file.remove(file.path(getwd(),"new_folder"))
+```
+
+**IMPORTANT WARNING: Make sure you check twice before deleting anything from inside the code as unlike deleting with a mouse cursor, deleted files DO NOT land in the bin. Additionally, if you ever search online for deleting files, you might stumble upon `unlink(<directory>,recursive=TRUE)` command. Unlike file.remove() unlink will not return a warning when a folder is not empty but will instead delete everything inside it. If you set an argument force=TRUE, you can even make it delete the R markdown file you are using. For this very reason we advice against ever using unlink(), and instead taking time to remove files one by one. On this very rare exception, more code is better.**
+
+## Copying a file exercise
+
+As you might have seen from the previous exercise we can move any file using `file.rename(from = <current path>,to = <target file path>)`. Similarly, we can also copy files from inside R. The command `file.copy(from = <current path>,to = <target file path>)` is used for copying files and is used in the same way `file.rename()` would be.
+
+Fill in the code below to copy our image `r_fundamentals_5.png` to a new folder with the name of your choosing. Try avoiding spelling out the path manually, but instead use `file.path()` commands where necessary:
+
+```{r}
+# set up pathways
+old_folder <- "image"
+image_name <- "r_fundamentals_5.png"
+new_folder <- 
+
+
+# make a new directory if it doesn't already exist in a working directory
+
+
+# copy image file if new and old directories exist
+
+
+```
+
+
+
+
