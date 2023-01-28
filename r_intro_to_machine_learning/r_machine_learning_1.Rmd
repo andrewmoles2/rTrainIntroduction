@@ -1,0 +1,304 @@
+---
+title: 'R Fundamentals 1: Numerical Variables'
+author:
+- name: Andrew Moles
+  affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: yes
+    toc: yes
+    toc_float:
+      collapsed: no
+---
+
+# Objective of workshop
+
+To get the basic understanding of what machine learning is.
+
+# What will this workshop cover?
+
+We will cover:
+
+-   What types of questions can we answer using Machine Learning and AI.
+-   What types of data there are.
+-   What is a loss function and what do we mean by training.
+-   Why use one model over the other.
+
+------------------------------------------------------------------------
+
+# Tabular data
+
+Machine learning (ML) is technology at the intersection of statistics and computer sciences that allows us to create software that makes autonomous decisions without being explicitly programmed to do so. Unlike statistics which focuses on uncovering casual relationships governing our world, machine learning focuses much more on making correct predictions. This is why, although crucial to understanding  ML, in this course we will skip chunks of statistical theory in favour of learning the practical side. For those interested in theoretical underpinnings of Machine Learning we highly recommend reading "Elements of Statistical Learning" by Trevor Hastie.
+
+
+Before we jump head first into analyzing data we first have to understand what we intend on analyzing. Although rarely talked about, understanding what types of data there are is crucial to understanding how we can answer certain questions and automate our lives. Very often failure of many of our models stems from poor data or lack of understanding what models we can apply to a given data. Clean and timely data is so vital there's actually a specialization called Data Engineer. Data Engineers often work with Data Scientists to help them gather and warehouse data.
+
+## Tabular continous data
+
+### Loading in data and visualising exercise
+
+**I'll try to find a dataset that contains categorical, time and continuous data all in once**
+
+```{r}
+#Load in simple
+```
+
+
+**Description: we can see that there's a very wide range of datapoints which constitutes continous data points**
+
+
+
+## Categorical data
+
+**Short description of categorical data, how we can code (sick, not sick) as a number and how we call them dummy variables**
+
+### Creating dummy variables exercise
+
+```{r}
+#Take a column with categorical data and transform it to 1's and 0's
+```
+
+**quick offside how to handle more than 2 categories**
+
+## Time data
+
+**short description of time data and time series**
+
+### Plotting across time
+
+```{r}
+
+```
+
+
+
+# Non-tabular data
+
+
+## Images
+
+**loading in a picture in tensor format**
+
+```{r}
+#Quick code for loading in a picture as a tensor
+```
+
+## Text data
+
+**description how we can encode text as variables. We can mention how tokens work in ChatGPT**
+
+## Sound
+
+**Short description I will not go into detail**
+
+
+## Graph data
+
+**quick description**
+
+```{r}
+#Sample code for displaying graphs in r
+```
+
+
+
+# Questions ML can help us answer
+
+## Continous Analysis
+
+**Question: What could be the impact of x on y**
+
+### Visualising correlation exercise
+
+
+```{r}
+#We ask them to take 2 columns that we can visually see correlated
+```
+
+**We can see that they're are correlated visually, but we might want to know exactly how much x impacts y to make precise predictions. This is why it's not enough to just look at the data visually but we will need to use models**
+
+**What models there are for this question **
+
+## Regularization
+
+**Explanation:**
+
+**what models there are for this question**
+
+## Classification
+
+**Quick explanation that we will have to take into account**
+
+### Visualising binary data
+
+**quick explanation that we can plot x1,x2 and binary data as colours, instructions on how to do it**
+
+```{r}
+#
+```
+
+**What models there are**
+
+## Time Series
+
+**Explanation why we consider this as a separate field**
+
+**What models there are**
+
+
+## Clustering
+
+**Examples of what problems fall into this category**
+
+**What models there are**
+
+
+## Geospatial analysis
+
+**Examples of what problems fall into this category**
+
+**what models there are**
+
+## Bayesian Inference
+
+**What if we already have some previous studies and would like to include them into our new research?**
+
+**Quick explanation of prior**
+
+**Quick offside that Bayesian machine learning is part of many models and is a much larger category**
+
+## Object Classification and Recognition
+
+**Difference between classification and recognition**
+
+**Convolutional neural network**
+
+## Speech recognition and text analysis
+
+**Briefly mention text analysis**
+
+**Recurrent neural networks**
+
+## Decoding and Encoding
+
+**How data analysis can help us distill and encode information, mention ChatGPT with brief explanation**
+**Explanation of how we can pair two neural networks, one encoding and decoding**
+
+**this video: https://www.youtube.com/watch?v=dVa1xRaHTA0**
+
+**Autoencoders and generative adversarial neural networks**
+
+### Remarks about the categories
+
+**Note that there's an overlap between the categories we have mentioned**
+**There is no need to specialise in all of the categories often Data Scientists specialise in just a few of those categories**
+
+
+# Cleaning Data
+
+## Why clean data is so vital
+
+You might often hear a phrase that "Machine Learning is both an art and a science". The science part is understanding how to use and what models to use, something we will cover in few of the next sessions. The art part is understanding how the bias in our data.
+
+In the early days of the second world war a group of statisticians were tasked with determining where on the plane to put more armour to increase their survivability. They looked at the bullet holes in the planes that returned from battle and concluded that they need to increase armour on tails and wings of the plane, two areas that had the most average bullet holes. One mathematician Abraham Wald proposed that actually armour should be put in places where the least hits were observed (the engine). Can you think of why?
+
+This is now an infamous case of what we know as "Survivorship Bias". Planes that got hit in the engine were the one's that didn't come back, therefore scientists only observed planes those that got hit in non-vital parts. This is a perfect example of how simply applying our models can yield false results.
+
+
+
+### Cleaning data from sampling bias Exercise
+
+**We ask them to look at the averages over one column**
+```{r}
+#Exercise where we ask them to find the average representation of male/female ratio in a sample (I'll find a dataset where we've got data significantly skewed towards one)
+```
+
+**As we can see in our data we have one group over-represented, can you think why this is problematic?**
+
+Overrepresentation is a type of sampling bias, which occurs when a certain subset of the population is more likely to be included in the sample than others. This can lead to conclusions that are not representative of the entire population, and can result in biased estimates or predictions. In machine learning, overrepresentation can occur when the dataset is not representative of the population that the model will be applied to, leading to biased predictions or decisions. To avoid overrepresentation, it is important to ensure that the sample is randomly selected and that the population is adequately represented in the sample.
+
+**I believe there is a model from tidymodels for re-sampling the data, we can introduce it here**
+```{r}
+#Cleaning data of oversampling data bias
+```
+
+
+Although, oversampling bias is not the only one it is the most common one, and often the easiest to avoid. We'll not cover every bias here but we recommend **I'll find some exhaustive article** for further reading.
+
+
+# What is a model?
+
+You might be surprised but every model starting from simple tree (which we'll cover in the next section) to a complex neural network like chatGPT all have 2 things in common: Parameters and a Loss function. For example in the next lesson we'll cover a model with 3 paramenters. In comparison ChatGPT has 175 Billion parameters. What might come as a surprise ChatGPT actually uses the same loss function that we will learn in lesson 3 on logistic regression, the cross-entropy function. Try asking ChatGPT "What loss function do you use?". 
+
+## Loss function
+
+**Explanation that with randomness we can never be correct, so we need to chose how "we punish our model for being incorrect"**
+
+### Calculating missclassification rate exercise
+
+**The simplest example of how we might judge our model is miss classification rate. Although not used for any models directly, we can still use it as a form of evaluating our model**
+
+$$ Sum\space\space of \space |\space \textit{predictions} - \textit{true values}\space |$$
+
+Let's assume that I've trained a complex neural network which distinguishes between a cat and a dog on a picture. We fed it 10 pictures and it's predictions for 10 pictures are stored in `predictions` vector. We also have labels for what is on the pictures stored in `true_labels` vector. Calculate the missclassification rate of our model. How well did it perform? What would be the ideal missclassification rate?
+
+```{r}
+predictions <- c("dog","dog","cat","dog","dog","cat","cat","dog","cat","cat")
+true_labels <- c("dog","dog","cat","dog","cat","cat","cat","dog","cat","dog")
+#Your code below
+
+```
+
+
+As you can see our model made 2 mistakes, therefore the missclassification rate would be 0.2. Ideally, we would want our model to classify every picture correctly (which is often impossible) hence our desired missclasification rate would be 0.
+
+Often we will use loss function to improve our model. As loss function is often an indicator of how incorrect our model is, our task as Data Scientists would be to chose parameters such as to minimize the loss function. This is where mathematical optimization comes in. When you hear Data Scientists say they are "training the model", what they actually mean is that they perform optimization algorithms trying to find parameters that yield the lowest possible loss.
+
+### Quadratic loss and average
+
+Let's see this in practice. One loss function we will cover in chapter 2 is quadratic loss.
+
+**Quadratic loss explained**
+
+
+**Calculate the average, we introduce 2 biased models (average +4, average -1). Which model performs best? Why?**
+
+```{r}
+our_observations <- c(10,5,6,0,8,4,5,2,5,5)
+first_model <- #Calculate the average
+second_model <- first_model + 4
+third_model <- first_model - 1
+#Your code below 
+#Calculate the squared loss of 3 models
+
+```
+
+You probably knew very well that adding 4 or subtracting 1 from an average will yield worst predictions than simply using an average. This is an oversimplified example where you can see right away which predictions will yield the best results but when we introduce more complicated models, it might be impossible to gauge visually which model performs best. Another question would be by exactly how much worse is model 2 compared to models 1 and 3? Can you see how a loss function can give us a quantifiable measure of how well our model performs? You can now decide that the model 2 is the worst and you can quantify that it performs exactly `X`% worse than model 1.
+
+**I'll make a caveat here that we cannot compare different loss functions and that loss function should be used to only gauge how well our parameters in model perform. So for example using missclassification will always yield between 0-1 meaning that it would beat almost any model using squared loss.**
+
+**I'll omit overfitting for now and training / testing... I think I'll explain it in linear regression where we can use Loess from glm to fit to every single point and get loss of  0. Then explain that when we use to predict new points our linear regression actually makes better predictions**
+
+
+# Further Readings
+
+Machine Learning has in the past ten years seen such an explosion of models and theoretical explanations it would be impossible to cover everything in such a short course (even 10 books would probably not cut it). Although, this might feel very overwhelming to you, this shouldn't stop you from trying to understand a few fundamental models. Often times Data Scientists will spend 70% of their time using Linear Regression / Trees / Logistic Regression (all of which we cover) and only reach for more complicated models when the situation really requires it. Something, we will cover in later section. Not only that certain fields often only use very narrow set of models (for example biology most often uses Regularization and most biology statisticians will not know how a basic neural network works).
+
+Nonetheless we tried giving you a holistic overview of what subfields there are in machine learning. For those interested we link to further readings below. Feel free to only read up on chapters that actually interest you or/and are relevant to you, as many of the books we list here are on their own very rich in content. If you do intend on deepening your knowledge for career purposes we highly recommend finding out what sub-filed of machine learning is most often used in your field before diving into reading:
+
+
+**Links to all of the books and what they cover**
+
+
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+[https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp](https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp){.uri}
