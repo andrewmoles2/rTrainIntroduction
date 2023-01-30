@@ -25,7 +25,7 @@ The materials for the R workshops will be hosted on Microsoft Teams.
 1. Open [Teams](https://info.lse.ac.uk/staff/divisions/dts/essentials/setting-up-microsoft-teams)   
 2. Go to the teams overview on the left hand bar    
 3. Click on **'Join or create team'** button    
-4. Enter the code **7gnl0dm**   
+4. Enter the code **4qgm3qm**   
 5. Open the DSL-R-Workshops team page   
 6. Find the relevant document/s by searching the channels on the sidebar
 
