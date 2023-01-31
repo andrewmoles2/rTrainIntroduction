@@ -1,0 +1,608 @@
+---
+title: 'R Intro to Machine Learning: Decision Trees'
+author:
+- name: Bartosz Gawin
+  affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: yes
+    toc: yes
+    toc_float:
+      collapsed: no
+---
+# Objective of workshop
+
+To get the basic understanding of Decision Trees.
+
+# What will this workshop cover?
+
+We will cover:
+
+-   Quadratic Loss revised
+-   Two Dimensional Decision Tree
+-   Underfitting
+-   Overfitting
+-   Sampling bias in action
+-   Multi Dimensional Decision Tree
+
+------------------------------------------------------------------------
+
+
+## Installing Packages
+
+```{r}
+install.packages("tidyverse")
+install.packages("magrittr")
+install.packages("rpart.plot")
+install.packages("remotes")
+install.packages("ggtext")
+remotes::install_github("grantmcdermott/parttree")
+```
+
+## Loading in Packages
+
+```{r}
+#Packages we're using
+library(ggplot2)
+library(magrittr)
+library(parsnip)
+library(rpart.plot)
+library(dplyr)
+library(parttree)
+```
+
+# Quadratic Loss Function again
+
+**Quick reminder of what is a quadratic loss function from previous lesson**
+
+### Write a quadratic loss function exercise:
+
+**call it sqrd_loss as we'll be using it later on**
+
+```{r}
+#Your code below
+sqrd_loss <- function(preds,obs) {
+  l <- sum((obs-preds)^2)
+  return(l)
+}
+```
+
+**Run tests below to see whether the sqrd_loss function is correct**
+
+```{r}
+#Don't modify this cell
+
+#(TODO:1) write a few basic tests for sqrd_loss
+```
+
+**Run the code below**
+
+```{r}
+#Don't modify this cell
+
+Tree_loss <- function(Nodes,X,Y,data) {
+  
+  Nodes <- sort(Nodes)
+  
+  #Initiating parameters
+  nodes_len <- length(Nodes)+1
+  labels_split <- 1:nodes_len
+  Total_Loss <- 0
+  
+  
+  
+  data$interval <- cut(data[[X]],c(-Inf,Nodes,Inf),label = labels_split)
+  
+  for (label in labels_split) {
+    Subset <- subset(data,data$interval == label)
+    Avg <- mean(Subset[[Y]])
+    Subset_Loss <- sqrd_loss(Avg,Subset[[Y]])
+    Total_Loss <- Total_Loss + Subset_Loss
+  }
+  
+  return(round(Total_Loss,digits=2))
+}
+
+#(TODO:2) Write data to output it as an S3 object with mean's for buckets for predictions in Overfitting exercise
+```
+
+# Decision Tree with a single node
+
+**Run the code below**
+
+```{r}
+set.seed(80)
+
+global_sd <- 0.3
+num_obs <- 100
+X <- runif(num_obs,min=0,max=10)
+Y <- rnorm(num_obs,mean = 5,sd = global_sd)
+
+Train_Data_One <- data.frame(X,Y)
+
+X <- runif(num_obs,min=0,max=10)
+Y <- ifelse(X < 5,3,7)
+Y <- Y + rnorm(num_obs,mean=0,sd = global_sd)
+
+Train_Data_Two <- data.frame(X,Y)
+```
+
+## Plotting simple dataset
+
+**Here I want to explain a pipe operator from margrittr**
+
+```{r}
+Train_Data_One %>% 
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,10) +
+  xlim(0,10)
+```
+
+
+### Plotting simple exercise and calculating squared loss:
+
+1. Plot Train_Data_Two dataset, use a pipe operator `%>%` to pass data into `ggplot()` function
+
+```{r}
+#Your code below
+Train_Data_Two %>% 
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,10) +
+  xlim(0,10)
+```
+
+2. Calculate the averages of Y column in both datasets
+
+```{r}
+#Your code below
+```
+
+3. Compare which data an average fits better as a predictor?
+
+```{r}
+#Your code below
+```
+
+*Hint: how did we rate performance of average at the end of the previous lesson?*
+
+**Which data is better fit by an average? What is the problem? (Y is dependent on X value)**
+
+
+
+## Single Node Decision Tree
+
+**Let's try to split the data into 2 areas of X**
+
+1. Run the code below and interpret the grap
+2. Play around with the value in `nodes`. What is changing?
+3. Try setting the value to 10 and gradually decreasing it slowly. What can you observe?
+```{r}
+#Modify the following value and run the code to see the results (change only the value in a vector)
+nodes = c(3)
+
+#Don't modify the code below
+tree_loss <- Tree_loss(nodes,"X","Y",Train_Data_Two)
+txt_tree_label <- sprintf("Single Node Loss: %s", tree_loss)
+txt_tree <- data.frame(text=txt_tree_label,X=7,Y=10)
+
+avg_two <- mean(Train_Data_Two$Y)
+avg_loss <- sqrd_loss(avg_two,Train_Data_Two$Y)
+avg_loss <- round(avg_loss,digits = 2)
+txt_avg_label <- sprintf("Average Loss: %s",avg_loss)
+txt_avg <- data.frame(text=txt_avg_label,X=7,Y=9)
+
+Train_Data_Two %>%
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,10) +
+  xlim(0,10) +
+  geom_vline(xintercept=nodes,colour="red") +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_tree,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_avg,width = unit(2,"inch"),height = unit(0.25,"inch"))
+```
+
+**Explanation what is a Decision Tree. What we call a Node**
+
+**Explain that the optimization algorithm in the background is just trying to minimize the loss**
+
+## Decision Tree using tidymodels
+
+```{r}
+Single_node_tree <- decision_tree(mode="regression",tree_depth = 1) %>% 
+  set_engine("rpart") %>% 
+  fit(Y ~ X, data = Train_Data_Two)
+
+Single_node_tree$fit %>% rpart.plot(roundint = FALSE)
+```
+
+**Explain the graph, explain the parameters**
+
+
+# Decision Tree with multiple nodes
+
+
+**Run the cell below**
+```{r}
+#Don't modify this cell
+X <- runif(200,min=0,max=20)
+Y <- ifelse(X>5,ifelse(X<=15,8,5),2)
+Y <- Y - rnorm(200,mean=0,sd=global_sd)
+
+Train_Data_Three <- data.frame(X,Y)
+```
+
+### Plotting the data exercise:
+**I'm thinking whether there's a way to teach them some additional functionalities of ggplot at this point as it would just be the same exercise as before**
+
+```{r}
+#Your code below
+Train_Data_Three %>% 
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,12) +
+  xlim(0,20)
+```
+
+**What would be the ideal model here?**
+
+## Underfitting
+
+**Play around with the values below**
+
+```{r}
+#Modify the following value and run the code to see the results (change only the value in a vector)
+nodes = c(5,15)
+single_node = c(10)
+
+
+#Do not modify the code below
+tree_loss <- Tree_loss(nodes,"X","Y",Train_Data_Three)
+txt_tree_label <- sprintf("Two Nodes Loss: %s", tree_loss)
+txt_tree <- data.frame(text=txt_tree_label,X=15,Y=12)
+
+single_node_loss <- Tree_loss(single_node,"X","Y",Train_Data_Three)
+txt_node_label <- sprintf("Single Node Loss: %s",single_node_loss)
+txt_node <- data.frame(text=txt_node_label,X=15,Y=11)
+
+avg_three <- mean(Train_Data_Three$Y)
+avg_loss <- sqrd_loss(avg_three,Train_Data_Three$Y)
+avg_loss <- round(avg_loss,digits = 2)
+txt_avg_label <- sprintf("Average Loss: %s",avg_loss)
+txt_avg <- data.frame(text=txt_avg_label,X=15,Y=10)
+
+
+Train_Data_Three %>% 
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,12) +
+  xlim(0,20) +
+  geom_vline(xintercept=single_node,colour="red", alpha = 0.4) +
+  geom_vline(xintercept=nodes,colour="blue",linetype="longdash") +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_tree,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_node,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_avg,width = unit(2,"inch"),height = unit(0.25,"inch"))
+```
+
+
+**Explain that the single node model performs worse**
+
+**Explain what is underfitting*
+
+### Fitting a Decision Tree model using parsnip exercise: 
+
+1. Fit the model using `decision_tree` function
+```{r}
+#Your code below
+Two_nodes_tree <- decision_tree(mode="regression",tree_depth = 5) %>% 
+  set_engine("rpart") %>% 
+  fit(Y ~ X, data = Train_Data_Three)
+
+Two_nodes_tree$fit %>% rpart.plot(roundint = FALSE)
+```
+
+2. Try graphing decision tree leaves as vertical lines
+```{r}
+#Your code below
+
+```
+
+
+
+# Overfitting 
+
+**Modify the following value and run the code to see the results (keep a single value ) Are they surprising in any way? **
+
+```{r}
+#Modify the following value and run the code to see the results (change only the value in a vector)
+second_node = c(8)
+
+
+
+#Do not modify the code below
+nodes = c(5,second_node)
+tree_loss <- Tree_loss(nodes,"X","Y",Train_Data_Two)
+txt_tree_label <- sprintf("Two Nodes Loss: %s", tree_loss)
+txt_tree <- data.frame(text=txt_tree_label,X=7,Y=12)
+
+single_node = c(5)
+single_node_loss <- Tree_loss(single_node,"X","Y",Train_Data_Two)
+txt_node_label <- sprintf("Single Node Loss: %s",single_node_loss)
+txt_node <- data.frame(text=txt_node_label,X=7,Y=11)
+
+avg_three <- mean(Train_Data_Two$Y)
+avg_loss <- sqrd_loss(avg_three,Train_Data_Two$Y)
+avg_loss <- round(avg_loss,digits = 2)
+txt_avg_label <- sprintf("Average Loss: %s",avg_loss)
+txt_avg <- data.frame(text=txt_avg_label,X=7,Y=10)
+
+
+Train_Data_Two %>% 
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,12) +
+  xlim(0,10) +
+  geom_vline(xintercept=single_node,colour="red", alpha = 0.4) +
+  geom_vline(xintercept=nodes,colour="blue",linetype="longdash") +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_tree,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_node,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_avg,width = unit(2,"inch"),height = unit(0.25,"inch"))
+
+```
+
+
+**Why do you think this happens? What do you think will happen if we keep adding nodes? What can you observe about a loss as you keep adding nodes to the tree?**
+
+
+**Keep adding values to the vector and re-running the code (keep 5 as one of the elements). What can you observe? Try adding 15+ variables in the range (0,10) (you're allowed to insert fractions). What do you think will happen if we create exactly as many nodes as there are point in the dataset?**
+```{r}
+
+many_nodes = c(1,5,7,9)
+
+
+
+#Do not modify the following code
+many_nodes_loss <- Tree_loss(many_nodes,"X","Y",Train_Data_Two)
+
+nodes = c(5,8)
+tree_loss <- Tree_loss(nodes,"X","Y",Train_Data_Two)
+txt_tree_label <- sprintf("Two Nodes Loss: %s", tree_loss)
+txt_tree <- data.frame(text=txt_tree_label,X=7,Y=12)
+
+single_node = c(5)
+single_node_loss <- Tree_loss(single_node,"X","Y",Train_Data_Two)
+txt_node_label <- sprintf("Single Node Loss: %s",single_node_loss)
+txt_node <- data.frame(text=txt_node_label,X=7,Y=11)
+
+avg_three <- mean(Train_Data_Two$Y)
+avg_loss <- sqrd_loss(avg_three,Train_Data_Two$Y)
+avg_loss <- round(avg_loss,digits = 2)
+txt_avg_label <- sprintf("Average Loss: %s",avg_loss)
+txt_avg <- data.frame(text=txt_avg_label,X=7,Y=10)
+
+
+Train_Data_Two %>% 
+  ggplot(mapping = aes(X,Y)) +
+  geom_point() +
+  ylim(0,13) +
+  xlim(0,10) +
+  geom_vline(xintercept = many_nodes,colour="purple",linetype="dotdash")
+  geom_vline(xintercept=single_node,colour="red") +
+  geom_vline(xintercept=nodes,colour="blue",linetype="longdash",alpha=0.2) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_tree,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_node,width = unit(2,"inch"),height = unit(0.25,"inch")) +
+  ggtext::geom_textbox(mapping = aes(x = X,y = Y,label = text),txt_avg,width = unit(2,"inch"),height = unit(0.25,"inch"))
+```
+
+
+
+
+**IMPLEMENT THE FOLLOWING**
+```{r}
+#(TODO:3)
+#Generate a model with every single node for a datapoint
+#Calculate the loss (it's exactly 0)
+#Generate 200 more observations
+#Test all 3 trees on a new sample
+#How is does the loss differ?
+#Explain in-sample error rate / out-of-sample error rate
+#Explain the parameters in decision_tree function (peanalizing the decision tree)
+#Exercise for fitting a decision_tree with different parameters (modyfying C, modying min depth) etc.
+  
+#Code to be implemented
+```
+**IMPLEMENT ABOVE**
+
+
+
+# Sampling Bias
+
+
+Run the code below
+```{r}
+#Do not modify this cell
+X <- runif(300,min=-10,max=35)
+Y <- ifelse(X>5,ifelse(X>15,ifelse(X>25,8,5),8),ifelse(X<(-5),10,2))
+Y <- Y - rnorm(300,mean=0,sd=global_sd)
+  
+Test_Data_Three <- data.frame(X,Y)
+```
+
+**Explain how the goal of our research is to predict data that we haven't yet seen**
+**Explain training and test data**
+
+
+## Fitting a model we have trained with two nodes (Train_Data_Three)
+
+**I'm thinking about giving them an exercise to find out how to plot 2 different set's of data (second part of the cell) without explain it prior**
+
+```{r}
+#Let's use our model from exercise on fitting 2 nodes (same data set)
+
+Two_nodes_tree$fit %>% rpart.plot(roundint = FALSE)
+predictions <- predict(Two_nodes_tree,Test_Data_Three)
+predictions <- data.frame(X,predictions)
+
+
+Test_Data_Three %>% 
+  ggplot() +
+  geom_point(aes(x=X,y=Y),alpha = 0.4) +
+  geom_point(data = predictions,aes(x=X,y=.pred),colour = "red") +
+  xlim(-10,35) +
+  ylim(0,12)
+```
+
+**Explaining the Sampling bias, that the real data is in range from -10 to 35 and we only had data 0 to 20**
+
+### Fitting data on dataset containing sampling bias exercise:
+
+
+1. Fill in marked cells (fitting a model on biased Dataset, and finding predictions)
+2. Use Biased_Data_Three as training data, use Test_Data_Three as test data
+3. Interpret the results.
+4. Try changing the ratio in `data_split_percentage`.
+5. Make the ratio in `data_split_percentage` smaller and bigger. What can you observe?
+6. Try changing `total_sample`. Try making the sample very small and re-run the code multiple times. What happens?
+7. Try changing both `data_split_percentage` and increasing `total_sample`, does it help?
+8. Try making the split rather equal but changing the `total_sample` to be very small <30. Try re-running the code multiple times. What can you observe?
+
+```{r}
+#Exercise modify the strength of sampling bias and re-train the model and see how uneven sampling affects our findings
+data_split_percentage = c(0.05,0.95)
+total_sample = 300
+
+
+#Don't modify code below ---------------------------------------------------------------------------------------
+set.seed(NULL)
+stopifnot(sum(data_split_percentage)==1)
+
+X <- runif(total_sample,min=-10,max=35)
+Y <- ifelse(X>5,ifelse(X>15,ifelse(X>25,8,5),8),ifelse(X<(-5),10,2))
+Y <- Y - rnorm(total_sample,mean=0,sd=global_sd)
+
+Test_Data_Three <- data.frame(X,Y)
+
+
+data_split_percentage <- data_split_percentage*total_sample
+data_split_nums <- c(floor(data_split_percentage[1]/2),ceiling(data_split_percentage[2]),floor(data_split_percentage[1]/2))
+
+
+if (sum(data_split_nums) != total_sample) {
+  difference <- total_sample - sum(data_split_nums)
+  data_split_nums[2] <- data_split_nums[2] + difference
+}
+
+X <- c(runif(data_split_nums[1],-10,0),runif(data_split_nums[2],-0,20),runif(data_split_nums[1],20,35))
+Y <- ifelse(X>5,ifelse(X>15,ifelse(X>25,8,5),8),ifelse(X<(-5),10,2))
+Y <- Y - rnorm(total_sample,mean=0,sd=global_sd)
+
+Biased_Data_Three <- data.frame(X,Y)
+#You can modify the code below-----------------------------------------------------------------------------------
+
+
+#Plot our sampled data, how do you think our model will split the data?
+
+Biased_Data_Three %>% 
+  ggplot(mapping = aes(x=X,y=Y)) +
+  geom_point() +
+  xlim(-10,35) +
+  ylim(0,12)
+
+#Fit a new tree Biased_Data_Three
+
+Biased_Tree <- decision_tree(mode="regression",tree_depth = 10) %>% 
+  set_engine("rpart") %>% 
+  fit(Y ~ X, data = Biased_Data_Three)
+
+#Plot the decision tree
+Biased_Tree$fit %>% rpart.plot(roundint = FALSE)
+
+#Predict new values from 
+
+predictions_biased <- predict(Biased_Tree,Test_Data_Three)
+predictions_biased <- data.frame(Test_Data_Three$X,predictions_biased)
+
+#Sketch our predictions against our Test Data
+
+```
+
+
+**Explain the sample bias**
+**Explain that this is only an example and should not be indicative of how much split is enough to get reliable results (that we'd ideally want a perfectly uniformly spread out X's)**
+**Explain how lower sample will result in higher variance of our observations (without the jargon)**
+**Explain that gathering more data will not help sample bias if our methods for gathering data are flawed (that we may end-up in scenario from previous exercise.**
+**This of a good example of sampling bias**
+
+
+# Tree with multiple Nodes
+
+**Explain what we mean by dimensions in data**
+**Explain how we can handle dimensions in our model**
+
+```{r}
+#Don't modify this cell
+obs_numb <- 300
+X1 <- runif(obs_numb,0,20)
+X2 <- runif(obs_mumb,0,20)
+Y <- ifelse(X1>=10,ifelse(X2<=10,15,10),5)
+Y <- Y + rnorm(obs_numb,0,sd=0.2)
+
+ThreeDim_Data <- data.frame(X1,X2,Y)
+
+ThreeDim_Data %>% 
+  ggplot(mapping = aes(X1,X2,color = Y)) +
+  geom_point() + 
+  scale_color_gradient(low="yellow", high="blue")
+```
+
+**Explain how to interpret the above graph**
+
+### Splitting data into train & test data and fitting the model exercise:
+
+**I was thinking of introducing a model from tidyverse for sampling data into train and test**
+1. Split the `ThreeDim_Data` into train and test sample
+```{r}
+#Your code below
+#(TODO:4) Code for splitting data into train and test
+```
+
+2. Fit the Decision model on both X1 and X2. Plot the tree, how can you interpret it?
+```{r}
+#Your code below
+
+```
+
+3. Use `geom_parttree` function to plot the boxes in the data
+```{r}
+#Your code below
+ThreeDim_Data %>% 
+  ggplot(mapping = aes(X1,X2,)) +
+  geom_point() +
+  xlim(0,20) +
+  ylim(0,20) +
+  geom_parttree(data = ThreeDim_decision_tree, aes(fill = Y), alpha = 0.3) +
+  scale_colour_viridis_c(aesthetics = c("color ", "fill"),option = "E")
+```
+
+**Explain how we can fit more than just 3 dimension, explain how we can fit as many dimensions as we want**
+
+**Hint that we can also overfit by having 2 many dimensions. Explained in next lesson**
+
+
+
+
+
+### Plotting simple dataset exercise:
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+[https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp](https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp){.uri}
