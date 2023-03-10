@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "10 March, 2023"
 output: 
   html_document: 
     theme: readable
@@ -158,7 +158,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 4.25"
+## [1] "Mean value of y is 5.6"
 ```
 
 ```r
@@ -167,7 +167,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 4.25"
+## [1] "Mean value of y is 5.6"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -189,7 +189,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 4.95"
+## [1] "Mean value of x is 5.7"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -223,7 +223,7 @@ R.version.string
 ```
 
 ```
-## [1] "R version 4.2.0 (2022-04-22)"
+## [1] "R version 4.2.2 (2022-10-31)"
 ```
 
 We will be using the magrittr pipe (`%>%`) for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
@@ -701,11 +701,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          50    51   2018 FC Barcelona  31              12
+## 1          53    47   2009 FC Barcelona  22               8
 ## 2          50    60   2012 FC Barcelona  25               8
-## 3          53    47   2009 FC Barcelona  22               8
-## 4          40    16   2007 FC Barcelona  20               6
-## 5           9     1   2004 FC Barcelona  17               0
+## 3          52    54   2016 FC Barcelona  29              11
+## 4          54    45   2017 FC Barcelona  30               6
+## 5          60    73   2011 FC Barcelona  24              14
 ```
 
 ```r
@@ -716,10 +716,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          55    53   2010 FC Barcelona  23              12
-## 2          50    60   2012 FC Barcelona  25               8
-## 3          46    41   2013 FC Barcelona  26               8
-## 4          57    58   2014 FC Barcelona  27              10
+## 1          50    60   2012 FC Barcelona  25               8
+## 2          36    17   2006 FC Barcelona  19               1
+## 3          50    51   2018 FC Barcelona  31              12
+## 4          52    54   2016 FC Barcelona  29              11
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
@@ -766,7 +766,7 @@ messi_career %>%
 
 ```r
 # this harder and less clear in base r
-messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
+head(messi_career[order(messi_career$Goals, decreasing = TRUE), ], 3)
 ```
 
 ```

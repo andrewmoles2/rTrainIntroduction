@@ -417,7 +417,7 @@ messi_career %>%
   slice_max(Goals, n = 3)
 
 # this harder and less clear in base r
-messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
+head(messi_career[order(messi_career$Goals, decreasing = TRUE), ], 3)
 
 # extract rows with bottom three Goals
 messi_career %>%

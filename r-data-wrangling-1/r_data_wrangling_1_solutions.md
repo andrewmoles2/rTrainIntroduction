@@ -3,7 +3,7 @@ title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "10 March, 2023"
 output: 
   html_document: 
     theme: readable
@@ -157,7 +157,7 @@ y_mean
 ```
 
 ```
-## [1] "Mean value of y is 5.65"
+## [1] "Mean value of y is 5.15"
 ```
 
 ```r
@@ -166,7 +166,7 @@ paste("Mean value of y is", round(mean(y), digits = 2))
 ```
 
 ```
-## [1] "Mean value of y is 5.65"
+## [1] "Mean value of y is 5.15"
 ```
 
 Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
@@ -188,7 +188,7 @@ x_mean
 ```
 
 ```
-## [1] "Mean value of x is 5.75"
+## [1] "Mean value of x is 5.3"
 ```
 
 Notice how we assign the result at the start just like we would usually do, then pipe from then on.
@@ -210,7 +210,7 @@ z_mean
 ```
 
 ```
-## [1] 4.9
+## [1] 5.35
 ```
 
 If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
@@ -222,7 +222,7 @@ R.version.string
 ```
 
 ```
-## [1] "R version 4.2.0 (2022-04-22)"
+## [1] "R version 4.2.2 (2022-10-31)"
 ```
 
 We will be using the magrittr pipe (`%>%`) for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
@@ -741,23 +741,24 @@ USA_1989_high
 
 ```
 ## # A tibble: 12 × 15
-##    imdb_title_id title       year date_published genre duration country language
-##    <chr>         <chr>      <dbl> <chr>          <chr>    <dbl> <chr>   <chr>   
-##  1 tt0096754     The Abyss   1989 22/12/1989     Adve…      171 USA     English 
-##  2 tt0096874     Back to t…  1989 22/12/1989     Adve…      108 USA     English 
-##  3 tt0097123     Crimes an…  1989 20/02/1990     Come…      104 USA     English…
-##  4 tt0097165     Dead Poet…  1989 29/09/1989     Come…      128 USA     English…
-##  5 tt0097216     Do the Ri…  1989 17/11/1989     Come…      120 USA     English…
-##  6 tt0097351     Field of …  1989 05/05/1989     Dram…      107 USA     English 
-##  7 tt0097441     Glory       1989 16/02/1990     Biog…      122 USA     English 
-##  8 tt0097576     Indiana J…  1989 06/10/1989     Acti…      127 USA     English…
-##  9 tt0097757     The Littl…  1989 06/12/1990     Anim…       83 USA     English…
-## 10 tt0097958     National …  1989 01/12/1989     Come…       97 USA     English 
-## 11 tt0098635     When Harr…  1989 05/01/1990     Come…       95 USA     English 
-## 12 tt0100049     Longtime …  1989 01/05/1990     Dram…       96 USA     English 
-## # … with 7 more variables: director <chr>, writer <chr>, actors <chr>,
-## #   avg_vote <dbl>, votes <dbl>, reviews_from_users <dbl>,
-## #   reviews_from_critics <dbl>
+##    imdb_title…¹ title  year date_…² genre durat…³ country langu…⁴ direc…⁵ writer
+##    <chr>        <chr> <dbl> <chr>   <chr>   <dbl> <chr>   <chr>   <chr>   <chr> 
+##  1 tt0096754    The …  1989 22/12/… Adve…     171 USA     English James … James…
+##  2 tt0096874    Back…  1989 22/12/… Adve…     108 USA     English Robert… Rober…
+##  3 tt0097123    Crim…  1989 20/02/… Come…     104 USA     Englis… Woody … Woody…
+##  4 tt0097165    Dead…  1989 29/09/… Come…     128 USA     Englis… Peter … Tom S…
+##  5 tt0097216    Do t…  1989 17/11/… Come…     120 USA     Englis… Spike … Spike…
+##  6 tt0097351    Fiel…  1989 05/05/… Dram…     107 USA     English Phil A… W.P. …
+##  7 tt0097441    Glory  1989 16/02/… Biog…     122 USA     English Edward… Kevin…
+##  8 tt0097576    Indi…  1989 06/10/… Acti…     127 USA     Englis… Steven… Jeffr…
+##  9 tt0097757    The …  1989 06/12/… Anim…      83 USA     Englis… Ron Cl… John …
+## 10 tt0097958    Nati…  1989 01/12/… Come…      97 USA     English Jeremi… John …
+## 11 tt0098635    When…  1989 05/01/… Come…      95 USA     English Rob Re… Nora …
+## 12 tt0100049    Long…  1989 01/05/… Dram…      96 USA     English Norman… Craig…
+## # … with 5 more variables: actors <chr>, avg_vote <dbl>, votes <dbl>,
+## #   reviews_from_users <dbl>, reviews_from_critics <dbl>, and abbreviated
+## #   variable names ¹​imdb_title_id, ²​date_published, ³​duration, ⁴​language,
+## #   ⁵​director
 ```
 
 You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
@@ -777,11 +778,11 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          40    16   2007 FC Barcelona  20               6
-## 2          36    17   2006 FC Barcelona  19               1
-## 3          25     8   2005 FC Barcelona  18               1
-## 4          55    53   2010 FC Barcelona  23              12
-## 5          50    60   2012 FC Barcelona  25               8
+## 1          49    41   2015 FC Barcelona  28               6
+## 2          52    54   2016 FC Barcelona  29              11
+## 3          54    45   2017 FC Barcelona  30               6
+## 4          53    47   2009 FC Barcelona  22               8
+## 5          50    51   2018 FC Barcelona  31              12
 ```
 
 ```r
@@ -792,10 +793,10 @@ messi_career %>%
 
 ```
 ##   Appearances Goals Season         Club Age champLeagueGoal
-## 1          51    38   2008 FC Barcelona  21               9
-## 2          36    17   2006 FC Barcelona  19               1
-## 3          53    47   2009 FC Barcelona  22               8
-## 4          44    31   2019 FC Barcelona  32               3
+## 1          53    47   2009 FC Barcelona  22               8
+## 2          57    58   2014 FC Barcelona  27              10
+## 3          52    54   2016 FC Barcelona  29              11
+## 4          46    41   2013 FC Barcelona  26               8
 ```
 
 The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment.
@@ -844,7 +845,7 @@ messi_career %>%
 
 ```r
 # this harder and less clear in base r
-messi_career[messi_career$Goals %in% tail(sort(messi_career$Goals), 3), ]
+head(messi_career[order(messi_career$Goals, decreasing = TRUE), ], 3)
 ```
 
 ```
@@ -905,28 +906,29 @@ top_votes_USA
 
 ```
 ## # A tibble: 20 × 4
-##    title                                           year genre           avg_vote
+##    title                                           year genre            avg_v…¹
 ##    <chr>                                          <dbl> <chr>              <dbl>
 ##  1 The Shawshank Redemption                        1994 Drama                9.3
 ##  2 The Godfather                                   1972 Crime, Drama         9.2
 ##  3 The Godfather: Part II                          1974 Crime, Drama         9  
-##  4 Schindler's List                                1993 Biography, Dra…      8.9
+##  4 Schindler's List                                1993 Biography, Dram…     8.9
 ##  5 Pulp Fiction                                    1994 Crime, Drama         8.9
 ##  6 Forrest Gump                                    1994 Drama, Romance       8.8
 ##  7 Metallica & San Francisco Symphony - S&M2       2019 Music                8.8
-##  8 Kill Bill: The Whole Bloody Affair              2011 Action, Crime,…      8.8
+##  8 Kill Bill: The Whole Bloody Affair              2011 Action, Crime, …     8.8
 ##  9 One Flew Over the Cuckoo's Nest                 1975 Drama                8.7
-## 10 Star Wars: Episode V - The Empire Strikes Back  1980 Action, Advent…      8.7
-## 11 Goodfellas                                      1990 Biography, Cri…      8.7
+## 10 Star Wars: Episode V - The Empire Strikes Back  1980 Action, Adventu…     8.7
+## 11 Goodfellas                                      1990 Biography, Crim…     8.7
 ## 12 The Matrix                                      1999 Action, Sci-Fi       8.7
 ## 13 Spies Are Forever                               2016 Musical              8.7
-## 14 Hamilton                                        2020 Biography, Dra…      8.7
-## 15 It's a Wonderful Life                           1946 Drama, Family,…      8.6
-## 16 Star Wars                                       1977 Action, Advent…      8.6
-## 17 Se7en                                           1995 Crime, Drama, …      8.6
-## 18 The Green Mile                                  1999 Crime, Drama, …      8.6
+## 14 Hamilton                                        2020 Biography, Dram…     8.7
+## 15 It's a Wonderful Life                           1946 Drama, Family, …     8.6
+## 16 Star Wars                                       1977 Action, Adventu…     8.6
+## 17 Se7en                                           1995 Crime, Drama, M…     8.6
+## 18 The Green Mile                                  1999 Crime, Drama, F…     8.6
 ## 19 Saving Private Ryan                             1998 Drama, War           8.6
 ## 20 George Takei's Allegiance                       2016 Musical              8.6
+## # … with abbreviated variable name ¹​avg_vote
 ```
 
 ```r
@@ -1136,21 +1138,22 @@ imdb_sub %>%
 
 ```
 ## # A tibble: 85,855 × 15
-##     year imdb_title_id title      date_published genre duration country language
-##    <dbl> <chr>         <chr>      <chr>          <chr>    <dbl> <chr>   <chr>   
-##  1  1894 tt0000009     Miss Jerry 1894-10-09     Roma…       45 USA     None    
-##  2  1906 tt0000574     The Story… 26/12/1906     Biog…       70 Austra… None    
-##  3  1911 tt0001892     Den sorte… 19/08/1911     Drama       53 German… <NA>    
-##  4  1912 tt0002101     Cleopatra  13/11/1912     Dram…      100 USA     English 
-##  5  1911 tt0002130     L'Inferno  06/03/1911     Adve…       68 Italy   Italian 
-##  6  1912 tt0002199     From the … 1913           Biog…       60 USA     English 
-##  7  1919 tt0002423     Madame Du… 26/11/1919     Biog…       85 Germany German  
-##  8  1913 tt0002445     Quo Vadis? 01/03/1913     Dram…      120 Italy   Italian 
-##  9  1912 tt0002452     Independe… 01/09/1912     Hist…      120 Romania <NA>    
-## 10  1912 tt0002461     Richard I… 15/10/1912     Drama       55 France… English 
-## # … with 85,845 more rows, and 7 more variables: director <chr>, writer <chr>,
-## #   actors <chr>, avg_vote <dbl>, votes <dbl>, reviews_from_users <dbl>,
-## #   reviews_from_critics <dbl>
+##     year imdb_title…¹ title date_…² genre durat…³ country langu…⁴ direc…⁵ writer
+##    <dbl> <chr>        <chr> <chr>   <chr>   <dbl> <chr>   <chr>   <chr>   <chr> 
+##  1  1894 tt0000009    Miss… 1894-1… Roma…      45 USA     None    Alexan… Alexa…
+##  2  1906 tt0000574    The … 26/12/… Biog…      70 Austra… None    Charle… Charl…
+##  3  1911 tt0001892    Den … 19/08/… Drama      53 German… <NA>    Urban … Urban…
+##  4  1912 tt0002101    Cleo… 13/11/… Dram…     100 USA     English Charle… Victo…
+##  5  1911 tt0002130    L'In… 06/03/… Adve…      68 Italy   Italian France… Dante…
+##  6  1912 tt0002199    From… 1913    Biog…      60 USA     English Sidney… Gene …
+##  7  1919 tt0002423    Mada… 26/11/… Biog…      85 Germany German  Ernst … Norbe…
+##  8  1913 tt0002445    Quo … 01/03/… Dram…     120 Italy   Italian Enrico… Henry…
+##  9  1912 tt0002452    Inde… 01/09/… Hist…     120 Romania <NA>    Aristi… Arist…
+## 10  1912 tt0002461    Rich… 15/10/… Drama      55 France… English André … James…
+## # … with 85,845 more rows, 5 more variables: actors <chr>, avg_vote <dbl>,
+## #   votes <dbl>, reviews_from_users <dbl>, reviews_from_critics <dbl>, and
+## #   abbreviated variable names ¹​imdb_title_id, ²​date_published, ³​duration,
+## #   ⁴​language, ⁵​director
 ```
 
 ```r
@@ -1161,21 +1164,22 @@ imdb_sub %>%
 
 ```
 ## # A tibble: 85,855 × 15
-##    imdb_title_id title       year avg_vote date_published genre duration country
-##    <chr>         <chr>      <dbl>    <dbl> <chr>          <chr>    <dbl> <chr>  
-##  1 tt0000009     Miss Jerry  1894      5.9 1894-10-09     Roma…       45 USA    
-##  2 tt0000574     The Story…  1906      6.1 26/12/1906     Biog…       70 Austra…
-##  3 tt0001892     Den sorte…  1911      5.8 19/08/1911     Drama       53 German…
-##  4 tt0002101     Cleopatra   1912      5.2 13/11/1912     Dram…      100 USA    
-##  5 tt0002130     L'Inferno   1911      7   06/03/1911     Adve…       68 Italy  
-##  6 tt0002199     From the …  1912      5.7 1913           Biog…       60 USA    
-##  7 tt0002423     Madame Du…  1919      6.8 26/11/1919     Biog…       85 Germany
-##  8 tt0002445     Quo Vadis?  1913      6.2 01/03/1913     Dram…      120 Italy  
-##  9 tt0002452     Independe…  1912      6.7 01/09/1912     Hist…      120 Romania
-## 10 tt0002461     Richard I…  1912      5.5 15/10/1912     Drama       55 France…
-## # … with 85,845 more rows, and 7 more variables: language <chr>,
-## #   director <chr>, writer <chr>, actors <chr>, votes <dbl>,
-## #   reviews_from_users <dbl>, reviews_from_critics <dbl>
+##    imdb_titl…¹ title  year avg_v…² date_…³ genre durat…⁴ country langu…⁵ direc…⁶
+##    <chr>       <chr> <dbl>   <dbl> <chr>   <chr>   <dbl> <chr>   <chr>   <chr>  
+##  1 tt0000009   Miss…  1894     5.9 1894-1… Roma…      45 USA     None    Alexan…
+##  2 tt0000574   The …  1906     6.1 26/12/… Biog…      70 Austra… None    Charle…
+##  3 tt0001892   Den …  1911     5.8 19/08/… Drama      53 German… <NA>    Urban …
+##  4 tt0002101   Cleo…  1912     5.2 13/11/… Dram…     100 USA     English Charle…
+##  5 tt0002130   L'In…  1911     7   06/03/… Adve…      68 Italy   Italian France…
+##  6 tt0002199   From…  1912     5.7 1913    Biog…      60 USA     English Sidney…
+##  7 tt0002423   Mada…  1919     6.8 26/11/… Biog…      85 Germany German  Ernst …
+##  8 tt0002445   Quo …  1913     6.2 01/03/… Dram…     120 Italy   Italian Enrico…
+##  9 tt0002452   Inde…  1912     6.7 01/09/… Hist…     120 Romania <NA>    Aristi…
+## 10 tt0002461   Rich…  1912     5.5 15/10/… Drama      55 France… English André …
+## # … with 85,845 more rows, 5 more variables: writer <chr>, actors <chr>,
+## #   votes <dbl>, reviews_from_users <dbl>, reviews_from_critics <dbl>, and
+## #   abbreviated variable names ¹​imdb_title_id, ²​avg_vote, ³​date_published,
+## #   ⁴​duration, ⁵​language, ⁶​director
 ```
 
 # Final task - Please give us your individual feedback!
@@ -1425,19 +1429,19 @@ imdb_sub %>%
 
 ```
 ## # A tibble: 85,855 × 4
-##    title                                               genre   language avg_vote
-##    <chr>                                               <chr>   <chr>       <dbl>
-##  1 Miss Jerry                                          Romance None          5.9
-##  2 The Story of the Kelly Gang                         Biogra… None          6.1
-##  3 Den sorte drøm                                      Drama   <NA>          5.8
-##  4 Cleopatra                                           Drama,… English       5.2
-##  5 L'Inferno                                           Advent… Italian       7  
-##  6 From the Manger to the Cross; or, Jesus of Nazareth Biogra… English       5.7
-##  7 Madame DuBarry                                      Biogra… German        6.8
-##  8 Quo Vadis?                                          Drama,… Italian       6.2
-##  9 Independenta Romaniei                               Histor… <NA>          6.7
-## 10 Richard III                                         Drama   English       5.5
-## # … with 85,845 more rows
+##    title                                               genre     langu…¹ avg_v…²
+##    <chr>                                               <chr>     <chr>     <dbl>
+##  1 Miss Jerry                                          Romance   None        5.9
+##  2 The Story of the Kelly Gang                         Biograph… None        6.1
+##  3 Den sorte drøm                                      Drama     <NA>        5.8
+##  4 Cleopatra                                           Drama, H… English     5.2
+##  5 L'Inferno                                           Adventur… Italian     7  
+##  6 From the Manger to the Cross; or, Jesus of Nazareth Biograph… English     5.7
+##  7 Madame DuBarry                                      Biograph… German      6.8
+##  8 Quo Vadis?                                          Drama, H… Italian     6.2
+##  9 Independenta Romaniei                               History,… <NA>        6.7
+## 10 Richard III                                         Drama     English     5.5
+## # … with 85,845 more rows, and abbreviated variable names ¹​language, ²​avg_vote
 ```
 
 ```r

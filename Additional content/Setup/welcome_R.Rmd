@@ -103,3 +103,55 @@ Get started with ggplot2 where you will mark scatter and bar plots to visualise 
 Continue learning ggplot2 by making box plots, histograms, and time series visualisations
 
 </font> 
+
+----
+
+<font size="5">
+
+## Installing R and RStudio
+
+Below are step by step instructions for getting R and RStudio installed in your personal laptop. RStudio is a popular tool for using R. 
+
+If you are wanting to install R and RStudio on a device whereby you do not have administrative privilages, contact `tech.support@lse.ac.uk`
+
+## Windows install
+
+### Install R
+
+To install R, you need to download the installer from the [R website](https://cloud.r-project.org/bin/windows/ ). Once downloaded, follow the installation instructions.  
+
+### Install RStudio
+
+Finally, we install RStudio. To do so, we download it from the [Posit website](https://posit.co/download/rstudio-desktop/), and follow the installation instructions. 
+
+Once installed, open RStudio. If the installation of all the above software has worked you should see three panes, with one of them telling you the version of R you have installed. 
+
+## Mac install
+
+### Install R
+
+To install R on your Mac you need to know the type of processor your Mac uses. This is straightforward to find out:
+
+1) On the top navigation bar on your Mac, click on the apple icon
+2) From the drop down menu, select *About This Mac*
+3) In *Overview* you will find the information about your Mac. If you have an *Intel Mac*, you will see the processor row, which has information that includes *Intel*. If you have an M1 Mac, you will see chip and M1 in the *Overview*
+
+If you have a *M1 Mac* you will need to download the R package that says something like: *R-4.2.2-arm64.pkg*. If you have a *Intel Mac* you will need to download the R package that says something like: *R-4.2.2.pkg*
+
+To install R, you need to download the installer from the [R website](https://cloud.r-project.org/bin/macosx/). Once downloaded, follow the installation instructions.  
+
+### Install XQuartz
+
+To run R on a Mac operating system, XQuartz is required. You can install it by following [this link](https://www.xquartz.org/), downloading it and following the installation instructions. 
+
+### Install RStudio
+
+Finally, we install RStudio. To do so, we download it from the [Posit website](https://posit.co/download/rstudio-desktop/), and follow the installation instructions. 
+
+Once installed, open RStudio. If the installation of all the above software has worked you should see three panes, with one of them telling you the version of R you have installed. 
+
+## Installing R and RStudio installation issues
+
+If your installation for R and RStudio did not work, this is likely because your computer is running an older operating system. In these cases you will have to install an older version of the software. For help with this please contact `digital.skills.lab@lse.ac.uk`. 
+
+</font> 

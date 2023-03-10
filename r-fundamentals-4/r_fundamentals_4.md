@@ -3,7 +3,7 @@ title: "R Fundamentals 4 - Data Frames"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "10 March, 2023"
 output: 
   html_document: 
     theme: readable
@@ -117,7 +117,7 @@ Club <- rep("FC Barcelona", length(app))
 
 When working with data frames you will need to add columns and rows to them in the process of working with the data. There are multiple ways of adding data to a data frame. We will cover the most common for both adding columns and rows.
 
-There are two common ways to add a column to a data frame, these involve using the `cbind()` function or using the `$` operator.
+There are three common ways to add a column to a data frame, these involve using the `cbind()` function, the `$` operator, or the `transform()` function.
 
 Lets look at the first way using `cbind()`. *It is important to note that the dimensions have to match when using `cbind()` and `rbind()`, so if your data frame has 5 rows, the vector you are binding needs to have 5 rows.*
 
@@ -168,6 +168,26 @@ exampleDat
 ## 5 person_5       5      3     no        1 Experiment
 ```
 
+`transform()` is a really great function and the most flexible of the options. It is a convenience function that allows you to assign multiple columns to a data frame. *Fun fact: it is one of the inspirations for some tidyverse functions you will see in later workshops.*
+
+
+```r
+exampleDat <- transform(exampleDat, 
+                        x = c(0.4, 0.5, 0.1, 0.9, 0.6),
+                        y = rep(18, 5))
+exampleDat
+```
+
+```
+##     string integer number factor integer2    string2   x  y
+## 1 person_1       1      4    yes        5    Control 0.4 18
+## 2 person_2       2      7    yes        4    Control 0.5 18
+## 3 person_3       3      2     no        3 Experiment 0.1 18
+## 4 person_4       4      9    yes        2 Experiment 0.9 18
+## 5 person_5       5      3     no        1 Experiment 0.6 18
+```
+
+
 ## Adding columns exercise
 
 Using the data frame you created in the previous task (`messi_career`):
@@ -176,6 +196,7 @@ Using the data frame you created in the previous task (`messi_career`):
 2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
 3)  Now we are going to add Messi's Champions League goals using the `$` sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
 4)  Print out the result. You should see both the new columns of data you just added.
+5)  Using `transform()` and without assigning the result back to messi_career, add Age and champLeagueGoal to messi_career. 
 
 
 ```r
@@ -196,7 +217,9 @@ newRow <- data.frame(string = "person_6",
                      number = 5,
                      factor = factor("yes"),
                      integer2 = 0,
-                     string2 = "Control")
+                     string2 = "Control",
+                     x = 0.3,
+                     y = 18)
 # binding new row to example data
 exampleDat <- rbind(exampleDat, newRow)
 # print result
@@ -204,20 +227,20 @@ exampleDat
 ```
 
 ```
-##     string integer number factor integer2    string2
-## 1 person_1       1      4    yes        5    Control
-## 2 person_2       2      7    yes        4    Control
-## 3 person_3       3      2     no        3 Experiment
-## 4 person_4       4      9    yes        2 Experiment
-## 5 person_5       5      3     no        1 Experiment
-## 6 person_6       6      5    yes        0    Control
+##     string integer number factor integer2    string2   x  y
+## 1 person_1       1      4    yes        5    Control 0.4 18
+## 2 person_2       2      7    yes        4    Control 0.5 18
+## 3 person_3       3      2     no        3 Experiment 0.1 18
+## 4 person_4       4      9    yes        2 Experiment 0.9 18
+## 5 person_5       5      3     no        1 Experiment 0.6 18
+## 6 person_6       6      5    yes        0    Control 0.3 18
 ```
 
 ## Adding rows exercise
 
 For this exercise we will use the same `messi_career` data frame, adding data from 2020.
 
-1)  Make a data frame called thisYear (or similar) and add the following data: Appearances: 19, Goals: 10, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 3. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
+1)  Make a data frame called thisYear (or similar) and add the following data: Appearances: 47, Goals: 38, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 5. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
 2)  Now, using `rbind()` add the new row of data to your messi_career data frame.
 3)  Print the result, you should now see your new row of data!
 
@@ -242,7 +265,7 @@ dim(exampleDat)
 ```
 
 ```
-## [1] 6 6
+## [1] 6 8
 ```
 
 To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
@@ -253,13 +276,13 @@ head(exampleDat)
 ```
 
 ```
-##     string integer number factor integer2    string2
-## 1 person_1       1      4    yes        5    Control
-## 2 person_2       2      7    yes        4    Control
-## 3 person_3       3      2     no        3 Experiment
-## 4 person_4       4      9    yes        2 Experiment
-## 5 person_5       5      3     no        1 Experiment
-## 6 person_6       6      5    yes        0    Control
+##     string integer number factor integer2    string2   x  y
+## 1 person_1       1      4    yes        5    Control 0.4 18
+## 2 person_2       2      7    yes        4    Control 0.5 18
+## 3 person_3       3      2     no        3 Experiment 0.1 18
+## 4 person_4       4      9    yes        2 Experiment 0.9 18
+## 5 person_5       5      3     no        1 Experiment 0.6 18
+## 6 person_6       6      5    yes        0    Control 0.3 18
 ```
 
 To find the structure of our data we use the `str()` command. This function gives us information on the column name, what data type that column is, and some of the data in that column.
@@ -270,13 +293,15 @@ str(exampleDat)
 ```
 
 ```
-## 'data.frame':	6 obs. of  6 variables:
+## 'data.frame':	6 obs. of  8 variables:
 ##  $ string  : chr  "person_1" "person_2" "person_3" "person_4" ...
 ##  $ integer : num  1 2 3 4 5 6
 ##  $ number  : num  4 7 2 9 3 5
 ##  $ factor  : Factor w/ 2 levels "no","yes": 2 2 1 2 1 2
 ##  $ integer2: num  5 4 3 2 1 0
 ##  $ string2 : chr  "Control" "Control" "Experiment" "Experiment" ...
+##  $ x       : num  0.4 0.5 0.1 0.9 0.6 0.3
+##  $ y       : num  18 18 18 18 18 18
 ```
 
 Finally, to get some basic descriptive statistics we can use `summary()`.
@@ -294,13 +319,13 @@ summary(exampleDat)
 ##                     Mean   :3.50   Mean   :5.00           Mean   :2.50  
 ##                     3rd Qu.:4.75   3rd Qu.:6.50           3rd Qu.:3.75  
 ##                     Max.   :6.00   Max.   :9.00           Max.   :5.00  
-##    string2         
-##  Length:6          
-##  Class :character  
-##  Mode  :character  
-##                    
-##                    
-## 
+##    string2                x                y     
+##  Length:6           Min.   :0.1000   Min.   :18  
+##  Class :character   1st Qu.:0.3250   1st Qu.:18  
+##  Mode  :character   Median :0.4500   Median :18  
+##                     Mean   :0.4667   Mean   :18  
+##                     3rd Qu.:0.5750   3rd Qu.:18  
+##                     Max.   :0.9000   Max.   :18
 ```
 
 ## Getting information exercise
@@ -326,8 +351,8 @@ exampleDat[3, ]
 ```
 
 ```
-##     string integer number factor integer2    string2
-## 3 person_3       3      2     no        3 Experiment
+##     string integer number factor integer2    string2   x  y
+## 3 person_3       3      2     no        3 Experiment 0.1 18
 ```
 
 ```r
@@ -346,7 +371,7 @@ exampleDat[ ,4:5]
 
 You can see we get the 3rd row of data for the first example. For the second example we get all rows and columns 4 to 5.
 
-We can also index the the names of the columns, below are are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.
+We can also index the the names of the columns, below we are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.
 
 
 ```r
@@ -417,15 +442,15 @@ exampleDat3
 ```
 
 ```
-##     string integer number factor integer2    string2
-## 3 person_3       3      2     no        3 Experiment
+##     string integer number factor integer2    string2   x  y
+## 3 person_3       3      2     no        3 Experiment 0.1 18
 ```
 
 This is conditional indexing, which we will cover more in R fundamentals 6 (conditionals and logic).
 
 We can bring together adding a new column with indexing to do calculations. See the examples below.
 
-In the first example, we make a new column called calculation using the `$` operator..Then we do a calculation with indexing, in this case the *integer* column divided by the *number* column.
+In the first example, we make a new column called calculation using the `$` operator. Then we do a calculation with indexing, in this case the *integer* column divided by the *number* column.
 
 In the second example, we do the calculations by using only the `$` operator.
 
@@ -442,14 +467,48 @@ exampleDat
 ```
 
 ```
-##     string integer number factor integer2    string2 calculation calculation2
-## 1 person_1       1      4    yes        5    Control   0.2500000    0.8333333
-## 2 person_2       2      7    yes        4    Control   0.2857143    1.3333333
-## 3 person_3       3      2     no        3 Experiment   1.5000000    1.5000000
-## 4 person_4       4      9    yes        2 Experiment   0.4444444    1.3333333
-## 5 person_5       5      3     no        1 Experiment   1.6666667    0.8333333
-## 6 person_6       6      5    yes        0    Control   1.2000000    0.0000000
+##     string integer number factor integer2    string2   x  y calculation
+## 1 person_1       1      4    yes        5    Control 0.4 18   0.2500000
+## 2 person_2       2      7    yes        4    Control 0.5 18   0.2857143
+## 3 person_3       3      2     no        3 Experiment 0.1 18   1.5000000
+## 4 person_4       4      9    yes        2 Experiment 0.9 18   0.4444444
+## 5 person_5       5      3     no        1 Experiment 0.6 18   1.6666667
+## 6 person_6       6      5    yes        0    Control 0.3 18   1.2000000
+##   calculation2
+## 1    0.8333333
+## 2    1.3333333
+## 3    1.5000000
+## 4    1.3333333
+## 5    0.8333333
+## 6    0.0000000
 ```
+
+We can also use `transform()` for this sort of operation. The advantage of `transform()` is you can do multiple column assignments and you do not have to call the data frame each time. 
+
+
+```r
+transform(exampleDat, 
+          new_calculation = (calculation*calculation2)/2,
+          new_string = paste0(string, "_", string2))
+```
+
+```
+##     string integer number factor integer2    string2   x  y calculation
+## 1 person_1       1      4    yes        5    Control 0.4 18   0.2500000
+## 2 person_2       2      7    yes        4    Control 0.5 18   0.2857143
+## 3 person_3       3      2     no        3 Experiment 0.1 18   1.5000000
+## 4 person_4       4      9    yes        2 Experiment 0.9 18   0.4444444
+## 5 person_5       5      3     no        1 Experiment 0.6 18   1.6666667
+## 6 person_6       6      5    yes        0    Control 0.3 18   1.2000000
+##   calculation2 new_calculation          new_string
+## 1    0.8333333       0.1041667    person_1_Control
+## 2    1.3333333       0.1904762    person_2_Control
+## 3    1.5000000       1.1250000 person_3_Experiment
+## 4    1.3333333       0.2962963 person_4_Experiment
+## 5    0.8333333       0.6944444 person_5_Experiment
+## 6    0.0000000       0.0000000    person_6_Control
+```
+
 
 ## Indexing data frames exercise 2
 
@@ -503,4 +562,61 @@ paste(HP_Characters[1,1], "is very", HP_Characters[7,2],
 ## 6:   Trait = ("Brave",
 ##                      ^
 ```
+
+
+# Other options
+
+We have covered some of the classic R options for adding columns and indexing data frames. There are two other very useful functions which can make your life easier when using R: `within()` and `with()`. 
+
+`with()` is a convenience function designed to save you writing out your data frame name every time you want to use a column in that data frame. `within()` is similar but allows you to assign a variable in the same way you would with $. 
+
+```r
+with(exampleDat, integer/number)
+```
+
+```
+## [1] 0.2500000 0.2857143 1.5000000 0.4444444 1.6666667 1.2000000
+```
+
+```r
+within(exampleDat, calc <- integer/number)
+```
+
+```
+##     string integer number factor integer2    string2   x  y calculation
+## 1 person_1       1      4    yes        5    Control 0.4 18   0.2500000
+## 2 person_2       2      7    yes        4    Control 0.5 18   0.2857143
+## 3 person_3       3      2     no        3 Experiment 0.1 18   1.5000000
+## 4 person_4       4      9    yes        2 Experiment 0.9 18   0.4444444
+## 5 person_5       5      3     no        1 Experiment 0.6 18   1.6666667
+## 6 person_6       6      5    yes        0    Control 0.3 18   1.2000000
+##   calculation2      calc
+## 1    0.8333333 0.2500000
+## 2    1.3333333 0.2857143
+## 3    1.5000000 1.5000000
+## 4    1.3333333 0.4444444
+## 5    0.8333333 1.6666667
+## 6    0.0000000 1.2000000
+```
+
+`with()` is particularly useful when used with functions which do not have a *data* argument such as mean or paste like the examples show below. 
+
+```r
+with(exampleDat, mean(calculation))
+```
+
+```
+## [1] 0.8911376
+```
+
+```r
+with(exampleDat, paste(
+  "Average number is", mean(number), 
+  "and max number is", max(number)))
+```
+
+```
+## [1] "Average number is 5 and max number is 9"
+```
+
 

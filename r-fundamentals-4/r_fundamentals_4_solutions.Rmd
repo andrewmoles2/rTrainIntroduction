@@ -101,7 +101,7 @@ messi_career
 
 When working with data frames you will need to add columns and rows to them in the process of working with the data. There are multiple ways of adding data to a data frame. We will cover the most common for both adding columns and rows.
 
-There are two common ways to add a column to a data frame, these involve using the `cbind()` function or using the `$` operator.
+There are three common ways to add a column to a data frame, these involve using the `cbind()` function, the `$` operator, or the `transform()` function.
 
 Lets look at the first way using `cbind()`. *It is important to note that the dimensions have to match when using `cbind()` and `rbind()`, so if your data frame has 5 rows, the vector you are binding needs to have 5 rows.*
 
@@ -127,6 +127,16 @@ exampleDat$string2 <- c(rep("Control",2), rep("Experiment", 3))
 exampleDat
 ```
 
+`transform()` is a really great function and the most flexible of the options. It is a convenience function that allows you to assign multiple columns to a data frame. *Fun fact: it is one of the inspirations for some tidyverse functions you will see in later workshops.*
+
+```{r}
+exampleDat <- transform(exampleDat, 
+                        x = c(0.4, 0.5, 0.1, 0.9, 0.6),
+                        y = rep(18, 5))
+exampleDat
+```
+
+
 ## Adding columns exercise
 
 Using the data frame you created in the previous task (`messi_career`):
@@ -135,6 +145,7 @@ Using the data frame you created in the previous task (`messi_career`):
 2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
 3)  Now we are going to add Messi's Champions League goals using the `$` sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
 4)  Print out the result. You should see both the new columns of data you just added.
+5)  Using `transform()` and without assigning the result back to messi_career, add Age and champLeagueGoal to messi_career. 
 
 ```{r}
 # your code here
@@ -147,6 +158,10 @@ messi_career
 # add champ league goals
 messi_career$champLeagueGoal <- c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3)
 messi_career
+# testing out transform
+transform(messi_career, 
+          Age = seq(17, 32),
+          champLeagueGoal = c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3))
 ```
 
 # Adding rows to a data frame
@@ -162,7 +177,9 @@ newRow <- data.frame(string = "person_6",
                      number = 5,
                      factor = factor("yes"),
                      integer2 = 0,
-                     string2 = "Control")
+                     string2 = "Control",
+                     x = 0.3,
+                     y = 18)
 # binding new row to example data
 exampleDat <- rbind(exampleDat, newRow)
 # print result
@@ -173,19 +190,19 @@ exampleDat
 
 For this exercise we will use the same `messi_career` data frame, adding data from 2020.
 
-1)  Make a data frame called thisYear (or similar) and add the following data: Appearances: 19, Goals: 10, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 3. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
+1)  Make a data frame called thisYear (or similar) and add the following data: Appearances: 47, Goals: 38, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 5. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
 2)  Now, using `rbind()` add the new row of data to your messi_career data frame.
 3)  Print the result, you should now see your new row of data!
 
 ```{r}
 # your code here
 # make data frame for new year
-thisYear <- data.frame(Appearances = 19,
-                       Goals = 10,
+thisYear <- data.frame(Appearances = 47,
+                       Goals = 38,
                        Season = 2020,
                        Club = 'FC Barcelona',
                        Age = 33,
-                       champLeagueGoal = 3)
+                       champLeagueGoal = 5)
 # rbind to previous data
 messi_career <- rbind(messi_career, thisYear)
 # print result
@@ -255,7 +272,7 @@ exampleDat[ ,4:5]
 
 You can see we get the 3rd row of data for the first example. For the second example we get all rows and columns 4 to 5.
 
-We can also index the the names of the columns, below are are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.
+We can also index the the names of the columns, below we are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.
 
 ```{r}
 exampleDat[, c("factor", "string2")]
@@ -303,7 +320,7 @@ This is conditional indexing, which we will cover more in R fundamentals 6 (cond
 
 We can bring together adding a new column with indexing to do calculations. See the examples below.
 
-In the first example, we make a new column called calculation using the `$` operator..Then we do a calculation with indexing, in this case the *integer* column divided by the *number* column.
+In the first example, we make a new column called calculation using the `$` operator. Then we do a calculation with indexing, in this case the *integer* column divided by the *number* column.
 
 In the second example, we do the calculations by using only the `$` operator.
 
@@ -317,6 +334,15 @@ exampleDat$calculation2 <- (exampleDat$integer*exampleDat$integer2)/nrow(example
 # print result
 exampleDat
 ```
+
+We can also use `transform()` for this sort of operation. The advantage of `transform()` is you can do multiple column assignments and you do not have to call the data frame each time. 
+
+```{r}
+transform(exampleDat, 
+          new_calculation = (calculation*calculation2)/2,
+          new_string = paste0(string, "_", string2))
+```
+
 
 ## Indexing data frames exercise 2
 
@@ -392,3 +418,24 @@ HP_Characters$PowEvilRatio <- HP_Characters$Power/HP_Characters$Evil
 paste(HP_Characters[7,1], "is very", HP_Characters[7,2], 
       "and has a power to evil ratio of", round(HP_Characters[7,5],2), sep = " ")
 ```
+
+
+# Other options
+
+We have covered some of the classic R options for adding columns and indexing data frames. There are two other very useful functions which can make your life easier when using R: `within()` and `with()`. 
+
+`with()` is a convenience function designed to save you writing out your data frame name every time you want to use a column in that data frame. `within()` is similar but allows you to assign a variable in the same way you would with $. 
+```{r}
+with(exampleDat, integer/number)
+within(exampleDat, calc <- integer/number)
+```
+
+`with()` is particularly useful when used with functions which do not have a *data* argument such as mean or paste like the examples show below. 
+```{r}
+with(exampleDat, mean(calculation))
+with(exampleDat, paste(
+  "Average number is", mean(number), 
+  "and max number is", max(number)))
+```
+
+
