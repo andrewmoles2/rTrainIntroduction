@@ -1,5 +1,5 @@
 ---
-title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
+title: "R Data Wrangling 2: Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab

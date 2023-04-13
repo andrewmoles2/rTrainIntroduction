@@ -1,5 +1,5 @@
 ---
-title: "R Fundamentals 6 - Conditionals and Logic"
+title: "R Fundamentals 6: Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab

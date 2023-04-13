@@ -21,7 +21,7 @@ To get acquainted with R and RStudio, and do calculations using R.
 
 # What will this workshop cover?
 
-The goal of this session is to get to started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
+The goal of this session is to get started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
 
 -   Introduction to RStudio
 -   Using r as a calculator
@@ -32,7 +32,7 @@ The goal of this session is to get to started using RStudio, learn how to use va
 
 # Using R as a calculator
 
-We can use R to do simple or advanced calculations for us. Remember to run the code press the green play button or press Ctrl + Enter (or Cmd + Enter on Mac).
+We can use R to do simple or advanced calculations for us. Remember to run the code by pressing the green play button or Ctrl + Enter (or Cmd + Enter on Mac).
 
 ```{r}
 7 * 6
@@ -40,7 +40,7 @@ We can use R to do simple or advanced calculations for us. Remember to run the c
 (16 - 4) + (1 * 9)
 ```
 
-## Exercise (R as calculator)
+## R as calculator exercise
 
 Use R to work out the following arithmetic:
 
@@ -58,7 +58,7 @@ Use R to work out the following arithmetic:
 
 # Assigning variables
 
-A variable is a named storage of information. In our case today we are storing numbers.
+A variable is named storage of information. In our case today we are storing numbers.
 
 We can assign variables by using `<-`. You should see the variable appear to your right in the global environment once you've run this command (under Values).
 
@@ -78,9 +78,9 @@ When calling a variable, be careful to type it exactly (you can also copy it or 
 hieght
 ```
 
-We can do calculations on variables. We first assign the variables, and then use them in the calculation.
+We can do calculations on variables. We first assign the variables and, then use them in the calculation.
 
-In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is `42 * 92`, as this is the data stored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
+In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is `42 * 92`, as this is the data scored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
 
 ```{r}
 # test scores
@@ -103,7 +103,7 @@ You will have noticed the hashtags (`#`) with text in the above example. These a
 
 1)  Make a variable called my_height, and assign your height in cm (this can be an estimate if you are not sure)
 2)  Print the output of my_height
-3)  Convert your height from cm to feet. Make a new variable called my_height_feet, and assign the calculation of your height in cm to feet. *hint: there are 0.0328084 feet in 1 cm*
+3)  Convert your height in cm to feet. Make a new variable called my_height_feet, and assign the calculation of your height in cm to feet. *hint: there are 0.0328084 feet in 1 cm*
 4)  Print your my_height_feet variable
 
 ```{r}
@@ -113,7 +113,7 @@ You will have noticed the hashtags (`#`) with text in the above example. These a
 
 # Reassigning variables
 
-You can also change the value of a variable you have already assigned. Here we are going to add our new pay check to our previous bank balance.
+You can also change the value of a variable you have already assigned. Here we are going to sum our new paycheck with our previous bank balance.
 
 *Run this code to test it out:*
 
@@ -121,13 +121,13 @@ You can also change the value of a variable you have already assigned. Here we a
 # create variables
 BankBalance <- 100
 PayCheck <- 250
-# add old bank balance and pay check, assigning result to bank balance
+# sum old bank balance and pay check, assigning result to bank balance
 BankBalance <- BankBalance + PayCheck
 # print bank balance
 BankBalance
 ```
 
-Note that if you run `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works *sequentially* in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
+Note that if you run the `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
 
 ```{r}
 # variables
@@ -144,13 +144,13 @@ total
 
 ## Reassigning variables exercise
 
-Try and add another pay check of £50 to the bank balance variable.
+Try and sum another paycheck of £50 with the bank balance variable.
 
 1)  Make a variable called PayCheck2 with a value of 50
 2)  Assign BankBalance, and calculate BankBalance + PayCheck2
 3)  Print the outcome
 4)  You go out for dinner with friends and spend 36.55. Make a variable called dinner with the value of 36.55
-5)  Assign BankBalance, and calculate BankBalance minus dinner
+5)  Assign BankBalance, and calculate BankBalance - dinner
 6)  Print the outcome *hint: if this doesn't work run the code chunk with the bank balance variable*
 
 ```{r}
@@ -162,21 +162,14 @@ Try and add another pay check of £50 to the bank balance variable.
 
 Use R to work out the body mass index (BMI) of someone who is 79kg, and 1.77m tall.
 
-1) Assign the variables of weight and height    
-2) Assign the variable of BMI, and calculate the BMI based on the weight and height variables   
-3) Print the outcome    
-4) Add comments on what each line of code is doing    
+1)  Assign the variables of weight and height
+2)  Assign the variable of BMI, and calculate the BMI based of the weight and height variables
+3)  Print the outcome
+4)  Add comments on what each line of code is doing
 
 ```{r}
-# your code here
 # Exercise: BMI calculation
-# assign variables of weight and height
 
-
-# BMI calculation
-
-
-# print outcome
 
 ```
 
@@ -202,13 +195,12 @@ course1 <- (exam1 * ex_weight) + (coursework * cw_weight)
 course2 <- (exam2 * ex_weight) + (coursework2 * cw_weight)
 
 overall_grade <- (course1 + course2)/3
-
 overall_grade
 ```
 
 ## Salary calculation exercise
 
-Robin and Charlie are a married couple, one gets paid an hourly rate, the other has an annual salary. They want to workout how much annual salary they have combined before tax. Out of interest Charlie also wants to know what her hourly rate is before tax.
+Robin and Charlie are a married couple, one gets paid an hourly rate, and the other has an annual salary. They want to workout how much annual salary they have combined before tax. Out of interest Charlie also wants to know what her hourly rate is before tax.
 
 They used simple calculations using the following formulas:
 
@@ -217,6 +209,9 @@ They used simple calculations using the following formulas:
 Re-arrange the code so the calculations run. You should have both the combined salary and Charlie's hourly rate calculations printed.
 
 ```{r error=TRUE}
+# Note: Hours worked, salaries and weeks in year can be in any order but need
+# to be above the rest of the code
+
 # weeks in year
 weeksYear <- 52
 
@@ -245,9 +240,7 @@ Charlie_hoursPerWeek <- 35
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp>
-
-The solutions we be available from a link at the end of the survey.
+[https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp](https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp){.uri}
 
 # Individual coding challenge
 
@@ -265,12 +258,14 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 1)  Make a variable for each friend that is the sum of their order (e.g. Roger would be 11 + 2)
 2)  Make a variable for the shared food
 3)  Make a variable called TotalBill, and calculate their total bill
-4)  For those that shared food, add the shared food to their bill
+4)  For those that shared food, sum the shared food with their bill
 5)  Comment your code
 6)  Print the total bill and what each friend owes
 
 ```{r}
 # individual coding challenge
+
+
 ```
 
 # Recommended links

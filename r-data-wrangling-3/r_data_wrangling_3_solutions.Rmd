@@ -1,5 +1,5 @@
 ---
-title: "R Data Wrangling 3 - Joining and aggregation"
+title: "R Data Wrangling 3: Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab

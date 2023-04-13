@@ -1,5 +1,5 @@
 ---
-title: "R Fundamentals 5 - Loading data and packages"
+title: "R Fundamentals 5: Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab

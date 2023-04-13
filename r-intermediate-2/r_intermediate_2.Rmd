@@ -1,0 +1,681 @@
+---
+title: "R Intermediate 2: Functional programming"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: false
+---
+
+# Objective of workshop
+
+To start using functional programming techniques, with the apply and map family of functions, to perform iteration. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to start working with apply and map functions in R. This will primarily include:
+
+-   Perform rowwise and columnwise operations with `apply()`
+-   Using the lapply, sapply, and vapply functions to perform iteration
+-   Using apply functions to load in lots of data
+-   Perform aggregation with tapply
+-   Start using map family of functions and compare use to apply
+
+# Why do we need apply functions? And what are they?
+
+For loops can be complicated and difficult to write. Luckily, you don't always have to write them in R thanks to its functional nature. Someone else has written these loops and put them into a function! This is known as *functional programming*. 
+
+> Of course, someone has to write loops. It doesn't have to be you. --- Jenny Bryan
+
+Jenny Bryan is a software developer as RStudio: <https://jennybryan.org/>
+
+There are two main options when it comes to using *functional loops* in R, the apply family of functions, and the map family of functions. This workshop will go through both! 
+
+# Introduction to the apply family of functions
+
+The apply family of functions eliminate common uses of the for loop in R and are part of the reason for loops are not seen as often in the R programming language compared to a language like Python. They simplify the process so it can be written in more concisely, often just one line of code.
+
+There are five common apply functions:
+
+-   `apply()` allows you to select your *margins* to decide if you want to work rowwise or columnwise
+-   `lapply()` outputs lists and only works columnwise
+-   `sapply()` is similar to lapply but will return a vector
+-   `vapply()` is similar to lapply and sapply but you need to specify outcome data type
+-   `tapply()` breaks a vector into segments then applies a function to those segments
+
+There are other apply functions, such as mapply, that are beyond the scope of this tutorial to cover. Knowledge of how to use apply will enable you to be able to use the other apply functions.
+
+We will begin with the `apply()` function. The apply function can perform iterations across rows or columns. You decide this by adding either 1 or 2 into the `MARGIN` parameter. We select 1 to work across on rows, and 2 to work across on columns.
+
+The syntax for apply by default takes three arguments: the data, which margin (rowwise or columnwise) and the function you want to perform. If the function you are using needs to use a parameter ,like na.rm = TRUE, then you add that after a comma `apply(data, MARGIN = 1 or 2, function, function parameter)`.
+
+To demonstrate, we will use the palmers penguins dataset. If you are running code in this example you will need to install the palmerpenguins library where the data is held.
+
+```{r eval=FALSE}
+install.packages("palmerpenguins")
+```
+
+The palmer penguins data were collected and made available by [Dr. Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) and the [Palmer Station, Antarctica LTER](https://pal.lternet.edu/), a member of the [Long Term Ecological Research Network](https://lternet.edu/).
+
+There are two datasets, we will just look at the cleaned up *penguins* data.
+
+```{r message=FALSE}
+# load library
+library(palmerpenguins)
+# load data to environment
+data(penguins)
+# review data
+head(penguins)
+```
+
+## How to "apply" (rowwise)
+
+Working across rows is often called working *rowwise*. By working *rowwise* we can perform a calculation or a function across several columns for each row.
+
+For example, in the penguins data we might want to find the average of the three columns bill_length_mm, bill_depth_mm and flipper_length_mm for each row of data we have. 
+
+Notice what happens when you run the below chunk. Take a moment to work through each component of the syntax to understand the iterative process.
+
+```{r}
+columns <- c("bill_length_mm", "bill_depth_mm", "flipper_length_mm")
+apply_rows <- apply(penguins[ , columns], MARGIN = 1, mean, na.rm = TRUE)
+
+# print first 5 
+apply_rows[1:5]
+```
+
+This technique is most useful if we were to add that data back into the data frame, making a new column with our averages. This can be really useful if you are working with survey data and need to calculate the sum or average of questions for each participant in your survey. Check example below!
+
+```{r}
+penguins$bill_flip_avg <- apply(penguins[ ,columns], MARGIN = 1, mean, na.rm = TRUE)
+
+# view data frame with added column
+penguins[1:5, c("bill_length_mm", "bill_depth_mm", 
+                "flipper_length_mm", "bill_flip_avg")]
+```
+
+Another option to doing rowwise calculations are to use the rowMeans or rowSums functions that come with R by default. They perform rowwise calculations faster than apply, but are limited to mean or sum calculations.
+
+```{r}
+# mean of cols for first 5 rows
+rowMeans(penguins[1:5 , columns], na.rm = TRUE)
+# sum of cols for first 5 rows
+rowSums(penguins[1:5 , columns], na.rm = TRUE)
+```
+
+Other calculations such as min, max, interquartile range are available with the `matrixStats` package.
+
+### Rowwise apply exercise
+
+This this exercise we will use [song data from Spotify](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-01-21/readme.md). The dataset has information such as artist, popularity, and information about the song such as *danceability*.
+
+Using the code provided:
+
+1.  Review the data using the `str()` and `View()` commands
+
+2.  Make a new column called `duration_mins,` which is the duration of the song converted from milliseconds to minutes. To convert milliseconds to minutes use the formula: `milliseconds/60000`
+
+3.  Now make a subset of your data that contains only songs with a track popularity rating of over 62. Assign this subset to `spotify_songs_pop`
+
+4.  Using apply rowwise, find the mean of the danceability, energy, and valence columns. Add the result to `spotify_songs_pop` as `avg_excitement`
+
+5.  Use `range()` to find the range of values for your new `avg_excitement` variable
+
+6.  Use `hist()` to look at the spread of the values for your new `avg_excitement` variable
+
+```{r}
+# load in data
+spotify_songs <- read.csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
+
+# your code here
+
+```
+
+## How to "apply" (columnwise)
+
+To replicate what we did with our for loop earlier we would use apply over columns; this is known as working *columnwise*. We do this by setting the margin to 2. Notice how the output is nicer than the for loop as it gives us a named vector, which is easy to read.
+
+```{r}
+apply_cols <- apply(penguins[ , columns], MARGIN = 2, mean, na.rm = TRUE)
+apply_cols
+```
+
+In order to run both mean and median on the selected columns we need to change the code a little. Within the apply function *we make a function* which finds the mean and median of x. X is the column to apply the functions too. The x in `function(x)` is just a reference we are using to refer to the column we are applying a function too, but you can use something else if you like, such as y.
+
+```{r}
+apply_cols <- apply(penguins[ , columns], 
+                    MARGIN = 2,
+                    function(x) c(median(x, na.rm = TRUE),
+                                  mean(x, na.rm = TRUE)))
+
+apply_cols
+```
+
+To add rownames to the output we add them in after the c function, this makes the output clearer. To keep things simple we've called the rows median and mean. In R this concept is known as a *named vector*, to make a named vector you give the name then value `c(name = value)`.
+
+```{r}
+# named vector example
+c(mean = 4.5, median = 4)
+
+# add rownames
+apply_cols <- apply(penguins[ , columns], 
+                    MARGIN = 2,
+                    function(x) c(median = median(x, na.rm = TRUE),
+                                  mean = mean(x, na.rm = TRUE)))
+
+apply_cols
+```
+
+Again, there are other options that come with R by default in the colMeans and colSums functions.
+
+```{r}
+# mean values for selected columns
+colMeans(penguins[, columns], na.rm = TRUE)
+# sum of values for selected columns
+colSums(penguins[, columns], na.rm = TRUE)
+```
+
+Other calculations such as min, max, interquartile range are available with the `matrixStats` package.
+
+### Columnwise apply exercise
+
+We can pick up where we left off with our Spotify data! Here we will look at some statistics for chosen columns using columnwise apply.
+
+1.  Using `apply()` with a margin of 2 find the median, mean, standard deviation, inter quartile range, min, and max for the following columns in the `spotify_songs_pop` subset you made in the last exercise: track_popularity, avg_excitement, duration_mins
+
+2.  Review the output of your summary statistics
+
+3.  There are some really long songs in this data! Subset the data for songs with a duration over 8 minutes
+
+4.  There are also some duplicates which would be sensible to remove. Use `!duplicated(long_songs$track_id)` to filter out these cases
+
+5.  Use `table()` on the playlist_genre column to see what genre these long songs belong to.
+
+```{r}
+# your code here
+
+
+```
+
+# lapply, sapply, and vapply
+
+The main difference between apply and lapply is that the output is always a list with lapply. You also do not need to specify the margins with lapply as it assumes it will be working across columns.
+
+```{r}
+lapply_penguins <- lapply(penguins[ , columns], mean, na.rm = TRUE)
+# print output
+lapply_penguins
+# check the class 
+class(lapply_penguins)
+```
+
+We can do just as we did with apply and use `function(x)` to run mean and median over our selected columns. Each of the columns we run the functions on become named vectors within a list.
+
+```{r}
+lapply_penguins <- lapply(penguins[ , columns],
+                          function(x) c(median = median(x, na.rm = TRUE),
+                                        mean = mean(x, na.rm = TRUE)))
+
+# print output
+lapply_penguins
+
+# access just flipper_length_mm
+lapply_penguins$flipper_length_mm
+```
+
+The sapply function is very similar to the lapply function but outputs a vector instead of a list. We can run the exact same code as we did with lapply, but our output will be slightly different.
+
+First we can run just the mean on our selected columns. We can see from the the `str()` command that the output is a named number, which means a named vector.
+
+```{r}
+sapply_penguins <- sapply(penguins[, columns], mean, na.rm = TRUE)
+
+sapply_penguins
+
+str(sapply_penguins)
+
+```
+
+Then we can run the mean and median on our columns.
+
+```{r}
+sapply_penguins <- sapply(penguins[ , columns], 
+                          function(x) c(median = median(x, na.rm = TRUE),
+                                        mean = mean(x, na.rm = TRUE)))
+
+sapply_penguins
+```
+
+The vapply function is similar to sapply but stricter. You have to specify the expected output type. This is generally preferred as you have more control over the output produced. The syntax is slightly different: `vapply(data, function, output type, extra parameters)`. You have to specify the output type using the `FUN.VALUE` argument.
+
+Here we know our output should be a double or numeric data type. Both work.
+
+```{r}
+vapply_penguins <- vapply(penguins[, columns], mean, FUN.VALUE = double(1), na.rm = T)
+vapply_penguins
+
+vapply(penguins[, columns], mean, FUN.VALUE = numeric(1), na.rm = T)
+```
+
+## lapply, sapply, and vapply exercises
+
+Using the `spotify_songs` data from earlier for the apply exercises:
+
+1.  Use `lapply()` to find the range for the acousticness, instrumentalness, and liveness columns
+
+2.  Use `sapply()` to find the range and quantiles for the same columns
+
+3.  We will convert all character data in the dataset to factors. Using `vapply()`, make a vector called *to_char* which contains true or false if a column is character or not. *hint: use is.character and FUN.VALUE logical*
+
+4.  Use `lapply()` to convert the columns in the `spotify_songs` data that are true to a factor *hint 1: use conditional indexing data[, vector == TRUE], hint 2: try as.factor*
+
+5.  Run `str()` on the `spotify_songs` data to see if your columns have changed to factor
+
+```{r}
+# your code here
+
+
+```
+
+# Using lapply to load in lots of data
+
+The list data type is very useful for efficient storage of data as it can hold any data type. For this reason lapply is a good choice for the bulk loading of data. If you have a lot of files or data from urls which you need to load, you can use lapply to load them all at once and store them into a list.
+
+We have two examples below, one of loading *local* files from your computer, and one of loading data from urls.
+
+To make the local data example reproducible, we will first create three data frames and save them as csv files in a folder called data. This should make a directory called data, then save all the files there. *note: this is purely for reproducibility and demonstration purposes, usually you will already have your files saved on your computer*
+
+```{r}
+# set up pathway
+path <- "data/"
+
+# make data directory if it doesn't already exist
+if (dir.exists(path) == FALSE) {
+  dir.create(path)
+}
+# set seed for reproducibility 
+set.seed(2021)
+
+# vector for data frame names
+df_names <- vector()
+# empty list to put data frames
+df_list <- list()
+
+# make three data frames with random data and add to list
+for (i in 1:3) {
+  # create vectors
+  x <- runif(5)
+  y <- rnorm(5)
+  z <- sample(1:10, 5)
+  # add to a data frame
+  df <- data.frame(x, y, z)
+  # add df to a list
+  df_list[[i]] <- df
+  # make names and add to vector
+  name <- paste0("df_", i)
+  df_names[i] <- name
+}
+
+# add our data frame names to our list
+names(df_list) <- df_names
+
+# look at the created data frames
+str(df_list)
+
+# use for loop to write the files
+for (save_file in names(df_list)) {
+  write.csv(df_list[[save_file]], file = paste0("data/", save_file, ".csv"))
+}
+
+# print the files in data directory to show files
+list.files(path)
+```
+
+Now we have made the files we can load them back in. To do so we set up the path which tells R where to look for the data. Then we use list.files to make a vector with the file names of the data we want to load. Finally, we use lapply to load in all the files. You can add names to the data frames after loading.
+
+```{r}
+# where you files are
+path <- "data"
+
+# use list files to find csv files from a directory
+files <- list.files(path = path, pattern = ".csv", full.names = TRUE)
+
+# print files
+files
+
+# load the files into a list
+load_data <- lapply(files, read.csv)
+
+# give names to the data frames you've loaded
+names(load_data) <- c("data_1", "data_2", "data_3")
+
+# see the data loaded
+str(load_data)
+```
+
+This process can also be done loading in data from the internet. Instead of having a list of files, we have a list of urls we want to load.
+
+In this example we will load in datasets from Github urls. The urls come from the [tidytuesday Github repository](https://github.com/rfordatascience/tidytuesday). The datasets are Lemurs, Scooby Doo, and Star Trek computer commands.
+
+```{r}
+# make a vector of urls
+urls <- c("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-08-24/lemur_data.csv",
+          "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-07-13/scoobydoo.csv",
+          "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-08-17/computer.csv")
+
+# make a vector of names for the datasets
+data_names <- c("lemurs", "Scooby_Doo", "Star_Trek")
+
+# load in all the urls into a list
+url_load <- lapply(urls, read.csv)
+
+# add the names to the datasets
+names(url_load) <- data_names
+names(url_load)
+
+# view the scooby doo dataset
+head(url_load$Scooby_Doo)
+```
+
+## Lapply loading data exercise
+
+Using the examples above, load in the three datasets from urls listed below using `lapply()`. 
+
+Once loaded change the names of the data frames to *player_dob*, *grand_slams*, *grand_slam_timeline*. Use `View()` to review your data once they are loaded and check the names are changed.
+
+The data is about tennis grand slams, from April 2019.
+
+Urls:
+
+-   player date of birth (dob): "<https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-09/player_dob.csv>"
+-   grand slams: "<https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-09/grand_slams.csv>"
+-   grand slam timeline: "<https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-09/grand_slam_timeline.csv>"
+
+```{r}
+# your code here
+
+
+```
+
+# tapply
+
+The tapply function is quite different to the other apply functions in that it performs aggregations. To use tapply we need a factor (or dummy variable) to break up our average calculations by. We can use the `str()` function to see if we already have factors in our data.
+
+```{r}
+str(penguins)
+```
+
+The species, island, and sex columns are factors so we can use one of these to break up our calculation. For this example we will just species with bill_lenght_mm.
+
+```{r}
+# method 1
+tapply(penguins$bill_length_mm, factor(penguins$species), mean, na.rm = TRUE)
+
+# method 2
+penguins$species <- as.factor(penguins$species)
+
+tapply_penguins <- tapply(penguins$bill_length_mm, penguins$species, mean, na.rm = TRUE)
+tapply_penguins
+```
+
+As you can see you get a named vector back with the mean bill_length_mm for each species of penguin.
+
+If you want to add another factor, such as what island the penguins live on we put the factors in a list within the tapply function.
+
+```{r}
+# make sure island is a factor
+penguins$island <- as.factor(penguins$island)
+# adding multiple factors
+tapply(penguins$bill_depth_mm, 
+       list(penguins$species, penguins$island),
+       mean, na.rm = TRUE)
+```
+
+We can also use tapply to do counts of factors or string data by using `length()` as our function. However, this is equivalent to the `table()` function which involves less typing.
+
+```{r}
+# count species vs sex
+tapply(penguins$species, list(penguins$species, penguins$sex), length)
+# table version
+table(penguins$species, penguins$sex)
+```
+
+The main downside of tapply is that is only allows you to work on one vector (or column) of data at a time. There are several other options to allow you to do this but they are beyond the scope of this tutorial; the three main alternatives are the `aggregate()` function that comes with the base version of R, `group_by()` and `summarise()` that come with the dplyr package, and the data.table package.
+
+## tapply exercises
+
+Using the `spotify_songs` data we used in previous exercises and using tapply, work out the following:
+
+-   Find the median duration per track_artist
+-   Find the median duration per track_artist and playlist genre
+
+We will filter the data to only look at a selection of artists: Led Zeppelin, Queen, The Beatles, Fleetwood Mac, Madonna, Beyoncé, Taylor Swift, and Ed Sheeran.
+
+1.  First, make the track_artist column a character data type and save the result back to the `spotify_songs` data
+
+2.  Make a vector of the selected artists specified above
+
+3.  Subset the data to only include the selected artists
+
+4.  Using `tapply()` find the median duration per track_artist
+
+5.  Using `tapply()` find the median duration per track_artist and playlist genre
+
+6.  Use the `table()` function to count how many times each artist appears in the dataset
+
+```{r}
+# your code here
+
+
+```
+
+# Introduction to the map family of functions
+
+The map family of functions work in very much the same way as the apply functions, however they are in some ways simpler. You select the map function based on the output you want, for example, if you want character you use `map_chr()` or if you want a data frame you use `map_df()`. The `map()` function can be used to apply a function to each element of a vector, list, or data frame column. The output is returned as a list.
+
+To use map, we first have to install the `purrr` library. This is part of the *tidyverse* ecosystem of packages which are covered in the R Data Wrangling and R Data Visualisation series.
+
+```{r eval=FALSE}
+install.packages("purrr")
+```
+
+Find a quick example below. In this, map() takes two arguments: the first is the list to be mapped over, and the second is the function to be applied to each element of the list (in this case, `mean()`).
+
+```{r}
+library(purrr)
+
+columns <- c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")
+
+map(penguins[, columns], mean, na.rm = TRUE)
+```
+
+How easy was that? How does this technique compare this to the efficiency of loops?
+
+`map()` works a bit like `lapply()`. What if we wanted to have our output be a vector? Well this is where `map()` gets really cool. To have the output be a vector of the double data type we use `map_dlb()`. There is also the option to use `map_vec()` which outputs a vector in a similar way to `sapply()`, in that it picks a data type for you.
+
+```{r}
+map_dbl(penguins[, columns], mean, na.rm = TRUE)
+
+map_vec(penguins[, columns], mean, na.rm = TRUE)
+```
+
+Just like apply functions we can define shorthand functions. Here we use this to calculate the mean as well as median for each column.
+
+```{r}
+map(penguins[, columns], 
+    function(x) c(mean = mean(x, na.rm = TRUE), 
+                  median = median(x, na.rm = TRUE)))
+```
+
+A nice feature of the map functions is the ability to use a `~` instead of the `function()` call, making things a bit neater. `~` defines an anonymous function, with `.` being the place holder for the argument, in the same way that `function(x) x` works.
+
+Look at this code and the code chunk above. Can you spot the two differences between them?
+
+```{r}
+map(penguins[, columns], 
+    ~ c(mean = mean(.x, na.rm = TRUE), 
+                  median = median(.x, na.rm = TRUE)))
+```
+
+If we wanted our output as a data.frame we would use `map()` wrapped in a `data.frame()` function. Why is there no data frame option? There used to be but because of inconsistency issues it was removed.
+
+```{r}
+data.frame(
+  map(penguins[, columns], 
+      ~ c(mean = mean(.x, na.rm = TRUE), 
+                 median = median(.x, na.rm = TRUE)))
+  )
+```
+
+The key advantage of using the map family of functions over apply is the consistency and flexibility. They are just as powerful, but you have more control, plus they work well within the *tidyverse ecosystem* (see data wrangling and data visualisation workshops).
+
+The purrr reference page can also be helpful, each function often has useful examples: <https://purrr.tidyverse.org/reference/index.html>
+
+*note: you might have noticed we did not perform the rowwise operation with map. This is because the tidyverse way of doing this is using the rowwise function from the dplyr package - <https://dplyr.tidyverse.org/articles/rowwise.html>*
+
+## Introduction to the map family of functions exercise
+
+In this exercise we are going to use the map family of functions to count how often the word love is used in the track names, album names, and playlist names.
+
+Here is the code we can use to find the number of times *love* is used in the track name column. Your job is to use this code to count how often love is used in each of the columns `track_name`,`track_album_name`, and `playlist_name` using `map()`.
+
+*note: this code uses grepl to patten match. Use ?grepl to look it up*
+
+```{r}
+sum(
+  grepl(
+    "love", spotify_songs[, "track_name"], 
+    ignore.case = TRUE
+  )
+)
+```
+
+1)  First, make a vector with the column names of the columns we want to use: `track_name`,`track_album_name`, and `playlist_name`
+2)  Next, use `map()` to find the number of times love was mentioned in each of your columns
+3)  Lets try out a different map variant. Use the same code but use `map_dbl()` instead. What is the difference in the output?
+4)  Finally, using the code you've used in part 2 or 3, transform your output to a data frame
+
+```{r}
+# your code here
+
+
+```
+
+# Loop vs. Apply: what's your verdict?
+
+In general, it is recommended to use apply or map functions wherever possible because they are faster and easier to read than for loops. However, there may be situations where a for loop is more appropriate, such as when you need more control over the iteration process or when you are working with complex data structures that cannot be easily processed by apply functions.
+
+# Some useful resources
+
+These are two useful guides/tutorials on the purrr library, where the map family of functions come from. In this workshop we only covered the basics of map but there is lots more to dive into!
+
+<https://www.rebeccabarter.com/blog/2019-08-19_purrr>
+
+<https://jennybc.github.io/purrr-tutorial>
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Intermediate%2:%Functional%programming&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EouhwWBxe6lApboHwWHQBMAB53jnX0xFdIlOZ7kb4ovC3A?e=sbvEZ3>
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge
+
+For the individual coding challenge we are going to use apply/map functions to automate a small analysis pipeline using simple linear regressions, bringing together ideas and concepts of what we have covered so far.
+
+This challenge is similar to what we did with for loops, but this time we are using functional loops.
+
+Some code has been provided to help you along the way!
+
+## Part 1 - Using apply/map to load in data
+
+We have an Excel file, called `top_shows.xlsx`, which has our data stored in multiple sheets. The column names are the same for each sheet. Each sheet represents a different Broadway show.
+
+1)  Load in the readxl and purrr library
+
+2)  Make a variable called `path` which is the pathway to your `top_shows.xlsx` file
+
+3)  Make a variable called `sheets`, using the `excel_sheets()` function, from readxl, with your path variable to extract the sheet names from your file.
+
+4)  Using `map()` or an `lapply()` load in all the data from all sheets, store the resulting list as `broadway` or similar
+
+5)  Now your data is loaded into your list, you can add names to those datasets. Using the names function add the names from your `sheets` variable to the datasets in your list. *hint: this is the same as assigning column names*
+
+6)  Finally, as all our column names are the same we can bind these datasets together. Using list_rbind`()` from the `purrr` library, combine the loaded datasets into a data frame and save the result as `top_broadway` or similar.
+
+```{r}
+# your code here
+
+
+```
+
+## Part 2 - Review data
+
+Now we have our data we can extract columns of interest and review our data. As we will be doing regressions, we want to look at how our predictor, which in this case will be `weekly_gross_overall` relates to our independent variables, in this case `avg_ticket_price`, `seats_sold`, `performances`.
+
+1)  make a vector called `selected_cols` with the columns `weekly_gross_overall`, `avg_ticket_price`, `seats_sold`, and `performances`.
+2)  Filter your top_broadway data to include only your selected columns. Assign this filtered data to `top_broadway_filt`
+3)  Use `summary()` to review the summary statistics of your filtered data
+4)  Now we will make some plots comparing weekly_gross_overall to our independent variables using `map()` or `lapply()`.
+    -   First define `par(mfrow = c(2,2))` so we can view them all plots once.
+    -   Now use `map()` or `lapply()` to plot your variables
+
+*Hint 1:* plot will take a filtered dataset. If we gave the `plot()` function this code: `top_broadway_filt[, c(2, 1)]` what would it plot? 
+
+*Hint 2:* think of your code like a for loop, you want your map/apply function to loop through different indices for our plotting code. E.g. `map(seq(2, 4, by = 1), function)`
+
+```{r}
+# your code here
+
+
+```
+
+## Part 3 - Analysis using regressions with some different variables
+
+To finish off this challenge we will use map/apply to iteratively add variables to a regression, allowing you to see the effect each addition has on the model.
+
+Here we are going to start with a simple linear regression, then build up to a multiple linear regression (still only 3 predictor variables). We will be using our prepared data from earlier `top_broadway_filt`.
+
+To keep things a bit simpler we have provided two functions to use with map and apply. Have a look at the R Intermediate 3 workshop that introduces functions to start using your own functions. The first function is adapted from this article: <https://statisticsglobe.com/r-multiple-regressions-in-for-loop>.
+
+1)  Use `map()` or `lapply()` and the `model_loop` function to build three models, that add a new column from our `top_broadway_filt` data on each loop. Assign the result to `model_summaries`.
+2)  Check your results by printing model_summaries
+3)  Cool! We just run several regressions. We can now review the results. Use `map()` or `lapply()` with the `adjust_r` function to review your R squared for each model in model_summaries. Your output should look something like *Model 1 has adjusted R Squared of 0.603*
+4)  Finally, use the functions tidy and glance from broom, with map or apply to get summaries of your models!
+
+```{r}
+# load required packages
+library(purrr)
+library(broom)
+
+# model function
+model_loop <- function(x) {
+  predictors <- colnames(top_broadway_filt)[2:x]
+  summary(
+    lm(
+      weekly_gross_overall ~ .,
+      data = top_broadway_filt[, c("weekly_gross_overall", predictors)]
+    )
+  )
+}
+
+#adj r function
+adjust_r <- function(x) {
+  r_sq <- round(model_summaries[[x]][["adj.r.squared"]], 3)
+  paste0("Model ", x, " has adjusted R Squared of ", r_sq)
+}
+
+# your code here
+
+
+```

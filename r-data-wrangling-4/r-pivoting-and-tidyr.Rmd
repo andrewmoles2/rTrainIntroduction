@@ -1,0 +1,416 @@
+---
+title: "Pivoting Data, and dealing with NAs"
+author:
+   - name: Ajjit Narayananan
+     affiliation: Data Science Trainer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: true
+    toc_float: true
+    df_print: kable
+editor_options: 
+  markdown: 
+    wrap: 72
+  output: console
+---
+
+```{r, include = FALSE, eval = TRUE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+
+# Objective of workshop
+
+To learn how to transform your data to be longer, or wider, and how to
+effectively deal with `NA` values.
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to start working with looping
+in R. We will be covering:
+
+-   What tidy data is
+-   Pivoting data with the `pivot_longer()` and `pivot_wider()`
+    functions
+-   Dealing with `NA` values with `drop_na()` and `replace_na()`
+
+------------------------------------------------------------------------
+
+# Tidy data
+
+We have already talked a little bit about tidy data before. But to
+refresh your memory, refer to the picture below.
+
+![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/main/rstats-artwork/tidydata_1.jpg?raw=true){width="90%"}
+
+```{r}
+knitr::include_graphics("https://github.com/allisonhorst/stats-illustrations/blob/main/rstats-artwork/tidydata_1.jpg?raw=true")
+```
+
+
+It's important to recognize that there are many ways of storing the exact same data. For example, below is the same dataset on student test scores stored three different ways. 
+
+```{r, echo = FALSE}
+library(tidycensus)
+library(tidyverse)
+
+
+test_scores_1 <- tribble(
+  ~name,    ~test_2019, ~test_2020, ~test_2021,
+  "Prithvi",  NA,     70,    82,
+  "Suzy",   92,    90,     81,
+  )
+
+
+test_scores_2 <- tribble(
+  ~test,    ~`Prithvi`, ~Suzy,
+  "test_2019",  NA,     92,    
+  "test_2020",   70,    90, 
+  "test_2021",   82,    81
+  )
+
+test_scores_3 <- tribble(
+  ~name,    ~`test_year`, ~score,
+  "Prithvi",  2019,   NA,    
+  "Prithvi",  2020,    70, 
+  "Prithvi",  2021,    82, 
+  "Suzy",   2019,    92,
+  "Suzy",   2020,    90,
+  "Suzy",   2021,    81
+
+  )
+
+```
+
+#### Table 1
+
+```{r, echo = FALSE}
+test_scores_1
+
+# rowMeans
+test_scores_1 %>%
+  mutate(avg = rowMeans(select(., -name), na.rm = TRUE))
+# across/c_across
+test_scores_1 %>%
+  group_by(name) %>%
+  mutate(avg = mean(c_across(), na.rm = TRUE))
+```
+
+#### Table 2
+
+```{r, echo = FALSE}
+test_scores_2
+
+data.frame(
+  test = "average",
+  Prithvi = mean(test_scores_2$Prithvi, na.rm = TRUE),
+  Suzy = mean(test_scores_2$Suzy, na.rm = TRUE)
+) %>%
+  bind_rows(test_scores_2, .)
+
+
+```
+
+#### Table 3
+
+```{r, echo = FALSE}
+test_scores_3
+
+test_scores_3 %>%
+  group_by(name) %>%
+  mutate(avg = mean(score, na.rm = TRUE))
+test_scores_3 %>%
+  group_by(name) %>%
+  summarise(avg = mean(score, na.rm = TRUE))
+```
+
+
+## Tidy tables exercise
+
+1) Explain in words how you would calculate the average test scores for Prithvi and Suzy across all years using Table 2. How about using Table 3?
+
+2) Which of the above 3 tables is tidy and why?
+
+It's important to note that most data out in the wild is not tidy by default. And a large chunk of your time will be spent cleaning up messy data and turning it into a tidy format for analysis. To dive deeper into exactly what tidy data is, you can read this [blog
+post](https://tidyr.tidyverse.org/articles/tidy-data.html)
+
+
+# Why is tidy data important?
+
+The reason that tidy data is important is because a lot of common data operations require your data to be in tidy form. For example, in order to create plots with `library(ggplot2)` or do
+grouped calculations with `group_by()` in your data must be in tidy format. In fact, many of the operations in `library(dplyr)` work best with tidy data. Also picking one consistent way to store and use data will make your life easier. For example, if we wanted to make a line plot of Prithvi's and Suzy's test scores across time, this is easy with table 3.
+
+```{r, warning = FALSE, message = FALSE}
+
+# Make line plot
+test_scores_3 %>% 
+  ggplot(aes(x = test_year, y = score, color = name)) +
+  geom_line() 
+
+test_scores_3 %>%
+  group_by(name) %>%
+  summarise(avg = mean(score, na.rm = TRUE))
+
+test_scores_3 %>%
+  group_by(test_year) %>%
+  summarise(avg = mean(score, na.rm = TRUE))
+
+```
+
+It's also easy to calculate the average score across all years, by student:
+
+```{r}
+# Find average scores by student across all years
+test_scores_3 %>% 
+  group_by(name) %>% 
+  summarize(avg_score = mean(score, na.rm = TRUE)) 
+
+```
+
+You could also use `test_score_1`, or `test_score_2`, but you'd have to transform the data first or do something hackier to make everything work. 
+
+# How can we convert messy data into tidy data?
+
+We use *pivoting functions* which can take messy data with  variables stored in multiple columns/rows and turn them into tidy data. There are 2 main pivoting functions we use: `pivot_longer()` and `pivot_wider()`
+
+# `pivot_longer()`
+
+This function "lengthens" data, increasing the number of rows and decreasing the number of columns.
+
+With `test_score_2`, the problem is that the `name` variable is distributed across multiple columns, one column with Prithvi's scores and one with Suzy's. We can transform this data by using `pivot_longer()`, which takes wide data and transforms it into long data. See the gif below for a visual explanation of how `pivot_longer()` works. You may need to watch it a few times
+
+![](r-pivoting-and-tidyr/images/pivot_longer.gif)
+And below is an example of how we would pivot `test_score_2` longer to look like `test_score_1`:
+
+```{r}
+test_scores_2
+
+test_scores_2  %>% 
+  pivot_longer(cols = c(Prithvi, Suzy), # Name of columns to collapse into one column
+               names_to = "name", # Name for column which contains "Prithvi" and "Suzy"
+               values_to = "score") # Name for column which contains the cell values for each student
+
+test_scores_2 %>%
+  pivot_longer(cols = Prithvi:Suzy,
+               names_to = "name",
+               values_to = "score")
+
+test_scores_1
+test_scores_3
+
+test_scores_1 %>%
+  pivot_longer(cols = test_2019:test_2021,
+               names_to = c("test_year"),
+               values_to = "score")
+```
+
+
+# `pivot_longer()` exercise
+
+Not its your turn to use `pivot_longer()`! Run the below code to generate a dataset of 4 US states, along with information on their male populations at various age ranges
+
+```{r, warning = FALSE, cache = TRUE}
+library(tidycensus)
+
+# Generate US state data
+us_state_data = get_acs(geography = "state",
+                            variables = c(male_under_5 = "B01001_003",
+                                          male_5_to_9 = "B01001_004",
+                                          male_10_14 = "B01001_005"),
+                            output = "wide"
+                            ) %>%
+  select(GEOID, NAME, ends_with("E")) %>% 
+  filter(NAME %in% c("California",
+                     "Oregon", 
+                     "Washington",
+                     "Utah"))
+
+# See what the data looks like
+us_state_data
+```
+
+1) Now use `pivot_longer()` to transform this dataset into long and tidy format. Think carefully aboout which columns need to be collapsed into one, and what some good names for the two output columns should be. At the end print `us_state_data_long` and make sure it's in tidy format. 
+
+```{r, eval = FALSE}
+# Insert appropriate code below
+us_state_data_long = us_state_data %>% 
+  pivot_longer(
+    cols = ###,
+    names_to = ### ,
+    values_to = ### ,
+
+  )
+
+us_state_data_long <- us_state_data %>%
+  pivot_longer(
+    cols = male_under_5E:male_10_14E,
+    names_to = 'male_age_group',
+    values_to = 'pop_count')
+
+us_state_data_long %>%
+  group_by(NAME) %>%
+  summarise(avg_male = mean(pop_count),
+            total_male = sum(pop_count))
+```
+
+
+# `pivot_wider()`
+
+This function widens data, by decreasing the amount of rows and increasing the amount of columns. 
+
+See the second half of the gif below for a visual explanation of how `pivot_wider()` works. You may need to watch it a few times
+
+![](r-pivoting-and-tidyr/images/pivot_longer.gif)
+
+Note that this often takes tidy data and turns it into untidy wider data. But this may sometimes be helpful to do, for example when you need wide data for regression analysis in R. Below is an example of how we would pivot `test_scores_3` wider to look like `test_scores_2`:
+
+```{r}
+test_scores_3 %>% 
+  pivot_wider(names_from = name, # Column from which the names of output columns are generated
+              values_from = score # Column from which the values of output columns are generated
+              )
+
+test_scores_3 %>%
+  pivot_wider(names_from = test_year, 
+              names_glue = "test_{test_year}",
+              values_from = score)
+```
+# `pivot_wider()` exercise
+
+First run the below code chunk to get a long dataset on 4 US states and their population/median income
+
+```{r}
+# Generate US state data
+us_state_data_long = get_acs(geography = "state",
+                            variables = c(population = "B01001_001",
+                                          median_income = "B19013_001"),
+                            output = "tidy"
+                            ) %>%
+  select(GEOID, NAME, variable, estimate) %>% 
+  filter(NAME %in% c("California",
+                     "Oregon", 
+                     "Washington",
+                     "Utah"))
+
+# See what the data looks like
+us_state_data_long 
+```
+
+1) Now use `pivot_wider()` to transform this dataset into a wide format with separate columns for population and median income. Call the wide dataframe `us_state_data_wide` and print it to confirm that it has become wider. 
+
+```{r, eval = FALSE}
+# Insert appropriate code below
+us_state_data_wide = us_state_data_long %>% 
+  pivot_wider(
+    names_from = ###,
+    values_from = ###
+  )
+
+(us_state_data_wide <- us_state_data_long %>%
+  pivot_wider(
+    names_from = variable,
+    values_from = estimate
+  ))
+
+library(gt)
+us_state_data_wide %>%
+  select(-GEOID) %>%
+  gt() %>%
+  tab_header(title = "Population and median incomes of US States") %>%
+  tab_style(style = list(cell_fill(color = "#E8DDFC")),
+            locations = cells_body(columns = median_income, 
+                                   rows = median_income > 80000)) %>%
+  cols_align(align = "center")
+```
+
+Together `pivot_wider()` and `pivot_longer()` are powerful tools that can handle most data reshaping tasks.
+
+# Dealing with NAs in the data
+
+Another common issue is that your dataset might have a lot of NA values. Often you will either need to drop NA values from your analysis or replace NA values with a specific value. `library(tidyr)` (which is a part of `library(tidyverse)`) luckily has two functions to help you do exactly that.
+
+# `drop_na()` and `replace_na()`
+
+The `drop_na()` function drops rows where any of the specified column contains a missing value.
+
+
+Similarly `replace_na()` **replaces** `NA` values with another user-specified value. This might be useful if your data uses `NA` to refer to some other value, or if you want to use certain R functions that won't accept NA values. 
+
+Going back to our example with test scores, below is both `drop_na()` and `replace_na()` in action
+
+```{r}
+
+# drop_na()
+test_scores_3 %>% 
+  drop_na(test_year, score)  # drops all rows where either test_year or score is NA
+  
+
+# replace_na() takes a list of columns, and their replacement values. Here NA 
+# values in score will be replaced by 0 and NA values in test_year will be 
+# replaced by 2000
+test_scores_3 %>% 
+  replace_na(list(score = 0, test_year = 2000)) # Replaces NA values 
+
+```
+
+# Dealing with NAs exercise
+
+Run the below code to get the first few rows of the inbuilt `airquality` dataset
+
+```{r}
+airquality_example = head(airquality, 
+                          n = 20)
+
+# View the data
+airquality_example
+```
+
+1) Use `drop_na()` drop any rows that are missing Ozone or Solar Radiation values. Call the resulting dataframe `airquality_example_trimmed`
+
+```{r}
+# Insert code here
+
+```
+
+2) Now assume `NA` values actually correspond to values of 0 for Ozone, and 500 for Solar Radiation. Use `replace_na()` to replace the NAs appropriately in both the columns
+
+```{r}
+# Insert code here
+
+```
+
+# converting values to NA
+
+
+
+```{r}
+example_data <- data.frame(
+  x = sample(c(-99, 1:5, NA), 30, replace = TRUE),
+  y = sample(c("x", "y", "z", "missing"), 30, replace = TRUE),
+  z = rnorm(30, mean = 50, sd = 15)
+)
+example_data
+
+# two options
+# 1) use dplyr
+example_data %>%
+  mutate(
+    x = na_if(x, -99),
+    y = na_if(y, "missing")
+  )
+
+# 2) make your own function to do it (this one searches the whole data frame for the values, rather then just the column like na_if)
+fix_missing <- function(x, na.value){
+  x[x == na.value] <- NA
+  return(x)
+}
+
+fix_missing(example_data, -99)
+fix_missing(example_data, "missing")
+```
+

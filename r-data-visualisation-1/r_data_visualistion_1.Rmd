@@ -1,5 +1,5 @@
 ---
-title: "R Data Visualistion 1 - Data viz with ggplot2"
+title: "R Data Visualistion 1: Data viz with ggplot2"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab

@@ -1,5 +1,5 @@
 ---
-title: "R Data Wrangling 1 - Tidyverse introduction with Pipes and dplyr"
+title: "R Data Wrangling 1: Tidyverse introduction with Pipes and dplyr"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
