@@ -142,7 +142,7 @@ Using the data frame you created in the previous task (`messi_career`):
 2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
 3)  Now we are going to add Messi's Champions League goals using the `$` sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
 4)  Print out the result. You should see both the new columns of data you just added.
-5)  Using `transform()` and without assigning the result back to messi_career, add Age and champLeagueGoal to messi_career. 
+5)  Test out using `transform()` on the messi data to add a new column called age2 that is Age times 2
 
 ```{r}
 # your code here
@@ -200,7 +200,7 @@ To understand the dimensions of our data frame we use `dim()`, it returns the ro
 dim(exampleDat)
 ```
 
-To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
+To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the first few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
 
 ```{r}
 head(exampleDat)

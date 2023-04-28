@@ -65,6 +65,8 @@ To load a package you need to use the `library()` function. For example, if I wa
 
 Using `library()` load in the packages you just installed: `readr`, `readxl`, and `writexl`.
 
+*Note: readxl is the letter l rather than the number 1, which is hard to see with the default font*
+
 ```{r}
 # your code here
 library(readr)

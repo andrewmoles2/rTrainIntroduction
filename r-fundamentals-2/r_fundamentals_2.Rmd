@@ -70,9 +70,9 @@ As you can see this divides all elements in the vector by 5.
 ## Vector exercise 1
 
 1)  Make a vector called x with integers from 8 through to 14
-2)  Add 5 to your x vector (be sure to save as result back to x)
+2)  Add (plus) 5 to your x vector (be sure to save as result back to x)
 3)  Make a vector called y with variables 34, 55, 13, 71, 98, 43 and 25
-4)  Take 12 from your y vector (be sure to save as result back to y)
+4)  Take (subtract) 12 from your y vector (be sure to save as result back to y)
 5)  Times x vector by y
 
 ```{r}
