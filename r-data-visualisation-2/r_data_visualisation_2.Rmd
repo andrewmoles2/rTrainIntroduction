@@ -467,22 +467,10 @@ Using the examples above, extract year, month, day, day of week from covid data,
 # your code here
 
 # separate date column
-covid <- covid %>%
-  mutate(year = year(date),
-         month = month(date, label = TRUE),
-         week = week(date),
-         day = day(date),
-         week_day = wday(date, label = TRUE))
+
 
 # make year and month aggregate
-avg_year_month_covid <- covid %>%
-  group_by(year, month) %>%
-  summarise(
-    avg_total_cases_per_mil = mean(total_cases_per_million, na.rm = TRUE),
-    avg_total_deaths_per_mil = mean(total_deaths_per_million, na.rm = TRUE)
-    )
 
-avg_year_month_covid
 ```
 
 
