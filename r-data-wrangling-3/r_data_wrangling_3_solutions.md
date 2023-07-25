@@ -1,9 +1,9 @@
 ---
-title: "R Data Wrangling 3 - Joining and aggregation"
+title: "R Data Wrangling 3: Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "25 July, 2023"
 output: 
   html_document: 
     theme: readable
@@ -138,11 +138,11 @@ It can be easier to understand what each join does but seeing it visually. The f
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/right_join.png?raw=true){width="700"}
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/full_join.png?raw=true){width="700"}
 
-The code below is an example of the syntax to join data frames in dplyr. The syntax is the same for the other joins (left, right, and full). `x` is the table on the right. `y` is the table on the left. `by` indicates which column we are joining our datasets with. In this case both have ID so we join using that column. 
+The code below is an example of the syntax to join data frames in dplyr. The syntax is the same for the other joins (left, right, and full). `x` is the table on the right. `y` is the table on the left. `by` indicates which column we are joining our datasets with, and `join_by()` is a helper function to describe how to join the tables; more on this later. In this case both have ID so we join using that column. 
 
 ```r
 # example with an inner join
-people_inner_join <- inner_join(x = Person_Info, y = Food_Info, by = "ID")
+people_inner_join <- inner_join(x = Person_Info, y = Food_Info, by = join_by(ID))
 people_inner_join
 ```
 
@@ -213,16 +213,16 @@ tv_series
 
 Using the example for guidance or the dplyr help page <https://dplyr.tidyverse.org/reference/mutate-joins.html>, attempt the following joins:
 
-1) Perform a left join with x as crew and y as tv_series. Assign the result to st_left and print the result
-2) Perform a right join with x as crew and y as tv_series. Assign the result to st_left and print the result
-3) Perform a inner join with x as crew and y as tv_series. Assign the result to st_left and print the result
-4) Perform a full join with x as crew and y as tv_series. Assign the result to st_left and print the result
+1) Perform a *left join* with x as crew and y as tv_series. Assign the result to st_left and print the result
+2) Perform a *right join* with x as crew and y as tv_series. Assign the result to st_left and print the result
+3) Perform a *inner join* with x as crew and y as tv_series. Assign the result to st_left and print the result
+4) Perform a *full join* with x as crew and y as tv_series. Assign the result to st_left and print the result
 5) Review the output from each join you have run. How does the output differ from each join? What rows are kept and dropped from different joins? 
 
 
 ```r
 # your code here
-st_left <- left_join(x = crew, y = tv_series, by = "crew_number")
+st_left <- left_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_left
 ```
 
@@ -246,7 +246,7 @@ st_left
 ```
 
 ```r
-st_right <- right_join(x = crew, y = tv_series, by = "crew_number")
+st_right <- right_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_right
 ```
 
@@ -272,7 +272,7 @@ st_right
 ```
 
 ```r
-st_inner <- inner_join(x = crew, y = tv_series, by = "crew_number")
+st_inner <- inner_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_inner
 ```
 
@@ -294,7 +294,7 @@ st_inner
 ```
 
 ```r
-st_full <- full_join(x = crew, y = tv_series, by = "crew_number")
+st_full <- full_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_full
 ```
 
@@ -326,7 +326,7 @@ st_full
 
 A common problem when joining data in R is how to perform a join when your key columns don't match. There is a trick to deal with this that comes from SQL; dplyr is based off SQL so this makes sense.
 
-In the *by* argument in the join functions we do something like `by = c("id_number" = "id")`, which in the full function call looks like `left_join(df1, df2, by = c("id_number" = "id"))`. In english this means: I want to join the data tables by id_number from df1, and id from df2. 
+This is where the `join_by()` function comes into play. In the *by* argument in the join functions we do something like `by = join_by(id_number == id)`, which in the full function call looks like `left_join(df1, df2, by = join_by(id_number == id))`. In english this means: I want to join the data tables by id_number from df1, and id from df2. 
 
 It is usually easier to see this as an example. We can use our previous data, with some slight modifications; notice the IDs are different. 
 
@@ -365,7 +365,7 @@ The order of the variables in the *by* argument is important. `Person_Info` has 
 ```r
 # join using the col = col trick
 food_person <- left_join(Person_Info, Food_Info,
-                         by = c("ID_num" = "ID"))
+                         by = join_by(ID_num == ID))
 
 food_person
 ```
@@ -388,7 +388,7 @@ Another common issue is having the same columns in two tables you're joining. No
 ```r
 # add age to by
 food_person <- left_join(Person_Info, Food_Info,
-                         by = c("ID_num" = "ID", "Age"))
+                         by = join_by(ID_num == ID, Age))
 
 food_person
 ```
@@ -473,9 +473,11 @@ To join the data we need to do some data cleaning. We have remove the text from 
 1)  We first need to fix the ids in the movies_imdb dataset. Type the following code to fix the ids: `movies_imdb$imdb_title_id <- parse_number(movies_imdb$imdb_title_id)`. The `parse_number()` function is from the readr library, and removes text from strings, which is exactly what we need in this case
 2)  Before joining the data we should test for duplicate ids in both datasets. Using the example above, check the duplicates in the imdb_id column in movies_imdb and bechdel datasets.
 3)  We have some duplicates in the bechdel data! Use `filter()`, `duplicated()` and the `!` (not) operator to remove them.
-4)  Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
-5)  Using the `full_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
+4)  Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the `by` argument with the `join_by()` function. The columns to join on are the imdb id column, title, and year columns. Remember that the imdb id column is different in each dataset, and we need to tell the `join_by()` function the different names. 
+5)  Using the `full_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the same method used in step 4. 
 6)  Have a look at both your newly joined up data frames using head, glimpse or View. Do you notice how when we used inner_join we filtered out all data that isn't in our bechdel test dataset?
+
+*Note: once you have run step 1, it will give an error each time you try to re-run it. This is because parse_number() only works on text, and we have converted the imdb_title_id column to numbers*
 
 
 ```r
@@ -491,7 +493,7 @@ movies_imdb %>%
 
 ```
 ## # A tibble: 0 × 21
-## # … with 21 variables: imdb_title_id <dbl>, title <chr>, year <dbl>,
+## # ℹ 21 variables: imdb_title_id <dbl>, title <chr>, year <dbl>,
 ## #   date_published <chr>, genre <chr>, duration <dbl>, country <chr>,
 ## #   language <chr>, director <chr>, writer <chr>, production_company <chr>,
 ## #   actors <chr>, description <chr>, avg_vote <dbl>, votes <dbl>, budget <chr>,
@@ -526,10 +528,10 @@ bechdel <- bechdel %>%
   filter(!duplicated(imdb_id))
 
 # inner join to keep just the matches
-imdb_bechdel <- inner_join(movies_imdb, bechdel, by = c("imdb_title_id" = "imdb_id", "year", "title"))
+imdb_bechdel <- inner_join(movies_imdb, bechdel, by = join_by(imdb_title_id == imdb_id, year, title))
 
 # full join with everything 
-imdb_bechdel_full <- full_join(movies_imdb, bechdel, by = c("imdb_title_id" = "imdb_id", "year", "title")) 
+imdb_bechdel_full <- full_join(movies_imdb, bechdel, by = join_by(imdb_title_id == imdb_id, year, title))
 
 imdb_bechdel %>% glimpse()
 ```
@@ -615,26 +617,26 @@ df1
 
 ```
 ##          city tourist_rating
-## 1  Manchester              4
-## 2   Cambridge              5
-## 3   Cambridge              4
-## 4  Manchester              2
-## 5   Cambridge              3
+## 1   Cambridge              2
+## 2  Manchester              4
+## 3  Manchester              3
+## 4     Bristol              1
+## 5     Bristol              5
 ## 6  Manchester              3
-## 7  Birmingham              3
-## 8  Manchester              5
-## 9   Cambridge              1
-## 10 Birmingham              5
-## 11    Bristol              3
-## 12 Birmingham              1
-## 13    Bristol              3
-## 14    Bristol              3
-## 15    Bristol              4
-## 16 Manchester              1
-## 17    Bristol              4
-## 18  Cambridge              5
-## 19 Birmingham              4
-## 20 Manchester              5
+## 7  Manchester              1
+## 8   Cambridge              2
+## 9  Birmingham              3
+## 10    Bristol              1
+## 11    Bristol              1
+## 12    Bristol              3
+## 13 Manchester              3
+## 14 Birmingham              4
+## 15  Cambridge              5
+## 16  Cambridge              2
+## 17 Birmingham              4
+## 18  Cambridge              1
+## 19 Manchester              2
+## 20 Birmingham              2
 ```
 
 ```r
@@ -711,21 +713,19 @@ df1 %>%
 
 ```
 ##          city tourist_rating n
-## 1  Birmingham              1 1
+## 1  Birmingham              2 1
 ## 2  Birmingham              3 1
-## 3  Birmingham              4 1
-## 4  Birmingham              5 1
-## 5     Bristol              3 3
-## 6     Bristol              4 2
+## 3  Birmingham              4 2
+## 4     Bristol              1 3
+## 5     Bristol              3 1
+## 6     Bristol              5 1
 ## 7   Cambridge              1 1
-## 8   Cambridge              3 1
-## 9   Cambridge              4 1
-## 10  Cambridge              5 2
-## 11 Manchester              1 1
-## 12 Manchester              2 1
-## 13 Manchester              3 1
-## 14 Manchester              4 1
-## 15 Manchester              5 2
+## 8   Cambridge              2 3
+## 9   Cambridge              5 1
+## 10 Manchester              1 1
+## 11 Manchester              2 1
+## 12 Manchester              3 3
+## 13 Manchester              4 1
 ```
 
 ```r
@@ -735,10 +735,10 @@ table(df1$city, df1$tourist_rating)
 ```
 ##             
 ##              1 2 3 4 5
-##   Birmingham 1 0 1 1 1
-##   Bristol    0 0 3 2 0
-##   Cambridge  1 0 1 1 2
-##   Manchester 1 1 1 1 2
+##   Birmingham 0 1 1 2 0
+##   Bristol    3 0 1 0 1
+##   Cambridge  1 3 0 0 1
+##   Manchester 1 1 3 1 0
 ```
 
 We can also apply filtering using count or table functions. With count we use dplyr's filter function, with table we use base r indexing.
@@ -752,12 +752,11 @@ df1 %>%
 
 ```
 ##         city tourist_rating n
-## 1 Birmingham              1 1
-## 2 Birmingham              5 1
+## 1    Bristol              1 3
+## 2    Bristol              5 1
 ## 3  Cambridge              1 1
-## 4  Cambridge              5 2
+## 4  Cambridge              5 1
 ## 5 Manchester              1 1
-## 6 Manchester              5 2
 ```
 
 ```r
@@ -767,10 +766,10 @@ table(df1$city, df1$tourist_rating)[, c(1, 5)]
 ```
 ##             
 ##              1 5
-##   Birmingham 1 1
-##   Bristol    0 0
-##   Cambridge  1 2
-##   Manchester 1 2
+##   Birmingham 0 0
+##   Bristol    3 1
+##   Cambridge  1 1
+##   Manchester 1 0
 ```
 
 ## Cross tabluation exercise
@@ -894,12 +893,12 @@ head(df2)
 
 ```
 ##   key key2 num1     num2     num3
-## 1   B    X    3 5.115206 2.590850
-## 2   B    X    6 5.987680 6.865076
-## 3   B    Y   10 1.268665 2.716989
-## 4   A    X    5 1.335266 6.134864
-## 5   A    Y   10 5.708365 7.790496
-## 6   B    Y    2 1.007185 9.521444
+## 1   B    Y   NA 1.313668 6.744983
+## 2   B    X    7 4.063565 6.864403
+## 3   C    X    2 1.564439 5.680413
+## 4   B    Y   10 6.119026 1.650609
+## 5   A    X    4 5.783602 5.313634
+## 6   C    X    8 4.120486 4.748939
 ```
 
 ```r
@@ -913,9 +912,9 @@ df2 %>%
 ## # A tibble: 3 × 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A        NA
+## 1 A        48
 ## 2 B        NA
-## 3 C        NA
+## 3 C        12
 ```
 
 ```r
@@ -929,9 +928,9 @@ df2 %>%
 ## # A tibble: 3 × 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A        37
-## 2 B        34
-## 3 C         4
+## 1 A        48
+## 2 B        51
+## 3 C        12
 ```
 
 The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
@@ -957,9 +956,9 @@ df2 %>%
 ## # A tibble: 3 × 3
 ##   key    sum1  sum2
 ##   <fct> <int> <dbl>
-## 1 A        37  38.0
-## 2 B        34  29.0
-## 3 C         4  26.7
+## 1 A        48 48.1 
+## 2 B        51 50.7 
+## 3 C        12  9.38
 ```
 
 We can take this a bit further by adding the `n()` function, which counts how many of each category in our grouped variable there are. If you want to add in a relative frequency, we can then pipe to a `mutate` function. We then divide our count by the sum of our count.
@@ -979,9 +978,9 @@ df2 %>%
 ## # A tibble: 3 × 5
 ##   key    sum1  sum2 count_n rel_freq
 ##   <fct> <int> <dbl>   <int>    <dbl>
-## 1 A        37  38.0       8      0.4
-## 2 B        34  29.0       8      0.4
-## 3 C         4  26.7       4      0.2
+## 1 A        48 48.1        9     0.45
+## 2 B        51 50.7        8     0.4 
+## 3 C        12  9.38       3     0.15
 ```
 
 If you want to extract a single element from an aggregation the `pull()` function is very helpful. It is useful if you make a large aggregation table but only need one column at the moment for a visualisation. You can also add a name from another column, for example we might want to add the key as the name as we did in the example below.
@@ -1002,7 +1001,7 @@ agg %>%
 ```
 
 ```
-## [1] 38.02927 29.03423 26.74129
+## [1] 48.109174 50.718675  9.375054
 ```
 
 ```r
@@ -1012,8 +1011,8 @@ agg %>%
 ```
 
 ```
-##        A        B        C 
-## 38.02927 29.03423 26.74129
+##         A         B         C 
+## 48.109174 50.718675  9.375054
 ```
 
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
@@ -1039,16 +1038,15 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 6 × 6
+## # A tibble: 5 × 6
 ## # Groups:   key [3]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        16  18.5       4    0.5  
-## 2 A     Y        21  19.5       4    0.5  
-## 3 B     X        13  12.6       3    0.375
-## 4 B     Y        21  16.5       5    0.625
-## 5 C     X         0  12.2       2    0.5  
-## 6 C     Y         4  14.5       2    0.5
+## 1 A     X        22 21.9        4    0.444
+## 2 A     Y        26 26.2        5    0.556
+## 3 B     X        41 43.3        6    0.75 
+## 4 B     Y        10  7.43       2    0.25 
+## 5 C     X        12  9.38       3    1
 ```
 
 ```r
@@ -1067,16 +1065,15 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 6 × 6
+## # A tibble: 5 × 6
 ## # Groups:   key2 [2]
 ##   key2  key    sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 X     A        16  18.5       4    0.444
-## 2 X     B        13  12.6       3    0.333
-## 3 X     C         0  12.2       2    0.222
-## 4 Y     A        21  19.5       4    0.364
-## 5 Y     B        21  16.5       5    0.455
-## 6 Y     C         4  14.5       2    0.182
+## 1 X     A        22 21.9        4    0.308
+## 2 X     B        41 43.3        6    0.462
+## 3 X     C        12  9.38       3    0.231
+## 4 Y     A        26 26.2        5    0.714
+## 5 Y     B        10  7.43       2    0.286
 ```
 
 You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result.
@@ -1093,15 +1090,14 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 6 × 6
+## # A tibble: 5 × 6
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        16  18.5       4     0.2 
-## 2 A     Y        21  19.5       4     0.2 
-## 3 B     X        13  12.6       3     0.15
-## 4 B     Y        21  16.5       5     0.25
-## 5 C     X         0  12.2       2     0.1 
-## 6 C     Y         4  14.5       2     0.1
+## 1 A     X        22 21.9        4     0.2 
+## 2 A     Y        26 26.2        5     0.25
+## 3 B     X        41 43.3        6     0.3 
+## 4 B     Y        10  7.43       2     0.1 
+## 5 C     X        12  9.38       3     0.15
 ```
 
 ```r
@@ -1115,16 +1111,15 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 6 × 6
-## # Groups:   key, key2 [6]
+## # A tibble: 5 × 6
+## # Groups:   key, key2 [5]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        16  18.5       4        1
-## 2 A     Y        21  19.5       4        1
-## 3 B     X        13  12.6       3        1
-## 4 B     Y        21  16.5       5        1
-## 5 C     X         0  12.2       2        1
-## 6 C     Y         4  14.5       2        1
+## 1 A     X        22 21.9        4        1
+## 2 A     Y        26 26.2        5        1
+## 3 B     X        41 43.3        6        1
+## 4 B     Y        10  7.43       2        1
+## 5 C     X        12  9.38       3        1
 ```
 
 ## Aggregation exercise
@@ -1267,12 +1262,12 @@ head(df2)
 
 ```
 ##   key key2 num1     num2     num3
-## 1   B    X    3 5.115206 2.590850
-## 2   B    X    6 5.987680 6.865076
-## 3   B    Y   10 1.268665 2.716989
-## 4   A    X    5 1.335266 6.134864
-## 5   A    Y   10 5.708365 7.790496
-## 6   B    Y    2 1.007185 9.521444
+## 1   B    Y   NA 1.313668 6.744983
+## 2   B    X    7 4.063565 6.864403
+## 3   C    X    2 1.564439 5.680413
+## 4   B    Y   10 6.119026 1.650609
+## 5   A    X    4 5.783602 5.313634
+## 6   C    X    8 4.120486 4.748939
 ```
 
 ```r
@@ -1286,26 +1281,26 @@ df2 %>%
 ## # A tibble: 20 × 1
 ##    total_avg
 ##        <dbl>
-##  1      3.57
-##  2      6.28
-##  3      4.66
-##  4      4.16
-##  5      7.83
-##  6      4.18
-##  7      3.65
-##  8      6.63
-##  9      6.41
-## 10      3.59
-## 11      7.23
-## 12      4.75
-## 13      3.56
-## 14      5.44
-## 15      4.73
-## 16      3.96
-## 17      4.55
-## 18      3.29
-## 19      6.27
-## 20      5.31
+##  1      4.03
+##  2      5.98
+##  3      3.08
+##  4      5.92
+##  5      5.03
+##  6      5.62
+##  7      4.92
+##  8      5.87
+##  9      8.13
+## 10      4.73
+## 11      3.77
+## 12      6.66
+## 13      6.81
+## 14      5.73
+## 15      6.27
+## 16      5.60
+## 17      4.10
+## 18      4.35
+## 19      7.03
+## 20      3.21
 ```
 
 ```r
@@ -1319,26 +1314,26 @@ df2 %>%
 ## # A tibble: 20 × 1
 ##    total_avg
 ##        <dbl>
-##  1      3.57
-##  2      6.28
-##  3      4.66
-##  4      4.16
-##  5      7.83
-##  6      4.18
-##  7      3.65
-##  8      6.63
-##  9      6.41
-## 10      3.59
-## 11      7.23
-## 12      4.75
-## 13      3.56
-## 14      5.44
-## 15      4.73
-## 16      3.96
-## 17      4.55
-## 18      3.29
-## 19      6.27
-## 20      5.31
+##  1      4.03
+##  2      5.98
+##  3      3.08
+##  4      5.92
+##  5      5.03
+##  6      5.62
+##  7      4.92
+##  8      5.87
+##  9      8.13
+## 10      4.73
+## 11      3.77
+## 12      6.66
+## 13      6.81
+## 14      5.73
+## 15      6.27
+## 16      5.60
+## 17      4.10
+## 18      4.35
+## 19      7.03
+## 20      3.21
 ```
 
 If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns.
@@ -1354,28 +1349,28 @@ df2 %>%
 ```
 ## # A tibble: 20 × 6
 ## # Rowwise: 
-##    key   key2   num1  num2  num3 total_avg
-##    <fct> <fct> <int> <dbl> <dbl>     <dbl>
-##  1 B     X         3  5.12 2.59       3.57
-##  2 B     X         6  5.99 6.87       6.28
-##  3 B     Y        10  1.27 2.72       4.66
-##  4 A     X         5  1.34 6.13       4.16
-##  5 A     Y        10  5.71 7.79       7.83
-##  6 B     Y         2  1.01 9.52       4.18
-##  7 A     X         2  8.20 0.747      3.65
-##  8 A     X         9  5.68 5.20       6.63
-##  9 B     Y         8  5.69 5.55       6.41
-## 10 B     Y         1  6.21 3.55       3.59
-## 11 C     X        NA  8.50 5.97       7.23
-## 12 C     Y         3  6.13 5.11       4.75
-## 13 A     Y        NA  2.14 4.98       3.56
-## 14 C     X        NA  3.71 7.18       5.44
-## 15 B     Y        NA  2.31 7.16       4.73
-## 16 A     X        NA  3.29 4.62       3.96
-## 17 A     Y         5  3.31 5.35       4.55
-## 18 B     X         4  1.46 4.40       3.29
-## 19 A     Y         6  8.35 4.45       6.27
-## 20 C     Y         1  8.40 6.54       5.31
+##    key   key2   num1  num2   num3 total_avg
+##    <fct> <fct> <int> <dbl>  <dbl>     <dbl>
+##  1 B     Y        NA  1.31  6.74       4.03
+##  2 B     X         7  4.06  6.86       5.98
+##  3 C     X         2  1.56  5.68       3.08
+##  4 B     Y        10  6.12  1.65       5.92
+##  5 A     X         4  5.78  5.31       5.03
+##  6 C     X         8  4.12  4.75       5.62
+##  7 A     Y         1  5.97  7.78       4.92
+##  8 A     X         7  5.56  5.04       5.87
+##  9 B     X         9  9.31  6.10       8.13
+## 10 B     X         1  6.97  6.22       4.73
+## 11 C     X         2  3.69  5.62       3.77
+## 12 B     X         7  6.80  6.18       6.66
+## 13 B     X        10  6.92  3.50       6.81
+## 14 A     X         7  7.88  2.31       5.73
+## 15 A     Y         6  8.71  4.09       6.27
+## 16 A     Y         7  3.03  6.76       5.60
+## 17 A     Y         8  4.59 -0.287      4.10
+## 18 A     Y         4  3.93  5.12       4.35
+## 19 B     X         7  9.22  4.88       7.03
+## 20 A     X         4  2.64  3.00       3.21
 ```
 
 An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`.
@@ -1388,27 +1383,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_avg
-## 1    B    X    3 5.115206 2.5908501  3.568685
-## 2    B    X    6 5.987680 6.8650762  6.284252
-## 3    B    Y   10 1.268665 2.7169895  4.661885
-## 4    A    X    5 1.335266 6.1348637  4.156710
-## 5    A    Y   10 5.708365 7.7904958  7.832954
-## 6    B    Y    2 1.007185 9.5214443  4.176210
-## 7    A    X    2 8.202008 0.7469821  3.649663
-## 8    A    X    9 5.683898 5.2028152  6.628904
-## 9    B    Y    8 5.687291 5.5539103  6.413734
-## 10   B    Y    1 6.206139 3.5520121  3.586050
-## 11   C    X   NA 8.498148 5.9691312  7.233639
-## 12   C    Y    3 6.132687 5.1140208  4.748903
-## 13   A    Y   NA 2.143402 4.9757944  3.559598
-## 14   C    X   NA 3.710269 7.1795121  5.444891
-## 15   B    Y   NA 2.306187 7.1599556  4.733071
-## 16   A    X   NA 3.294769 4.6223941  3.958581
-## 17   A    Y    5 3.309716 5.3464794  4.552065
-## 18   B    X    4 1.455874 4.4016763  3.285850
-## 19   A    Y    6 8.351847 4.4545872  6.268811
-## 20   C    Y    1 8.400184 6.5417547  5.313980
+##    key key2 num1     num2       num3 total_avg
+## 1    B    Y   NA 1.313668  6.7449834  4.029326
+## 2    B    X    7 4.063565  6.8644034  5.975989
+## 3    C    X    2 1.564439  5.6804129  3.081617
+## 4    B    Y   10 6.119026  1.6506092  5.923212
+## 5    A    X    4 5.783602  5.3136336  5.032412
+## 6    C    X    8 4.120486  4.7489391  5.623142
+## 7    A    Y    1 5.966518  7.7789421  4.915153
+## 8    A    X    7 5.560784  5.0360315  5.865605
+## 9    B    X    9 9.306314  6.0963795  8.134231
+## 10   B    X    1 6.974497  6.2235194  4.732672
+## 11   C    X    2 3.690130  5.6159863  3.768705
+## 12   B    X    7 6.797059  6.1789248  6.658661
+## 13   B    X   10 6.922938  3.5002445  6.807728
+## 14   A    X    7 7.882413  2.3060824  5.729499
+## 15   A    Y    6 8.713384  4.0908597  6.268081
+## 16   A    Y    7 3.034879  6.7553041  5.596728
+## 17   A    Y    8 4.593444 -0.2866724  4.102257
+## 18   A    Y    4 3.934712  5.1199079  4.351540
+## 19   B    X    7 9.221607  4.8814590  7.034355
+## 20   A    X    4 2.639439  2.9980124  3.212484
 ```
 
 ```r
@@ -1418,27 +1413,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_avg
-## 1    B    X    3 5.115206 2.5908501  3.568685
-## 2    B    X    6 5.987680 6.8650762  6.284252
-## 3    B    Y   10 1.268665 2.7169895  4.661885
-## 4    A    X    5 1.335266 6.1348637  4.156710
-## 5    A    Y   10 5.708365 7.7904958  7.832954
-## 6    B    Y    2 1.007185 9.5214443  4.176210
-## 7    A    X    2 8.202008 0.7469821  3.649663
-## 8    A    X    9 5.683898 5.2028152  6.628904
-## 9    B    Y    8 5.687291 5.5539103  6.413734
-## 10   B    Y    1 6.206139 3.5520121  3.586050
-## 11   C    X   NA 8.498148 5.9691312  7.233639
-## 12   C    Y    3 6.132687 5.1140208  4.748903
-## 13   A    Y   NA 2.143402 4.9757944  3.559598
-## 14   C    X   NA 3.710269 7.1795121  5.444891
-## 15   B    Y   NA 2.306187 7.1599556  4.733071
-## 16   A    X   NA 3.294769 4.6223941  3.958581
-## 17   A    Y    5 3.309716 5.3464794  4.552065
-## 18   B    X    4 1.455874 4.4016763  3.285850
-## 19   A    Y    6 8.351847 4.4545872  6.268811
-## 20   C    Y    1 8.400184 6.5417547  5.313980
+##    key key2 num1     num2       num3 total_avg
+## 1    B    Y   NA 1.313668  6.7449834  4.029326
+## 2    B    X    7 4.063565  6.8644034  5.975989
+## 3    C    X    2 1.564439  5.6804129  3.081617
+## 4    B    Y   10 6.119026  1.6506092  5.923212
+## 5    A    X    4 5.783602  5.3136336  5.032412
+## 6    C    X    8 4.120486  4.7489391  5.623142
+## 7    A    Y    1 5.966518  7.7789421  4.915153
+## 8    A    X    7 5.560784  5.0360315  5.865605
+## 9    B    X    9 9.306314  6.0963795  8.134231
+## 10   B    X    1 6.974497  6.2235194  4.732672
+## 11   C    X    2 3.690130  5.6159863  3.768705
+## 12   B    X    7 6.797059  6.1789248  6.658661
+## 13   B    X   10 6.922938  3.5002445  6.807728
+## 14   A    X    7 7.882413  2.3060824  5.729499
+## 15   A    Y    6 8.713384  4.0908597  6.268081
+## 16   A    Y    7 3.034879  6.7553041  5.596728
+## 17   A    Y    8 4.593444 -0.2866724  4.102257
+## 18   A    Y    4 3.934712  5.1199079  4.351540
+## 19   B    X    7 9.221607  4.8814590  7.034355
+## 20   A    X    4 2.639439  2.9980124  3.212484
 ```
 
 If you want to do a sum calculation, you should use the `rowSums()` function.
@@ -1451,27 +1446,27 @@ df2 %>%
 ```
 
 ```
-##    key key2 num1     num2      num3 total_sum
-## 1    B    X    3 5.115206 2.5908501 10.706056
-## 2    B    X    6 5.987680 6.8650762 18.852756
-## 3    B    Y   10 1.268665 2.7169895 13.985654
-## 4    A    X    5 1.335266 6.1348637 12.470130
-## 5    A    Y   10 5.708365 7.7904958 23.498861
-## 6    B    Y    2 1.007185 9.5214443 12.528629
-## 7    A    X    2 8.202008 0.7469821 10.948990
-## 8    A    X    9 5.683898 5.2028152 19.886713
-## 9    B    Y    8 5.687291 5.5539103 19.241201
-## 10   B    Y    1 6.206139 3.5520121 10.758151
-## 11   C    X   NA 8.498148 5.9691312 14.467279
-## 12   C    Y    3 6.132687 5.1140208 14.246708
-## 13   A    Y   NA 2.143402 4.9757944  7.119197
-## 14   C    X   NA 3.710269 7.1795121 10.889781
-## 15   B    Y   NA 2.306187 7.1599556  9.466143
-## 16   A    X   NA 3.294769 4.6223941  7.917163
-## 17   A    Y    5 3.309716 5.3464794 13.656195
-## 18   B    X    4 1.455874 4.4016763  9.857550
-## 19   A    Y    6 8.351847 4.4545872 18.806434
-## 20   C    Y    1 8.400184 6.5417547 15.941939
+##    key key2 num1     num2       num3 total_sum
+## 1    B    Y   NA 1.313668  6.7449834  8.058651
+## 2    B    X    7 4.063565  6.8644034 17.927968
+## 3    C    X    2 1.564439  5.6804129  9.244851
+## 4    B    Y   10 6.119026  1.6506092 17.769636
+## 5    A    X    4 5.783602  5.3136336 15.097235
+## 6    C    X    8 4.120486  4.7489391 16.869425
+## 7    A    Y    1 5.966518  7.7789421 14.745460
+## 8    A    X    7 5.560784  5.0360315 17.596815
+## 9    B    X    9 9.306314  6.0963795 24.402694
+## 10   B    X    1 6.974497  6.2235194 14.198017
+## 11   C    X    2 3.690130  5.6159863 11.306116
+## 12   B    X    7 6.797059  6.1789248 19.975984
+## 13   B    X   10 6.922938  3.5002445 20.423183
+## 14   A    X    7 7.882413  2.3060824 17.188496
+## 15   A    Y    6 8.713384  4.0908597 18.804244
+## 16   A    Y    7 3.034879  6.7553041 16.790183
+## 17   A    Y    8 4.593444 -0.2866724 12.306771
+## 18   A    Y    4 3.934712  5.1199079 13.054620
+## 19   B    X    7 9.221607  4.8814590 21.103066
+## 20   A    X    4 2.639439  2.9980124  9.637451
 ```
 
 ## Rowwise aggregation exercise
@@ -1491,9 +1486,9 @@ imdb_bechdel %>%
 
 ```
 ## Error in `mutate()`:
-## ! Problem while computing `total_reviews =
+## ℹ In argument: `total_reviews =
 ##   sum(c_across(reviews_from_users:reviews_from_critics), na.rm = TRUE)`.
-## Caused by error in `chr_as_locations()`:
+## Caused by error in `c_across()`:
 ## ! Can't subset columns that don't exist.
 ## ✖ Column `reviews_from_critics` doesn't exist.
 ```
@@ -1508,7 +1503,7 @@ imdb_bechdel %>%
 
 ```
 ## Error in `mutate()`:
-## ! Problem while computing `total_reviews =
+## ℹ In argument: `total_reviews =
 ##   sum(across(reviews_from_users:reviews_from_critics))`.
 ## Caused by error in `across()`:
 ## ! Can't subset columns that don't exist.
@@ -1530,19 +1525,20 @@ imdb_bechdel %>%
 ```
 ## # A tibble: 70 × 8
 ## # Rowwise: 
-##    title         year duration avg_vote reviews_from_us… reviews_from_cr… rating
-##    <chr>        <dbl>    <dbl>    <dbl>            <dbl>            <dbl>  <dbl>
-##  1 The Story o…  1906       70      6.1                7                7      1
-##  2 Cleopatra     1912      100      5.2               25                3      2
-##  3 A Florida E…  1914       63      5.8                6                3      2
-##  4 The Birth o…  1915      195      6.3              368               97      2
-##  5 Gretchen th…  1916       58      5.7                7                1      3
-##  6 Snow White    1916       63      6.2               13                5      3
-##  7 The Poor Li…  1917       65      6.7               16               13      3
-##  8 Raffles, th…  1917       70      6.4                3                3      2
-##  9 Rebecca of …  1917       78      6.1                9                5      3
-## 10 A Romance o…  1917       91      5.7               12                4      0
-## # … with 60 more rows, and 1 more variable: total_reviews <dbl>
+##    title   year duration avg_vote reviews_from_users reviews_from_critics rating
+##    <chr>  <dbl>    <dbl>    <dbl>              <dbl>                <dbl>  <dbl>
+##  1 The S…  1906       70      6.1                  7                    7      1
+##  2 Cleop…  1912      100      5.2                 25                    3      2
+##  3 A Flo…  1914       63      5.8                  6                    3      2
+##  4 The B…  1915      195      6.3                368                   97      2
+##  5 Gretc…  1916       58      5.7                  7                    1      3
+##  6 Snow …  1916       63      6.2                 13                    5      3
+##  7 The P…  1917       65      6.7                 16                   13      3
+##  8 Raffl…  1917       70      6.4                  3                    3      2
+##  9 Rebec…  1917       78      6.1                  9                    5      3
+## 10 A Rom…  1917       91      5.7                 12                    4      0
+## # ℹ 60 more rows
+## # ℹ 1 more variable: total_reviews <dbl>
 ```
 
 ```r
@@ -1555,19 +1551,20 @@ imdb_bechdel %>%
 
 ```
 ## # A tibble: 70 × 8
-##    title         year duration avg_vote reviews_from_us… reviews_from_cr… rating
-##    <chr>        <dbl>    <dbl>    <dbl>            <dbl>            <dbl>  <dbl>
-##  1 The Story o…  1906       70      6.1                7                7      1
-##  2 Cleopatra     1912      100      5.2               25                3      2
-##  3 A Florida E…  1914       63      5.8                6                3      2
-##  4 The Birth o…  1915      195      6.3              368               97      2
-##  5 Gretchen th…  1916       58      5.7                7                1      3
-##  6 Snow White    1916       63      6.2               13                5      3
-##  7 The Poor Li…  1917       65      6.7               16               13      3
-##  8 Raffles, th…  1917       70      6.4                3                3      2
-##  9 Rebecca of …  1917       78      6.1                9                5      3
-## 10 A Romance o…  1917       91      5.7               12                4      0
-## # … with 60 more rows, and 1 more variable: total_reviews <dbl>
+##    title   year duration avg_vote reviews_from_users reviews_from_critics rating
+##    <chr>  <dbl>    <dbl>    <dbl>              <dbl>                <dbl>  <dbl>
+##  1 The S…  1906       70      6.1                  7                    7      1
+##  2 Cleop…  1912      100      5.2                 25                    3      2
+##  3 A Flo…  1914       63      5.8                  6                    3      2
+##  4 The B…  1915      195      6.3                368                   97      2
+##  5 Gretc…  1916       58      5.7                  7                    1      3
+##  6 Snow …  1916       63      6.2                 13                    5      3
+##  7 The P…  1917       65      6.7                 16                   13      3
+##  8 Raffl…  1917       70      6.4                  3                    3      2
+##  9 Rebec…  1917       78      6.1                  9                    5      3
+## 10 A Rom…  1917       91      5.7                 12                    4      0
+## # ℹ 60 more rows
+## # ℹ 1 more variable: total_reviews <dbl>
 ```
 
 # Final task - Please give us your individual feedback!
@@ -1753,44 +1750,37 @@ df2 %>%
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 22 </td>
    <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> 50% </td>
+   <td style="text-align:left;"> 44% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 21 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> 50% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 13 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> 38% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 26 </td>
    <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> 62% </td>
+   <td style="text-align:left;"> 56% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> X </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> 75% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> Y </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 25% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 50% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> C </td>
-   <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 50% </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> 100% </td>
   </tr>
 </tbody>
 </table>
@@ -1904,8 +1894,18 @@ audio_features %>% glimpse()
 
 ```r
 billboard_features <- inner_join(billboard, audio_features, 
-                                 by = c("song_id", "song", "performer"))
+                                 by = join_by(song_id, song, performer))
+```
 
+```
+## Warning in inner_join(billboard, audio_features, by = join_by(song_id, song, : Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 197 of `x` matches multiple rows in `y`.
+## ℹ Row 5858 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   "many-to-many"` to silence this warning.
+```
+
+```r
 # review joined data
 billboard_features %>% glimpse()
 ```
@@ -2000,14 +2000,26 @@ billboard_agg %>%
 ```
 
 ```{=html}
-<div id="nkyvgqriwi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="ivtowsamdl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ivtowsamdl table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#nkyvgqriwi .gt_table {
+#ivtowsamdl thead, #ivtowsamdl tbody, #ivtowsamdl tfoot, #ivtowsamdl tr, #ivtowsamdl td, #ivtowsamdl th {
+  border-style: none;
+}
+
+#ivtowsamdl p {
+  margin: 0;
+  padding: 0;
+}
+
+#ivtowsamdl .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -2030,19 +2042,12 @@ billboard_agg %>%
   border-left-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#ivtowsamdl .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#nkyvgqriwi .gt_title {
+#ivtowsamdl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2054,25 +2059,37 @@ billboard_agg %>%
   border-bottom-width: 0;
 }
 
-#nkyvgqriwi .gt_subtitle {
+#ivtowsamdl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#nkyvgqriwi .gt_bottom_border {
+#ivtowsamdl .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ivtowsamdl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_col_headings {
+#ivtowsamdl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2087,7 +2104,7 @@ billboard_agg %>%
   border-right-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_col_heading {
+#ivtowsamdl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2107,7 +2124,7 @@ billboard_agg %>%
   overflow-x: hidden;
 }
 
-#nkyvgqriwi .gt_column_spanner_outer {
+#ivtowsamdl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2119,15 +2136,15 @@ billboard_agg %>%
   padding-right: 4px;
 }
 
-#nkyvgqriwi .gt_column_spanner_outer:first-child {
+#ivtowsamdl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nkyvgqriwi .gt_column_spanner_outer:last-child {
+#ivtowsamdl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nkyvgqriwi .gt_column_spanner {
+#ivtowsamdl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2139,7 +2156,11 @@ billboard_agg %>%
   width: 100%;
 }
 
-#nkyvgqriwi .gt_group_heading {
+#ivtowsamdl .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ivtowsamdl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2162,9 +2183,10 @@ billboard_agg %>%
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#nkyvgqriwi .gt_empty_group_heading {
+#ivtowsamdl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2179,15 +2201,15 @@ billboard_agg %>%
   vertical-align: middle;
 }
 
-#nkyvgqriwi .gt_from_md > :first-child {
+#ivtowsamdl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nkyvgqriwi .gt_from_md > :last-child {
+#ivtowsamdl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nkyvgqriwi .gt_row {
+#ivtowsamdl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2206,7 +2228,7 @@ billboard_agg %>%
   overflow-x: hidden;
 }
 
-#nkyvgqriwi .gt_stub {
+#ivtowsamdl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2219,7 +2241,7 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#nkyvgqriwi .gt_stub_row_group {
+#ivtowsamdl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2233,11 +2255,15 @@ billboard_agg %>%
   vertical-align: top;
 }
 
-#nkyvgqriwi .gt_row_group_first td {
+#ivtowsamdl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nkyvgqriwi .gt_summary_row {
+#ivtowsamdl .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ivtowsamdl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2247,16 +2273,16 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#nkyvgqriwi .gt_first_summary_row {
+#ivtowsamdl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_first_summary_row.thick {
+#ivtowsamdl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nkyvgqriwi .gt_last_summary_row {
+#ivtowsamdl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2266,7 +2292,7 @@ billboard_agg %>%
   border-bottom-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_grand_summary_row {
+#ivtowsamdl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2276,7 +2302,7 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#nkyvgqriwi .gt_first_grand_summary_row {
+#ivtowsamdl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2286,11 +2312,21 @@ billboard_agg %>%
   border-top-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_striped {
+#ivtowsamdl .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ivtowsamdl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nkyvgqriwi .gt_table_body {
+#ivtowsamdl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2299,7 +2335,7 @@ billboard_agg %>%
   border-bottom-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_footnotes {
+#ivtowsamdl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2313,30 +2349,8 @@ billboard_agg %>%
   border-right-color: #D3D3D3;
 }
 
-#nkyvgqriwi .gt_footnote {
+#ivtowsamdl .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#nkyvgqriwi .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#nkyvgqriwi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2344,131 +2358,143 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#nkyvgqriwi .gt_left {
+#ivtowsamdl .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ivtowsamdl .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ivtowsamdl .gt_left {
   text-align: left;
 }
 
-#nkyvgqriwi .gt_center {
+#ivtowsamdl .gt_center {
   text-align: center;
 }
 
-#nkyvgqriwi .gt_right {
+#ivtowsamdl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nkyvgqriwi .gt_font_normal {
+#ivtowsamdl .gt_font_normal {
   font-weight: normal;
 }
 
-#nkyvgqriwi .gt_font_bold {
+#ivtowsamdl .gt_font_bold {
   font-weight: bold;
 }
 
-#nkyvgqriwi .gt_font_italic {
+#ivtowsamdl .gt_font_italic {
   font-style: italic;
 }
 
-#nkyvgqriwi .gt_super {
+#ivtowsamdl .gt_super {
   font-size: 65%;
 }
 
-#nkyvgqriwi .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-#nkyvgqriwi .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#ivtowsamdl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#nkyvgqriwi .gt_asterisk {
+#ivtowsamdl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nkyvgqriwi .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+#ivtowsamdl .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#nkyvgqriwi .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+#ivtowsamdl .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#nkyvgqriwi .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+#ivtowsamdl .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ivtowsamdl .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ivtowsamdl .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  <thead class="gt_header">
-    <tr>
-      <th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Famous pop artists song statistics</th>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Famous pop artists song statistics</td>
     </tr>
     
-  </thead>
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">performer</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">avg_duration_mins</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">avg_weeks_on_chart</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">avg_danceability</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">avg_energy</th>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="performer">performer</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="avg_duration_mins">avg_duration_mins</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="avg_weeks_on_chart">avg_weeks_on_chart</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="avg_danceability">avg_danceability</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="avg_energy">avg_energy</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_center">Ed Sheeran</td>
-<td class="gt_row gt_center" style="background-color: #E8DDFC;">4.13</td>
-<td class="gt_row gt_center">20.77</td>
-<td class="gt_row gt_center">0.69</td>
-<td class="gt_row gt_center">0.54</td></tr>
-    <tr><td class="gt_row gt_center">Adele</td>
-<td class="gt_row gt_center" style="background-color: #E8DDFC;">4.19</td>
-<td class="gt_row gt_center">18.89</td>
-<td class="gt_row gt_center">0.59</td>
-<td class="gt_row gt_center">0.61</td></tr>
-    <tr><td class="gt_row gt_center">Bruno Mars</td>
-<td class="gt_row gt_center">3.69</td>
-<td class="gt_row gt_center">17.91</td>
-<td class="gt_row gt_center">0.71</td>
-<td class="gt_row gt_center">0.67</td></tr>
-    <tr><td class="gt_row gt_center">The Weeknd</td>
-<td class="gt_row gt_center" style="background-color: #E8DDFC;">4.03</td>
-<td class="gt_row gt_center">17.80</td>
-<td class="gt_row gt_center">0.58</td>
-<td class="gt_row gt_center">0.63</td></tr>
-    <tr><td class="gt_row gt_center">Billie Eilish</td>
-<td class="gt_row gt_center">3.27</td>
-<td class="gt_row gt_center">15.05</td>
-<td class="gt_row gt_center">0.63</td>
-<td class="gt_row gt_center">0.33</td></tr>
-    <tr><td class="gt_row gt_center">Taylor Swift</td>
-<td class="gt_row gt_center">3.81</td>
-<td class="gt_row gt_center">13.39</td>
-<td class="gt_row gt_center">0.61</td>
-<td class="gt_row gt_center">0.66</td></tr>
-    <tr><td class="gt_row gt_center">Lady Gaga</td>
-<td class="gt_row gt_center" style="background-color: #E8DDFC;">4.13</td>
-<td class="gt_row gt_center">11.95</td>
-<td class="gt_row gt_center">0.68</td>
-<td class="gt_row gt_center">0.74</td></tr>
-    <tr><td class="gt_row gt_center">Ariana Grande</td>
-<td class="gt_row gt_center">3.26</td>
-<td class="gt_row gt_center">10.77</td>
-<td class="gt_row gt_center">0.67</td>
-<td class="gt_row gt_center">0.62</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Ed Sheeran</td>
+<td headers="avg_duration_mins" class="gt_row gt_center" style="background-color: #E8DDFC;">4.13</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">20.77</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.69</td>
+<td headers="avg_energy" class="gt_row gt_center">0.54</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Adele</td>
+<td headers="avg_duration_mins" class="gt_row gt_center" style="background-color: #E8DDFC;">4.19</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">18.89</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.59</td>
+<td headers="avg_energy" class="gt_row gt_center">0.61</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Bruno Mars</td>
+<td headers="avg_duration_mins" class="gt_row gt_center">3.69</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">17.91</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.71</td>
+<td headers="avg_energy" class="gt_row gt_center">0.67</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">The Weeknd</td>
+<td headers="avg_duration_mins" class="gt_row gt_center" style="background-color: #E8DDFC;">4.03</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">17.80</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.58</td>
+<td headers="avg_energy" class="gt_row gt_center">0.63</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Billie Eilish</td>
+<td headers="avg_duration_mins" class="gt_row gt_center">3.27</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">15.05</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.63</td>
+<td headers="avg_energy" class="gt_row gt_center">0.33</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Taylor Swift</td>
+<td headers="avg_duration_mins" class="gt_row gt_center">3.81</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">13.39</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.61</td>
+<td headers="avg_energy" class="gt_row gt_center">0.66</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Lady Gaga</td>
+<td headers="avg_duration_mins" class="gt_row gt_center" style="background-color: #E8DDFC;">4.13</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">11.95</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.68</td>
+<td headers="avg_energy" class="gt_row gt_center">0.74</td></tr>
+    <tr><td headers="performer" class="gt_row gt_center">Ariana Grande</td>
+<td headers="avg_duration_mins" class="gt_row gt_center">3.26</td>
+<td headers="avg_weeks_on_chart" class="gt_row gt_center">10.77</td>
+<td headers="avg_danceability" class="gt_row gt_center">0.67</td>
+<td headers="avg_energy" class="gt_row gt_center">0.62</td></tr>
   </tbody>
   
   
@@ -2495,9 +2521,9 @@ aggregate(df2[, c("num1", "num2", "num3")],
 
 ```
 ##   Group.1     num1     num2     num3
-## 1       A 6.166667 4.753659 4.909301
-## 2       B 4.857143 3.629278 5.295239
-## 3       C 2.000000 6.685322 6.201105
+## 1       A 5.333333 5.345464 4.345789
+## 2       B 7.285714 6.339834 5.267565
+## 3       C 4.000000 3.125018 5.348446
 ```
 
 ```r
@@ -2508,13 +2534,12 @@ aggregate(df2[, c("num1", "num2", "num3")],
 ```
 
 ```
-##   Group.1 Group.2     num1     num2     num3
-## 1       A       X 5.333333 4.628985 4.176764
-## 2       B       X 4.333333 4.186253 4.619201
-## 3       C       X      NaN 6.104209 6.574322
-## 4       A       Y 7.000000 4.878333 5.641839
-## 5       B       Y 5.250000 3.295093 5.700862
-## 6       C       Y 2.000000 7.266436 5.827888
+##   Group.1 Group.2      num1     num2     num3
+## 1       A       X  5.500000 5.466559 3.913440
+## 2       B       X  6.833333 7.214330 5.624155
+## 3       C       X  4.000000 3.125018 5.348446
+## 4       A       Y  5.200000 5.248587 4.691668
+## 5       B       Y 10.000000 3.716347 4.197796
 ```
 
 The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets.
@@ -2544,9 +2569,9 @@ df2[, .(avg_num1 = median(num1, na.rm = TRUE),
 
 ```
 ##    key avg_num1 avg_num2 avg_num3
-## 1:   B      4.0 3.710696 4.977793
-## 2:   A      5.5 4.496807 5.089305
-## 3:   C      2.0 7.266436 6.255443
+## 1:   B        7 6.859999 6.137652
+## 2:   C        2 3.690130 5.615986
+## 3:   A        6 5.560784 5.036031
 ```
 
 ```r
@@ -2557,10 +2582,11 @@ df2[num1 >= 5, .(avg_num2 = median(num2, na.rm = TRUE),
 
 ```
 ##    key key2 avg_num2 avg_num3
-## 1:   B    X 5.987680 6.865076
-## 2:   B    Y 3.477978 4.135450
-## 3:   A    X 3.509582 5.668839
-## 4:   A    Y 5.708365 5.346479
+## 1:   B    X 6.922938 6.096380
+## 2:   B    Y 6.119026 1.650609
+## 3:   C    X 4.120486 4.748939
+## 4:   A    X 6.721598 3.671057
+## 5:   A    Y 4.593444 4.090860
 ```
 
-If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>.
+If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>. It is a great package with all the same functionality of the tidyverse (aggregation, joins, data manipulation etc.). It is especially useful when you have large datasets, due to its speed at running and performing operations. 

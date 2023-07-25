@@ -86,10 +86,10 @@ It can be easier to understand what each join does but seeing it visually. The f
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/right_join.png?raw=true){width="700"}
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-3/images/full_join.png?raw=true){width="700"}
 
-The code below is an example of the syntax to join data frames in dplyr. The syntax is the same for the other joins (left, right, and full). `x` is the table on the right. `y` is the table on the left. `by` indicates which column we are joining our datasets with. In this case both have ID so we join using that column. 
+The code below is an example of the syntax to join data frames in dplyr. The syntax is the same for the other joins (left, right, and full). `x` is the table on the right. `y` is the table on the left. `by` indicates which column we are joining our datasets with, and `join_by()` is a helper function to describe how to join the tables; more on this later. In this case both have ID so we join using that column. 
 ```{r}
 # example with an inner join
-people_inner_join <- inner_join(x = Person_Info, y = Food_Info, by = "ID")
+people_inner_join <- inner_join(x = Person_Info, y = Food_Info, by = join_by(ID))
 people_inner_join
 ```
 
@@ -128,22 +128,24 @@ tv_series
 
 Using the example for guidance or the dplyr help page <https://dplyr.tidyverse.org/reference/mutate-joins.html>, attempt the following joins:
 
-1) Perform a left join with x as crew and y as tv_series. Assign the result to st_left and print the result
-2) Perform a right join with x as crew and y as tv_series. Assign the result to st_left and print the result
-3) Perform a inner join with x as crew and y as tv_series. Assign the result to st_left and print the result
-4) Perform a full join with x as crew and y as tv_series. Assign the result to st_left and print the result
+1) Perform a *left join* with x as crew and y as tv_series. Assign the result to st_left and print the result
+2) Perform a *right join* with x as crew and y as tv_series. Assign the result to st_left and print the result
+3) Perform a *inner join* with x as crew and y as tv_series. Assign the result to st_left and print the result
+4) Perform a *full join* with x as crew and y as tv_series. Assign the result to st_left and print the result
 5) Review the output from each join you have run. How does the output differ from each join? What rows are kept and dropped from different joins? 
 
 ```{r}
 # your code here
-st_left <- left_join(x = crew, y = tv_series, by = "crew_number")
+st_left <- left_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_left
-st_right <- right_join(x = crew, y = tv_series, by = "crew_number")
+st_right <- right_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_right
-st_inner <- inner_join(x = crew, y = tv_series, by = "crew_number")
+st_inner <- inner_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_inner
-st_full <- full_join(x = crew, y = tv_series, by = "crew_number")
+st_full <- full_join(x = crew, y = tv_series, by = join_by(crew_number))
 st_full
+
+
 ```
 
 
@@ -151,7 +153,7 @@ st_full
 
 A common problem when joining data in R is how to perform a join when your key columns don't match. There is a trick to deal with this that comes from SQL; dplyr is based off SQL so this makes sense.
 
-In the *by* argument in the join functions we do something like `by = c("id_number" = "id")`, which in the full function call looks like `left_join(df1, df2, by = c("id_number" = "id"))`. In english this means: I want to join the data tables by id_number from df1, and id from df2. 
+This is where the `join_by()` function comes into play. In the *by* argument in the join functions we do something like `by = join_by(id_number == id)`, which in the full function call looks like `left_join(df1, df2, by = join_by(id_number == id))`. In english this means: I want to join the data tables by id_number from df1, and id from df2. 
 
 It is usually easier to see this as an example. We can use our previous data, with some slight modifications; notice the IDs are different. 
 ```{r}
@@ -177,7 +179,7 @@ The order of the variables in the *by* argument is important. `Person_Info` has 
 ```{r}
 # join using the col = col trick
 food_person <- left_join(Person_Info, Food_Info,
-                         by = c("ID_num" = "ID"))
+                         by = join_by(ID_num == ID))
 
 food_person
 ```
@@ -189,7 +191,7 @@ Another common issue is having the same columns in two tables you're joining. No
 ```{r}
 # add age to by
 food_person <- left_join(Person_Info, Food_Info,
-                         by = c("ID_num" = "ID", "Age"))
+                         by = join_by(ID_num == ID, Age))
 
 food_person
 ```
@@ -224,9 +226,11 @@ To join the data we need to do some data cleaning. We have remove the text from 
 1)  We first need to fix the ids in the movies_imdb dataset. Type the following code to fix the ids: `movies_imdb$imdb_title_id <- parse_number(movies_imdb$imdb_title_id)`. The `parse_number()` function is from the readr library, and removes text from strings, which is exactly what we need in this case
 2)  Before joining the data we should test for duplicate ids in both datasets. Using the example above, check the duplicates in the imdb_id column in movies_imdb and bechdel datasets.
 3)  We have some duplicates in the bechdel data! Use `filter()`, `duplicated()` and the `!` (not) operator to remove them.
-4)  Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
-5)  Using the `full_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the `by` argument with imdb_id, title, and year columns, or you can let the function do this for you
+4)  Using the `inner_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel`. You can do this using the `by` argument with the `join_by()` function. The columns to join on are the imdb id column, title, and year columns. Remember that the imdb id column is different in each dataset, and we need to tell the `join_by()` function the different names. 
+5)  Using the `full_join()` function, join together movies_imdb and bechdel data frames. Call the new data frame `imdb_bechdel_full`. You can do this using the same method used in step 4. 
 6)  Have a look at both your newly joined up data frames using head, glimpse or View. Do you notice how when we used inner_join we filtered out all data that isn't in our bechdel test dataset?
+
+*Note: once you have run step 1, it will give an error each time you try to re-run it. This is because parse_number() only works on text, and we have converted the imdb_title_id column to numbers*
 
 ```{r}
 # your code here
@@ -246,10 +250,10 @@ bechdel <- bechdel %>%
   filter(!duplicated(imdb_id))
 
 # inner join to keep just the matches
-imdb_bechdel <- inner_join(movies_imdb, bechdel, by = c("imdb_title_id" = "imdb_id", "year", "title"))
+imdb_bechdel <- inner_join(movies_imdb, bechdel, by = join_by(imdb_title_id == imdb_id, year, title))
 
 # full join with everything 
-imdb_bechdel_full <- full_join(movies_imdb, bechdel, by = c("imdb_title_id" = "imdb_id", "year", "title")) 
+imdb_bechdel_full <- full_join(movies_imdb, bechdel, by = join_by(imdb_title_id == imdb_id, year, title))
 
 imdb_bechdel %>% glimpse()
 imdb_bechdel_full %>% glimpse()
@@ -703,7 +707,7 @@ billboard %>% glimpse()
 audio_features %>% glimpse()
 
 billboard_features <- inner_join(billboard, audio_features, 
-                                 by = c("song_id", "song", "performer"))
+                                 by = join_by(song_id, song, performer))
 
 # review joined data
 billboard_features %>% glimpse()
@@ -793,4 +797,4 @@ df2[num1 >= 5, .(avg_num2 = median(num2, na.rm = TRUE),
                  avg_num3 = median(num3, na.rm = TRUE)), by = c("key", "key2")]
 ```
 
-If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>.
+If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>. It is a great package with all the same functionality of the tidyverse (aggregation, joins, data manipulation etc.). It is especially useful when you have large datasets, due to its speed at running and performing operations. 
