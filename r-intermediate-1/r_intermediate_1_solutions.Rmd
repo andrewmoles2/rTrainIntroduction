@@ -580,6 +580,103 @@ for (show_name in selected_shows) {
 
 <https://www.datamentor.io/r-programming/while-loop>
 
+# While loops
+
+This workshop has focused on the for loop as a tool to repeat code. Another option is the while loop, which repeats the specified code until a condition is met. They are particularly useful when you have some user input needed, and you do not know how many times you will need to repeat the code. Generally speaking, while loops are rare in R but can be useful to know, especially if you are planning to use other programming languages in the future. 
+
+Here is an example of a while loop in action. The setup and execution is slightly different to a for loop. On each loop, it will check if the condition is true, then run the code in the `{}`. On each loop we need to update our variable, or the loop would just stop at 1. 
+
+Why did our while loop print 1 to 5? 
+```{r}
+# variable
+x <- 1
+
+while (x < 6) {
+  # print our variable
+  print(x)
+  # update expression
+  x <- x + 1
+}
+```
+
+One word of caution on using while loops, if the condition is never met, the while loop will run forever! 
+
+Another example of a while loop in action, is a dice rolling programme. Run the code and review the output. 
+
+Why did the code stop when it did? What was the output when the code stopped?
+```{r}
+dice_roll <- 0
+
+while(dice_roll != 6) {
+  dice_roll <- sample(1:6, 1, replace = TRUE)
+  print(paste("You rolled a", dice_roll))
+}
+```
+
+
+## While loop exercise
+
+For this exercise, we will be debugging some code to get it running! This code is for randomly generating data, and uses a while loop to do that. 
+
+There are 4 errors to find in total. If you get the code to run, you should get a box plot as the output! 
+
+```{r, error=TRUE}
+# data
+my_words <- c("coding", "R", "fun", "is", "really")
+# empty vectors
+all_words <- c()
+n <- c()
+
+# while loop
+while (lenght(words) < 50) {
+  
+  s <- sample(1:5, size = 1)
+  w <- my_words[samp]
+  
+  all_words <- c(all_words, w)
+  n <- (n, sample(1:10, 1))
+}
+
+# put into data frame
+word_data <- data.frame(
+  n, 
+  all_words = factor(all_words, levels = c("R", "coding", "is", "really", "fun"))
+  )
+
+# plot outcome
+plot(x = word_data$all_words, 
+     y = word_data$n)
+```
+
+```{r}
+# solution! 
+# data
+my_words <- c("coding", "R", "fun", "is", "really")
+# empty vectors
+all_words <- c()
+n <- c()
+
+# while loop
+while (length(all_words) < 50) {
+  
+  s <- sample(1:5, size = 1)
+  w <- my_words[s]
+  
+  all_words <- c(all_words, w)
+  n <- c(n, sample(1:10, 1))
+}
+
+# put into data frame
+word_data <- data.frame(
+  n, 
+  all_words = factor(all_words, levels = c("R", "coding", "is", "really", "fun"))
+  )
+
+# plot outcome
+plot(x = word_data$all_words, 
+     y = word_data$n)
+```
+
 # Final task - Please give us your individual feedback!
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
