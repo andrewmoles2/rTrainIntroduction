@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "10 August, 2023"
 output: 
   html_document: 
     theme: readable
@@ -17,7 +17,7 @@ output:
 
 # Objective of workshop
 
-To work with vectors, a key data type in R, and learn to use built in functions on those vectors. 
+To work with vectors, a key data type in R, and learn to use built-in functions on those vectors. 
 
 # What will this workshop cover?
 
@@ -49,7 +49,7 @@ vect1
 ## [1]  1  6 19  4  9
 ```
 
-We can also combine predefined variables and vectors together to create a new vector.
+We can also combine predefined variables and vectors to create a new vector.
 
 
 ```r
@@ -90,9 +90,9 @@ As you can see this divides all elements in the vector by 5.
 ## Vector exercise 1
 
 1)  Make a vector called x with integers from 8 through to 14
-2)  Add 5 to your x vector (be sure to save as result back to x)
+2)  Add (plus) 5 to your x vector (be sure to save as result back to x)
 3)  Make a vector called y with variables 34, 55, 13, 71, 98, 43 and 25
-4)  Take 12 from your y vector (be sure to save as result back to y)
+4)  Take (subtract) 12 from your y vector (be sure to save as result back to y)
 5)  Times x vector by y
 
 
@@ -188,6 +188,78 @@ median(steps)
 ```
 ## [1] 6500
 ```
+
+# Plotting vectors
+
+As well as functions to find averages, we can also use plotting functions. This is helpful to take a quick look at our data, which is often easier to read then just looking at the numbers themselves. Base R provides two useful functions called `hist()` and `plot()`. 
+
+`hist()` makes histograms of vectors. For example, we can use it on our runTimes variable from earlier. 
+
+```r
+hist(runTimes)
+```
+
+![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+`plot()` by default makes scatter plots. Here we make a vector called days and plot it with our running times. We have also added a title using the `main =` parameter. 
+
+```r
+days <- 1:7
+
+plot(x = days, y = runTimes,
+     main = "Running time for each day of week")
+```
+
+![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
+To make a different visualisation we can use the type parameter. Here we make our scatter plot a line plot instead, which makes a bit more sense. 
+
+```r
+plot(x = days, y = runTimes,
+     main = "Running time for each day of week",
+     type = "l")
+```
+
+![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
+Later in the R workshops, R Data Visualisation 1 & 2, we go more into plotting and will be using the popular ggplot2 library. For now though, the base plotting functions are very handy tools. 
+
+## Plotting vectors exercise
+
+You have been asked to review the exam and coursework grades for a module. The lecturer wants to check if the exam or coursework were too easy or hard. If too easy, they would expect more scores greater then 70, if too hard they would expect more scores around 50 or less. 
+
+Each student represents a position in each vector. For example, student 1 has a coursework grade of 58, and an exam grade of 80. 
+
+Using the `hist()` and `plot()` functions:
+
+1) Make a histogram of `coursework_grades`. What do you make of the distribution of grades?
+2) Make a histogram of `exam_grades`. What do you make of the distribution of grades?
+3) Make a scatter plot of `coursework_grades` and `exam_grades`. Add a title such as "Exam vs coursework grades on module x". Is there any pattern at all between coursework grades and exam grades?
+
+
+```r
+coursework_grades <- c(58, 68, 75, 75, 62, 62, 68, 55, 58, 62, 75, 58, 72, 65, 65)
+exam_grades <- c(80, 68, 63, 54, 42, 51, 41, 67, 53, 72, 69, 53, 70, 68, 51)
+
+# your code here
+hist(coursework_grades)
+```
+
+![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
+```r
+hist(exam_grades)
+```
+
+![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-11-2.png)<!-- -->
+
+```r
+plot(x = coursework_grades, y = exam_grades, 
+     main = "Exam vs coursework grades on module x")
+```
+
+![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-11-3.png)<!-- -->
+
 
 # Indexing vectors
 
