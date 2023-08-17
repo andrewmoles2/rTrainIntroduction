@@ -216,15 +216,15 @@ Re-arrange the code so the calculations run. You should have both the combined s
 weeksYear <- 52
 
 # Charlies hourly rate
-Charlie_HourlyRate <- (Charlie_annualSary / weeksYear)/Charlie_hoursPerWeek
+Charlie_HourlyRate <- (Charlie_annualSalary / weeksYear)/Charlie_hoursPerWeek
 Charlie_HourlyRate
 
 # salaries
 Robin_HourlyRate <- 16.5
-Charlie_annualSary <- 31800
+Charlie_annualSalary <- 31800
 
 # Combined salaries
-CombinedSalaries <- Robin_annualSalary + Charlie_annualSary
+CombinedSalaries <- Robin_annualSalary + Charlie_annualSalary
 CombinedSalaries
 
 # Robins annual salary

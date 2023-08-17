@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 August, 2023"
+date: "17 August, 2023"
 output: 
   html_document: 
     theme: readable
@@ -160,10 +160,10 @@ Here we are using the functions `c()` to concatenate, `mean()` calculates the me
 
 ## Functions exercise
 
-We are on a walking exercise plan, where we increase our step count by a thousand each day, starting at 1000 steps and ending on 12000.
+We are on a walking exercise plan, where we increase our step count by a five hundred each day, starting at 1000 steps and ending on 12000.
 
 1)  Make a variable called steps using the `seq()` function that increases steps from 1000 to 12000 by increments of 500
-2)  Workout the sum of how many steps we have done in total from this exercise plan
+2)  Calculate the sum of your steps, which is the total steps taken in your exercise plan
 3)  Workout out the median amount of steps we have done on this exercise plan
 4)  Comment your code
 

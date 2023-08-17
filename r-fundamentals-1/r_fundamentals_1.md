@@ -3,7 +3,7 @@ title: "R Fundamentals 1: Numerical Variables"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "17 March, 2023"
+date: "17 August, 2023"
 output: 
   html_document: 
     theme: readable
@@ -307,11 +307,11 @@ Re-arrange the code so the calculations run. You should have both the combined s
 weeksYear <- 52
 
 # Charlies hourly rate
-Charlie_HourlyRate <- (Charlie_annualSary / weeksYear)/Charlie_hoursPerWeek
+Charlie_HourlyRate <- (Charlie_annualSalary / weeksYear)/Charlie_hoursPerWeek
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'Charlie_annualSary' not found
+## Error in eval(expr, envir, enclos): object 'Charlie_annualSalary' not found
 ```
 
 ```r
@@ -325,10 +325,10 @@ Charlie_HourlyRate
 ```r
 # salaries
 Robin_HourlyRate <- 16.5
-Charlie_annualSary <- 31800
+Charlie_annualSalary <- 31800
 
 # Combined salaries
-CombinedSalaries <- Robin_annualSalary + Charlie_annualSary
+CombinedSalaries <- Robin_annualSalary + Charlie_annualSalary
 ```
 
 ```
