@@ -1,9 +1,9 @@
 ---
-title: "R Fundamentals 6 - Conditionals and Logic"
+title: "R Fundamentals 6: Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "31 August, 2023"
 output: 
   html_document: 
     theme: readable
@@ -60,9 +60,9 @@ Why is this useful? Using boolean allows us to set *conditions* that can either 
 
 ## Boolean exercise
 
-1) Make data frame called pizza. For the first column use the topping vector provided. For the second column call it Good_topping, and use 1's and 0's to indicate a good or bad topping (1 = good, 0 = bad)
-2) Convert your good topping column to logical using `as.logical`
-3) Run `str()` and `head()` to view your data. Good_topping should now be logical (true and false). 
+1)  Make data frame called pizza. For the first column use the topping vector provided. For the second column call it Good_topping, and use 1's and 0's to indicate a good or bad topping (1 = good, 0 = bad) for those listed in the Topping
+2)  Convert your good topping column to logical using `as.logical`
+3)  Run `str()` and `head()` to view your data. Good_topping should now be logical (true and false)
 
 
 ```r
@@ -111,7 +111,7 @@ In order to test conditions we need conditional operators. Below is a table of c
 | `==`       | Equal to                 |
 | `!=`       | Not equal to             |
 | `!X`       | NOT X                    |
-| `X`        | Y                        |
+| `X | Y`    | X OR Y                   |
 | `X & Y`    | X AND Y                  |
 | `X %in% Y` | is X in Y                |
 
@@ -244,7 +244,7 @@ sum(z < 50)
 ```
 
 ```
-## [1] 6
+## [1] 11
 ```
 
 ```r
@@ -252,7 +252,7 @@ sum(z >= 50)
 ```
 
 ```
-## [1] 14
+## [1] 9
 ```
 
 ```r
@@ -339,10 +339,9 @@ df[df$x < 20, ]
 ```
 
 ```
-##     x  y
-## 11  3 15
-## 14 16 62
-## 15 13  4
+##    x  y
+## 8  4 71
+## 12 7 54
 ```
 
 ```r
@@ -352,16 +351,18 @@ df2
 ```
 
 ```
-##      x  y
-## 1   39 20
-## 2   35 48
-## 3   90 34
-## 7   71 13
-## 8  100  9
-## 9   84 33
-## 10  87 87
-## 12  44 78
-## 13  38 60
+##     x  y
+## 1  40 90
+## 2  49 99
+## 3  67  1
+## 4  54 39
+## 7  63  7
+## 9  99 45
+## 10 66 18
+## 11 39 42
+## 13 36 28
+## 14 42 67
+## 15 44 41
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -371,14 +372,13 @@ subset(df, y <= 40)
 ```
 
 ```
-##      x  y
-## 1   39 20
-## 3   90 34
-## 7   71 13
-## 8  100  9
-## 9   84 33
-## 11   3 15
-## 15  13  4
+##     x  y
+## 3  67  1
+## 4  54 39
+## 6  28 30
+## 7  63  7
+## 10 66 18
+## 13 36 28
 ```
 
 ## Subsetting exercise
@@ -429,7 +429,7 @@ head(pokemon)
 ## 4      4 Charman… Fire   <NA>     309    39     52      43      60      50    65
 ## 5      5 Charmel… Fire   <NA>     405    58     64      58      80      65    80
 ## 6      6 Chariza… Fire   Flying   534    78     84      78     109      85   100
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 ```r
@@ -437,7 +437,7 @@ str(pokemon)
 ```
 
 ```
-## spec_tbl_df [151 × 13] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+## spc_tbl_ [151 × 13] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
 ##  $ Number    : num [1:151] 1 2 3 4 5 6 7 8 9 10 ...
 ##  $ Name      : chr [1:151] "Bulbasaur" "Ivysaur" "Venusaur" "Charmander" ...
 ##  $ Type.1    : chr [1:151] "Grass" "Grass" "Grass" "Fire" ...
@@ -517,7 +517,7 @@ highHP[which.min(highHP$Attack),]
 ##   Number Name    Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
 ##    <dbl> <chr>   <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
 ## 1    113 Chansey Normal <NA>     450   250      5       5      35     105    50
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 ```r
@@ -529,7 +529,7 @@ highHP[which.min(highHP$Defense),]
 ##   Number Name    Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
 ##    <dbl> <chr>   <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
 ## 1    113 Chansey Normal <NA>     450   250      5       5      35     105    50
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 ```r
@@ -541,7 +541,7 @@ highHP[which.min(highHP$Speed),]
 ##   Number Name     Type.1 Type.2 Total    HP Attack Defense Sp..Atk Sp..Def Speed
 ##    <dbl> <chr>    <chr>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
 ## 1     79 Slowpoke Water  Psych…   315    90     65      65      40      40    15
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 ```r
@@ -576,7 +576,7 @@ subset(highHP, Attack >= 100)
 ## 13    149 Dragon… Dragon Flying   600    91    134      95     100     100    80
 ## 14    150 Mewtwo  Psych… <NA>     680   106    110      90     154      90   130
 ## 15    151 Mew     Psych… <NA>     600   100    100     100     100     100   100
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 # Using AND OR and %in%
@@ -650,8 +650,8 @@ df3[df3$y >= 70 & df3$z >= 70,]
 ```
 
 ```
-## [1] id  x   y   z   exp
-## <0 rows> (or 0-length row.names)
+##         id  x  y  z     exp
+## 5 person_e 91 82 85 control
 ```
 
 ```r
@@ -659,11 +659,11 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 ```
 
 ```
-##          id  x  y  z     exp
-## 2  person_b 32 11 32    test
-## 3  person_c 14 52 11    test
-## 6  person_f 98 57 13    test
-## 10 person_j 12 34 96 control
+##         id  x  y  z     exp
+## 1 person_a 29 18  7    test
+## 2 person_b 67  3 67    test
+## 3 person_c 82 89  5 control
+## 7 person_g 38 12 55    test
 ```
 
 ```r
@@ -671,9 +671,9 @@ subset(df3, y < 60 & exp == 'control')
 ```
 
 ```
-##          id  x  y  z     exp
-## 4  person_d 34 36 16 control
-## 10 person_j 12 34 96 control
+##         id  x  y  z     exp
+## 4 person_d 15 51 30 control
+## 8 person_h 85 53 25 control
 ```
 
 # %in% operator
@@ -690,10 +690,9 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y  z     exp
-## 3 person_c 14 52 11    test
-## 4 person_d 34 36 16 control
-## 6 person_f 98 57 13    test
+##         id  x  y z     exp
+## 1 person_a 29 18 7    test
+## 3 person_c 82 89 5 control
 ```
 
 ```r
@@ -713,9 +712,9 @@ subset(df3, id %in% val_match)
 
 ```
 ##          id  x  y  z     exp
-## 8  person_h 36 66 52 control
-## 9  person_i 67 89 48 control
-## 10 person_j 12 34 96 control
+## 8  person_h 85 53 25 control
+## 9  person_i 19 59 69    test
+## 10 person_j 79 64 62 control
 ```
 
 ```r
@@ -819,7 +818,7 @@ subset(poke_wfg, Speed >= 90 & Attack >= 90)
 ## 2     78 Rapidash Fire   <NA>     500    65    100      70      80      80   105
 ## 3    126 Magmar   Fire   <NA>     495    65     95      57     100      85    93
 ## 4    146 Moltres  Fire   Flying   580    90    100      90     125      85    90
-## # … with 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 
 ```r
@@ -840,7 +839,8 @@ subset(poke_wfg, Speed >= 90 | Attack >= 90)
 ##  8     70 Weepin… Grass  Poison   390    65     90      50      85      45    55
 ##  9     71 Victre… Grass  Poison   490    80    105      65     100      70    70
 ## 10     73 Tentac… Water  Poison   515    80     70      65      80     120   100
-## # … with 13 more rows, and 2 more variables: Generation <dbl>, Legendary <chr>
+## # ℹ 13 more rows
+## # ℹ 2 more variables: Generation <dbl>, Legendary <chr>
 ```
 *note: the table() function makes counts of categorical data (factors)* 
 
@@ -902,16 +902,16 @@ df3[, c('x','cat')]
 
 ```
 ##     x    cat
-## 1  71   high
-## 2  32    low
-## 3  14    low
-## 4  34 medium
-## 5  49 medium
-## 6  98   high
-## 7  19    low
-## 8  36 medium
-## 9  67   high
-## 10 12    low
+## 1  29    low
+## 2  67   high
+## 3  82   high
+## 4  15    low
+## 5  91   high
+## 6  56 medium
+## 7  38 medium
+## 8  85   high
+## 9  19    low
+## 10 79   high
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -1044,6 +1044,6 @@ ash[ash$HP >=100 | ash$Attack >= 100 | ash$Defense >= 100 | ash$Sp..Atk >= 100 |
 ##    <dbl> <chr>    <fct>  <chr>  <dbl> <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>
 ## 1      6 Chariza… Fire   Flying   534    78     84      78     109      85   100
 ## 2     18 Pidgeot  Normal Flying   479    83     80      75      70      70   101
-## # … with 3 more variables: Generation <dbl>, Legendary <chr>, SpeedTier <fct>
+## # ℹ 3 more variables: Generation <dbl>, Legendary <chr>, SpeedTier <fct>
 ```
 

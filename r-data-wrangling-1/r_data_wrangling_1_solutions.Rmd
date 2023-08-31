@@ -313,7 +313,7 @@ The filter function allows you to subset rows based on conditions, using conditi
 | `==`       | Equal to                 |
 | `!=`       | Not equal to             |
 | `!X`       | NOT X                    |
-| `X`        | Y                        |
+| `X | Y`    | X OR Y                   |
 | `X & Y`    | X AND Y                  |
 | `X %in% Y` | is X in Y                |
 

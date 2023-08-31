@@ -50,9 +50,9 @@ Why is this useful? Using boolean allows us to set *conditions* that can either 
 
 ## Boolean exercise
 
-1) Make data frame called pizza. For the first column use the topping vector provided. For the second column call it Good_topping, and use 1's and 0's to indicate a good or bad topping (1 = good, 0 = bad)
-2) Convert your good topping column to logical using `as.logical`
-3) Run `str()` and `head()` to view your data. Good_topping should now be logical (true and false). 
+1)  Make data frame called pizza. For the first column use the topping vector provided. For the second column call it Good_topping, and use 1's and 0's to indicate a good or bad topping (1 = good, 0 = bad) for those listed in the Topping
+2)  Convert your good topping column to logical using `as.logical`
+3)  Run `str()` and `head()` to view your data. Good_topping should now be logical (true and false)
 
 ```{r}
 Topping <- c('Mozzarella', 'Pepperoni','Pinapple', 'Pepper', 'Sweetcorn')
@@ -82,7 +82,7 @@ In order to test conditions we need conditional operators. Below is a table of c
 | `==`       | Equal to                 |
 | `!=`       | Not equal to             |
 | `!X`       | NOT X                    |
-| `X`        | Y                        |
+| `X | Y`    | X OR Y                   |
 | `X & Y`    | X AND Y                  |
 | `X %in% Y` | is X in Y                |
 

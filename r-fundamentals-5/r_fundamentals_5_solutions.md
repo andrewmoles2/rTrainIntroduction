@@ -1,9 +1,9 @@
 ---
-title: "R Fundamentals 5 - Loading data and packages"
+title: "R Fundamentals 5: Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "20 January, 2023"
+date: "31 August, 2023"
 output: 
   html_document: 
     theme: readable
@@ -46,7 +46,7 @@ Once installed, you will not need to do this again unless you install a newer ve
 
 ## Installing packages exercise
 
-Try installing the following packages:`readr`, `readxl`, and `writexl` using the `install.packages()` function. We will be using these in today's session.
+Try installing the following packages:`readr`, `readxl`, `writexl`, and `knitr` using the `install.packages()` function. We will be using these in today's session.
 
 
 ```r
@@ -54,6 +54,7 @@ Try installing the following packages:`readr`, `readxl`, and `writexl` using the
 install.packages('readr')
 install.packages('readxl')
 install.packages('writexl')
+install.packages('knitr')
 ```
 
 # Loading packages
@@ -65,6 +66,8 @@ To load a package you need to use the `library()` function. For example, if I wa
 ## Loading packages exercise
 
 Using `library()` load in the packages you just installed: `readr`, `readxl`, and `writexl`.
+
+*Note: readxl is the letter l rather than the number 1, which is hard to see with the default font*
 
 
 ```r
@@ -82,33 +85,35 @@ sessionInfo()
 ```
 
 ```
-## R version 4.2.2 (2022-10-31)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur ... 10.16
+## R version 4.3.0 (2023-04-21)
+## Platform: x86_64-apple-darwin20 (64-bit)
+## Running under: macOS Ventura 13.5.1
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: Europe/London
+## tzcode source: internal
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] writexl_1.4.1 readxl_1.4.1  readr_2.1.3  
+## [1] writexl_1.4.2 readxl_1.4.2  readr_2.1.4  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] rstudioapi_0.14  knitr_1.41       magrittr_2.0.3   hms_1.1.2       
-##  [5] R6_2.5.1         rlang_1.0.6      fastmap_1.1.0    fansi_1.0.3     
-##  [9] stringr_1.5.0    tools_4.2.2      xfun_0.35        utf8_1.2.2      
-## [13] cli_3.6.0        jquerylib_0.1.4  htmltools_0.5.3  ellipsis_0.3.2  
-## [17] yaml_2.3.6       digest_0.6.30    tibble_3.1.8     lifecycle_1.0.3 
-## [21] tzdb_0.3.0       sass_0.4.3       vctrs_0.5.1      glue_1.6.2      
-## [25] cachem_1.0.6     evaluate_0.18    rmarkdown_2.18   stringi_1.7.12  
-## [29] cellranger_1.1.0 pillar_1.8.1     compiler_4.2.2   bslib_0.4.1     
-## [33] jsonlite_1.8.4   pkgconfig_2.0.3
+##  [1] vctrs_0.6.3      cli_3.6.1        knitr_1.43       rlang_1.1.1     
+##  [5] xfun_0.39        jsonlite_1.8.7   glue_1.6.2       htmltools_0.5.5 
+##  [9] sass_0.4.6       hms_1.1.3        fansi_1.0.4      rmarkdown_2.23  
+## [13] cellranger_1.1.0 evaluate_0.21    jquerylib_0.1.4  tibble_3.2.1    
+## [17] tzdb_0.4.0       fastmap_1.1.1    yaml_2.3.7       lifecycle_1.0.3 
+## [21] compiler_4.3.0   pkgconfig_2.0.3  rstudioapi_0.14  digest_0.6.33   
+## [25] R6_2.5.1         utf8_1.2.3       pillar_1.9.0     magrittr_2.0.3  
+## [29] bslib_0.5.0      tools_4.3.0      cachem_1.0.8
 ```
 
 # Introduction to directories
@@ -132,6 +137,8 @@ We call this a "path" and it tells you what directory the "r_fundamentals_5.Rmd"
 
 You can understand a directory as simply a place on your computer's hard drive and path as its' name. The simplest example of a directory is a folder. When you right click on your desktop and create a new folder, you create a new directory. Programmers often use the word folder interchangeably with a directory. Although they're almost the same in meaning a directory can also be a specific file in which case the path of a file will be the folder it is in followed by `/<name of the file>.<format such as jpg,txt or Rmd>`.
 
+Note: On Windows the path returned in R will use `/` as the path separator. However, Windows machines use `\` as the path separator. 
+
 ## Finding your directory exercise
 
 Now that you know the path of where your r_markdown file is, you can manually locate the file from the desktop.
@@ -141,7 +148,8 @@ If you're using Windows:
 1. Copy the path you just found without the quotation marks (`shortcut: Ctrl+C`)
 2. Minimize RStudio so that you're on your Desktop 
 3. Open the Windows search menu and paste the path directly (`shortcut: Ctrl+V`)
-4. Click on the folder that appears
+4. Replace the forward slashes (`/`) with backward slashes (`\`)
+5. Click on the folder that appears
 
 If you're using Mac:
 
@@ -174,10 +182,10 @@ Now minimize RStudio again and go to the folder which you accessed previously, d
 
 ## Loading in a Picture Exercise
 
-1. Please download the picture "r_fundamentals_5.png" from the files in the r-fundamentals-5 teams channel.
+1. Please download the picture "r_fundamentals_5.png" from the files in the r-fundamentals-5 teams channel
 2. Create a new folder on your Desktop and move the picture to that new folder **Make sure it is a different folder than the one your `r_fundamentals_5.Rmd` is placed in**
 3. Google how to find a path of a file on your operating system
-4. Load in a picture using `knitr::include_graphics("path-to-image-here")` command
+4. Load in a picture using `knitr::include_graphics("path-to-image-here")` command. Note that if you are using Windows, make sure to change any backwards slashes (`\`) into forward slashes (`/`)
 5. Feel free to inspect a picture to get a better understanding of how your computer memory is structured
 6. Try running the same command but in the `path-to-image-here` insert just the name of the picture `r_fundamentals_5.png`. What error do you get? Why do you think that is?
 
@@ -186,7 +194,7 @@ Now minimize RStudio again and go to the folder which you accessed previously, d
 ## Error in knitr::include_graphics("e.g. C:/Users/<Your Name>/Desktop/New_file/r_fundamentals_5.png"): Cannot find the file(s): "e.g. C:/Users/<Your Name>/Desktop/New_file/r_fundamentals_5.png"
 ```
 
-*note: include_graphics() command is from knitr package. You might have noticed that we have not loaded in knitr at the begging of this lesson. We can actually use commands from packages you have installed but not loaded in using <name-of-the-package>::<command>. It's actually a good practice not to load in entire packages if we're only going to use a single command*
+*note: include_graphics() command is from knitr package. You might have noticed that we have not loaded in knitr at the beginning of this lesson. We can actually use commands from packages you have installed but not loaded in using <name-of-the-package>::<command>. It's actually a good practice not to load in entire packages if we're only going to use a single command*
 
 # Introduction to working directory
 
@@ -202,10 +210,9 @@ The second important directory is a subdirectory. The Oxford Language official d
 
 It's important to note that when loading in a file, R will not search through all of the subdirectories, only the working directory. Nonetheless, if you are putting a file in a subdirectory there is no need to spell out the entire file path. When we are looking for a file from a subdirectory of a working directory we can just spell out the file path from the working directory onwards. When telling R to find a file in a subdirectory, you need to reference working directory with a dot e.g. `./MyFolder/MyFile.txt` instead of `C:/Users/Desktop/MyWorkingDirectory/MyFolder/MyFile.txt`.
 
-
 ## Accessing a file from working directory exercise
 
-1. Move your file to your working directory *you can use `getwd()` again if you forgot where it is*
+1. Move your `r_fundamentals_5.png` file to your working directory *you can use `getwd()` again if you forgot where it is*
 2. Run the command below without changing it. If the picture doesn't display correctly make sure you placed the picture in the same file you have `r_fundamentals_5.Rmd`.
 
 
@@ -237,7 +244,39 @@ if (file.exists("r_fundamentals_5.png")) {
 }
 ```
 
-4. Inspect the working directory, what changed, where is the image now?
+4. Inspect the working directory using `getwd()` and `list.files()`. What changed and where is the image now? Try running `list.files("images")` to help you
+
+
+```r
+# your code here
+
+getwd()
+```
+
+```
+## [1] "/Users/MOLES/Library/CloudStorage/OneDrive-LondonSchoolofEconomics/Code/rTrainIntroduction/r-fundamentals-5"
+```
+
+```r
+list.files()
+```
+
+```
+## [1] "data"                            "images"                         
+## [3] "r_fundamentals_5_solutions.html" "r_fundamentals_5_solutions.md"  
+## [5] "r_fundamentals_5_solutions.Rmd"  "r_fundamentals_5.html"          
+## [7] "r_fundamentals_5.md"             "r_fundamentals_5.Rmd"
+```
+
+```r
+list.files("images")
+```
+
+```
+## [1] "fileSys.png"          "r_fundamentals_5.png" "RStudio_projects.png"
+```
+
+
 5. Modify the code below so that the picture displays correctly. *You don't need to spell out the entire path like in the `Loading in a Picture` exercise*
 
 
@@ -248,7 +287,7 @@ knitr::include_graphics("images/r_fundamentals_5.png")
 
 <img src="images/r_fundamentals_5.png" width="100%" style="display: block; margin: auto;" />
 
-*note: now that you know what a path is you can speed up your work by using keyboard shortcuts. To quickly get a file path you can click on the file once and press `Shift+A` on Windows or `Command+Option+C` on Mac. This will copy a path to your clipboard which you can then quickly paste with `Ctrl+V` on Windows and `Command+V` on Mac.*
+**Note:** now that you know what a path is you can speed up your work by using keyboard shortcuts. To quickly get a file path you can click on the file once and press `Ctrl+Shift+C` or Right Click on the file and Copy as Path on Windows, or `Command+Option+C` on Mac. This will copy a path to your clipboard which you can then quickly paste with `Ctrl+V` on Windows and `Command+V` on Mac.
 
 # How to set up a project?
 
@@ -294,23 +333,7 @@ To open and review your projects in future you will see them in a drop down menu
 
 Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta.
 
-To check your folders or data files are where you expect them to be, you can use the `list.files()` function. You should see your r_fundamentals_5.Rmd and your data file.
-
-
-```r
-list.files()
-```
-
-```
-## [1] "data"                            "images"                         
-## [3] "r_fundamentals_5_solutions.html" "r_fundamentals_5_solutions.md"  
-## [5] "r_fundamentals_5_solutions.Rmd"  "r_fundamentals_5.html"          
-## [7] "r_fundamentals_5.md"             "r_fundamentals_5.Rmd"
-```
-
-RStudio helpfully has auto-completion for directories to help you build file paths.
-
-To get this working use speech marks with a function, like `list.files()`. Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want. Repeat the process till you get to where you want to be.
+RStudio helpfully has auto-completion for directories to help you build file paths. To get this working use speech marks with a function, like `list.files()`. **Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want.** Repeat the process till you get to where you want to be.
 
 ## List files exercise
 
@@ -410,20 +433,19 @@ head(tflJourneyType)
 
 ```
 ## # A tibble: 6 × 12
-##   Period and F…¹ Repor…² Days …³ Perio…⁴ Perio…⁵ Bus j…⁶ Under…⁷ DLR J…⁸ Tram …⁹
-##   <chr>            <dbl>   <dbl> <chr>   <chr>     <dbl>   <dbl>   <dbl>   <dbl>
-## 1 01_10/11             1      31 01-Apr… 01-May…    189.    90.5     6.3     2.3
-## 2 02_10/11             2      28 02-May… 29-May…    182.    84.5     5.8     2.2
-## 3 03_10/11             3      28 30-May… 26-Jun…    176.    84.3     5.8     2.1
-## 4 04_10/11             4      28 27-Jun… 24-Jul…    183.    86.5     6.1     2.1
-## 5 05_10/11             5      28 25-Jul… 21-Aug…    160.    82.9     5.8     2  
-## 6 06_10/11             6      28 22-Aug… 18-Sep…    176.    80.9     5.5     2  
-## # … with 3 more variables: `Overground Journeys (m)` <dbl>,
-## #   `Emirates Airline Journeys (m)` <dbl>, `TfL Rail Journeys (m)` <dbl>, and
-## #   abbreviated variable names ¹​`Period and Financial year`,
-## #   ²​`Reporting Period`, ³​`Days in period`, ⁴​`Period beginning`,
-## #   ⁵​`Period ending`, ⁶​`Bus journeys (m)`, ⁷​`Underground journeys (m)`,
-## #   ⁸​`DLR Journeys (m)`, ⁹​`Tram Journeys (m)`
+##   Period and Financial …¹ `Reporting Period` `Days in period` `Period beginning`
+##   <chr>                                <dbl>            <dbl> <chr>             
+## 1 01_10/11                                 1               31 01-Apr-10         
+## 2 02_10/11                                 2               28 02-May-10         
+## 3 03_10/11                                 3               28 30-May-10         
+## 4 04_10/11                                 4               28 27-Jun-10         
+## 5 05_10/11                                 5               28 25-Jul-10         
+## 6 06_10/11                                 6               28 22-Aug-10         
+## # ℹ abbreviated name: ¹​`Period and Financial year`
+## # ℹ 8 more variables: `Period ending` <chr>, `Bus journeys (m)` <dbl>,
+## #   `Underground journeys (m)` <dbl>, `DLR Journeys (m)` <dbl>,
+## #   `Tram Journeys (m)` <dbl>, `Overground Journeys (m)` <dbl>,
+## #   `Emirates Airline Journeys (m)` <dbl>, `TfL Rail Journeys (m)` <dbl>
 ```
 
 ```r
@@ -432,20 +454,19 @@ tail(tflJourneyType)
 
 ```
 ## # A tibble: 6 × 12
-##   Period and F…¹ Repor…² Days …³ Perio…⁴ Perio…⁵ Bus j…⁶ Under…⁷ DLR J…⁸ Tram …⁹
-##   <chr>            <dbl>   <dbl> <chr>   <chr>     <dbl>   <dbl>   <dbl>   <dbl>
-## 1 02_19/20             2      28 28-Apr… 25-May…    32.5     6.7     1.4     0.5
-## 2 03_19/20             3      28 26-May… 22-Jun…    47      13.3     2.1     0.7
-## 3 04_19/20             4      28 23-Jun… 20-Jul…    66.7    22.2     2.9     1  
-## 4 05_19/20             5      28 21-Jul… 17-Aug…    75.2    28.8     3.6     1  
-## 5 06_19/20             6      28 18-Aug… 14-Sep…    94.8    36.3     4.2     1.2
-## 6 07_19/20             7      28 15-Sep… 12-Oct…   102      39.5     4.5     1.4
-## # … with 3 more variables: `Overground Journeys (m)` <dbl>,
-## #   `Emirates Airline Journeys (m)` <dbl>, `TfL Rail Journeys (m)` <dbl>, and
-## #   abbreviated variable names ¹​`Period and Financial year`,
-## #   ²​`Reporting Period`, ³​`Days in period`, ⁴​`Period beginning`,
-## #   ⁵​`Period ending`, ⁶​`Bus journeys (m)`, ⁷​`Underground journeys (m)`,
-## #   ⁸​`DLR Journeys (m)`, ⁹​`Tram Journeys (m)`
+##   Period and Financial …¹ `Reporting Period` `Days in period` `Period beginning`
+##   <chr>                                <dbl>            <dbl> <chr>             
+## 1 02_19/20                                 2               28 28-Apr-20         
+## 2 03_19/20                                 3               28 26-May-20         
+## 3 04_19/20                                 4               28 23-Jun-20         
+## 4 05_19/20                                 5               28 21-Jul-20         
+## 5 06_19/20                                 6               28 18-Aug-20         
+## 6 07_19/20                                 7               28 15-Sep-20         
+## # ℹ abbreviated name: ¹​`Period and Financial year`
+## # ℹ 8 more variables: `Period ending` <chr>, `Bus journeys (m)` <dbl>,
+## #   `Underground journeys (m)` <dbl>, `DLR Journeys (m)` <dbl>,
+## #   `Tram Journeys (m)` <dbl>, `Overground Journeys (m)` <dbl>,
+## #   `Emirates Airline Journeys (m)` <dbl>, `TfL Rail Journeys (m)` <dbl>
 ```
 
 ```r
@@ -548,18 +569,17 @@ head(tflCycle)
 
 ```
 ## # A tibble: 6 × 11
-##   Day                 Number of …¹ ...3  Month...4           Numbe…² ...6  Year 
-##   <dttm>                     <dbl> <lgl> <dttm>                <dbl> <lgl> <chr>
-## 1 2010-07-30 00:00:00         6897 NA    2010-07-01 00:00:00   12461 NA    2010 
-## 2 2010-07-31 00:00:00         5564 NA    2010-08-01 00:00:00  341203 NA    2011 
-## 3 2010-08-01 00:00:00         4303 NA    2010-09-01 00:00:00  540859 NA    2012 
-## 4 2010-08-02 00:00:00         6642 NA    2010-10-01 00:00:00  544412 NA    2013 
-## 5 2010-08-03 00:00:00         7966 NA    2010-11-01 00:00:00  456304 NA    2014 
-## 6 2010-08-04 00:00:00         7893 NA    2010-12-01 00:00:00  285574 NA    2015 
-## # … with 4 more variables: `Number of Bicycle Hires...8` <chr>, ...9 <lgl>,
-## #   Month...10 <dttm>, `Average Hire Time (mins)` <dbl>, and abbreviated
-## #   variable names ¹​`Number of Bicycle Hires...2`,
-## #   ²​`Number of Bicycle Hires...5`
+##   Day                 `Number of Bicycle Hires...2` ...3  Month...4          
+##   <dttm>                                      <dbl> <lgl> <dttm>             
+## 1 2010-07-30 00:00:00                          6897 NA    2010-07-01 00:00:00
+## 2 2010-07-31 00:00:00                          5564 NA    2010-08-01 00:00:00
+## 3 2010-08-01 00:00:00                          4303 NA    2010-09-01 00:00:00
+## 4 2010-08-02 00:00:00                          6642 NA    2010-10-01 00:00:00
+## 5 2010-08-03 00:00:00                          7966 NA    2010-11-01 00:00:00
+## 6 2010-08-04 00:00:00                          7893 NA    2010-12-01 00:00:00
+## # ℹ 7 more variables: `Number of Bicycle Hires...5` <dbl>, ...6 <lgl>,
+## #   Year <chr>, `Number of Bicycle Hires...8` <chr>, ...9 <lgl>,
+## #   Month...10 <dttm>, `Average Hire Time (mins)` <dbl>
 ```
 
 ```r
@@ -647,7 +667,7 @@ tflJourneyType <- read_csv("https://data.london.gov.uk/download/public-transport
 ```
 
 ```
-## Rows: 164 Columns: 12
+## Rows: 173 Columns: 12
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
 ## chr (3): Period and Financial year, Period beginning, Period ending
@@ -663,19 +683,19 @@ str(tflJourneyType)
 ```
 
 ```
-## spc_tbl_ [164 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Period and Financial year    : chr [1:164] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
-##  $ Reporting Period             : num [1:164] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Days in period               : num [1:164] 31 28 28 28 28 28 28 28 28 28 ...
-##  $ Period beginning             : chr [1:164] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
-##  $ Period ending                : chr [1:164] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
-##  $ Bus journeys (m)             : num [1:164] 189 182 176 183 160 ...
-##  $ Underground journeys (m)     : num [1:164] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
-##  $ DLR Journeys (m)             : num [1:164] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
-##  $ Tram Journeys (m)            : num [1:164] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
-##  $ Overground Journeys (m)      : num [1:164] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
-##  $ Emirates Airline Journeys (m): num [1:164] NA NA NA NA NA NA NA NA NA NA ...
-##  $ TfL Rail Journeys (m)        : num [1:164] NA NA NA NA NA NA NA NA NA NA ...
+## spc_tbl_ [173 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Period and Financial year    : chr [1:173] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
+##  $ Reporting Period             : num [1:173] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Days in period               : num [1:173] 31 28 28 28 28 28 28 28 28 28 ...
+##  $ Period beginning             : chr [1:173] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
+##  $ Period ending                : chr [1:173] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
+##  $ Bus journeys (m)             : num [1:173] 189 182 176 183 160 ...
+##  $ Underground journeys (m)     : num [1:173] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
+##  $ DLR Journeys (m)             : num [1:173] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
+##  $ Tram Journeys (m)            : num [1:173] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
+##  $ Overground Journeys (m)      : num [1:173] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
+##  $ London Cable Car Journeys (m): num [1:173] NA NA NA NA NA NA NA NA NA NA ...
+##  $ TfL Rail Journeys (m)        : num [1:173] NA NA NA NA NA NA NA NA NA NA ...
 ##  - attr(*, "spec")=
 ##   .. cols(
 ##   ..   `Period and Financial year` = col_character(),
@@ -688,7 +708,7 @@ str(tflJourneyType)
 ##   ..   `DLR Journeys (m)` = col_double(),
 ##   ..   `Tram Journeys (m)` = col_double(),
 ##   ..   `Overground Journeys (m)` = col_double(),
-##   ..   `Emirates Airline Journeys (m)` = col_double(),
+##   ..   `London Cable Car Journeys (m)` = col_double(),
 ##   ..   `TfL Rail Journeys (m)` = col_double()
 ##   .. )
 ##  - attr(*, "problems")=<externalptr>
@@ -700,36 +720,36 @@ summary(tflJourneyType)
 
 ```
 ##  Period and Financial year Reporting Period Days in period  Period beginning  
-##  Length:164                Min.   : 1.000   Min.   :26.00   Length:164        
+##  Length:173                Min.   : 1.000   Min.   :26.00   Length:173        
 ##  Class :character          1st Qu.: 4.000   1st Qu.:28.00   Class :character  
 ##  Mode  :character          Median : 7.000   Median :28.00   Mode  :character  
-##                            Mean   : 6.878   Mean   :28.09                     
+##                            Mean   : 6.896   Mean   :28.09                     
 ##                            3rd Qu.:10.000   3rd Qu.:28.00                     
 ##                            Max.   :13.000   Max.   :31.00                     
 ##                                                                               
 ##  Period ending      Bus journeys (m) Underground journeys (m) DLR Journeys (m)
-##  Length:164         Min.   : 30.2    Min.   :  5.70           Min.   : 1.200  
-##  Class :character   1st Qu.:149.1    1st Qu.: 84.38           1st Qu.: 6.400  
-##  Mode  :character   Median :175.2    Median : 95.85           Median : 7.750  
-##                     Mean   :160.6    Mean   : 88.83           Mean   : 7.602  
-##                     3rd Qu.:183.1    3rd Qu.:105.62           3rd Qu.: 9.200  
+##  Length:173         Min.   : 30.2    Min.   :  5.70           Min.   : 1.200  
+##  Class :character   1st Qu.:145.8    1st Qu.: 84.50           1st Qu.: 6.500  
+##  Mode  :character   Median :173.9    Median : 94.30           Median : 7.700  
+##                     Mean   :159.6    Mean   : 88.76           Mean   : 7.599  
+##                     3rd Qu.:182.7    3rd Qu.:105.30           3rd Qu.: 9.200  
 ##                     Max.   :207.5    Max.   :118.20           Max.   :10.600  
 ##                                                                               
-##  Tram Journeys (m) Overground Journeys (m) Emirates Airline Journeys (m)
+##  Tram Journeys (m) Overground Journeys (m) London Cable Car Journeys (m)
 ##  Min.   :0.400     Min.   : 1.00           Min.   :0.0000               
-##  1st Qu.:1.900     1st Qu.: 8.80           1st Qu.:0.1000               
-##  Median :2.200     Median :11.30           Median :0.1000               
-##  Mean   :2.027     Mean   :11.21           Mean   :0.1104               
-##  3rd Qu.:2.300     3rd Qu.:14.40           3rd Qu.:0.1000               
+##  1st Qu.:1.800     1st Qu.: 8.90           1st Qu.:0.1000               
+##  Median :2.200     Median :11.35           Median :0.1000               
+##  Mean   :2.005     Mean   :11.30           Mean   :0.1097               
+##  3rd Qu.:2.300     3rd Qu.:14.30           3rd Qu.:0.1000               
 ##  Max.   :2.800     Max.   :17.80           Max.   :0.5000               
 ##                    NA's   :7               NA's   :29                   
 ##  TfL Rail Journeys (m)
 ##  Min.   : 0.600       
-##  1st Qu.: 3.100       
+##  1st Qu.: 3.200       
 ##  Median : 3.700       
-##  Mean   : 3.898       
-##  3rd Qu.: 4.300       
-##  Max.   :12.500       
+##  Mean   : 4.762       
+##  3rd Qu.: 4.500       
+##  Max.   :16.700       
 ##  NA's   :66
 ```
 
@@ -763,21 +783,21 @@ str(tflJourneyType)
 ```
 
 ```
-## spc_tbl_ [164 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ Period and Financial year    : chr [1:164] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
-##  $ Reporting Period             : num [1:164] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ Days in period               : num [1:164] 31 28 28 28 28 28 28 28 28 28 ...
-##  $ Period beginning             : chr [1:164] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
-##  $ Period ending                : chr [1:164] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
-##  $ Bus journeys (m)             : num [1:164] 189 182 176 183 160 ...
-##  $ Underground journeys (m)     : num [1:164] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
-##  $ DLR Journeys (m)             : num [1:164] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
-##  $ Tram Journeys (m)            : num [1:164] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
-##  $ Overground Journeys (m)      : num [1:164] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
-##  $ Emirates Airline Journeys (m): num [1:164] NA NA NA NA NA NA NA NA NA NA ...
-##  $ TfL Rail Journeys (m)        : num [1:164] NA NA NA NA NA NA NA NA NA NA ...
-##  $ BusTube                      : num [1:164] 280 266 260 270 243 ...
-##  $ DLR_Tram                     : num [1:164] 8.6 8 7.9 8.2 7.8 7.5 8.6 8.9 8.7 6.6 ...
+## spc_tbl_ [173 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Period and Financial year    : chr [1:173] "01_10/11" "02_10/11" "03_10/11" "04_10/11" ...
+##  $ Reporting Period             : num [1:173] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Days in period               : num [1:173] 31 28 28 28 28 28 28 28 28 28 ...
+##  $ Period beginning             : chr [1:173] "01-Apr-10" "02-May-10" "30-May-10" "27-Jun-10" ...
+##  $ Period ending                : chr [1:173] "01-May-10" "29-May-10" "26-Jun-10" "24-Jul-10" ...
+##  $ Bus journeys (m)             : num [1:173] 189 182 176 183 160 ...
+##  $ Underground journeys (m)     : num [1:173] 90.5 84.5 84.3 86.5 82.9 80.9 88.7 90.3 90.6 72.5 ...
+##  $ DLR Journeys (m)             : num [1:173] 6.3 5.8 5.8 6.1 5.8 5.5 6.3 6.7 6.4 4.8 ...
+##  $ Tram Journeys (m)            : num [1:173] 2.3 2.2 2.1 2.1 2 2 2.3 2.2 2.3 1.8 ...
+##  $ Overground Journeys (m)      : num [1:173] NA NA NA NA NA NA NA 5.6 5.4 3.5 ...
+##  $ London Cable Car Journeys (m): num [1:173] NA NA NA NA NA NA NA NA NA NA ...
+##  $ TfL Rail Journeys (m)        : num [1:173] NA NA NA NA NA NA NA NA NA NA ...
+##  $ BusTube                      : num [1:173] 280 266 260 270 243 ...
+##  $ DLR_Tram                     : num [1:173] 8.6 8 7.9 8.2 7.8 7.5 8.6 8.9 8.7 6.6 ...
 ##  - attr(*, "spec")=
 ##   .. cols(
 ##   ..   `Period and Financial year` = col_character(),
@@ -790,7 +810,7 @@ str(tflJourneyType)
 ##   ..   `DLR Journeys (m)` = col_double(),
 ##   ..   `Tram Journeys (m)` = col_double(),
 ##   ..   `Overground Journeys (m)` = col_double(),
-##   ..   `Emirates Airline Journeys (m)` = col_double(),
+##   ..   `London Cable Car Journeys (m)` = col_double(),
 ##   ..   `TfL Rail Journeys (m)` = col_double()
 ##   .. )
 ##  - attr(*, "problems")=<externalptr>
@@ -885,7 +905,7 @@ paste("The highest highest average cycle hire time per month was", maxHire[1,3],
 ```
 
 ```
-## Error in paste("The highest highest average cycle hire time per month was", : object 'maxHire' not found
+## Error in eval(expr, envir, enclos): object 'maxHire' not found
 ```
 
 ```r

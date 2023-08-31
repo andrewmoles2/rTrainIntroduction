@@ -46,13 +46,14 @@ Once installed, you will not need to do this again unless you install a newer ve
 
 ## Installing packages exercise
 
-Try installing the following packages:`readr`, `readxl`, and `writexl` using the `install.packages()` function. We will be using these in today's session.
+Try installing the following packages:`readr`, `readxl`, `writexl`, and `knitr` using the `install.packages()` function. We will be using these in today's session.
 
 ```{r eval=FALSE}
 # your code here
 install.packages('readr')
 install.packages('readxl')
 install.packages('writexl')
+install.packages('knitr')
 ```
 
 # Loading packages
@@ -96,6 +97,8 @@ We call this a "path" and it tells you what directory the "r_fundamentals_5.Rmd"
 
 You can understand a directory as simply a place on your computer's hard drive and path as its' name. The simplest example of a directory is a folder. When you right click on your desktop and create a new folder, you create a new directory. Programmers often use the word folder interchangeably with a directory. Although they're almost the same in meaning a directory can also be a specific file in which case the path of a file will be the folder it is in followed by `/<name of the file>.<format such as jpg,txt or Rmd>`.
 
+Note: On Windows the path returned in R will use `/` as the path separator. However, Windows machines use `\` as the path separator. 
+
 ## Finding your directory exercise
 
 Now that you know the path of where your r_markdown file is, you can manually locate the file from the desktop.
@@ -105,7 +108,8 @@ If you're using Windows:
 1. Copy the path you just found without the quotation marks (`shortcut: Ctrl+C`)
 2. Minimize RStudio so that you're on your Desktop 
 3. Open the Windows search menu and paste the path directly (`shortcut: Ctrl+V`)
-4. Click on the folder that appears
+4. Replace the forward slashes (`/`) with backward slashes (`\`)
+5. Click on the folder that appears
 
 If you're using Mac:
 
@@ -130,10 +134,10 @@ Now minimize RStudio again and go to the folder which you accessed previously, d
 
 ## Loading in a Picture Exercise
 
-1. Please download the picture "r_fundamentals_5.png" from the files in the r-fundamentals-5 teams channel.
+1. Please download the picture "r_fundamentals_5.png" from the files in the r-fundamentals-5 teams channel
 2. Create a new folder on your Desktop and move the picture to that new folder **Make sure it is a different folder than the one your `r_fundamentals_5.Rmd` is placed in**
 3. Google how to find a path of a file on your operating system
-4. Load in a picture using `knitr::include_graphics("path-to-image-here")` command
+4. Load in a picture using `knitr::include_graphics("path-to-image-here")` command. Note that if you are using Windows, make sure to change any backwards slashes (`\`) into forward slashes (`/`)
 5. Feel free to inspect a picture to get a better understanding of how your computer memory is structured
 6. Try running the same command but in the `path-to-image-here` insert just the name of the picture `r_fundamentals_5.png`. What error do you get? Why do you think that is?
 
@@ -144,7 +148,7 @@ knitr::include_graphics("e.g. C:/Users/<Your Name>/Desktop/New_file/r_fundamenta
 #Remember that the directory path needs to include the name of the file with the format at the end "../r_fundamentals_5.png"
 ```
 
-*note: include_graphics() command is from knitr package. You might have noticed that we have not loaded in knitr at the begging of this lesson. We can actually use commands from packages you have installed but not loaded in using <name-of-the-package>::<command>. It's actually a good practice not to load in entire packages if we're only going to use a single command*
+*note: include_graphics() command is from knitr package. You might have noticed that we have not loaded in knitr at the beginning of this lesson. We can actually use commands from packages you have installed but not loaded in using <name-of-the-package>::<command>. It's actually a good practice not to load in entire packages if we're only going to use a single command*
 
 # Introduction to working directory
 
@@ -160,10 +164,9 @@ The second important directory is a subdirectory. The Oxford Language official d
 
 It's important to note that when loading in a file, R will not search through all of the subdirectories, only the working directory. Nonetheless, if you are putting a file in a subdirectory there is no need to spell out the entire file path. When we are looking for a file from a subdirectory of a working directory we can just spell out the file path from the working directory onwards. When telling R to find a file in a subdirectory, you need to reference working directory with a dot e.g. `./MyFolder/MyFile.txt` instead of `C:/Users/Desktop/MyWorkingDirectory/MyFolder/MyFile.txt`.
 
-
 ## Accessing a file from working directory exercise
 
-1. Move your file to your working directory *you can use `getwd()` again if you forgot where it is*
+1. Move your `r_fundamentals_5.png` file to your working directory *you can use `getwd()` again if you forgot where it is*
 2. Run the command below without changing it. If the picture doesn't display correctly make sure you placed the picture in the same file you have `r_fundamentals_5.Rmd`.
 
 ```{r, out.width = '100%',fig.align='center', error=TRUE}
@@ -190,7 +193,17 @@ if (file.exists("r_fundamentals_5.png")) {
 
 ```
 
-4. Inspect the working directory, what changed, where is the image now?
+4. Inspect the working directory using `getwd()` and `list.files()`. What changed and where is the image now? Try running `list.files("images")` to help you
+
+```{r, error=TRUE}
+# your code here
+
+getwd()
+list.files()
+list.files("images")
+```
+
+
 5. Modify the code below so that the picture displays correctly. *You don't need to spell out the entire path like in the `Loading in a Picture` exercise*
 
 
@@ -198,7 +211,7 @@ if (file.exists("r_fundamentals_5.png")) {
 knitr::include_graphics("images/r_fundamentals_5.png")
 ```
 
-*note: now that you know what a path is you can speed up your work by using keyboard shortcuts. To quickly get a file path you can click on the file once and press `Shift+A` on Windows or `Command+Option+C` on Mac. This will copy a path to your clipboard which you can then quickly paste with `Ctrl+V` on Windows and `Command+V` on Mac.*
+**Note:** now that you know what a path is you can speed up your work by using keyboard shortcuts. To quickly get a file path you can click on the file once and press `Ctrl+Shift+C` or Right Click on the file and Copy as Path on Windows, or `Command+Option+C` on Mac. This will copy a path to your clipboard which you can then quickly paste with `Ctrl+V` on Windows and `Command+V` on Mac.
 
 # How to set up a project?
 
@@ -244,15 +257,7 @@ To open and review your projects in future you will see them in a drop down menu
 
 Data can be loaded into R either from files from your computer, or the internet using URLs. R can handle many different file types thanks to packages built by the R community. These include .csv, .xlsx, .sav, .dta.
 
-To check your folders or data files are where you expect them to be, you can use the `list.files()` function. You should see your r_fundamentals_5.Rmd and your data file.
-
-```{r}
-list.files()
-```
-
-RStudio helpfully has auto-completion for directories to help you build file paths.
-
-To get this working use speech marks with a function, like `list.files()`. Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want. Repeat the process till you get to where you want to be.
+RStudio helpfully has auto-completion for directories to help you build file paths. To get this working use speech marks with a function, like `list.files()`. **Press tab (key on far left of keyboard above caps lock with arrow) when the cursor is within the speech marks (""). You should get a drop down list of your files, press tab again to select the file you want.** Repeat the process till you get to where you want to be.
 
 ## List files exercise
 
