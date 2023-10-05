@@ -1,9 +1,9 @@
 ---
-title: "R Data Wrangling 2 - Data wrangling with dplyr continued"
+title: "R Data Wrangling 2: Data wrangling with dplyr continued"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "05 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -279,6 +279,20 @@ messi_career %>%
 ```
 
 ```
+## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `across(c(goal_ratio, diff_avg_goal_ratio), round, digits = 1)`.
+## Caused by warning:
+## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
+## Supply arguments directly to `.fns` through an anonymous function instead.
+## 
+##   # Previously
+##   across(a:b, mean, na.rm = TRUE)
+## 
+##   # Now
+##   across(a:b, \(x) mean(x, na.rm = TRUE))
+```
+
+```
 ##    Appearances Goals Season         Club Age champLeagueGoal goal_ratio
 ## 1            9     1   2004 FC Barcelona  17               0        0.1
 ## 2           25     8   2005 FC Barcelona  18               1        0.3
@@ -502,10 +516,10 @@ df
 
 ```
 ##   column1 column2 column3 integer factor
-## 1   Hello       3       1       4    dog
-## 2   Hello       8       2       5    cat
-## 3   Hello       7       3       6    cat
-## 4   Hello       4       4       7    dog
+## 1   Hello       9       1       4    dog
+## 2   Hello       6       2       5    cat
+## 3   Hello      10       3       6    cat
+## 4   Hello       5       4       7    dog
 ```
 
 ```r
@@ -578,10 +592,10 @@ df_new_col
 
 ```
 ##   string random sequence integer factor
-## 1  Hello      4        1       4    dog
-## 2  Hello      9        2       5    cat
-## 3  Hello      7        3       6    cat
-## 4  Hello     10        4       7    dog
+## 1  Hello     10        1       4    dog
+## 2  Hello      3        2       5    cat
+## 3  Hello      2        3       6    cat
+## 4  Hello      8        4       7    dog
 ```
 
 ## Rename columns exercise
@@ -647,9 +661,10 @@ data_frame(default = names(messy_cols),
 
 ```
 ## Warning: `data_frame()` was deprecated in tibble 1.1.0.
-## Please use `tibble()` instead.
+## ℹ Please use `tibble()` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 ```
@@ -888,7 +903,7 @@ Using the `pokemon_cleaned` data from the `janitor` exercise:
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Data%Wrangling%2:%Data%wrangling%with%dplyr%continued&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=4hVS7P>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Data%Wrangling%2:%Data%wrangling%with%dplyr%continued&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=4hVS7P>
 
 The solutions we be available from a link at the end of the survey.
 

@@ -3,7 +3,7 @@ title: "R Fundamentals 6: Conditionals and Logic"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "31 August, 2023"
+date: "05 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -244,7 +244,7 @@ sum(z < 50)
 ```
 
 ```
-## [1] 11
+## [1] 10
 ```
 
 ```r
@@ -252,7 +252,7 @@ sum(z >= 50)
 ```
 
 ```
-## [1] 9
+## [1] 10
 ```
 
 ```r
@@ -339,9 +339,9 @@ df[df$x < 20, ]
 ```
 
 ```
-##    x  y
-## 8  4 71
-## 12 7 54
+##   x y
+## 4 9 7
+## 7 7 9
 ```
 
 ```r
@@ -352,17 +352,17 @@ df2
 
 ```
 ##     x  y
-## 1  40 90
-## 2  49 99
-## 3  67  1
-## 4  54 39
-## 7  63  7
-## 9  99 45
-## 10 66 18
-## 11 39 42
-## 13 36 28
-## 14 42 67
-## 15 44 41
+## 1  41 89
+## 2  64 81
+## 5  38 85
+## 6  84 23
+## 8  80 31
+## 9  48 78
+## 10 91  6
+## 11 89 79
+## 12 66 18
+## 13 76 57
+## 15 97 45
 ```
 
 In base R there is a specialised function for subsetting data frames called `subset()`. It is pretty handy as it will save you time typing because you only need to give the name of the data frame once. 
@@ -373,12 +373,12 @@ subset(df, y <= 40)
 
 ```
 ##     x  y
-## 3  67  1
-## 4  54 39
-## 6  28 30
-## 7  63  7
-## 10 66 18
-## 13 36 28
+## 4   9  7
+## 6  84 23
+## 7   7  9
+## 8  80 31
+## 10 91  6
+## 12 66 18
 ```
 
 ## Subsetting exercise
@@ -650,8 +650,8 @@ df3[df3$y >= 70 & df3$z >= 70,]
 ```
 
 ```
-##         id  x  y  z     exp
-## 5 person_e 91 82 85 control
+##         id  x  y  z  exp
+## 7 person_g 63 92 86 test
 ```
 
 ```r
@@ -659,11 +659,12 @@ df3[df3$x < 15 | df3$y < 15 | df3$z < 15,]
 ```
 
 ```
-##         id  x  y  z     exp
-## 1 person_a 29 18  7    test
-## 2 person_b 67  3 67    test
-## 3 person_c 82 89  5 control
-## 7 person_g 38 12 55    test
+##          id  x  y  z     exp
+## 2  person_b 10 13 76    test
+## 4  person_d 43  9 34    test
+## 6  person_f 56 88  8    test
+## 9  person_i 35  1 55    test
+## 10 person_j 82 93  2 control
 ```
 
 ```r
@@ -671,9 +672,9 @@ subset(df3, y < 60 & exp == 'control')
 ```
 
 ```
-##         id  x  y  z     exp
-## 4 person_d 15 51 30 control
-## 8 person_h 85 53 25 control
+##         id   x  y  z     exp
+## 5 person_e  22 34 96 control
+## 8 person_h 100 50 83 control
 ```
 
 # %in% operator
@@ -690,9 +691,9 @@ df3[df3$z %in% 1:20, ]
 ```
 
 ```
-##         id  x  y z     exp
-## 1 person_a 29 18 7    test
-## 3 person_c 82 89 5 control
+##          id  x  y z     exp
+## 6  person_f 56 88 8    test
+## 10 person_j 82 93 2 control
 ```
 
 ```r
@@ -711,10 +712,10 @@ subset(df3, id %in% val_match)
 ```
 
 ```
-##          id  x  y  z     exp
-## 8  person_h 85 53 25 control
-## 9  person_i 19 59 69    test
-## 10 person_j 79 64 62 control
+##          id   x  y  z     exp
+## 8  person_h 100 50 83 control
+## 9  person_i  35  1 55    test
+## 10 person_j  82 93  2 control
 ```
 
 ```r
@@ -901,17 +902,17 @@ df3[, c('x','cat')]
 ```
 
 ```
-##     x    cat
-## 1  29    low
-## 2  67   high
-## 3  82   high
-## 4  15    low
-## 5  91   high
-## 6  56 medium
-## 7  38 medium
-## 8  85   high
-## 9  19    low
-## 10 79   high
+##      x    cat
+## 1   69   high
+## 2   10    low
+## 3   58 medium
+## 4   43 medium
+## 5   22    low
+## 6   56 medium
+## 7   63 medium
+## 8  100   high
+## 9   35 medium
+## 10  82   high
 ```
 When nesting if statements like this, *else* becomes the next ifelse statement. 
 
@@ -981,7 +982,7 @@ table(pokemon$SpeedTier, pokemon$Type.1)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%6:%Conditionals%and%Logic&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=0ZYnrr>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%6:%Conditionals%and%Logic&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EsE8R-SkQKVHgGxQR78_Dp8B5dgJGBH0SntwdsbDv8AZaA?e=0ZYnrr>
 
 # Individual take home challenge 
 

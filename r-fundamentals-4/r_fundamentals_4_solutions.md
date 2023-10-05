@@ -1,9 +1,9 @@
 ---
-title: "R Fundamentals 4 - Data Frames"
+title: "R Fundamentals 4: Data Frames"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "10 March, 2023"
+date: "05 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -221,7 +221,7 @@ Using the data frame you created in the previous task (`messi_career`):
 2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
 3)  Now we are going to add Messi's Champions League goals using the `$` sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
 4)  Print out the result. You should see both the new columns of data you just added.
-5)  Using `transform()` and without assigning the result back to messi_career, add Age and champLeagueGoal to messi_career. 
+5)  Test out using `transform()` on the messi data to add a new column called age2 that is Age times 2
 
 
 ```r
@@ -404,7 +404,7 @@ dim(exampleDat)
 ## [1] 6 8
 ```
 
-To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
+To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the first few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
 
 
 ```r
@@ -826,7 +826,7 @@ paste("Messi's best goal ratio is", round(bestGR$goalRatio,2), "goals per game i
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%4:%Data%Frames&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=33hbek>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%4:%Data%Frames&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=33hbek>
 
 # Individual take home challenge
 
@@ -883,7 +883,7 @@ paste(HP_Characters[7,1], "is very", HP_Characters[7,2],
 ```
 
 ```
-## [1] "Dobby the house elf is very Devoted and has a power to evil ratio of 0.33"
+## [1] "Dobby the house elf is very Devoted and has a power to evil ratio of 0.14"
 ```
 
 

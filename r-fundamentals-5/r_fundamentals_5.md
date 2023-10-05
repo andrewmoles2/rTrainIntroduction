@@ -3,7 +3,7 @@ title: "R Fundamentals 5: Loading data and packages"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "31 August, 2023"
+date: "05 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -96,11 +96,11 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.33   R6_2.5.1        fastmap_1.1.1   xfun_0.39      
-##  [5] cachem_1.0.8    knitr_1.43      htmltools_0.5.5 rmarkdown_2.23 
-##  [9] cli_3.6.1       sass_0.4.6      jquerylib_0.1.4 compiler_4.3.0 
-## [13] rstudioapi_0.14 tools_4.3.0     evaluate_0.21   bslib_0.5.0    
-## [17] yaml_2.3.7      rlang_1.1.1     jsonlite_1.8.7
+##  [1] digest_0.6.33     R6_2.5.1          fastmap_1.1.1     xfun_0.40        
+##  [5] cachem_1.0.8      knitr_1.44        htmltools_0.5.6   rmarkdown_2.25   
+##  [9] cli_3.6.1         sass_0.4.7        jquerylib_0.1.4   compiler_4.3.0   
+## [13] rstudioapi_0.15.0 tools_4.3.0       evaluate_0.21     bslib_0.5.1      
+## [17] yaml_2.3.7        rlang_1.1.1       jsonlite_1.8.7
 ```
 
 # Introduction to directories
@@ -406,7 +406,7 @@ library(writexl)
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%5:%Loading%data%and%packages&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=RrIyhO>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%5:%Loading%data%and%packages&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Enb32qhTgaZNrj--DH48fLcBMXQZrXgpjtfW2dawAVYhBQ?e=RrIyhO>
 
 # Individual take home challenge
 

@@ -1,9 +1,9 @@
 ---
-title: "R Fundamentals 7 - Lists and Matrices"
+title: "R Fundamentals 7: Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "05 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -349,9 +349,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  15 16 3 8 7 9 14 4 12 11
-##  $ rand  : num  5.4 8.4 6.14 8.19 7.05 ...
-##  $ rand2 : num  6.04 5 6.24 3 5.65 ...
+##  $ samp  : int  16 10 14 19 18 20 4 13 7 17
+##  $ rand  : num  1.05 8.69 9.92 7.21 9.26 ...
+##  $ rand2 : num  2.08 3.52 5.57 6.88 5.46 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -371,12 +371,12 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   15 5.404607 6.043384
-## string2   2   16 8.402783 5.001026
-## string3   3    3 6.135280 6.235763
-## string4   4    8 8.186040 2.996660
-## string5   5    7 7.050192 5.651943
-## string6   6    9 4.066525 7.263813
+## string1   1   16 1.051454 2.076559
+## string2   2   10 8.689607 3.516698
+## string3   3   14 9.923028 5.573342
+## string4   4   19 7.207855 6.882567
+## string5   5   18 9.259457 5.456826
+## string6   6   20 4.208970 4.476484
 ```
 
 Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
@@ -392,12 +392,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   15 5.404607 6.043384
-## string2   2   16 8.402783 5.001026
-## string3   3    3 6.135280 6.235763
-## string4   4    8 8.186040 2.996660
-## string5   5    7 7.050192 5.651943
-## string6   6    9 4.066525 7.263813
+## string1   1   16 1.051454 2.076559
+## string2   2   10 8.689607 3.516698
+## string3   3   14 9.923028 5.573342
+## string4   4   19 7.207855 6.882567
+## string5   5   18 9.259457 5.456826
+## string6   6   20 4.208970 4.476484
 ```
 
 ```r
@@ -419,10 +419,10 @@ calc
 ```
 
 ```
-##    string1    string2    string3    string4    string5    string6    string7 
-## 0.81069098 1.34444523 0.18405841 0.65488322 0.49351342 0.36598721 0.20748272 
-##    string8    string9   string10 
-## 0.06222317 0.55274595 0.66494019
+##   string1   string2   string3   string4   string5   string6   string7   string8 
+## 0.1682326 0.8689607 1.3892239 1.3694925 1.6667023 0.8417940 0.1910393 1.2263337 
+##   string9  string10 
+## 0.3168648 1.5386706
 ```
 
 ```r
@@ -432,17 +432,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand    rand2       calc
-## string1    1   15 5.404607 6.043384 0.81069098
-## string2    2   16 8.402783 5.001026 1.34444523
-## string3    3    3 6.135280 6.235763 0.18405841
-## string4    4    8 8.186040 2.996660 0.65488322
-## string5    5    7 7.050192 5.651943 0.49351342
-## string6    6    9 4.066525 7.263813 0.36598721
-## string7    7   14 1.482019 4.158702 0.20748272
-## string8    8    4 1.555579 2.218915 0.06222317
-## string9    9   12 4.606216 5.073300 0.55274595
-## string10  10   11 6.044911 7.396006 0.66494019
+##          int samp     rand    rand2      calc
+## string1    1   16 1.051454 2.076559 0.1682326
+## string2    2   10 8.689607 3.516698 0.8689607
+## string3    3   14 9.923028 5.573342 1.3892239
+## string4    4   19 7.207855 6.882567 1.3694925
+## string5    5   18 9.259457 5.456826 1.6667023
+## string6    6   20 4.208970 4.476484 0.8417940
+## string7    7    4 4.775983 5.723734 0.1910393
+## string8    8   13 9.433336 5.560040 1.2263337
+## string9    9    7 4.526641 4.496447 0.3168648
+## string10  10   17 9.051004 9.065236 1.5386706
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -455,12 +455,12 @@ df_cor
 ```
 
 ```
-##               int       samp       rand       rand2       calc
-## int    1.00000000 -0.1596204 -0.5057188 -0.02492626 -0.4403370
-## samp  -0.15962038  1.0000000  0.1027407  0.18137970  0.6948704
-## rand  -0.50571879  0.1027407  1.0000000  0.24522243  0.7184422
-## rand2 -0.02492626  0.1813797  0.2452224  1.00000000  0.1950924
-## calc  -0.44033698  0.6948704  0.7184422  0.19509243  1.0000000
+##              int       samp      rand     rand2      calc
+## int    1.0000000 -0.2065922 0.1720966 0.6355960 0.1062933
+## samp  -0.2065922  1.0000000 0.1224695 0.1846010 0.6086332
+## rand   0.1720966  0.1224695 1.0000000 0.5779993 0.8458704
+## rand2  0.6355960  0.1846010 0.5779993 1.0000000 0.6355782
+## calc   0.1062933  0.6086332 0.8458704 0.6355782 1.0000000
 ```
 
 ```r
@@ -470,12 +470,12 @@ df_cor
 ```
 
 ```
-##          int   samp   rand  rand2   calc
-## int    1.000 -0.160 -0.506 -0.025 -0.440
-## samp  -0.160  1.000  0.103  0.181  0.695
-## rand  -0.506  0.103  1.000  0.245  0.718
-## rand2 -0.025  0.181  0.245  1.000  0.195
-## calc  -0.440  0.695  0.718  0.195  1.000
+##          int   samp  rand rand2  calc
+## int    1.000 -0.207 0.172 0.636 0.106
+## samp  -0.207  1.000 0.122 0.185 0.609
+## rand   0.172  0.122 1.000 0.578 0.846
+## rand2  0.636  0.185 0.578 1.000 0.636
+## calc   0.106  0.609 0.846 0.636 1.000
 ```
 
 ```r
@@ -499,12 +499,12 @@ df_cor
 ```
 
 ```
-##          int   samp   rand  rand2   calc
-## int    1.000 -0.160 -0.506 -0.025 -0.440
-## samp  -0.160  1.000  0.103  0.181  0.695
-## rand  -0.506  0.103  1.000  0.245  0.718
-## rand2 -0.025  0.181  0.245  1.000  0.195
-## calc  -0.440  0.695  0.718  0.195  1.000
+##          int   samp  rand rand2  calc
+## int    1.000 -0.207 0.172 0.636 0.106
+## samp  -0.207  1.000 0.122 0.185 0.609
+## rand   0.172  0.122 1.000 0.578 0.846
+## rand2  0.636  0.185 0.578 1.000 0.636
+## calc   0.106  0.609 0.846 0.636 1.000
 ```
 
 ```r
@@ -512,7 +512,7 @@ df_cor$int
 ```
 
 ```
-## [1]  1.000 -0.160 -0.506 -0.025 -0.440
+## [1]  1.000 -0.207  0.172  0.636  0.106
 ```
 
 ## Converting matrices exercise
@@ -538,7 +538,7 @@ head(ronaldo)
 ```
 
 ```
-## Error in head(ronaldo): object 'ronaldo' not found
+## Error in eval(expr, envir, enclos): object 'ronaldo' not found
 ```
 
 ```r
@@ -574,7 +574,7 @@ ronaldo_mat <- as.matrix(ronaldo)
 ```
 
 ```
-## Error in as.matrix(ronaldo): object 'ronaldo' not found
+## Error in eval(expr, envir, enclos): object 'ronaldo' not found
 ```
 
 ```r
@@ -591,7 +591,7 @@ ronaldo_mat <- cbind(ronaldo_mat, goal_ratio)
 ```
 
 ```
-## Error in cbind(ronaldo_mat, goal_ratio): object 'ronaldo_mat' not found
+## Error in eval(expr, envir, enclos): object 'ronaldo_mat' not found
 ```
 
 ```r
@@ -1249,7 +1249,7 @@ plot(x = dino_weight, y = dino_length,
 ```
 
 ```
-## Error in plot(x = dino_weight, y = dino_length, col = c("orange", "blue", : object 'dino_weight' not found
+## Error in eval(expr, envir, enclos): object 'dino_weight' not found
 ```
 
 ```r
@@ -1258,14 +1258,14 @@ legend("topleft", legend = levels(dino_class),
 ```
 
 ```
-## Error in levels(dino_class): object 'dino_class' not found
+## Error in eval(expr, envir, enclos): object 'dino_class' not found
 ```
 
 # Final task - Please give us your individual feedback!
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%7:%Lists%and%Matrices&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Et1Q00_hUB9Iv3NaRfEoRzIBXFH_Ui3ZpdEFmbIKdgCCmw?e=qeYzZ7>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%7:%Lists%and%Matrices&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Et1Q00_hUB9Iv3NaRfEoRzIBXFH_Ui3ZpdEFmbIKdgCCmw?e=qeYzZ7>
 
 # Individual take home challenge
 

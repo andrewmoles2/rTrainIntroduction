@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "17 August, 2023"
+date: "04 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -346,7 +346,7 @@ You decided to track your total monthly expenditures for the year to find out mo
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%2:%Vectors,%Functions,%and%Indexing&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EmUo-IOFzsxFjPujn5poqp4BKnYT46Eg1qoA5o1fSHr6Lw?e=UGNzwj>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%2:%Vectors,%Functions,%and%Indexing&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EmUo-IOFzsxFjPujn5poqp4BKnYT46Eg1qoA5o1fSHr6Lw?e=UGNzwj>
 
 The solutions will be available from a link at the end of the survey.
 

@@ -1,9 +1,9 @@
 ---
-title: "R Fundamentals 3 - Strings, factors, and type conversion"
+title: "R Fundamentals 3: Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2022"
+date: "04 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -458,7 +458,7 @@ As you can see paste can make new strings from existing strings and format them 
 3)  Use rep in conjunction with paste to print out each of your flowers with "I like" before each flower, repeat it four times
 4)  Make a variable called daysRaining with the value 360
 5)  Using `paste0` or `paste` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
-6)  Use `paste0` or `paste` with the seq function to make these strings: "order_1", "order_2", "order_3", "order_4", "order_5". Print out the result
+6)  Use `paste0` or `paste` with the seq function to make these strings: "order_1" "order_2" "order_3" "order_4" "order_5". Print out the result
 
 
 ```r
@@ -469,7 +469,7 @@ As you can see paste can make new strings from existing strings and format them 
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Fundamentals%3:%Strings,%Factors,%and%Type%Conversion&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElrN79ulZINElxjPz6Tx4VMBo1NWK7TEaket80nhJMPUwg?e=vwpRWp>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%3:%Strings,%Factors,%and%Type%Conversion&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElrN79ulZINElxjPz6Tx4VMBo1NWK7TEaket80nhJMPUwg?e=vwpRWp>
 
 # Individual take home challenge 1
 
@@ -497,7 +497,7 @@ red <- sum(table(typeWine[grep('red',typeWine)]))
 ```
 
 ```
-## Error in table(typeWine[grep("red", typeWine)]): object 'typeWine' not found
+## Error in eval(expr, envir, enclos): object 'typeWine' not found
 ```
 
 ```r
@@ -505,7 +505,7 @@ white <- sum(table(typeWine[grep('white',typeWine)]))
 ```
 
 ```
-## Error in table(typeWine[grep("white", typeWine)]): object 'typeWine' not found
+## Error in eval(expr, envir, enclos): object 'typeWine' not found
 ```
 
 ```r
@@ -514,7 +514,7 @@ meanWine <- round(mean(amountWine), digits = 2)
 ```
 
 ```
-## Error in mean(amountWine): object 'amountWine' not found
+## Error in eval(expr, envir, enclos): object 'amountWine' not found
 ```
 
 ```r
@@ -526,7 +526,7 @@ paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " r
 ```
 
 ```
-## Error in paste0("This week I drank on average ", meanWine, " glasses of wine, ", : object 'meanWine' not found
+## Error in eval(expr, envir, enclos): object 'meanWine' not found
 ```
 
 ```r

@@ -3,7 +3,7 @@ title: "R Data Wrangling 3: Joining and aggregation"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "25 July, 2023"
+date: "05 October, 2023"
 output: 
   html_document: 
     theme: readable
@@ -617,26 +617,26 @@ df1
 
 ```
 ##          city tourist_rating
-## 1   Cambridge              2
-## 2  Manchester              4
-## 3  Manchester              3
-## 4     Bristol              1
-## 5     Bristol              5
-## 6  Manchester              3
-## 7  Manchester              1
-## 8   Cambridge              2
-## 9  Birmingham              3
-## 10    Bristol              1
-## 11    Bristol              1
-## 12    Bristol              3
+## 1   Cambridge              3
+## 2  Birmingham              1
+## 3  Birmingham              1
+## 4     Bristol              3
+## 5  Manchester              2
+## 6     Bristol              4
+## 7  Birmingham              2
+## 8  Birmingham              3
+## 9     Bristol              3
+## 10  Cambridge              1
+## 11 Birmingham              4
+## 12 Birmingham              5
 ## 13 Manchester              3
-## 14 Birmingham              4
-## 15  Cambridge              5
-## 16  Cambridge              2
-## 17 Birmingham              4
-## 18  Cambridge              1
-## 19 Manchester              2
-## 20 Birmingham              2
+## 14  Cambridge              1
+## 15 Birmingham              2
+## 16 Manchester              1
+## 17 Manchester              2
+## 18 Birmingham              4
+## 19  Cambridge              4
+## 20  Cambridge              4
 ```
 
 ```r
@@ -647,10 +647,10 @@ df1 %>%
 
 ```
 ##         city n
-## 1 Birmingham 4
-## 2    Bristol 5
+## 1 Birmingham 8
+## 2    Bristol 3
 ## 3  Cambridge 5
-## 4 Manchester 6
+## 4 Manchester 4
 ```
 
 ```r
@@ -660,7 +660,7 @@ table(df1$city)
 ```
 ## 
 ## Birmingham    Bristol  Cambridge Manchester 
-##          4          5          5          6
+##          8          3          5          4
 ```
 
 We can expand this by using conditional operators in the count or table functions.
@@ -713,19 +713,19 @@ df1 %>%
 
 ```
 ##          city tourist_rating n
-## 1  Birmingham              2 1
-## 2  Birmingham              3 1
-## 3  Birmingham              4 2
-## 4     Bristol              1 3
-## 5     Bristol              3 1
-## 6     Bristol              5 1
-## 7   Cambridge              1 1
-## 8   Cambridge              2 3
-## 9   Cambridge              5 1
-## 10 Manchester              1 1
-## 11 Manchester              2 1
-## 12 Manchester              3 3
-## 13 Manchester              4 1
+## 1  Birmingham              1 2
+## 2  Birmingham              2 2
+## 3  Birmingham              3 1
+## 4  Birmingham              4 2
+## 5  Birmingham              5 1
+## 6     Bristol              3 2
+## 7     Bristol              4 1
+## 8   Cambridge              1 2
+## 9   Cambridge              3 1
+## 10  Cambridge              4 2
+## 11 Manchester              1 1
+## 12 Manchester              2 2
+## 13 Manchester              3 1
 ```
 
 ```r
@@ -735,10 +735,10 @@ table(df1$city, df1$tourist_rating)
 ```
 ##             
 ##              1 2 3 4 5
-##   Birmingham 0 1 1 2 0
-##   Bristol    3 0 1 0 1
-##   Cambridge  1 3 0 0 1
-##   Manchester 1 1 3 1 0
+##   Birmingham 2 2 1 2 1
+##   Bristol    0 0 2 1 0
+##   Cambridge  2 0 1 2 0
+##   Manchester 1 2 1 0 0
 ```
 
 We can also apply filtering using count or table functions. With count we use dplyr's filter function, with table we use base r indexing.
@@ -752,11 +752,10 @@ df1 %>%
 
 ```
 ##         city tourist_rating n
-## 1    Bristol              1 3
-## 2    Bristol              5 1
-## 3  Cambridge              1 1
-## 4  Cambridge              5 1
-## 5 Manchester              1 1
+## 1 Birmingham              1 2
+## 2 Birmingham              5 1
+## 3  Cambridge              1 2
+## 4 Manchester              1 1
 ```
 
 ```r
@@ -766,9 +765,9 @@ table(df1$city, df1$tourist_rating)[, c(1, 5)]
 ```
 ##             
 ##              1 5
-##   Birmingham 0 0
-##   Bristol    3 1
-##   Cambridge  1 1
+##   Birmingham 2 1
+##   Bristol    0 0
+##   Cambridge  2 0
 ##   Manchester 1 0
 ```
 
@@ -892,13 +891,13 @@ head(df2)
 ```
 
 ```
-##   key key2 num1     num2     num3
-## 1   B    Y   NA 1.313668 6.744983
-## 2   B    X    7 4.063565 6.864403
-## 3   C    X    2 1.564439 5.680413
-## 4   B    Y   10 6.119026 1.650609
-## 5   A    X    4 5.783602 5.313634
-## 6   C    X    8 4.120486 4.748939
+##   key key2 num1     num2       num3
+## 1   A    Y    2 4.770557 13.2979523
+## 2   B    X   10 9.783816  3.7564388
+## 3   C    Y    8 3.538413  7.2152020
+## 4   C    X    3 3.043103 12.1310580
+## 5   C    X    1 8.106753  0.7971242
+## 6   A    Y    2 4.856647  5.3486718
 ```
 
 ```r
@@ -912,9 +911,9 @@ df2 %>%
 ## # A tibble: 3 × 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A        48
-## 2 B        NA
-## 3 C        12
+## 1 A        NA
+## 2 B        33
+## 3 C        39
 ```
 
 ```r
@@ -928,9 +927,9 @@ df2 %>%
 ## # A tibble: 3 × 2
 ##   key    sum1
 ##   <fct> <int>
-## 1 A        48
-## 2 B        51
-## 3 C        12
+## 1 A        14
+## 2 B        33
+## 3 C        39
 ```
 
 The grouping concept can be a little confusing, and the below illustrations hopefully will help break down the steps, which are as follows:
@@ -956,9 +955,9 @@ df2 %>%
 ## # A tibble: 3 × 3
 ##   key    sum1  sum2
 ##   <fct> <int> <dbl>
-## 1 A        48 48.1 
-## 2 B        51 50.7 
-## 3 C        12  9.38
+## 1 A        14  34.7
+## 2 B        33  29.0
+## 3 C        39  37.9
 ```
 
 We can take this a bit further by adding the `n()` function, which counts how many of each category in our grouped variable there are. If you want to add in a relative frequency, we can then pipe to a `mutate` function. We then divide our count by the sum of our count.
@@ -978,9 +977,9 @@ df2 %>%
 ## # A tibble: 3 × 5
 ##   key    sum1  sum2 count_n rel_freq
 ##   <fct> <int> <dbl>   <int>    <dbl>
-## 1 A        48 48.1        9     0.45
-## 2 B        51 50.7        8     0.4 
-## 3 C        12  9.38       3     0.15
+## 1 A        14  34.7       6     0.3 
+## 2 B        33  29.0       5     0.25
+## 3 C        39  37.9       9     0.45
 ```
 
 If you want to extract a single element from an aggregation the `pull()` function is very helpful. It is useful if you make a large aggregation table but only need one column at the moment for a visualisation. You can also add a name from another column, for example we might want to add the key as the name as we did in the example below.
@@ -1001,7 +1000,7 @@ agg %>%
 ```
 
 ```
-## [1] 48.109174 50.718675  9.375054
+## [1] 34.73031 28.96327 37.91880
 ```
 
 ```r
@@ -1011,8 +1010,8 @@ agg %>%
 ```
 
 ```
-##         A         B         C 
-## 48.109174 50.718675  9.375054
+##        A        B        C 
+## 34.73031 28.96327 37.91880
 ```
 
 You can group your data by more than one group. This means when the data is *split*, more subsets are formed for all different possible splits.
@@ -1038,15 +1037,16 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 5 × 6
+## # A tibble: 6 × 6
 ## # Groups:   key [3]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        22 21.9        4    0.444
-## 2 A     Y        26 26.2        5    0.556
-## 3 B     X        41 43.3        6    0.75 
-## 4 B     Y        10  7.43       2    0.25 
-## 5 C     X        12  9.38       3    1
+## 1 A     X         7  11.9       2    0.333
+## 2 A     Y         7  22.8       4    0.667
+## 3 B     X        18  14.2       2    0.4  
+## 4 B     Y        15  14.8       3    0.6  
+## 5 C     X        24  24.0       6    0.667
+## 6 C     Y        15  13.9       3    0.333
 ```
 
 ```r
@@ -1065,15 +1065,16 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 5 × 6
+## # A tibble: 6 × 6
 ## # Groups:   key2 [2]
 ##   key2  key    sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 X     A        22 21.9        4    0.308
-## 2 X     B        41 43.3        6    0.462
-## 3 X     C        12  9.38       3    0.231
-## 4 Y     A        26 26.2        5    0.714
-## 5 Y     B        10  7.43       2    0.286
+## 1 X     A         7  11.9       2      0.2
+## 2 X     B        18  14.2       2      0.2
+## 3 X     C        24  24.0       6      0.6
+## 4 Y     A         7  22.8       4      0.4
+## 5 Y     B        15  14.8       3      0.3
+## 6 Y     C        15  13.9       3      0.3
 ```
 
 You can manually adjust the grouping structure of the output from your aggregation. By default, dplyr will use just your first grouping variable in the result. You can see this from the output from `rel_freq`. To change this, we use the `.groups` argument. Below are two examples, where we either drop all grouping with "drop" or keep the structure of the grouping with "keep". The default argument is "drop_last", which we what we have seen where only the first grouping is kept in the result.
@@ -1090,14 +1091,15 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 5 × 6
+## # A tibble: 6 × 6
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        22 21.9        4     0.2 
-## 2 A     Y        26 26.2        5     0.25
-## 3 B     X        41 43.3        6     0.3 
-## 4 B     Y        10  7.43       2     0.1 
-## 5 C     X        12  9.38       3     0.15
+## 1 A     X         7  11.9       2     0.1 
+## 2 A     Y         7  22.8       4     0.2 
+## 3 B     X        18  14.2       2     0.1 
+## 4 B     Y        15  14.8       3     0.15
+## 5 C     X        24  24.0       6     0.3 
+## 6 C     Y        15  13.9       3     0.15
 ```
 
 ```r
@@ -1111,15 +1113,16 @@ df2 %>%
 ```
 
 ```
-## # A tibble: 5 × 6
-## # Groups:   key, key2 [5]
+## # A tibble: 6 × 6
+## # Groups:   key, key2 [6]
 ##   key   key2   sum1  sum2 count_n rel_freq
 ##   <fct> <fct> <int> <dbl>   <int>    <dbl>
-## 1 A     X        22 21.9        4        1
-## 2 A     Y        26 26.2        5        1
-## 3 B     X        41 43.3        6        1
-## 4 B     Y        10  7.43       2        1
-## 5 C     X        12  9.38       3        1
+## 1 A     X         7  11.9       2        1
+## 2 A     Y         7  22.8       4        1
+## 3 B     X        18  14.2       2        1
+## 4 B     Y        15  14.8       3        1
+## 5 C     X        24  24.0       6        1
+## 6 C     Y        15  13.9       3        1
 ```
 
 ## Aggregation exercise
@@ -1261,13 +1264,13 @@ head(df2)
 ```
 
 ```
-##   key key2 num1     num2     num3
-## 1   B    Y   NA 1.313668 6.744983
-## 2   B    X    7 4.063565 6.864403
-## 3   C    X    2 1.564439 5.680413
-## 4   B    Y   10 6.119026 1.650609
-## 5   A    X    4 5.783602 5.313634
-## 6   C    X    8 4.120486 4.748939
+##   key key2 num1     num2       num3
+## 1   A    Y    2 4.770557 13.2979523
+## 2   B    X   10 9.783816  3.7564388
+## 3   C    Y    8 3.538413  7.2152020
+## 4   C    X    3 3.043103 12.1310580
+## 5   C    X    1 8.106753  0.7971242
+## 6   A    Y    2 4.856647  5.3486718
 ```
 
 ```r
@@ -1281,26 +1284,26 @@ df2 %>%
 ## # A tibble: 20 × 1
 ##    total_avg
 ##        <dbl>
-##  1      4.03
-##  2      5.98
-##  3      3.08
-##  4      5.92
-##  5      5.03
-##  6      5.62
-##  7      4.92
-##  8      5.87
-##  9      8.13
-## 10      4.73
-## 11      3.77
-## 12      6.66
-## 13      6.81
-## 14      5.73
-## 15      6.27
-## 16      5.60
-## 17      4.10
-## 18      4.35
-## 19      7.03
-## 20      3.21
+##  1      6.69
+##  2      7.85
+##  3      6.25
+##  4      6.06
+##  5      3.30
+##  6      4.07
+##  7      5.43
+##  8      7.27
+##  9      4.52
+## 10      5.21
+## 11      5.00
+## 12      2.69
+## 13      5.52
+## 14      5.65
+## 15      4.38
+## 16      4.07
+## 17      7.55
+## 18      3.37
+## 19      3.24
+## 20      6.05
 ```
 
 ```r
@@ -1314,26 +1317,26 @@ df2 %>%
 ## # A tibble: 20 × 1
 ##    total_avg
 ##        <dbl>
-##  1      4.03
-##  2      5.98
-##  3      3.08
-##  4      5.92
-##  5      5.03
-##  6      5.62
-##  7      4.92
-##  8      5.87
-##  9      8.13
-## 10      4.73
-## 11      3.77
-## 12      6.66
-## 13      6.81
-## 14      5.73
-## 15      6.27
-## 16      5.60
-## 17      4.10
-## 18      4.35
-## 19      7.03
-## 20      3.21
+##  1      6.69
+##  2      7.85
+##  3      6.25
+##  4      6.06
+##  5      3.30
+##  6      4.07
+##  7      5.43
+##  8      7.27
+##  9      4.52
+## 10      5.21
+## 11      5.00
+## 12      2.69
+## 13      5.52
+## 14      5.65
+## 15      4.38
+## 16      4.07
+## 17      7.55
+## 18      3.37
+## 19      3.24
+## 20      6.05
 ```
 
 If you want to add that total column to your data you use `mutate` instead of summarise. This is the most useful functionally of doing rowwise operations, as it allows you to calculate for each row a summary across several columns.
@@ -1351,26 +1354,26 @@ df2 %>%
 ## # Rowwise: 
 ##    key   key2   num1  num2   num3 total_avg
 ##    <fct> <fct> <int> <dbl>  <dbl>     <dbl>
-##  1 B     Y        NA  1.31  6.74       4.03
-##  2 B     X         7  4.06  6.86       5.98
-##  3 C     X         2  1.56  5.68       3.08
-##  4 B     Y        10  6.12  1.65       5.92
-##  5 A     X         4  5.78  5.31       5.03
-##  6 C     X         8  4.12  4.75       5.62
-##  7 A     Y         1  5.97  7.78       4.92
-##  8 A     X         7  5.56  5.04       5.87
-##  9 B     X         9  9.31  6.10       8.13
-## 10 B     X         1  6.97  6.22       4.73
-## 11 C     X         2  3.69  5.62       3.77
-## 12 B     X         7  6.80  6.18       6.66
-## 13 B     X        10  6.92  3.50       6.81
-## 14 A     X         7  7.88  2.31       5.73
-## 15 A     Y         6  8.71  4.09       6.27
-## 16 A     Y         7  3.03  6.76       5.60
-## 17 A     Y         8  4.59 -0.287      4.10
-## 18 A     Y         4  3.93  5.12       4.35
-## 19 B     X         7  9.22  4.88       7.03
-## 20 A     X         4  2.64  3.00       3.21
+##  1 A     Y         2  4.77 13.3        6.69
+##  2 B     X        10  9.78  3.76       7.85
+##  3 C     Y         8  3.54  7.22       6.25
+##  4 C     X         3  3.04 12.1        6.06
+##  5 C     X         1  8.11  0.797      3.30
+##  6 A     Y         2  4.86  5.35       4.07
+##  7 C     X         7  3.66  5.64       5.43
+##  8 A     X         7  5.78  9.04       7.27
+##  9 A     Y         2  8.82  2.74       4.52
+## 10 A     X        NA  6.13  4.30       5.21
+## 11 B     X         8  4.41  2.57       5.00
+## 12 B     Y         1  1.82  5.24       2.69
+## 13 B     Y         7  4.74  4.83       5.52
+## 14 C     Y         5  7.82  4.13       5.65
+## 15 A     Y         1  4.38  7.76       4.38
+## 16 C     X         5  1.21  5.99       4.07
+## 17 B     Y         7  8.20  7.44       7.55
+## 18 C     Y         2  2.52  5.59       3.37
+## 19 C     X         1  5.52  3.20       3.24
+## 20 C     X         7  2.50  8.64       6.05
 ```
 
 An alternative to using `rowwise()` is to use the base r `rowMeans()` function within `mutate`. For larger datasets this is a faster option to using `rowwise()`.
@@ -1384,26 +1387,26 @@ df2 %>%
 
 ```
 ##    key key2 num1     num2       num3 total_avg
-## 1    B    Y   NA 1.313668  6.7449834  4.029326
-## 2    B    X    7 4.063565  6.8644034  5.975989
-## 3    C    X    2 1.564439  5.6804129  3.081617
-## 4    B    Y   10 6.119026  1.6506092  5.923212
-## 5    A    X    4 5.783602  5.3136336  5.032412
-## 6    C    X    8 4.120486  4.7489391  5.623142
-## 7    A    Y    1 5.966518  7.7789421  4.915153
-## 8    A    X    7 5.560784  5.0360315  5.865605
-## 9    B    X    9 9.306314  6.0963795  8.134231
-## 10   B    X    1 6.974497  6.2235194  4.732672
-## 11   C    X    2 3.690130  5.6159863  3.768705
-## 12   B    X    7 6.797059  6.1789248  6.658661
-## 13   B    X   10 6.922938  3.5002445  6.807728
-## 14   A    X    7 7.882413  2.3060824  5.729499
-## 15   A    Y    6 8.713384  4.0908597  6.268081
-## 16   A    Y    7 3.034879  6.7553041  5.596728
-## 17   A    Y    8 4.593444 -0.2866724  4.102257
-## 18   A    Y    4 3.934712  5.1199079  4.351540
-## 19   B    X    7 9.221607  4.8814590  7.034355
-## 20   A    X    4 2.639439  2.9980124  3.212484
+## 1    A    Y    2 4.770557 13.2979523  6.689503
+## 2    B    X   10 9.783816  3.7564388  7.846752
+## 3    C    Y    8 3.538413  7.2152020  6.251205
+## 4    C    X    3 3.043103 12.1310580  6.058054
+## 5    C    X    1 8.106753  0.7971242  3.301293
+## 6    A    Y    2 4.856647  5.3486718  4.068439
+## 7    C    X    7 3.662111  5.6417414  5.434618
+## 8    A    X    7 5.778903  9.0379092  7.272271
+## 9    A    Y    2 8.815212  2.7449972  4.520070
+## 10   A    X   NA 6.125356  4.2978181  5.211587
+## 11   B    X    8 4.414926  2.5701540  4.995027
+## 12   B    Y    1 1.820694  5.2376762  2.686123
+## 13   B    Y    7 4.744536  4.8251134  5.523217
+## 14   C    Y    5 7.816450  4.1336435  5.650031
+## 15   A    Y    1 4.383638  7.7556943  4.379778
+## 16   C    X    5 1.213067  5.9937257  4.068931
+## 17   B    Y    7 8.199296  7.4420365  7.547111
+## 18   C    Y    2 2.518652  5.5940424  3.370898
+## 19   C    X    1 5.520318  3.2015450  3.240621
+## 20   C    X    7 2.499929  8.6429545  6.047628
 ```
 
 ```r
@@ -1414,26 +1417,26 @@ df2 %>%
 
 ```
 ##    key key2 num1     num2       num3 total_avg
-## 1    B    Y   NA 1.313668  6.7449834  4.029326
-## 2    B    X    7 4.063565  6.8644034  5.975989
-## 3    C    X    2 1.564439  5.6804129  3.081617
-## 4    B    Y   10 6.119026  1.6506092  5.923212
-## 5    A    X    4 5.783602  5.3136336  5.032412
-## 6    C    X    8 4.120486  4.7489391  5.623142
-## 7    A    Y    1 5.966518  7.7789421  4.915153
-## 8    A    X    7 5.560784  5.0360315  5.865605
-## 9    B    X    9 9.306314  6.0963795  8.134231
-## 10   B    X    1 6.974497  6.2235194  4.732672
-## 11   C    X    2 3.690130  5.6159863  3.768705
-## 12   B    X    7 6.797059  6.1789248  6.658661
-## 13   B    X   10 6.922938  3.5002445  6.807728
-## 14   A    X    7 7.882413  2.3060824  5.729499
-## 15   A    Y    6 8.713384  4.0908597  6.268081
-## 16   A    Y    7 3.034879  6.7553041  5.596728
-## 17   A    Y    8 4.593444 -0.2866724  4.102257
-## 18   A    Y    4 3.934712  5.1199079  4.351540
-## 19   B    X    7 9.221607  4.8814590  7.034355
-## 20   A    X    4 2.639439  2.9980124  3.212484
+## 1    A    Y    2 4.770557 13.2979523  6.689503
+## 2    B    X   10 9.783816  3.7564388  7.846752
+## 3    C    Y    8 3.538413  7.2152020  6.251205
+## 4    C    X    3 3.043103 12.1310580  6.058054
+## 5    C    X    1 8.106753  0.7971242  3.301293
+## 6    A    Y    2 4.856647  5.3486718  4.068439
+## 7    C    X    7 3.662111  5.6417414  5.434618
+## 8    A    X    7 5.778903  9.0379092  7.272271
+## 9    A    Y    2 8.815212  2.7449972  4.520070
+## 10   A    X   NA 6.125356  4.2978181  5.211587
+## 11   B    X    8 4.414926  2.5701540  4.995027
+## 12   B    Y    1 1.820694  5.2376762  2.686123
+## 13   B    Y    7 4.744536  4.8251134  5.523217
+## 14   C    Y    5 7.816450  4.1336435  5.650031
+## 15   A    Y    1 4.383638  7.7556943  4.379778
+## 16   C    X    5 1.213067  5.9937257  4.068931
+## 17   B    Y    7 8.199296  7.4420365  7.547111
+## 18   C    Y    2 2.518652  5.5940424  3.370898
+## 19   C    X    1 5.520318  3.2015450  3.240621
+## 20   C    X    7 2.499929  8.6429545  6.047628
 ```
 
 If you want to do a sum calculation, you should use the `rowSums()` function.
@@ -1447,26 +1450,26 @@ df2 %>%
 
 ```
 ##    key key2 num1     num2       num3 total_sum
-## 1    B    Y   NA 1.313668  6.7449834  8.058651
-## 2    B    X    7 4.063565  6.8644034 17.927968
-## 3    C    X    2 1.564439  5.6804129  9.244851
-## 4    B    Y   10 6.119026  1.6506092 17.769636
-## 5    A    X    4 5.783602  5.3136336 15.097235
-## 6    C    X    8 4.120486  4.7489391 16.869425
-## 7    A    Y    1 5.966518  7.7789421 14.745460
-## 8    A    X    7 5.560784  5.0360315 17.596815
-## 9    B    X    9 9.306314  6.0963795 24.402694
-## 10   B    X    1 6.974497  6.2235194 14.198017
-## 11   C    X    2 3.690130  5.6159863 11.306116
-## 12   B    X    7 6.797059  6.1789248 19.975984
-## 13   B    X   10 6.922938  3.5002445 20.423183
-## 14   A    X    7 7.882413  2.3060824 17.188496
-## 15   A    Y    6 8.713384  4.0908597 18.804244
-## 16   A    Y    7 3.034879  6.7553041 16.790183
-## 17   A    Y    8 4.593444 -0.2866724 12.306771
-## 18   A    Y    4 3.934712  5.1199079 13.054620
-## 19   B    X    7 9.221607  4.8814590 21.103066
-## 20   A    X    4 2.639439  2.9980124  9.637451
+## 1    A    Y    2 4.770557 13.2979523 20.068509
+## 2    B    X   10 9.783816  3.7564388 23.540255
+## 3    C    Y    8 3.538413  7.2152020 18.753615
+## 4    C    X    3 3.043103 12.1310580 18.174161
+## 5    C    X    1 8.106753  0.7971242  9.903878
+## 6    A    Y    2 4.856647  5.3486718 12.205318
+## 7    C    X    7 3.662111  5.6417414 16.303853
+## 8    A    X    7 5.778903  9.0379092 21.816812
+## 9    A    Y    2 8.815212  2.7449972 13.560209
+## 10   A    X   NA 6.125356  4.2978181 10.423174
+## 11   B    X    8 4.414926  2.5701540 14.985081
+## 12   B    Y    1 1.820694  5.2376762  8.058370
+## 13   B    Y    7 4.744536  4.8251134 16.569650
+## 14   C    Y    5 7.816450  4.1336435 16.950093
+## 15   A    Y    1 4.383638  7.7556943 13.139333
+## 16   C    X    5 1.213067  5.9937257 12.206792
+## 17   B    Y    7 8.199296  7.4420365 22.641332
+## 18   C    Y    2 2.518652  5.5940424 10.112694
+## 19   C    X    1 5.520318  3.2015450  9.721863
+## 20   C    X    7 2.499929  8.6429545 18.142884
 ```
 
 ## Rowwise aggregation exercise
@@ -1571,7 +1574,7 @@ imdb_bechdel %>%
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_ewXuHQ1nRnurTdY?coursename=R%Data%Wrangling%3:%Joining%and%aggregation&topic=R&prog=DS&version=22-23&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Ev72JK9UjRhMgv0YHNkJZHsBjGHzydNtK5aBqHgc4Otr4g?e=m8huf3>
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Data%Wrangling%3:%Joining%and%aggregation&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Ev72JK9UjRhMgv0YHNkJZHsBjGHzydNtK5aBqHgc4Otr4g?e=m8huf3>
 
 The solutions we be available from a link at the end of the survey.
 
@@ -1750,37 +1753,44 @@ df2 %>%
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 22 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:left;"> 44% </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 33% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> A </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:left;"> 56% </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> 67% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 41 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:left;"> 75% </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 40% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
    <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 25% </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> 60% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> C </td>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> 67% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> Y </td>
+   <td style="text-align:right;"> 15 </td>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> 100% </td>
+   <td style="text-align:left;"> 33% </td>
   </tr>
 </tbody>
 </table>
@@ -2000,23 +2010,23 @@ billboard_agg %>%
 ```
 
 ```{=html}
-<div id="ivtowsamdl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ivtowsamdl table {
+<div id="evtdawnpxv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#evtdawnpxv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ivtowsamdl thead, #ivtowsamdl tbody, #ivtowsamdl tfoot, #ivtowsamdl tr, #ivtowsamdl td, #ivtowsamdl th {
+#evtdawnpxv thead, #evtdawnpxv tbody, #evtdawnpxv tfoot, #evtdawnpxv tr, #evtdawnpxv td, #evtdawnpxv th {
   border-style: none;
 }
 
-#ivtowsamdl p {
+#evtdawnpxv p {
   margin: 0;
   padding: 0;
 }
 
-#ivtowsamdl .gt_table {
+#evtdawnpxv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2042,12 +2052,12 @@ billboard_agg %>%
   border-left-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_caption {
+#evtdawnpxv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ivtowsamdl .gt_title {
+#evtdawnpxv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2059,7 +2069,7 @@ billboard_agg %>%
   border-bottom-width: 0;
 }
 
-#ivtowsamdl .gt_subtitle {
+#evtdawnpxv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2071,7 +2081,7 @@ billboard_agg %>%
   border-top-width: 0;
 }
 
-#ivtowsamdl .gt_heading {
+#evtdawnpxv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2083,13 +2093,13 @@ billboard_agg %>%
   border-right-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_bottom_border {
+#evtdawnpxv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_col_headings {
+#evtdawnpxv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2104,7 +2114,7 @@ billboard_agg %>%
   border-right-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_col_heading {
+#evtdawnpxv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2124,7 +2134,7 @@ billboard_agg %>%
   overflow-x: hidden;
 }
 
-#ivtowsamdl .gt_column_spanner_outer {
+#evtdawnpxv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2136,15 +2146,15 @@ billboard_agg %>%
   padding-right: 4px;
 }
 
-#ivtowsamdl .gt_column_spanner_outer:first-child {
+#evtdawnpxv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ivtowsamdl .gt_column_spanner_outer:last-child {
+#evtdawnpxv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ivtowsamdl .gt_column_spanner {
+#evtdawnpxv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2156,11 +2166,11 @@ billboard_agg %>%
   width: 100%;
 }
 
-#ivtowsamdl .gt_spanner_row {
+#evtdawnpxv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ivtowsamdl .gt_group_heading {
+#evtdawnpxv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2186,7 +2196,7 @@ billboard_agg %>%
   text-align: left;
 }
 
-#ivtowsamdl .gt_empty_group_heading {
+#evtdawnpxv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2201,15 +2211,15 @@ billboard_agg %>%
   vertical-align: middle;
 }
 
-#ivtowsamdl .gt_from_md > :first-child {
+#evtdawnpxv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ivtowsamdl .gt_from_md > :last-child {
+#evtdawnpxv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ivtowsamdl .gt_row {
+#evtdawnpxv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2228,7 +2238,7 @@ billboard_agg %>%
   overflow-x: hidden;
 }
 
-#ivtowsamdl .gt_stub {
+#evtdawnpxv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2241,7 +2251,7 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#ivtowsamdl .gt_stub_row_group {
+#evtdawnpxv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2255,15 +2265,15 @@ billboard_agg %>%
   vertical-align: top;
 }
 
-#ivtowsamdl .gt_row_group_first td {
+#evtdawnpxv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ivtowsamdl .gt_row_group_first th {
+#evtdawnpxv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ivtowsamdl .gt_summary_row {
+#evtdawnpxv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2273,16 +2283,16 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#ivtowsamdl .gt_first_summary_row {
+#evtdawnpxv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_first_summary_row.thick {
+#evtdawnpxv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ivtowsamdl .gt_last_summary_row {
+#evtdawnpxv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2292,7 +2302,7 @@ billboard_agg %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_grand_summary_row {
+#evtdawnpxv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2302,7 +2312,7 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#ivtowsamdl .gt_first_grand_summary_row {
+#evtdawnpxv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2312,7 +2322,7 @@ billboard_agg %>%
   border-top-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_last_grand_summary_row_top {
+#evtdawnpxv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2322,11 +2332,11 @@ billboard_agg %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_striped {
+#evtdawnpxv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ivtowsamdl .gt_table_body {
+#evtdawnpxv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2335,7 +2345,7 @@ billboard_agg %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_footnotes {
+#evtdawnpxv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2349,7 +2359,7 @@ billboard_agg %>%
   border-right-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_footnote {
+#evtdawnpxv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2358,7 +2368,7 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#ivtowsamdl .gt_sourcenotes {
+#evtdawnpxv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2372,7 +2382,7 @@ billboard_agg %>%
   border-right-color: #D3D3D3;
 }
 
-#ivtowsamdl .gt_sourcenote {
+#evtdawnpxv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2380,63 +2390,63 @@ billboard_agg %>%
   padding-right: 5px;
 }
 
-#ivtowsamdl .gt_left {
+#evtdawnpxv .gt_left {
   text-align: left;
 }
 
-#ivtowsamdl .gt_center {
+#evtdawnpxv .gt_center {
   text-align: center;
 }
 
-#ivtowsamdl .gt_right {
+#evtdawnpxv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ivtowsamdl .gt_font_normal {
+#evtdawnpxv .gt_font_normal {
   font-weight: normal;
 }
 
-#ivtowsamdl .gt_font_bold {
+#evtdawnpxv .gt_font_bold {
   font-weight: bold;
 }
 
-#ivtowsamdl .gt_font_italic {
+#evtdawnpxv .gt_font_italic {
   font-style: italic;
 }
 
-#ivtowsamdl .gt_super {
+#evtdawnpxv .gt_super {
   font-size: 65%;
 }
 
-#ivtowsamdl .gt_footnote_marks {
+#evtdawnpxv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ivtowsamdl .gt_asterisk {
+#evtdawnpxv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ivtowsamdl .gt_indent_1 {
+#evtdawnpxv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ivtowsamdl .gt_indent_2 {
+#evtdawnpxv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ivtowsamdl .gt_indent_3 {
+#evtdawnpxv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ivtowsamdl .gt_indent_4 {
+#evtdawnpxv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ivtowsamdl .gt_indent_5 {
+#evtdawnpxv .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2521,9 +2531,9 @@ aggregate(df2[, c("num1", "num2", "num3")],
 
 ```
 ##   Group.1     num1     num2     num3
-## 1       A 5.333333 5.345464 4.345789
-## 2       B 7.285714 6.339834 5.267565
-## 3       C 4.000000 3.125018 5.348446
+## 1       A 2.800000 5.788385 7.080507
+## 2       B 6.600000 5.792654 4.766284
+## 3       C 4.333333 4.213200 5.927893
 ```
 
 ```r
@@ -2534,12 +2544,13 @@ aggregate(df2[, c("num1", "num2", "num3")],
 ```
 
 ```
-##   Group.1 Group.2      num1     num2     num3
-## 1       A       X  5.500000 5.466559 3.913440
-## 2       B       X  6.833333 7.214330 5.624155
-## 3       C       X  4.000000 3.125018 5.348446
-## 4       A       Y  5.200000 5.248587 4.691668
-## 5       B       Y 10.000000 3.716347 4.197796
+##   Group.1 Group.2 num1     num2     num3
+## 1       A       X 7.00 5.952130 6.667864
+## 2       B       X 9.00 7.099371 3.163296
+## 3       C       X 4.00 4.007547 6.068025
+## 4       A       Y 1.75 5.706513 7.286829
+## 5       B       Y 5.00 4.921509 5.834942
+## 6       C       Y 5.00 4.624505 5.647629
 ```
 
 The other main contester is `data.table`. `data.table` is a great package for data manipulation, mostly because it is very fast. When it comes to loading in data, subsetting, joining data, and doing aggregations, `data.table` is the best option if you have a lot of data! The syntax for `data.table` is similar to base r, using the square brackets.
@@ -2569,9 +2580,9 @@ df2[, .(avg_num1 = median(num1, na.rm = TRUE),
 
 ```
 ##    key avg_num1 avg_num2 avg_num3
-## 1:   B        7 6.859999 6.137652
-## 2:   C        2 3.690130 5.615986
-## 3:   A        6 5.560784 5.036031
+## 1:   A        2 5.317775 6.552183
+## 2:   B        7 4.744536 4.825113
+## 3:   C        5 3.538413 5.641741
 ```
 
 ```r
@@ -2582,11 +2593,11 @@ df2[num1 >= 5, .(avg_num2 = median(num2, na.rm = TRUE),
 
 ```
 ##    key key2 avg_num2 avg_num3
-## 1:   B    X 6.922938 6.096380
-## 2:   B    Y 6.119026 1.650609
-## 3:   C    X 4.120486 4.748939
-## 4:   A    X 6.721598 3.671057
-## 5:   A    Y 4.593444 4.090860
+## 1:   B    X 7.099371 3.163296
+## 2:   C    Y 5.677431 5.674423
+## 3:   C    X 2.499929 5.993726
+## 4:   A    X 5.778903 9.037909
+## 5:   B    Y 6.471916 6.133575
 ```
 
 If you are interested in learning more have a look the introduction to data table vignette: <https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html>. It is a great package with all the same functionality of the tidyverse (aggregation, joins, data manipulation etc.). It is especially useful when you have large datasets, due to its speed at running and performing operations. 
