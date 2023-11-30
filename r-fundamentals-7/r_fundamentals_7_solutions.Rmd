@@ -113,9 +113,9 @@ Finally, we can use the indexing to perform calculations on elements of the matr
 
 ```{r}
 # sum the first col
-sum(mat[, 2])
-# sum second col
 sum(mat[, 1])
+# sum second col
+sum(mat[, 2])
 # sum both cols
 sum(mat)
 ```

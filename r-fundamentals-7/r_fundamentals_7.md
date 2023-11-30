@@ -3,7 +3,7 @@ title: "R Fundamentals 7: Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "05 October, 2023"
+date: "30 November, 2023"
 output: 
   html_document: 
     theme: readable
@@ -276,20 +276,20 @@ Finally, we can use the indexing to perform calculations on elements of the matr
 
 ```r
 # sum the first col
-sum(mat[, 2])
-```
-
-```
-## [1] 30
-```
-
-```r
-# sum second col
 sum(mat[, 1])
 ```
 
 ```
 ## [1] 25
+```
+
+```r
+# sum second col
+sum(mat[, 2])
+```
+
+```
+## [1] 30
 ```
 
 ```r
@@ -349,9 +349,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  16 10 14 19 18 20 4 13 7 17
-##  $ rand  : num  1.05 8.69 9.92 7.21 9.26 ...
-##  $ rand2 : num  2.08 3.52 5.57 6.88 5.46 ...
+##  $ samp  : int  19 10 2 18 4 7 1 20 15 13
+##  $ rand  : num  9.87 5.4 4.29 2.48 9.34 ...
+##  $ rand2 : num  3.67 2.43 6.54 6.17 7.93 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -371,12 +371,12 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   16 1.051454 2.076559
-## string2   2   10 8.689607 3.516698
-## string3   3   14 9.923028 5.573342
-## string4   4   19 7.207855 6.882567
-## string5   5   18 9.259457 5.456826
-## string6   6   20 4.208970 4.476484
+## string1   1   19 9.872781 3.665360
+## string2   2   10 5.396743 2.425931
+## string3   3    2 4.286029 6.538632
+## string4   4   18 2.482135 6.169800
+## string5   5    4 9.337695 7.929846
+## string6   6    7 7.502309 6.763555
 ```
 
 Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
@@ -392,12 +392,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   16 1.051454 2.076559
-## string2   2   10 8.689607 3.516698
-## string3   3   14 9.923028 5.573342
-## string4   4   19 7.207855 6.882567
-## string5   5   18 9.259457 5.456826
-## string6   6   20 4.208970 4.476484
+## string1   1   19 9.872781 3.665360
+## string2   2   10 5.396743 2.425931
+## string3   3    2 4.286029 6.538632
+## string4   4   18 2.482135 6.169800
+## string5   5    4 9.337695 7.929846
+## string6   6    7 7.502309 6.763555
 ```
 
 ```r
@@ -419,10 +419,10 @@ calc
 ```
 
 ```
-##   string1   string2   string3   string4   string5   string6   string7   string8 
-## 0.1682326 0.8689607 1.3892239 1.3694925 1.6667023 0.8417940 0.1910393 1.2263337 
-##   string9  string10 
-## 0.3168648 1.5386706
+##    string1    string2    string3    string4    string5    string6    string7 
+## 1.87582833 0.53967428 0.08572057 0.44678424 0.37350781 0.52516164 0.08379582 
+##    string8    string9   string10 
+## 1.92132366 1.16426378 1.08441162
 ```
 
 ```r
@@ -432,17 +432,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand    rand2      calc
-## string1    1   16 1.051454 2.076559 0.1682326
-## string2    2   10 8.689607 3.516698 0.8689607
-## string3    3   14 9.923028 5.573342 1.3892239
-## string4    4   19 7.207855 6.882567 1.3694925
-## string5    5   18 9.259457 5.456826 1.6667023
-## string6    6   20 4.208970 4.476484 0.8417940
-## string7    7    4 4.775983 5.723734 0.1910393
-## string8    8   13 9.433336 5.560040 1.2263337
-## string9    9    7 4.526641 4.496447 0.3168648
-## string10  10   17 9.051004 9.065236 1.5386706
+##          int samp     rand    rand2       calc
+## string1    1   19 9.872781 3.665360 1.87582833
+## string2    2   10 5.396743 2.425931 0.53967428
+## string3    3    2 4.286029 6.538632 0.08572057
+## string4    4   18 2.482135 6.169800 0.44678424
+## string5    5    4 9.337695 7.929846 0.37350781
+## string6    6    7 7.502309 6.763555 0.52516164
+## string7    7    1 8.379582 3.126681 0.08379582
+## string8    8   20 9.606618 6.709172 1.92132366
+## string9    9   15 7.761759 5.399347 1.16426378
+## string10  10   13 8.341628 1.068758 1.08441162
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -455,12 +455,12 @@ df_cor
 ```
 
 ```
-##              int       samp      rand     rand2      calc
-## int    1.0000000 -0.2065922 0.1720966 0.6355960 0.1062933
-## samp  -0.2065922  1.0000000 0.1224695 0.1846010 0.6086332
-## rand   0.1720966  0.1224695 1.0000000 0.5779993 0.8458704
-## rand2  0.6355960  0.1846010 0.5779993 1.0000000 0.6355782
-## calc   0.1062933  0.6086332 0.8458704 0.6355782 1.0000000
+##               int        samp        rand       rand2       calc
+## int    1.00000000  0.05897494  0.33725431 -0.09751413  0.1492472
+## samp   0.05897494  1.00000000  0.09276218 -0.09280407  0.8326475
+## rand   0.33725431  0.09276218  1.00000000 -0.08942571  0.5666005
+## rand2 -0.09751413 -0.09280407 -0.08942571  1.00000000 -0.1257376
+## calc   0.14924715  0.83264753  0.56660047 -0.12573761  1.0000000
 ```
 
 ```r
@@ -470,12 +470,12 @@ df_cor
 ```
 
 ```
-##          int   samp  rand rand2  calc
-## int    1.000 -0.207 0.172 0.636 0.106
-## samp  -0.207  1.000 0.122 0.185 0.609
-## rand   0.172  0.122 1.000 0.578 0.846
-## rand2  0.636  0.185 0.578 1.000 0.636
-## calc   0.106  0.609 0.846 0.636 1.000
+##          int   samp   rand  rand2   calc
+## int    1.000  0.059  0.337 -0.098  0.149
+## samp   0.059  1.000  0.093 -0.093  0.833
+## rand   0.337  0.093  1.000 -0.089  0.567
+## rand2 -0.098 -0.093 -0.089  1.000 -0.126
+## calc   0.149  0.833  0.567 -0.126  1.000
 ```
 
 ```r
@@ -499,12 +499,12 @@ df_cor
 ```
 
 ```
-##          int   samp  rand rand2  calc
-## int    1.000 -0.207 0.172 0.636 0.106
-## samp  -0.207  1.000 0.122 0.185 0.609
-## rand   0.172  0.122 1.000 0.578 0.846
-## rand2  0.636  0.185 0.578 1.000 0.636
-## calc   0.106  0.609 0.846 0.636 1.000
+##          int   samp   rand  rand2   calc
+## int    1.000  0.059  0.337 -0.098  0.149
+## samp   0.059  1.000  0.093 -0.093  0.833
+## rand   0.337  0.093  1.000 -0.089  0.567
+## rand2 -0.098 -0.093 -0.089  1.000 -0.126
+## calc   0.149  0.833  0.567 -0.126  1.000
 ```
 
 ```r
@@ -512,7 +512,7 @@ df_cor$int
 ```
 
 ```
-## [1]  1.000 -0.207  0.172  0.636  0.106
+## [1]  1.000  0.059  0.337 -0.098  0.149
 ```
 
 ## Converting matrices exercise
