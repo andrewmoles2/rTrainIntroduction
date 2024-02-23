@@ -226,7 +226,7 @@ sum(highHP$Attack >= 100)
 subset(highHP, Attack >= 100)
 ```
 
-# Using AND OR and %in%
+# Using operators: AND and OR
 
 So far we have only been using one condition. By using the AND/OR operators we can thread together multiple conditional tests to make our code more efficient. 
 

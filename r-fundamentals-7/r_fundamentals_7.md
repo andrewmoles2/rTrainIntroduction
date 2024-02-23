@@ -3,7 +3,7 @@ title: "R Fundamentals 7: Lists and Matrices"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "30 November, 2023"
+date: "13 February, 2024"
 output: 
   html_document: 
     theme: readable
@@ -303,7 +303,7 @@ sum(mat)
 
 When summing the whole matrix, this is done *columnwise*, this means that the sum of column 1 is added to the sum of column 2.
 
-## Intro to matricies exercise
+## Intro to matrices exercise
 
 Using the `dat` vector provided, try the following exercises:
 
@@ -322,7 +322,7 @@ dat <- sample(c(1:29, NA), 30)
 # your code here
 ```
 
-# Converting data into and from matricies
+# Converting data into and from matrices
 
 When doing analysis with R, you sometimes come across analysis packages that require your data to be in the form of a matrix. How do you convert your data from an object like a data frame to a matrix?
 
@@ -349,9 +349,9 @@ str(df)
 ## 'data.frame':	10 obs. of  5 variables:
 ##  $ string: chr  "string1" "string2" "string3" "string4" ...
 ##  $ int   : int  1 2 3 4 5 6 7 8 9 10
-##  $ samp  : int  19 10 2 18 4 7 1 20 15 13
-##  $ rand  : num  9.87 5.4 4.29 2.48 9.34 ...
-##  $ rand2 : num  3.67 2.43 6.54 6.17 7.93 ...
+##  $ samp  : int  19 3 10 11 4 18 17 6 5 15
+##  $ rand  : num  2.42 1.13 1.82 4.32 9.7 ...
+##  $ rand2 : num  3.83 4.7 7.07 6.22 4.06 ...
 ```
 
 As you can see we have a character variable, but we can move it to become a row name which can make indexing specific rows easier.
@@ -371,15 +371,15 @@ head(df)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   19 9.872781 3.665360
-## string2   2   10 5.396743 2.425931
-## string3   3    2 4.286029 6.538632
-## string4   4   18 2.482135 6.169800
-## string5   5    4 9.337695 7.929846
-## string6   6    7 7.502309 6.763555
+## string1   1   19 2.416686 3.832957
+## string2   2    3 1.130163 4.698386
+## string3   3   10 1.816221 7.072004
+## string4   4   11 4.320007 6.223034
+## string5   5    4 9.697952 4.060804
+## string6   6   18 2.067835 4.517144
 ```
 
-Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
+Note that this is made easier with the `tibble` package, and the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
 
 To convert our data frame to a matrix, we use the `as.matrix()` function. By naming the columns and rows, it is easier to read once converted.
 
@@ -392,12 +392,12 @@ head(df_mat)
 
 ```
 ##         int samp     rand    rand2
-## string1   1   19 9.872781 3.665360
-## string2   2   10 5.396743 2.425931
-## string3   3    2 4.286029 6.538632
-## string4   4   18 2.482135 6.169800
-## string5   5    4 9.337695 7.929846
-## string6   6    7 7.502309 6.763555
+## string1   1   19 2.416686 3.832957
+## string2   2    3 1.130163 4.698386
+## string3   3   10 1.816221 7.072004
+## string4   4   11 4.320007 6.223034
+## string5   5    4 9.697952 4.060804
+## string6   6   18 2.067835 4.517144
 ```
 
 ```r
@@ -419,10 +419,10 @@ calc
 ```
 
 ```
-##    string1    string2    string3    string4    string5    string6    string7 
-## 1.87582833 0.53967428 0.08572057 0.44678424 0.37350781 0.52516164 0.08379582 
-##    string8    string9   string10 
-## 1.92132366 1.16426378 1.08441162
+##   string1   string2   string3   string4   string5   string6   string7   string8 
+## 0.4591704 0.0339049 0.1816221 0.4752007 0.3879181 0.3722103 1.5453166 0.5754443 
+##   string9  string10 
+## 0.3453535 1.3105854
 ```
 
 ```r
@@ -432,17 +432,17 @@ df_mat
 ```
 
 ```
-##          int samp     rand    rand2       calc
-## string1    1   19 9.872781 3.665360 1.87582833
-## string2    2   10 5.396743 2.425931 0.53967428
-## string3    3    2 4.286029 6.538632 0.08572057
-## string4    4   18 2.482135 6.169800 0.44678424
-## string5    5    4 9.337695 7.929846 0.37350781
-## string6    6    7 7.502309 6.763555 0.52516164
-## string7    7    1 8.379582 3.126681 0.08379582
-## string8    8   20 9.606618 6.709172 1.92132366
-## string9    9   15 7.761759 5.399347 1.16426378
-## string10  10   13 8.341628 1.068758 1.08441162
+##          int samp     rand    rand2      calc
+## string1    1   19 2.416686 3.832957 0.4591704
+## string2    2    3 1.130163 4.698386 0.0339049
+## string3    3   10 1.816221 7.072004 0.1816221
+## string4    4   11 4.320007 6.223034 0.4752007
+## string5    5    4 9.697952 4.060804 0.3879181
+## string6    6   18 2.067835 4.517144 0.3722103
+## string7    7   17 9.090098 6.369038 1.5453166
+## string8    8    6 9.590738 3.520382 0.5754443
+## string9    9    5 6.907071 6.755373 0.3453535
+## string10  10   15 8.737236 5.834797 1.3105854
 ```
 
 The output of some analysis functions, such as the base R `cor()` (correlation) function, returns a matrix. What if you want this to be a data frame or something similar? First, lets run the cor function on our matrix.
@@ -455,12 +455,12 @@ df_cor
 ```
 
 ```
-##               int        samp        rand       rand2       calc
-## int    1.00000000  0.05897494  0.33725431 -0.09751413  0.1492472
-## samp   0.05897494  1.00000000  0.09276218 -0.09280407  0.8326475
-## rand   0.33725431  0.09276218  1.00000000 -0.08942571  0.5666005
-## rand2 -0.09751413 -0.09280407 -0.08942571  1.00000000 -0.1257376
-## calc   0.14924715  0.83264753  0.56660047 -0.12573761  1.0000000
+##               int        samp        rand       rand2      calc
+## int    1.00000000 -0.02987165  0.73345305  0.21838502 0.5725180
+## samp  -0.02987165  1.00000000 -0.17046833  0.04422696 0.5194702
+## rand   0.73345305 -0.17046833  1.00000000 -0.06265165 0.6299820
+## rand2  0.21838502  0.04422696 -0.06265165  1.00000000 0.2107027
+## calc   0.57251799  0.51947023  0.62998198  0.21070271 1.0000000
 ```
 
 ```r
@@ -470,12 +470,12 @@ df_cor
 ```
 
 ```
-##          int   samp   rand  rand2   calc
-## int    1.000  0.059  0.337 -0.098  0.149
-## samp   0.059  1.000  0.093 -0.093  0.833
-## rand   0.337  0.093  1.000 -0.089  0.567
-## rand2 -0.098 -0.093 -0.089  1.000 -0.126
-## calc   0.149  0.833  0.567 -0.126  1.000
+##          int   samp   rand  rand2  calc
+## int    1.000 -0.030  0.733  0.218 0.573
+## samp  -0.030  1.000 -0.170  0.044 0.519
+## rand   0.733 -0.170  1.000 -0.063 0.630
+## rand2  0.218  0.044 -0.063  1.000 0.211
+## calc   0.573  0.519  0.630  0.211 1.000
 ```
 
 ```r
@@ -499,12 +499,12 @@ df_cor
 ```
 
 ```
-##          int   samp   rand  rand2   calc
-## int    1.000  0.059  0.337 -0.098  0.149
-## samp   0.059  1.000  0.093 -0.093  0.833
-## rand   0.337  0.093  1.000 -0.089  0.567
-## rand2 -0.098 -0.093 -0.089  1.000 -0.126
-## calc   0.149  0.833  0.567 -0.126  1.000
+##          int   samp   rand  rand2  calc
+## int    1.000 -0.030  0.733  0.218 0.573
+## samp  -0.030  1.000 -0.170  0.044 0.519
+## rand   0.733 -0.170  1.000 -0.063 0.630
+## rand2  0.218  0.044 -0.063  1.000 0.211
+## calc   0.573  0.519  0.630  0.211 1.000
 ```
 
 ```r
@@ -512,7 +512,7 @@ df_cor$int
 ```
 
 ```
-## [1]  1.000  0.059  0.337 -0.098  0.149
+## [1]  1.000 -0.030  0.733  0.218  0.573
 ```
 
 ## Converting matrices exercise
@@ -1294,7 +1294,7 @@ heatmap(df_mat,
 Using the *ronaldo_mat* matrix we made in the converting matrices exercise: 
 
 1) Make a heatmap with the title *Ronaldo career heatmap*, that does not have the dendrograms
-2) You will need to increase the margins of the heatmap to view your columns. Use the margins argument to increase them. *hint: a margin of would work well c(10,5)*
+2) You will need to increase the margins of the heatmap to view your columns. Use the margins argument to increase them. *hint: a margin of c(10,5) would work well*
 3) The heatmap also needs to be scaled by your columns (by default it uses rows). Add the scale argument, and scale by column. *hint: to scale by row you use scale = "row"*
 4) Change the colour of your heatmap! First, install and load the RColorBrewer package
 5) Use the col argument to change the colour of your heatmap. For example, to change your colours to purple col = brewer.pal(n = 8, "Purples") would do the trick. Have a look at other colour palettes from the RColurBrewer package here: <https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html>

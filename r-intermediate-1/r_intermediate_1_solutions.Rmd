@@ -61,10 +61,10 @@ Check this (very fun) flow diagram below to process the intuition.
 
 ## For loop basics exercise 1
 
-Make your first for loop! What would be the output of the for loop if we changed the numbers of my vector to 1-10, and printed the numbers twice? Test it out.
+Make your first for loop! What would be the output of the for loop if we changed the numbers of my vector to 1 through to 5, and printed the numbers twice? Test it out.
 
-1)  Create a vector called `my_vector` with the numbers 1-5
-2)  Make a for loop using my_vector and print each number twice
+1)  Create a vector called `my_vector` with the numbers 1 through to 5
+2)  Make a for loop using `my_vector` and print each number twice
 3)  Add a print statement outside the loop to tell us the for loop has ended
 
 ```{r}
@@ -87,7 +87,7 @@ print("end of for loop")
 2)  Don't grow objects in a for loop as this slows things down a lot. R will make a new object, then copy information which isn't very efficient
 3)  Always make an empty data structure before the loop, then fill it during the loop
 
-We will elaborate on these rules as we go through this workshop!
+We will elaborate on these rules as we go through this worksheet!
 
 When needed, loops allow us to write more efficient code, which in a lot of cases means less repetition and use of copy and paste.
 
@@ -538,7 +538,7 @@ Now, we can try to explore the relationship between `avg_ticket_price` and `pct_
 
 For this exercise, we will expand our analysis to cover a few more classics. Namely, *The Phantom of the Opera, Chicago, The Lion King*, and of course, *Les Miserables*.
 
-1.  Subset your `broadway_grosses` data to just contain the shows classic shows listed above
+1.  Subset your `broadway_grosses` data to just contain the classic shows listed above
 
 2.  Set up `par()` to be a 2 by 2 grid like we did previously
 
@@ -733,7 +733,7 @@ names(broadway) <- sheets
 top_broadway <- do.call(rbind, broadway)
 ```
 
-Note, have only have 4 datasets here so we can do this manually. However, if this was to be expanded this would quickly become tiresome! 
+Note, we have only have 4 datasets here so we can do this manually. However, if this was to be expanded this would quickly become tiresome! 
 
 Something else to note is there are three really nice alternatives to appending data frames from a list: `do.call()`, `bind_rows()` from dplyr, and `rbindlist()` from data.table.
 

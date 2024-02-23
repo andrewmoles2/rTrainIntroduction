@@ -24,7 +24,7 @@ To get acquainted with R and RStudio, and do calculations using R.
 The goal of this session is to get started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
 
 -   Introduction to RStudio
--   Using r as a calculator
+-   Using R as a calculator
 -   Assigning variables
 -   Numerical variables
 
@@ -44,12 +44,12 @@ We can use R to do simple or advanced calculations for us. Remember to run the c
 
 Use R to work out the following arithmetic:
 
-1)  `44 * 26`
-2)  `9.6/1.6`
-3)  `(12+4)^2`
-4)  `(4*9)/(5+6)`
-5)  `(22/36) * 100`
-6)  The remainder of `55 / 2` (hint: look up r's modulus operator)
+1)  44 multiplied by 26
+2)  Divide 9.6 by 1.6
+3)  12 minus 4 to the power of 3. *Hint: use brackets (x-y)^z*
+4)  4 multiplied by 9 divided by the sum of 5 and 6
+5)  Divide 22 by 36 and multiply the result by 100
+6)  The remainder of 55 divided by 2. *hint: look up r's modulus operator*
 
 ```{r}
 # type your code here
@@ -80,7 +80,7 @@ hieght
 
 We can do calculations on variables. We first assign the variables and, then use them in the calculation.
 
-In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is `42 * 92`, as this is the data scored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
+In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is 42 times 92, as this is the data that is stored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
 
 ```{r}
 # test scores
@@ -204,7 +204,8 @@ Robin and Charlie are a married couple, one gets paid an hourly rate, and the ot
 
 They used simple calculations using the following formulas:
 
-(number hours worked per week x hourly rate) x number of weeks worked = annual salary (annual salary ÷ number of weeks in a year) ÷ hours worked per week = hourly rate
+(number hours worked per week x hourly rate) x number of weeks worked = annual salary 
+(annual salary ÷ number of weeks in a year) ÷ hours worked per week = hourly rate
 
 Re-arrange the code so the calculations run. You should have both the combined salary and Charlie's hourly rate calculations printed.
 

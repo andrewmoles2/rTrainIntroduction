@@ -193,7 +193,7 @@ df <- df[, !colnames(df) %in% rem_col]
 head(df)
 ```
 
-Note that this is made a bit easier with the tidyverse. We can use the `tibble` package with the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
+Note that this is made easier with the `tibble` package, and the function `column_to_rownames()`, which in this example would like like `tibble::column_to_rownames(df, var = "string")`.
 
 To convert our data frame to a matrix, we use the `as.matrix()` function. By naming the columns and rows, it is easier to read once converted.
 
@@ -623,7 +623,7 @@ heatmap(df_mat,
 Using the *ronaldo_mat* matrix we made in the converting matrices exercise: 
 
 1) Make a heatmap with the title *Ronaldo career heatmap*, that does not have the dendrograms
-2) You will need to increase the margins of the heatmap to view your columns. Use the margins argument to increase them. *hint: a margin of would work well c(10,5)*
+2) You will need to increase the margins of the heatmap to view your columns. Use the margins argument to increase them. *hint: a margin of c(10,5) would work well*
 3) The heatmap also needs to be scaled by your columns (by default it uses rows). Add the scale argument, and scale by column. *hint: to scale by row you use scale = "row"*
 4) Change the colour of your heatmap! First, install and load the RColorBrewer package
 5) Use the col argument to change the colour of your heatmap. For example, to change your colours to purple col = brewer.pal(n = 8, "Purples") would do the trick. Have a look at other colour palettes from the RColurBrewer package here: <https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html>

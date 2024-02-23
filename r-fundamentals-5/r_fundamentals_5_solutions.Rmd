@@ -152,13 +152,13 @@ knitr::include_graphics("e.g. C:/Users/<Your Name>/Desktop/New_file/r_fundamenta
 
 # Introduction to working directory
 
-Congratulations, you now know how to find a path of any file on your computer and access it only using its' path.
+Congratulations, you now know how to find a path of any file on your computer and access it only using its path.
 
 In this lesson we will learn about two important directories. The working directory and subdirectory.
 
 When starting this lesson you might have expected R to search your entire memory to find a file you are trying to load in. As the previous exercise has shown R has no ability to search through all the files on your computer to find the one you are looking for. This is why to load in a file you need to give it a precise location, the file path. Although R will cycle through your entire computer in search of a file there is one special directory in which it will look if you only give it a file name, the working directory. 
 
-Working directory, as the name suggests, is a directory in which you are currently working. You should already know your working directory. The command `getwd()` actually stands for get working directory. If you place a file in a working directory you can access it just via its' name.
+Working directory, as the name suggests, is a directory in which you are currently working. You should already know your working directory. The command `getwd()` actually stands for get working directory. If you place a file in a working directory you can access it just via its name.
 
 The second important directory is a subdirectory. The Oxford Language official definition of a subdirectory is "a directory below another directory in a hierarchy". If you create a folder inside your working directory, that folder will constitute a subdirectory of a working directory.
 

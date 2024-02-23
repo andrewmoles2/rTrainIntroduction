@@ -3,7 +3,7 @@ title: "R Fundamentals 4: Data Frames"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "05 October, 2023"
+date: "06 February, 2024"
 output: 
   html_document: 
     theme: readable
@@ -49,8 +49,8 @@ To make a data frame we use the `data.frame()` function. The one way to do this 
 
 ```r
 # vectors for various data types
-str1 <- paste0("person_", seq(1:5))
-int1 <- seq(1, 5)
+str1 <- paste0("person_", 1:5)
+int1 <- 1:5
 num1 <- c(4,7,2,9,3)
 fac1 <- factor(c("yes","yes","no","yes","no"))
 # adding them into a data frame
@@ -73,8 +73,8 @@ Notice how the column names are the same as what you named your vectors. You can
 
 ```r
 # vectors for various data types
-str1 <- paste0("person_", seq(1:5))
-int1 <- seq(1, 5)
+str1 <- paste0("person_", 1:5)
+int1 <- 1:5
 num1 <- c(4,7,2,9,3)
 fac1 <- factor(c("yes","yes","no","yes","no"))
 # adding them into a data frame
@@ -94,6 +94,8 @@ exampleDat
 ## 4 person_4       4      9    yes
 ## 5 person_5       5      3     no
 ```
+
+*Note: you can also change column names using functions - https://statisticsglobe.com/rename-column-name-in-r-data-frame/*
 
 ## Manual data frame exercise
 
@@ -193,7 +195,7 @@ exampleDat
 ## 5 person_5       5      3     no        1 Experiment
 ```
 
-`transform()` is a really great function and the most flexible of the options. It is a convenience function that allows you to assign multiple columns to a data frame. *Fun fact: it is one of the inspirations for some tidyverse functions you will see in later workshops.*
+`transform()` is a really great function and the most flexible of the options. It allows you to assign multiple columns to a data frame.
 
 
 ```r
@@ -217,25 +219,27 @@ exampleDat
 
 Using the data frame you created in the previous task (`messi_career`):
 
-1)  Make a vector called Age, with integers from 17 to 32. *hint: use the `seq()` function*
-2)  Using the `cbind()` method shown above, add the Age vector to the messi_career data frame you created in the previous task.
-3)  Now we are going to add Messi's Champions League goals using the `$` sign method shown above. Call the new column champLeagueGoal, and add the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
-4)  Print out the result. You should see both the new columns of data you just added.
-5)  Test out using `transform()` on the messi data to add a new column called age2 that is Age times 2
+*   Make a vector called `age`, with integers from 17 to 32.
+*   Make a vector called `champ_league_goal` with the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
+*   Using any of the methods above, add the `age` and `champ_league_goal` vectors to your `messi_career` data frame. 
+*   Print out the result. You should see both the new columns of data you just added.
 
 
 ```r
 # your code here
 # either of these work for making Age
-Age <- 17:32
-Age <- seq(17, 32)
+age <- 17:32
+age <- seq(17, 32)
+# champ_league_goal
+champ_league_goal <- c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3)
+
 # cbind age
-messi_career <- cbind(messi_career, Age)
+messi_career <- cbind(messi_career, age)
 messi_career
 ```
 
 ```
-##    Appearances Goals Season         Club Age
+##    Appearances Goals Season         Club age
 ## 1            9     1   2004 FC Barcelona  17
 ## 2           25     8   2005 FC Barcelona  18
 ## 3           36    17   2006 FC Barcelona  19
@@ -255,57 +259,59 @@ messi_career
 ```
 
 ```r
-# add champ league goals
-messi_career$champLeagueGoal <- c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3)
+# add champ league goals with $
+messi_career$champ_league_goal <- champ_league_goal
 messi_career
 ```
 
 ```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 1            9     1   2004 FC Barcelona  17               0
-## 2           25     8   2005 FC Barcelona  18               1
-## 3           36    17   2006 FC Barcelona  19               1
-## 4           40    16   2007 FC Barcelona  20               6
-## 5           51    38   2008 FC Barcelona  21               9
-## 6           53    47   2009 FC Barcelona  22               8
-## 7           55    53   2010 FC Barcelona  23              12
-## 8           60    73   2011 FC Barcelona  24              14
-## 9           50    60   2012 FC Barcelona  25               8
-## 10          46    41   2013 FC Barcelona  26               8
-## 11          57    58   2014 FC Barcelona  27              10
-## 12          49    41   2015 FC Barcelona  28               6
-## 13          52    54   2016 FC Barcelona  29              11
-## 14          54    45   2017 FC Barcelona  30               6
-## 15          50    51   2018 FC Barcelona  31              12
-## 16          44    31   2019 FC Barcelona  32               3
+##    Appearances Goals Season         Club age champ_league_goal
+## 1            9     1   2004 FC Barcelona  17                 0
+## 2           25     8   2005 FC Barcelona  18                 1
+## 3           36    17   2006 FC Barcelona  19                 1
+## 4           40    16   2007 FC Barcelona  20                 6
+## 5           51    38   2008 FC Barcelona  21                 9
+## 6           53    47   2009 FC Barcelona  22                 8
+## 7           55    53   2010 FC Barcelona  23                12
+## 8           60    73   2011 FC Barcelona  24                14
+## 9           50    60   2012 FC Barcelona  25                 8
+## 10          46    41   2013 FC Barcelona  26                 8
+## 11          57    58   2014 FC Barcelona  27                10
+## 12          49    41   2015 FC Barcelona  28                 6
+## 13          52    54   2016 FC Barcelona  29                11
+## 14          54    45   2017 FC Barcelona  30                 6
+## 15          50    51   2018 FC Barcelona  31                12
+## 16          44    31   2019 FC Barcelona  32                 3
 ```
 
 ```r
-# testing out transform
+# transform
 transform(messi_career, 
-          Age = seq(17, 32),
-          champLeagueGoal = c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3))
+          age,
+          champ_league_goal)
 ```
 
 ```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 1            9     1   2004 FC Barcelona  17               0
-## 2           25     8   2005 FC Barcelona  18               1
-## 3           36    17   2006 FC Barcelona  19               1
-## 4           40    16   2007 FC Barcelona  20               6
-## 5           51    38   2008 FC Barcelona  21               9
-## 6           53    47   2009 FC Barcelona  22               8
-## 7           55    53   2010 FC Barcelona  23              12
-## 8           60    73   2011 FC Barcelona  24              14
-## 9           50    60   2012 FC Barcelona  25               8
-## 10          46    41   2013 FC Barcelona  26               8
-## 11          57    58   2014 FC Barcelona  27              10
-## 12          49    41   2015 FC Barcelona  28               6
-## 13          52    54   2016 FC Barcelona  29              11
-## 14          54    45   2017 FC Barcelona  30               6
-## 15          50    51   2018 FC Barcelona  31              12
-## 16          44    31   2019 FC Barcelona  32               3
+##    Appearances Goals Season         Club age champ_league_goal
+## 1            9     1   2004 FC Barcelona  17                 0
+## 2           25     8   2005 FC Barcelona  18                 1
+## 3           36    17   2006 FC Barcelona  19                 1
+## 4           40    16   2007 FC Barcelona  20                 6
+## 5           51    38   2008 FC Barcelona  21                 9
+## 6           53    47   2009 FC Barcelona  22                 8
+## 7           55    53   2010 FC Barcelona  23                12
+## 8           60    73   2011 FC Barcelona  24                14
+## 9           50    60   2012 FC Barcelona  25                 8
+## 10          46    41   2013 FC Barcelona  26                 8
+## 11          57    58   2014 FC Barcelona  27                10
+## 12          49    41   2015 FC Barcelona  28                 6
+## 13          52    54   2016 FC Barcelona  29                11
+## 14          54    45   2017 FC Barcelona  30                 6
+## 15          50    51   2018 FC Barcelona  31                12
+## 16          44    31   2019 FC Barcelona  32                 3
 ```
+
+*Note if you end up with multiple columns of age or champ_league_goal, re-run the code from the Manual data frame exercise to reset your data frame* 
 
 # Adding rows to a data frame
 
@@ -344,7 +350,7 @@ exampleDat
 
 For this exercise we will use the same `messi_career` data frame, adding data from 2020.
 
-1)  Make a data frame called thisYear (or similar) and add the following data: Appearances: 47, Goals: 38, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 5. *hint: Make sure the column names match up (e.g. champLeagueGoal)*
+1)  Make a data frame called this_year (or similar) and add the following data: Appearances: 47, Goals: 38, Season: 2020, Club: FC Barcelona, Age: 33, Champions league Goals: 5. *hint: Make sure the column names match up (e.g. champ_league_goal)*
 2)  Now, using `rbind()` add the new row of data to your messi_career data frame.
 3)  Print the result, you should now see your new row of data!
 
@@ -352,121 +358,50 @@ For this exercise we will use the same `messi_career` data frame, adding data fr
 ```r
 # your code here
 # make data frame for new year
-thisYear <- data.frame(Appearances = 47,
+this_year <- data.frame(Appearances = 47,
                        Goals = 38,
                        Season = 2020,
                        Club = 'FC Barcelona',
-                       Age = 33,
-                       champLeagueGoal = 5)
+                       age = 33,
+                       champ_league_goal = 5)
 # rbind to previous data
-messi_career <- rbind(messi_career, thisYear)
+messi_career <- rbind(messi_career, this_year)
 # print result
 messi_career
 ```
 
 ```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 1            9     1   2004 FC Barcelona  17               0
-## 2           25     8   2005 FC Barcelona  18               1
-## 3           36    17   2006 FC Barcelona  19               1
-## 4           40    16   2007 FC Barcelona  20               6
-## 5           51    38   2008 FC Barcelona  21               9
-## 6           53    47   2009 FC Barcelona  22               8
-## 7           55    53   2010 FC Barcelona  23              12
-## 8           60    73   2011 FC Barcelona  24              14
-## 9           50    60   2012 FC Barcelona  25               8
-## 10          46    41   2013 FC Barcelona  26               8
-## 11          57    58   2014 FC Barcelona  27              10
-## 12          49    41   2015 FC Barcelona  28               6
-## 13          52    54   2016 FC Barcelona  29              11
-## 14          54    45   2017 FC Barcelona  30               6
-## 15          50    51   2018 FC Barcelona  31              12
-## 16          44    31   2019 FC Barcelona  32               3
-## 17          47    38   2020 FC Barcelona  33               5
+##    Appearances Goals Season         Club age champ_league_goal
+## 1            9     1   2004 FC Barcelona  17                 0
+## 2           25     8   2005 FC Barcelona  18                 1
+## 3           36    17   2006 FC Barcelona  19                 1
+## 4           40    16   2007 FC Barcelona  20                 6
+## 5           51    38   2008 FC Barcelona  21                 9
+## 6           53    47   2009 FC Barcelona  22                 8
+## 7           55    53   2010 FC Barcelona  23                12
+## 8           60    73   2011 FC Barcelona  24                14
+## 9           50    60   2012 FC Barcelona  25                 8
+## 10          46    41   2013 FC Barcelona  26                 8
+## 11          57    58   2014 FC Barcelona  27                10
+## 12          49    41   2015 FC Barcelona  28                 6
+## 13          52    54   2016 FC Barcelona  29                11
+## 14          54    45   2017 FC Barcelona  30                 6
+## 15          50    51   2018 FC Barcelona  31                12
+## 16          44    31   2019 FC Barcelona  32                 3
+## 17          47    38   2020 FC Barcelona  33                 5
 ```
 
 # Getting information on a data frame
 
-There are several ways to get information on your data frame. The simplest way is to simply click on the data frame in your global environment, this will bring up a viewer plane in a tab. When you have larger datasets however this is not the best way to view your data.
+There are several ways to get information on your data frame. The simplest way is to simply click on the data frame in your global environment, this will bring up a viewer plane in a tab. When you have larger datasets however this is not always the best way to view your data.
 
 There are several attributes you will want to find out from your data frame. These include the dimensions (amount of rows and columns), the structure (what data does each column hold), summary information (means, interquartile range etc.), and a visual snapshot of your data.
-
-To demonstrate of these functions we will use exampleDat. Run all the code chunks below to test out the functions.
-
-To understand the dimensions of our data frame we use `dim()`, it returns the rows then columns. We can also use `nrow()` and `ncol()`. For exampleDat we get an output of 6 6 which means 6 rows and 6 columns.
-
-
-```r
-dim(exampleDat)
-```
-
-```
-## [1] 6 8
-```
-
-To get a visual snapshot of our data we can use the `head()` or `tail()` functions. The head function gives you the first few rows, and the tail function gives you the last few rows. As the example data is so small we won't see a difference between the functions.
-
-
-```r
-head(exampleDat)
-```
-
-```
-##     string integer number factor integer2    string2   x  y
-## 1 person_1       1      4    yes        5    Control 0.4 18
-## 2 person_2       2      7    yes        4    Control 0.5 18
-## 3 person_3       3      2     no        3 Experiment 0.1 18
-## 4 person_4       4      9    yes        2 Experiment 0.9 18
-## 5 person_5       5      3     no        1 Experiment 0.6 18
-## 6 person_6       6      5    yes        0    Control 0.3 18
-```
-
-To find the structure of our data we use the `str()` command. This function gives us information on the column name, what data type that column is, and some of the data in that column.
-
-
-```r
-str(exampleDat)
-```
-
-```
-## 'data.frame':	6 obs. of  8 variables:
-##  $ string  : chr  "person_1" "person_2" "person_3" "person_4" ...
-##  $ integer : num  1 2 3 4 5 6
-##  $ number  : num  4 7 2 9 3 5
-##  $ factor  : Factor w/ 2 levels "no","yes": 2 2 1 2 1 2
-##  $ integer2: num  5 4 3 2 1 0
-##  $ string2 : chr  "Control" "Control" "Experiment" "Experiment" ...
-##  $ x       : num  0.4 0.5 0.1 0.9 0.6 0.3
-##  $ y       : num  18 18 18 18 18 18
-```
-
-Finally, to get some basic descriptive statistics we can use `summary()`.
-
-
-```r
-summary(exampleDat)
-```
-
-```
-##     string             integer         number     factor     integer2   
-##  Length:6           Min.   :1.00   Min.   :2.00   no :2   Min.   :0.00  
-##  Class :character   1st Qu.:2.25   1st Qu.:3.25   yes:4   1st Qu.:1.25  
-##  Mode  :character   Median :3.50   Median :4.50           Median :2.50  
-##                     Mean   :3.50   Mean   :5.00           Mean   :2.50  
-##                     3rd Qu.:4.75   3rd Qu.:6.50           3rd Qu.:3.75  
-##                     Max.   :6.00   Max.   :9.00           Max.   :5.00  
-##    string2                x                y     
-##  Length:6           Min.   :0.1000   Min.   :18  
-##  Class :character   1st Qu.:0.3250   1st Qu.:18  
-##  Mode  :character   Median :0.4500   Median :18  
-##                     Mean   :0.4667   Mean   :18  
-##                     3rd Qu.:0.5750   3rd Qu.:18  
-##                     Max.   :0.9000   Max.   :18
-```
 
 ## Getting information exercise
 
 Use the following commands on the `messi_career` data: `dim()`, `nrow()`, `ncol()`, `head()`, `tail()`, `summary()`, `str()`, and `View()`.
+
+What do each of the functions do? If you want to find out more about the function try looking it up in the built in help menu. For example, if I wanted to look up the summary function I could do `?summary()`. 
 
 
 ```r
@@ -499,13 +434,13 @@ head(messi_career)
 ```
 
 ```
-##   Appearances Goals Season         Club Age champLeagueGoal
-## 1           9     1   2004 FC Barcelona  17               0
-## 2          25     8   2005 FC Barcelona  18               1
-## 3          36    17   2006 FC Barcelona  19               1
-## 4          40    16   2007 FC Barcelona  20               6
-## 5          51    38   2008 FC Barcelona  21               9
-## 6          53    47   2009 FC Barcelona  22               8
+##   Appearances Goals Season         Club age champ_league_goal
+## 1           9     1   2004 FC Barcelona  17                 0
+## 2          25     8   2005 FC Barcelona  18                 1
+## 3          36    17   2006 FC Barcelona  19                 1
+## 4          40    16   2007 FC Barcelona  20                 6
+## 5          51    38   2008 FC Barcelona  21                 9
+## 6          53    47   2009 FC Barcelona  22                 8
 ```
 
 ```r
@@ -513,13 +448,13 @@ tail(messi_career)
 ```
 
 ```
-##    Appearances Goals Season         Club Age champLeagueGoal
-## 12          49    41   2015 FC Barcelona  28               6
-## 13          52    54   2016 FC Barcelona  29              11
-## 14          54    45   2017 FC Barcelona  30               6
-## 15          50    51   2018 FC Barcelona  31              12
-## 16          44    31   2019 FC Barcelona  32               3
-## 17          47    38   2020 FC Barcelona  33               5
+##    Appearances Goals Season         Club age champ_league_goal
+## 12          49    41   2015 FC Barcelona  28                 6
+## 13          52    54   2016 FC Barcelona  29                11
+## 14          54    45   2017 FC Barcelona  30                 6
+## 15          50    51   2018 FC Barcelona  31                12
+## 16          44    31   2019 FC Barcelona  32                 3
+## 17          47    38   2020 FC Barcelona  33                 5
 ```
 
 ```r
@@ -527,19 +462,19 @@ summary(messi_career)
 ```
 
 ```
-##   Appearances        Goals           Season         Club                Age    
+##   Appearances        Goals           Season         Club                age    
 ##  Min.   : 9.00   Min.   : 1.00   Min.   :2004   Length:17          Min.   :17  
 ##  1st Qu.:44.00   1st Qu.:31.00   1st Qu.:2008   Class :character   1st Qu.:21  
 ##  Median :50.00   Median :41.00   Median :2012   Mode  :character   Median :25  
 ##  Mean   :45.76   Mean   :39.53   Mean   :2012                      Mean   :25  
 ##  3rd Qu.:53.00   3rd Qu.:53.00   3rd Qu.:2016                      3rd Qu.:29  
 ##  Max.   :60.00   Max.   :73.00   Max.   :2020                      Max.   :33  
-##  champLeagueGoal 
-##  Min.   : 0.000  
-##  1st Qu.: 5.000  
-##  Median : 8.000  
-##  Mean   : 7.059  
-##  3rd Qu.:10.000  
+##  champ_league_goal
+##  Min.   : 0.000   
+##  1st Qu.: 5.000   
+##  Median : 8.000   
+##  Mean   : 7.059   
+##  3rd Qu.:10.000   
 ##  Max.   :14.000
 ```
 
@@ -549,12 +484,12 @@ str(messi_career)
 
 ```
 ## 'data.frame':	17 obs. of  6 variables:
-##  $ Appearances    : num  9 25 36 40 51 53 55 60 50 46 ...
-##  $ Goals          : num  1 8 17 16 38 47 53 73 60 41 ...
-##  $ Season         : num  2004 2005 2006 2007 2008 ...
-##  $ Club           : chr  "FC Barcelona" "FC Barcelona" "FC Barcelona" "FC Barcelona" ...
-##  $ Age            : num  17 18 19 20 21 22 23 24 25 26 ...
-##  $ champLeagueGoal: num  0 1 1 6 9 8 12 14 8 8 ...
+##  $ Appearances      : num  9 25 36 40 51 53 55 60 50 46 ...
+##  $ Goals            : num  1 8 17 16 38 47 53 73 60 41 ...
+##  $ Season           : num  2004 2005 2006 2007 2008 ...
+##  $ Club             : chr  "FC Barcelona" "FC Barcelona" "FC Barcelona" "FC Barcelona" ...
+##  $ age              : num  17 18 19 20 21 22 23 24 25 26 ...
+##  $ champ_league_goal: num  0 1 1 6 9 8 12 14 8 8 ...
 ```
 
 ```r
@@ -633,62 +568,62 @@ exampleDat[ , my_index]
 
 ## Indexing data frames exercise 1
 
-Using the messi_career data, index the columns Goals and Age to print out just those two columns and all the rows. Use the names of the columns as shown in the previous examples.
+Using the messi_career data, index the columns `Goals` and `Appearances` to print out just those two columns and all the rows. Try to index using the names of the columns. 
 
 
 ```r
 # your code here
 # make an index
-messi_index <- c("Goals", "Age")
+messi_index <- c("Goals", "Appearances")
 # pull out those columns
 messi_career[, messi_index]
 ```
 
 ```
-##    Goals Age
-## 1      1  17
-## 2      8  18
-## 3     17  19
-## 4     16  20
-## 5     38  21
-## 6     47  22
-## 7     53  23
-## 8     73  24
-## 9     60  25
-## 10    41  26
-## 11    58  27
-## 12    41  28
-## 13    54  29
-## 14    45  30
-## 15    51  31
-## 16    31  32
-## 17    38  33
+##    Goals Appearances
+## 1      1           9
+## 2      8          25
+## 3     17          36
+## 4     16          40
+## 5     38          51
+## 6     47          53
+## 7     53          55
+## 8     73          60
+## 9     60          50
+## 10    41          46
+## 11    58          57
+## 12    41          49
+## 13    54          52
+## 14    45          54
+## 15    51          50
+## 16    31          44
+## 17    38          47
 ```
 
 ```r
 # alt index option
-messi_career[, c("Goals", "Age")]
+messi_career[, c("Goals", "Appearances")]
 ```
 
 ```
-##    Goals Age
-## 1      1  17
-## 2      8  18
-## 3     17  19
-## 4     16  20
-## 5     38  21
-## 6     47  22
-## 7     53  23
-## 8     73  24
-## 9     60  25
-## 10    41  26
-## 11    58  27
-## 12    41  28
-## 13    54  29
-## 14    45  30
-## 15    51  31
-## 16    31  32
-## 17    38  33
+##    Goals Appearances
+## 1      1           9
+## 2      8          25
+## 3     17          36
+## 4     16          40
+## 5     38          51
+## 6     47          53
+## 7     53          55
+## 8     73          60
+## 9     60          50
+## 10    41          46
+## 11    58          57
+## 12    41          49
+## 13    54          52
+## 14    45          54
+## 15    51          50
+## 16    31          44
+## 17    38          47
 ```
 
 # Subsetting and calculations with indexing
@@ -787,39 +722,41 @@ transform(exampleDat,
 
 ## Indexing data frames exercise 2
 
-We will index the `messi_career` data we have using to do some calculations, subset, and print a nice result. The final printed result should be: *Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League.*.
+We will index the `messi_career` data to do some calculations, subset, and print a nice result. 
 
-1)  Make a new column called goalRatio and, using indexing, divide Goals by Appearances.
-2)  Make another new column called propChampGoal and, using indexing, divide champLeagueGoal by Goals and times by 100.
-3)  Subset the messi_career data. Call the subsetted data messi_careerSub, and keep all rows and the following columns: Season, Age, goalRatio and propChampGoal.
-4)  Using your new messi_careerSub data frame, use `which.max()` to find the row with the best goal ratio. Store this in a data frame called bestGR. *hint: see which.min() example*.
-5)  Use `paste()` or `paste0` to print the result: Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19 percent where in the Champions League. *hint: use indexing on the bestGR data frame, e.g. paste("text", round(bestGR[,3],2), "more text")*.
+1)  Make a new column called goal_ratio and, using indexing, divide Goals by Appearances.
+2)  Make another new column called prop_champ_goal and, using indexing, divide champ_league_goal by Goals and times by 100.
+3)  Subset the messi_career data. Call the subsetted data messi_career_sub, and keep all rows and the following columns: Season, age, goal_ratio and prop_champ_goal.
+4)  Using your new messi_career_sub data frame, use `which.max()` to find the row with the best goal ratio. Store this in a data frame called best_GR *hint: using ?which.max() to look up function*.
+5)  Use `paste()` or `paste0()` to print the final result: *Messi's best goal ratio is 1.22 goals per game in the 2011 season when he was 24. Of his goals, 19.18 percent were in the Champions League.*.
+
+*hint: use indexing on the best_GR data frame, e.g. paste("text", round(best_GR[,3],2), "more text")*.
 
 
 ```r
 # your code here
 # calculations
-messi_career$goalRatio <- messi_career$Goals/messi_career$Appearances
-messi_career$propChampGoal <- messi_career$champLeagueGoal/messi_career$Goals*100
+messi_career$goal_ratio <- messi_career$Goals/messi_career$Appearances
+messi_career$prop_champ_goal. <- messi_career$champ_league_goal/messi_career$Goals*100
 # subsetting
-messi_careerSub <- messi_career[,c('Season', 'Age', 'goalRatio', 'propChampGoal')]
+messi_career_sub <- messi_career[,c('Season', 'age', 'goal_ratio', 'prop_champ_goal.')]
 # best season
-bestGR <- messi_careerSub[which.max(messi_careerSub$goalRatio),]
-bestGR
+best_GR <- messi_career_sub[which.max(messi_career_sub$goal_ratio),]
+best_GR
 ```
 
 ```
-##   Season Age goalRatio propChampGoal
-## 8   2011  24  1.216667      19.17808
+##   Season age goal_ratio prop_champ_goal.
+## 8   2011  24   1.216667         19.17808
 ```
 
 ```r
-# output (using two methods of calling bestGR)
-paste("Messi's best goal ratio is", round(bestGR$goalRatio,2), "goals per game in the", bestGR[1] ,"Season, at the age of", bestGR[2], ", of his goals", round(bestGR$propChampGoal,2) ,"percent where in the Champions League")
+# output (using two methods of calling best_GR)
+paste0("Messi's best goal ratio is ", round(best_GR$goal_ratio,2), " goals per game in the ", best_GR[1] ," season when he was ", best_GR[2], ". Of his goals, ", round(best_GR$prop_champ_goal.,2) ," percent were in the Champions League.")
 ```
 
 ```
-## [1] "Messi's best goal ratio is 1.22 goals per game in the 2011 Season, at the age of 24 , of his goals 19.18 percent where in the Champions League"
+## [1] "Messi's best goal ratio is 1.22 goals per game in the 2011 season when he was 24. Of his goals, 19.18 percent were in the Champions League."
 ```
 
 # Final task - Please give us your individual feedback!
@@ -830,7 +767,7 @@ We would be grateful if you could take a minute before the end of the workshop s
 
 # Individual take home challenge
 
-For the individual coding challenge you will need to de-bug the code to get it working. The end result will be something like: *Dobby the house elf is very Devoted and has a power to evil ratio of 0.67*. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.
+For the individual coding challenge you will need to de-bug the code to get it working. The end result will be: *"Dobby the house elf is very Devoted and has a power to evil ratio of 1.6"*. The numbers you get will not be the same but the text should be the same. There are 6 errors to find.
 
 
 ```r
@@ -842,9 +779,9 @@ HP_Characters <- dataframe(
   Trait = ("Brave", "Wise", "Loyal", "Brave", "Cunning", "Loyal", 
             "Devoted"))
 # Give them a score out of 10 for power
-HP_Char$Power <- sample(1:10, 7)
+HP_Characters$Power <- c(7,9,5,2,3,10,8)
 # Give them a score out of 10 for Evilness
-HP_Characters$Evilness <- sample(1:10, 7)
+HP_Characters$Evilness <- c(7,6,3,2,8,4,5)
 # Give them a power to evil ratio
 HP_Characters$PowEvilRatio <- HP_Characters$Pow/HP_Characters$Evil
 
@@ -871,11 +808,11 @@ HP_Characters <- data.frame(
   Trait = c("Brave", "Wise", "Loyal", "Brave", "Cunning", "Loyal", 
             "Devoted"))
 # Give them a score out of 10 for power
-HP_Characters$Power <- sample(1:10, 7)
+HP_Characters$Power <- c(7,9,5,2,3,10,8)
 # Give them a score out of 10 for Evilness
-HP_Characters$Evilness <- sample(1:10, 7)
+HP_Characters$Evilness <- c(7,6,3,2,8,4,5)
 # Give them a power to evil ratio
-HP_Characters$PowEvilRatio <- HP_Characters$Power/HP_Characters$Evil
+HP_Characters$PowEvilRatio <- HP_Characters$Power/HP_Characters$Evilness
 
 # print the result for Dobby
 paste(HP_Characters[7,1], "is very", HP_Characters[7,2], 
@@ -883,7 +820,7 @@ paste(HP_Characters[7,1], "is very", HP_Characters[7,2],
 ```
 
 ```
-## [1] "Dobby the house elf is very Devoted and has a power to evil ratio of 0.14"
+## [1] "Dobby the house elf is very Devoted and has a power to evil ratio of 1.6"
 ```
 
 
@@ -891,7 +828,7 @@ paste(HP_Characters[7,1], "is very", HP_Characters[7,2],
 
 We have covered some of the classic R options for adding columns and indexing data frames. There are two other very useful functions which can make your life easier when using R: `within()` and `with()`. 
 
-`with()` is a convenience function designed to save you writing out your data frame name every time you want to use a column in that data frame. `within()` is similar but allows you to assign a variable in the same way you would with $. 
+`with()` is designed to save you writing out your data frame name every time you want to use a column in that data frame. `within()` is similar but allows you to assign a variable in the same way you would with $. 
 
 ```r
 with(exampleDat, integer/number)

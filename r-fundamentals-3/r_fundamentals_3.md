@@ -3,7 +3,7 @@ title: "R Fundamentals 3: Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2023"
+date: "02 February, 2024"
 output: 
   html_document: 
     theme: readable
@@ -21,7 +21,7 @@ To start working with text (strings) and categorical (factors) data in R.
 
 # What will this workshop cover?
 
-In this workshop, the aim is to cover strings and sting manipulation, introduce factors, and type conversion. We will be covering:
+In this workshop, the aim is to cover strings and string manipulation, introduce factors, and type conversion. We will be covering:
 
 -   String variables
 -   Introduction to factors, also known as dummy variables (represent categorical and ordered/un-ordered data)
@@ -156,11 +156,11 @@ fruit
 
 # Ordering factors
 
-Sometimes the ordering of the factor levels matter. For example, if you had a question on how fast someone eats ice cream with the possible answers of *slow, medium, and fast*, the order is important. This order reflects how the output will be printed or arranged in a figure.
+Sometimes the ordering of the factor levels matter. For example, if you had a question on how fast someone eats ice cream with the possible answers of *slow, medium, and fast*, the order is important. This order reflects how the output will be printed or arranged in a figure, a table, or your analysis output.
 
 ![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-3/images/dog_order.jpg?raw=true){width="50%"}
 
-Run the below example. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
+Run the below example. Look at the **Levels:* output. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
 
 
 ```r
@@ -183,36 +183,6 @@ Using our example above we add the *levels* argument after the variables (`facto
 iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
                      'medium','slow','medium', 'slow'), 
                    levels = c('slow','medium','fast'))
-iceCream
-```
-
-```
-## [1] slow   fast   fast   fast   medium slow   medium slow  
-## Levels: slow medium fast
-```
-
-We can also add the levels after the factor has been created, by reassigning it and adding the levels argument.
-
-
-```r
-iceCream <- factor(iceCream, levels = c('slow','medium','fast'))
-iceCream
-```
-
-```
-## [1] slow   fast   fast   fast   medium slow   medium slow  
-## Levels: slow medium fast
-```
-
-Finally, you can pre-define the levels in a vector before adding them as levels.
-
-
-```r
-qlevels <- c('slow','medium','fast')
-
-iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
-                     'medium','slow','medium', 'slow'), 
-                   levels = qlevels)
 iceCream
 ```
 
@@ -266,6 +236,14 @@ sum(numbers)
 ```r
 # convert to numeric and try sum again
 numbers <- as.numeric(numbers)
+numbers
+```
+
+```
+## [1] 1 2 3 4 5 6 7
+```
+
+```r
 sum(numbers)
 ```
 
@@ -275,12 +253,12 @@ sum(numbers)
 
 ## Type conversion exercise
 
-Using the meditation_time variable defined below:
+Using the `meditation_time` variable defined below:
 
 1)  Use the mean function on the `meditation_time` variable
 2)  Why did it not work?
-3)  Which function do you need to change the meditation_time vector to be numeric?
-4)  Once you've changed meditation_time to numeric, run mean on it again
+3)  Which function do you need to change the `meditation_time` vector to be numeric?
+4)  Once you've changed `meditation_time` to numeric, run mean on it again
 
 
 ```r
@@ -293,7 +271,7 @@ The syntax for type conversions in R always start with `as.` then whatever you'r
 
 # Basic string manipulation
 
-R comes with several useful functions for manipulating strings, today we will just look at `paste()`, `paste0()`.
+R comes with several useful functions for manipulating strings such as `paste()` and `paste0()`.
 
 The paste functions are useful for producing nice outputs for reports or an analysis. They concatenate strings and variables to make outputs more readable. They are also really helpful to creating data, or making reproducible examples of data.
 
@@ -320,150 +298,31 @@ my_name
 ## [1] "My name is Rose"
 ```
 
-We can combine paste with other functions such as rep or seq to make new vectors. This is really handy if you want or need to make some string based data.
-
-
-```r
-# repeat hello 
-hello <- rep(paste("Hello,", "nice to see you"), 3)
-hello
-```
-
-```
-## [1] "Hello, nice to see you" "Hello, nice to see you" "Hello, nice to see you"
-```
-
-```r
-# person id 1 to 5
-person <- paste("person", "id", seq(1:5))
-person
-```
-
-```
-## [1] "person id 1" "person id 2" "person id 3" "person id 4" "person id 5"
-```
-
-The `paste()` function has two extra arguments, `sep` and `collapse.` What do sep and collapse do? They tell paste how to separate the elements. Collapse is used when you give paste a vector, sep is for when you have single values (variables). You have to provide the symbols used to separate the elements, such as a comma.
-
-Some examples of paste with and without the sep or collapse arguments:
-
-
-```r
-# Using sep
-paste("Hi", "there")
-```
-
-```
-## [1] "Hi there"
-```
-
-```r
-paste("Hi", "there", sep = ", ")
-```
-
-```
-## [1] "Hi, there"
-```
-
-```r
-paste("person", "id", seq(1:5), sep = "_")
-```
-
-```
-## [1] "person_id_1" "person_id_2" "person_id_3" "person_id_4" "person_id_5"
-```
-
-```r
-# using collapse
-trees <- c('Oak', 'Willow', 'Redwood')
-paste(trees)
-```
-
-```
-## [1] "Oak"     "Willow"  "Redwood"
-```
-
-```r
-paste(trees, collapse = " and ")
-```
-
-```
-## [1] "Oak and Willow and Redwood"
-```
-
-```r
-paste(trees, collapse = ", ")
-```
-
-```
-## [1] "Oak, Willow, Redwood"
-```
-
-The difference between `paste` and `paste0` is that `paste0` by default has no separation between strings. Run the example below to see the difference.
-
-
-```r
-paste("paste", "seperation", seq(1:3))
-```
-
-```
-## [1] "paste seperation 1" "paste seperation 2" "paste seperation 3"
-```
-
-```r
-paste0("paste", "seperation", seq(1:3))
-```
-
-```
-## [1] "pasteseperation1" "pasteseperation2" "pasteseperation3"
-```
-
-With `paste0` you can add the separation you want after the string instead of as a sep arguement.
-
-
-```r
-paste0("paste_", "seperation_", seq(1:3))
-```
-
-```
-## [1] "paste_seperation_1" "paste_seperation_2" "paste_seperation_3"
-```
-
-You can't change the `sep` value for `paste0`, but collapse can be changed.
-
-
-```r
-pizzaEaten <- 4
-paste0("This week I ate ", pizzaEaten, " pizzas...")
-```
-
-```
-## [1] "This week I ate 4 pizzas..."
-```
-
-```r
-paste0(trees, collapse = " & ")
-```
-
-```
-## [1] "Oak & Willow & Redwood"
-```
-
-As you can see paste can make new strings from existing strings and format them into a readable format, as well as make new vectors from strings.
+The paste functions are really useful when you need to make strings from existing data, or programmatically make strings, which are reasonably common tasks. 
 
 ## Paste exercise
 
-1)  Make a vector with the following flowers: sunflowers, echinaceas, dahlias
-2)  Use `paste0` or `paste` to make this string: "sunflowers, echinaceas, dahlias"
-3)  Use rep in conjunction with paste to print out each of your flowers with "I like" before each flower, repeat it four times
-4)  Make a variable called daysRaining with the value 360
-5)  Using `paste0` or `paste` make the following sentence that uses the daysRaining variable: "It has been raining for 360 days this year"
-6)  Use `paste0` or `paste` with the seq function to make these strings: "order_1" "order_2" "order_3" "order_4" "order_5". Print out the result
+For help with these exercises you might need to Google something like *paste & paste0 R functions examples*.
+
+1) Write a nice message to your self that includes your name and the time of day (morning, afternoon, or evening). Make sure to use the name and time of day variables, changing them to your own name. You should get a result that is something like: "Good Evening, Andrew. Have a great day."
+
+
+```r
+# write a message to yourself
+name <- ""
+time_of_day <- ""
+
+# your code here
+```
+
+2) You need to make a string variable that is sequential. Using `paste0()` or `paste()` create a string variable with the result that is: "order_1" "order_2" "order_3" "order_4" "order_5". 
 
 
 ```r
 # your code here
+# make a variable
 ```
+
 
 # Final task - Please give us your individual feedback!
 
@@ -473,7 +332,7 @@ We would be grateful if you could take a minute before the end of the workshop s
 
 # Individual take home challenge 1
 
-Type conversion can be helpful with questionnaire data. In this example you've taken a questionnaire how much you agree to certain topics with the following scale: Disagree, Undecided, Agree.
+Type conversion can be helpful with questionnaire data. In this example you've taken a questionnaire on how much you agree to certain topics with the following scale: Disagree, Undecided, Agree.
 
 1)  Make a vector called `survey` with the following amount of responses: agree times 5, undecided times 3, disagree times 2. hint: use the `rep()` function.
 2)  Make the survey vector into a factor, with the order levels disagree to agree. You should get *Levels: disagree undecided agree*.
@@ -488,7 +347,7 @@ Type conversion can be helpful with questionnaire data. In this example you've t
 
 # Individual take home challenge 2
 
-In this challenge get the code below to run, it has been jumbled up so needs to be re-ordered. The code calculates your week wine consumption. When it runs it will print out the following statement *"This week I drank on average 1.71 glasses of wine, 5 red and 2 white"*.
+In this challenge try to get the code below to run. It has been jumbled up so needs to be re-ordered. The code calculates your weekly wine consumption. When it runs it will print out the following statement *"This week I drank on average 1.71 glasses of wine, 5 red and 2 white"*.
 
 
 ```r
@@ -535,4 +394,7 @@ paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " r
 amountWine <- c(1, 1, 2, 1, 3, 1, 3)
 ```
 
-*Note:* here we have used the `grep()` and `table()` functions so you can see how they can be used. They will be covered in later sessions. `grep()` is searching the type wine variable for either the string 'red' or 'white'. `table()` does a count on the number of each level of a factor; test out table() on the typeWine variable to see what it does.
+*Note:* here we have used the `grep()` and `table()` functions so you can see how they can be used. They will be covered in later sessions. `grep()` is searching the type wine variable for either the string 'red' or 'white'. `table()` does a count on the number of each level of a factor; test out table() on the `typeWine` variable to see what it does. try `?grep()` and `?table()` to look at the documentation for them. 
+
+
+

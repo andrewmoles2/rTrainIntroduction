@@ -363,9 +363,9 @@ In this coding challenge we are going to keep looking at the pokemon data. In th
 
 1)  First, make a vector with Ash's pokemon: Pikachu, Butterfree, Pidgeot, Bulbasaur, Charizard, Squirtle
 2)  Next we need to make a dataset called ash, and subset out all his pokemon using %in% as shown above
-3)  Now using `mean()` compare the mean Total for Ash's pokemon and the rest in the pokemon data *hint: putting both mean functions in a c function will allow you to see them side by side*
+3)  Now using `mean()` compare the mean Total for Ash's pokemon and the rest in the pokemon data *hint: putting both mean functions in a c() function will allow you to see them side by side*
 4)  Looks like Ash's pokemon on average are worse, but by how much? Work out the difference between the total of Ash's pokemon and the other pokemon.
-5)  Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. *hint: table(data*$name, data$total \>= mean(data2\$total))
+5)  Which of Ash's pokemon have higher total stats than the average pokemon? Use `table()` to do this comparison. *hint: table(data$name, data$total >= mean(data$total))*
 6)  Having stats over or equal to 100 seems important. Using subsetting and OR statements, find out how many of Ash's pokemon have stats in HP,Attack,Defense,Sp..Atk,Sp..Def, and Speed over or equal to 100.
 
 ```{r}
