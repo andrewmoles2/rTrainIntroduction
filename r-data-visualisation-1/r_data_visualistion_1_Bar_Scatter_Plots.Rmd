@@ -1,0 +1,794 @@
+---
+title: "R Data Visualistion 1: Data viz with ggplot2"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Objective of workshop
+
+To create scatter and bar plot visualisations using the ggplot2 package. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to use the ggplot2 package. We will be covering:
+
+-   An introduction to the ggplot2 package
+-   How to make scatter plots with ggplot2
+-   How to make bar plots with ggplot2
+-   How to change colours and other features in your visualisations  
+
+------------------------------------------------------------------------
+
+# Introduction
+
+Data visualisation is a way of looking at your data using graphics, which provides a different perspective to your data.
+
+There are a lot of different options for data visualistion with R. You can use the visualisation tools that come with R, ggplot and all its extensions, or for interactive visualisations there is the plotly library.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-visualisation-1/images/ggplot2_exploratory.png?raw=true){width="437"}
+
+In this data visualisation series we will be mainly focussing on ggplot, as well as plotly. While the visualistion tools that come with R are useful, ggplot and plotly are generally easier to use and make great visualisations with. For this tutorial we will be using the below packages: ggplot2, dplyr, readr, janitor. Run the code below to install the packages if you don't have them installed already.
+```{r eval=FALSE}
+# install packages
+install <- c("ggplot2", "dplyr", "readr",
+             "janitor", "RColorBrewer",
+             "forcats")
+
+install.packages(install, Ncpus = 6)
+```
+
+Then we need to load them into our session. Run the code chunk below to load all the libraries you will need.
+```{r message=FALSE}
+# load packages
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(janitor)
+library(RColorBrewer)
+library(forcats)
+```
+
+# What is ggplot and how does it work?
+
+ggplot2 is a package for producing graphics that works by combining independent components when making graphs, known as layers. This makes ggplot2 both versatile and powerful; you are not limited by a set of options but instead can make novel graphics to suit your needs.
+
+It is also important to note that ggplot can only use data frames. If your data is in another format you will need to transform it into a data frame in order to use ggplot.
+
+In order to understand how the layers work we will first load in some data for our examples. We will use data from the Pokémon games, which was web scraped from <https://pokemondb.net/pokedex/all>.
+```{r message=FALSE}
+# load and clean names
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv") %>%
+  clean_names()
+# review data
+pokemon %>%
+  glimpse()
+```
+
+The syntax for ggplot has three key components. The ggplot function call (`ggplot()`), the aesthetics (called `aes()`), and the geometry (called geoms) which refers to scatter, bar, or line plots for example. The next three code chunks break this down.
+
+```{r}
+# call ggplot2 and add data
+ggplot(pokemon)
+```
+
+Notice we just get a grey box. We have just loaded our data into ggplot but not much else! Now lets add the aesthetics and see what happens.
+
+Too add aesthetics we use the `aes()` function within the `ggplot()` function, and specify what our x and y axis will be with column names from our data, sp_atk and sp_def in this case.
+
+```{r}
+# add aesthetics
+ggplot(pokemon, aes(x = sp_atk, y = sp_def))
+```
+
+It is starting to look more like a visualisation now, we can see the x and y axis labels, but we still have no data points showing. We have to add a geometry for that to happen. Notice the syntax here, we use the `+` icon to add a geometry to ggplot, which in this case is `geom_point()` which makes scatter plots. All geometry functions start with `geom_` and end with the type of geometry such as point, bar, or line.
+
+```{r}
+# pick which geometry
+ggplot(pokemon, aes(x = sp_atk, y = sp_def)) +
+  geom_point()
+```
+
+This is the fundamental concept of ggplot, you construct your visualisations in layers, adding geometry layers, and other features as you go.
+
+## what is ggplot exercise
+
+Using the pokemon data, make a scatter plot with *hp* on the x axis and *speed* on the y axis.
+
+```{r}
+# your code here
+
+```
+
+# Scatter plots
+
+Scatter plots are for displaying the relationship between two numeric (or quantitative) variables. For each data point, the values of its first variable is represented on the X axis and the second on the Y axis.
+
+To make a scatter plot with ggplot2 we use the `geom_point()` function like you just saw. In order for ggplot to make a scatter plot, the X and Y axis must be numeric.
+
+The plot we just made in the example is okay but it could do with some improving. There are quite a few different ways to change the appearance of a visualisation, lets go through them.
+
+The first thing we will look at is adding some colour! There are a few options for adding colours to your plots. You can add the name, such as red, or you can use a hex code, or you can use a pre-defined palette. To add colour to a scatter plot we use the `colour =` argument.
+
+```{r}
+# colour of points
+ggplot(pokemon, aes(x = hp, y = speed)) +
+  geom_point(colour = "orange")
+```
+
+To colour your points by a group (or factor) we have to add the colour argument into the `aes()` function. This allows us to have different colours for different groups, which makes the plot more informative.
+
+In the below example, our data is coloured by if a pokemon is classified as legendary or not.
+
+```{r}
+# colour by factor
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary)) +
+  geom_point()
+```
+
+We get the default ggplot colours which are okay. There are a few different ways of changing the colours, all methods use the `scale_` function in a slightly different way. In the two examples below we have changed the colours using the RColorBrewer package and have set the colours manually.
+
+RColorBrewer comes with a set of palettes for different situations, you can view them by following this link <https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html>. To use these palettes with ggplot we use the `scale_colour_brewer()` function with an argument for which palette we want to use; in this example we are using Set1.
+
+```{r}
+library(RColorBrewer)
+# adjusting colour by factor using RColorBrewer
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary)) +
+  geom_point() +
+  scale_colour_brewer(palette = "Set1")
+```
+
+To make a manual palette, you first make a vector with your colours, to do so it is useful to use a colour picker such as <http://tristen.ca/hcl-picker/#/hlc/6/1/15534C/E2E062> or <https://coolors.co/>. You copy the hex code (code with \# then 6 numbers of letters) and paste it into your vector like you can see in the manual_pal vector below. To add the colour we use `scale_colour_manual()` function, and set the values to our manual palette.
+
+```{r}
+# adjusting colour by factor using manual palette
+manual_pal <- c("#90C0F8", "#EA964E")
+
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary)) +
+  geom_point() +
+  scale_colour_manual(values = manual_pal)
+```
+
+It is sometimes helpful to view the palette before using it. We can use the scales package for this, which is installed when you install ggplot2. We provide the `show_col()` function with the palette we want to view and it returns a grid view of the colours. In the example we look at Set1 from RColorBrewer and the manual palette we just used.
+
+```{r}
+# load scales
+library(scales)
+# view palettes
+show_col(RColorBrewer::brewer.pal(n = 8, name = "Set1"))
+show_col(manual_pal)
+```
+
+As well as changing the colour of the points, you can change their shape, size, and transparency (alpha). Just like with colour, we can define the size, shape or transparency either in the `aes()` function or in a `geom_` function. By adding them to the `geom_` function we manually change them. If we use them in `aes()` we have to associate the size/shape/alpha with a variable.
+
+See the below example, first we manually set the size and alpha. In the second example we set the size to be defined by the total column in our pokemon data, and manually set the alpha.
+
+```{r}
+# manually set size and alpha
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary)) +
+  geom_point(size = 5, alpha = 0.6) +
+  scale_colour_brewer(palette = "Set1")
+
+# manually set alpha, size by total
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary, size = total)) +
+  geom_point(alpha = 0.6) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+To manually change the shape and replace the circles, we give the shape argument a number. Each number represents a shape, letter, or number; by default ggplot uses shape number 19. We can change the shape to a square for example by using the number 15.
+
+```{r}
+# default shape number
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary, size = total)) +
+  geom_point(alpha = 0.6, shape = 19) +
+  scale_colour_brewer(palette = "Set1")
+
+# shape number for squares
+ggplot(pokemon, aes(x = hp, y = speed, colour = legendary, size = total)) +
+  geom_point(alpha = 0.6, shape = 15) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+View the image with the visual markdown editor to see what number represents what shape, letter, or number.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-visualisation-1/images/shapes.png?raw=true){width="800" height="900"}
+
+Finally we can add a title and save our plot! We've done two things in order to achieve this. To add a title, and change axis labels, we have used the `labs()` function. We add arguments for what we want to change, such as `title = "Pokemon Hit Points vs Speed"`. To change the legend labels we use colour and size, as we used these to define our legend in the `aes()` function.
+
+To save the plot we assign our code to a variable, then we use the `ggsave()` function, which requires what you want to call the file and the file extension (e.g. plot.PNG or plot.JPG), then the ggplot object we created. Run the example below, and you should get a hp_vs_speed.PNG file where your Rmd file is saved. You can also adjust the size of the image saved using the width and height arguments.
+
+```{r}
+# save plot to a variable
+hp_vs_speed <- ggplot(pokemon, aes(x = hp, y = speed, colour = legendary, size = total)) +
+  geom_point(alpha = 0.6, shape = 15) +
+  scale_colour_brewer(palette = "Set1") +
+  labs(title = "Pokemon Hit Points vs Speed",
+       subtitle = "Taken from pokemondb.net",
+       x = "Hit Points",
+       y = "Speed",
+       colour = "Legenary pokemon?",
+       size = "Total stats")
+
+hp_vs_speed
+
+# save plot
+ggsave("hp_vs_speed.PNG", hp_vs_speed)
+
+# save with defined width and height
+ggsave("hp_vs_speed.PNG", hp_vs_speed,
+       width = 7, height = 4.5)
+```
+
+## Scatter plots exercise
+
+For the exercises in this workshop we will use data from the Olympics that includes all Olympic games from 1896 through to 2016. More information on the dataset can be found here <https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-07-27/readme.md>. Run the code provided to load the libraries and data into R.
+
+We will make two scatter plots from the Olympics data. For both plots we will use dplyr to filter the information we are interested in, which has been done for you in this exercise. 
+
+1)  Using the provided `scatter_plot1` data, make a scatter plot of Olympic gymnasts heights (x axis) and weights (y axis).
+
+-   Change the colour and shape arguments to tell us what sex the gymnasts are.
+-   Change the colour palette by making a manual one or using RColorBrewer.
+-   Be sure to give your plot a title, and save your plot.
+
+2)  Using the provided `scatter_plot2` data, make a scatter plot of the age (y axis) of gymnastic medal winners by year (x axis). 
+
+-   Colour your plot by medal by making a manual colour palette. *hint: the hex codes for gold, silver and bronze are: "#FFD700", "#C0C0C0", "#CD7F32"*
+-   Use shape to tell us what sex the gymnasts were.
+-   Be sure to give your plot a title, and save your plot.
+
+
+```{r}
+# make sure libraries are loaded
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+# load in data
+olympics <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-07-27/olympics.csv")
+
+olympics %>% glimpse()
+
+# data cleaning for first scatter plot
+scatter_plot1 <- olympics %>%
+  filter(sport == "Gymnastics")
+
+# data cleaning for second scatter plot
+scatter_plot2 <- olympics %>%
+  filter(sport == "Gymnastics") %>%
+  filter(!is.na(medal)) %>%
+  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze")))
+
+# your code here
+
+```
+
+# Quirks of ggplot2
+
+There are a few quirks to be aware of when using ggplot2 and you'll see a few of them when you look for examples online. In order to aid with this, we can have a look at a few of them!
+
+The first quirk is piping data into ggplot, where you do not need to add your data into the `ggplot()` function as it is piped in. The main advantage of this approach is you can string together some data cleaning and then pipe the results straight into ggplot.
+
+```{r}
+# piping data into ggplot
+pokemon %>%
+  ggplot(aes(x = sp_atk, y = sp_def)) +
+  geom_point()
+
+# piping with filter
+pokemon %>%
+  filter(type1 == "Fire") %>%
+  ggplot(aes(x = sp_atk, y = sp_def)) +
+  geom_point()
+```
+
+The second quirk is adding aesthetics into a `geom_` function rather than the `ggplot()` function.
+
+```{r}
+# adding aesthetics into the geom_ call
+ggplot(pokemon) +
+  geom_point(aes(x = sp_atk, y = sp_def))
+```
+
+The third quirk is you can also add the data into the `geom_` function. When doing so you have to have `data =` otherwise you will get an error.
+
+```{r}
+# adding data and aesthetics into the geom_ call
+ggplot() +
+  geom_point(data = pokemon, aes(x = sp_atk, y = sp_def))
+```
+
+The fourth quirk relates to the second and third, in that you can add aesthetics into a `geom_` function more than once. You might occasionally come across this for more complex visualisations.
+
+In the example we will add the average of our x and y variables. First we make a summary table that has the averages of both axis's, using `summarise()` from dplyr. Then we add two `geom_point()` functions, one with the pokemon data, and one with our summary table data.
+
+```{r}
+# why adding aesthetics into the geom_ call
+# calculate mean of sp_atk and sp_def
+avg_sp <- pokemon %>%
+  summarise(
+    avg_sp_atk = mean(sp_atk, na.rm = TRUE),
+    avg_sp_def = mean(sp_def, na.rm = TRUE))
+
+avg_sp
+
+# add average sp_atk and sp_def as black point
+ggplot() +
+  geom_point(data = pokemon, 
+             aes(x = sp_atk, y = sp_def), 
+             colour = "orange",
+             size = 2.5) +
+  geom_point(data = avg_sp, 
+             aes(x = avg_sp_atk, y = avg_sp_def),
+             size = 2.5)
+```
+
+The last quirk we will look at is adding to a ggplot visualisation after you have assigned it a name. This is very common in tutorials and on Stack Overflow. A good use of this is to build a base of the x and y you want to use and test out different geometries.
+
+```{r}
+# saving plot then adding to it
+p <- ggplot(pokemon, aes(x = sp_atk, y = sp_def))
+
+p
+
+p + geom_point()
+
+p + geom_line()
+```
+
+# Quirks of ggplot2 exercise
+
+Make a visualisation of USA athletes ages vs heights, showing the difference between the genders using colour. When making your visualisation try to
+
+-   Pipe the olympics data to a filter function and select all USA athletes
+-   Pipe to a ggplot function
+-   Add a geom_point function and add the aesthetics there rather than in `ggplot()`
+
+```{r}
+# your code here
+
+```
+
+# Bar plots with counts
+
+Bar plots are used to show relationships between a numerical and categorical variable. The categorical variable is usually on the x axis, and the y axis is usually a frequency count.
+
+By default, bar plots with ggplot only require an x or y axis. From that they make a frequency count of that variable. See the example below. First we use ggplot to make a bar plot to count the number of pokemon added in each generation. Then we do the same thing with dplyr to make a aggregate table, ggplot is taking this aggregate table and making into a plot for us!
+
+It is important to make sure your x axis in a bar plot is a factor, as this helps ggplot to order the axis as you expect.
+
+```{r}
+# make generation a factor
+pokemon$generation <- factor(pokemon$generation)
+
+# default bar plot
+ggplot(pokemon, aes(x = generation)) +
+  geom_bar()
+
+# dplyr aggregate equivalent
+pokemon %>%
+  count(generation)
+```
+
+To add colour to your bar plot we use the fill argument rather than colour. This can be confusing, and sometimes if you forget, just try both till the colours look right! To add our fill manually we add the fill command to our `geom_bar()` function.
+
+```{r}
+# manually add fill colour
+ggplot(pokemon, aes(generation)) +
+  geom_bar(fill = "purple")
+```
+
+Just like with the scatter plot, we can colour our plot by a variable by putting the fill argument within the `aes()` function. The below example also shows the equivalent when doing aggregation using dplyr.
+
+```{r}
+# bar plot with colour by variable
+ggplot(pokemon, aes(x = generation, fill = legendary)) +
+  geom_bar()
+
+# dplyr aggregate equivalent
+pokemon %>%
+  count(generation, legendary)
+```
+
+Notice in the above example that the bars by default were stacked on top of each other. We have two other options for changing this with either a dodge setting (sit next to each other) or a fill setting (stacked and standarised). To change this we use the position argument within `geom_bar()`.
+
+```{r}
+# dodge bars
+ggplot(pokemon, aes(x = generation, fill = legendary)) +
+  geom_bar(position = "dodge")
+# filled bars
+ggplot(pokemon, aes(x = generation, fill = legendary)) +
+  geom_bar(position = "fill")
+```
+
+A useful thing to change with bar plots is to *flip* your coordinates. This is particularly useful if your x axis contains text. In the example below we will use the type1 variable as our x axis to see the difference. When we don't flip the coordinates, the x axis is hard to read.
+
+```{r}
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar()
+
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip()
+```
+
+To change our colours we use the `scale_fill_` function. This is very similar to what we did with scatter plots except we are using fill this time, rather than colour.
+
+```{r}
+# change fill with RColorBrewer
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1")
+
+# change fill with manual palette
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal)
+```
+
+Currently our plots have the default ggplot theme which has a grey background. We can change this by setting a new theme. To do so you use `theme_` and select a theme which works best.
+
+```{r}
+# change theme to black and white
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal) +
+  theme_bw()
+
+# change theme to dark
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal) +
+  theme_dark()
+```
+
+Adding a theme to each plot can be tiring, so instead you can set a theme for all your plots by using the `theme_set()` function. Usually you set the theme before you make any of your visualisations. Now we have changed the theme to black and white, all our plots from now on will have a black and white theme.
+
+```{r}
+# set global theme
+theme_set(theme_bw())
+
+# see result
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal)
+```
+
+It is often useful and helpful to arrange the values by their rank or size. There are options to do this with base R, but the `forcats` library from the tidyverse makes arranging and ordering functions very straightforward.
+
+We will use the `fct_infreq()` function, which means factors in frequency, in effect ordering our factors by the frequency they appear. There are two approaches. First we use the `fct_infreq()` function within ggplot, or second we arrange our factor outside ggplot. Outside of ggplot is usually better as you have more control and it make your ggplot code easier to read.
+
+```{r}
+# load forcats
+library(forcats)
+
+# arrange by frequency within ggplot
+ggplot(pokemon, aes(x = fct_infreq(type1), fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal)
+
+# arrange by frequency outside ggplot
+pokemon$type1 <- fct_infreq(pokemon$type1)
+
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal)
+```
+
+We can also reverse the ordering by putting putting our `fct_infreq()` function inside a `fct_rev()` function (stands for factor reverse).
+
+```{r}
+# arrange by frequency (descending)
+pokemon$type1 <- fct_rev(fct_infreq(pokemon$type1))
+
+ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal)
+```
+
+More information on the forcats package can be found here: <https://forcats.tidyverse.org/index.html>
+
+Finally, let's save and label our example bar plot.
+
+```{r}
+# save and label
+count_type1 <- ggplot(pokemon, aes(x = type1, fill = legendary)) +
+  geom_bar() + 
+  coord_flip() +
+  scale_fill_manual(values = manual_pal) +
+  labs(title = "Frequency of each Pokemon type",
+       subtitle = "Coloured by if legendary or not",
+       y = "Frequency of Pokemon type",
+       x = "Type of Pokemon",
+       fill = "Legendary pokemon?")
+
+count_type1
+
+ggsave("count_type1.PNG", count_type1)
+```
+
+## Bar plots with counts exercise
+
+Using the examples above, make a visualisation of the frequency of ski jump medal winners per country (team) from the Olympics dataset.
+
+Try to include:
+
+-   Setting a new theme using `theme_set()`.
+-   Order the x axis by the frequency in reverse order. *hint: remember the forcats package*
+-   Make medals a factor, re-order them, and then colour them like we did in the last exercise.
+-   Decide if position stack, dodge or fill work best with this visualisation.
+-   Add a title and labels.
+-   Save your visualisation.
+
+```{r}
+# your code here
+
+
+```
+
+# Bar plots with other statistics
+
+A very useful function of bar plots is to show a group average instead of frequency. There are two approaches to showing a group average in a bar plot.
+
+The first route is aggregate your dataset, then add it into your bar plot as shown in the example below. We first use `group_by()` and `summarise()` from dplyr to find an average, in this case the average total statistics by pokemon generation.
+
+We then put this data into ggplot. The difference from a normal bar plot is we provide a y axis (our calculated average), and add `stat = "identity"` to the `geom_bar()` function.
+
+This is a great approach as it is easy to see what is happening at each step, making it simple to identify issues and make changes if needed.
+
+```{r}
+# group and summarise to make average
+avg_total_gen <- pokemon %>%
+  group_by(generation) %>%
+  summarise(avg_total = mean(total, na.rm = TRUE))
+
+# print result
+avg_total_gen
+
+# add to bar plot with stat identity
+ggplot(avg_total_gen, aes(x = generation, y = avg_total)) +
+  geom_bar(stat = "identity")
+```
+
+The other approach is to use the `stat_summary()` function to perform the same plot. The difference from a normal bar plot is we again provide the y axis but provide the variable we want to aggregate, total in this case. We then call `stat_summary()` and add two arguments, the function we want to use and what type of geometry to use; we've used mean and bar.
+
+While this is less code, which is a good thing, it is hard to understand the steps taken to make the summary.
+
+```{r}
+ggplot(pokemon, aes(x = generation, y = total)) +
+  stat_summary(fun = "mean", geom = "bar")
+```
+
+We can also add error bars to our plots to help us understand how precise our average measure is. To add error bars it is generally easier to use the group_by and summarise approach. We will look at two types of error bars, the standard deviation and the standard error of the mean.
+
+The standard deviation indicates how close sample values are to the average of all data points, and the accuracy of the average. The standard error of the mean is the discrepancy of the sample mean and the true mean, telling you the accuracy of the sample mean.
+
+To calculate, we do the same aggregation as we did before but add sd (standard deviation) to the summarise function and calculate the sem (standard error of the mean) in a mutate function.
+
+```{r}
+# group and summarise to make average and sd per group
+avg_total_gen <- pokemon %>%
+  group_by(generation) %>%
+  summarise(avg_total = mean(total, na.rm = TRUE),
+            sd = sd(total, na.rm = TRUE)) %>%
+  mutate(sem = sd/sqrt(length(sd)))
+
+# print result
+avg_total_gen
+```
+
+To add error bars we use the `geom_errorbar()` function, which requires two arguments within an `aes()` function, the `ymin` and `ymax`. To find `ymin` or `ymax` we plus or minus our avg_total (y axis value) by the sd/sem.
+
+```{r}
+# adding standard deviation error bars
+ggplot(avg_total_gen, aes(x = generation, y = avg_total)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = avg_total-sd, ymax = avg_total+sd)) +
+  labs(title = "Average Pokemon total statistics by generation",
+       subtitle = "Error bars indicate standard deviation")
+
+# adding standard error bars
+ggplot(avg_total_gen, aes(x = generation, y = avg_total)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = avg_total-sem, ymax = avg_total+sem)) +
+  labs(title = "Average Pokemon total statistics by generation",
+       subtitle = "Error bars indicate standard error of the mean")
+```
+
+You can edit the look of the error bars, such as making them narrower and changing the colour. See the example below on how to do this. We've also changed the colour of the bars too.
+
+```{r}
+ggplot(avg_total_gen, aes(x = generation, y = avg_total)) +
+  geom_bar(stat = "identity", fill = "orange") +
+  geom_errorbar(aes(ymin = avg_total-sem, ymax = avg_total+sem), width = 0.3, colour = "darkblue") +
+  labs(title = "Average Pokemon total statistics by generation",
+       subtitle = "Error bars indicate standard error of the mean")
+```
+
+If you want to add error bars to bar plots with different groupings on the x axis we need to made a few subtle changes, the main change is we need to have a dodge bar chart.
+
+First we will re run our avg_total_gen aggregation and add another column to our group_by. We then pre-define how wide the bars and error bars should be. Instead of using `position = "dodge"` we use our dodge variable we just made, and add the fill to be legendary (our second grouping).
+
+```{r}
+# group by legendary as well
+avg_total_gen <- pokemon %>%
+  group_by(generation, legendary) %>%
+  summarise(avg_total = mean(total, na.rm = TRUE),
+            sd = sd(total, na.rm = TRUE)) %>%
+  mutate(sem = sd/sqrt(length(sd)))
+
+# pre-define the dodge position
+dodge <- position_dodge(width = 0.8)
+
+ggplot(avg_total_gen, aes(x = generation, y = avg_total, fill = legendary)) +
+  geom_bar(stat = "identity", position = dodge) +
+  geom_errorbar(aes(ymin = avg_total-sem, ymax = avg_total+sem), position = dodge, width = 0.3) +
+  labs(title = "Average Pokemon total statistics by generation",
+       subtitle = "Error bars indicate standard error of the mean") +
+  scale_fill_manual(values = manual_pal)
+```
+
+## Bar plots with other statistics exercise
+
+Using the examples above and the Olympics dataset, make a visualisation of the average age (mean or median) of GBR (Great Britain) medal winners by medal type and gender, making sure to
+
+-   show the difference between male and female athletes using colours
+-   show error bars for either standard deviation or standard error of the mean
+-   colour, label and save your visualisation
+
+*hint: don't forgot to use dodge `<- position_dodge(width = 0.8)`*
+
+```{r}
+# your code here
+
+```
+
+# Beyond bar plots
+
+Bar plots are not the only option to view aggregated data, and there are some sources that suggest bar plots are less than ideal for any visualisation other than showing the frequency of a continuous variable. See <https://paulvanderlaken.com/2018/12/17/avoid-bar-plots-for-continuous-data-do-this-instead/> for details on this.
+
+Fortunately, there are alternatives, such as box plots which will be covered in the second data visualisation workshop, or we can use scatter plots! Scatter plots allow us to see all the data and we can add on an average, the best of both worlds.
+
+In order to recreate what we just did with bar plots with scatter plots we can either use both `geom_point()` and `stat_summary()`, or make a summary table and add that using a second `geom_point()` function. First, lets just plot the data as a scatter plot, making the points larger and more transparent. Lowering the transparency (alpha) is important in these plots as darker colours indicate a higher density of data points.
+
+```{r}
+ggplot(pokemon, aes(x = generation, y = total)) +
+  geom_point(size = 5, alpha = .33)
+```
+
+Now we can add the `stat_summary()` function. We are going to use the mean, the geom is point, and the shape is a the `-` symbol (number 95); we will also make the shape larger so we can see it easier.
+
+```{r}
+# using stat_summary
+ggplot(pokemon, aes(x = generation, y = total)) +
+  geom_point(size = 5, alpha = .33) +
+  stat_summary(fun = mean, geom = "point",
+               shape = 95, size = 20)
+```
+
+If we use the summary table option we first make a summary table with `group_by()` and `summarise()`. Then we add two `geom_point()` functions. The first has the pokemon data and our x and y axis. The second is our summary table, with the same x axis and the `avg_total` as the y axis. 
+```{r}
+# summary table option
+gen_avg_total <- pokemon %>%
+  group_by(generation) %>%
+  summarise(avg_total = mean(total, na.rm = TRUE))
+
+gen_avg_total
+
+ggplot() +
+  geom_point(data = pokemon,
+             aes(x = generation, y = total),
+             size = 5, alpha = .33) +
+  geom_point(data = gen_avg_total,
+             aes(x = generation, y = avg_total),
+             shape = 95, size = 20)
+
+```
+
+Either option works well, but for the rest of the examples we will use the `stat_summary()` option as it is less code. 
+
+Now we have all our data so we can see the number of points for each group, and we can see the average per group!
+
+Finally, we can add colour by our grouped variable (legendary) and change the colour palette. Just like with the bar plots we can adjust the positioning from stack to dodge. The examples below show both stack and dodge versions.
+```{r}
+# position stacked
+ggplot(pokemon, aes(x = generation, y = total, colour = legendary)) +
+  geom_point(size = 5, alpha = 0.3) + 
+  stat_summary(fun = mean, geom = "point",
+               shape = 95, size = 20) +
+  scale_colour_brewer(palette = "Set1")
+
+# position dodge
+dodge <- position_dodge(width = 0.8)
+
+ggplot(pokemon, aes(x = generation, y = total, colour = legendary)) +
+  geom_point(size = 5, alpha = 0.3, position = dodge) + 
+  stat_summary(fun = mean, geom = "point",
+               shape = 95, size = 20,
+               position = dodge) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## Beyond bar plots exercise
+
+Recreate your last visualisation, average age (mean or median) of GBR (Great Britain) medal winners by medal type and gender, using the `geom_point()` and `stat_summary()` method detailed above.
+
+```{r}
+# your code here
+
+```
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Data%Visualisation%1:%Data%viz%with%ggplot2&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErkI8HmyRaxDpUKMZ_U-m4oBkuLx2XcBQx4jhWLEOFHg-w?e=SOigeU>
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge
+
+For the individual coding challenge we will be using the food consumption data from tidy Tuesday: <https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md>.
+
+Use what we have covered in this workshop to make two visualisations of this dataset:
+
+-   A scatter plot showing consumption and co2 emissions for a selected country (e.g. UK or France)
+-   A bar plot of average co2 emissions per food category. Display just six countries to compare, such as UK, France, Germany etc. and colour them.
+
+Use some of the tips we used and showed to make the visualisations have labels, colours and look appealing. Try and have some fun with it! =)
+
+```{r}
+food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-18/food_consumption.csv')
+
+food_consumption %>%
+  glimpse()
+
+# your code here
+
+```
+
+------------------------------------------------------------------------
+
+# Understanding which visualisation to use and when
+
+Sometimes it can be hard to know where to start with a visualisation. A great first starting point is understanding the options depending on the data types you have available. This website gives lots of information and visual guides on this process: <https://www.data-to-viz.com/>
+
+# Seeing what others have done with this data
+
+The Olympics data we used for the exercises today is from the Tidy Tuesday GitHub repository. Tidy Tuesday is a social data visualisation challenge that happens every week and is a great way of learning about data viz.
+
+The the link below to see what others have done and posted about using the Olympics data. Use it to get some ideas on what else you can try and do or get some inspiration from others. <https://twitter.com/search?lang=en&q=%23tidytuesday%20olympics&src=typed_query>
+
+# Fun extra
+
+As a fun extra you can manually determine shapes in your visualisation using `scale_shape_manual()`. We've also removed the guide which was unnecessary by using `guide = "none"`. 
+
+In the example below, as our x axis is generation from 1 to 8, we can make generation 1 have a shape of the number 1 and so on. 
+```{r}
+ggplot(pokemon, aes(x = generation, y = total, shape = generation)) +
+  geom_point(size = 5, alpha = .33) +
+  stat_summary(fun = mean, geom = "point",
+               shape = 95, size = 20) +
+  scale_shape_manual(values = c(49:56),
+                     guide = "none")
+```
+
+ 

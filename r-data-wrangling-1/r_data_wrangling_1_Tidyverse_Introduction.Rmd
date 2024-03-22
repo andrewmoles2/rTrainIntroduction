@@ -1,0 +1,564 @@
+---
+title: "R Data Wrangling 1: Tidyverse introduction with Pipes and dplyr"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: true
+    toc_float: true
+---
+
+# Objective of workshop
+
+To start using the dplyr package from the tidyverse to select columns and filter data. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to start working with the key library from the tidyverse, dplyr. We will be covering:
+
+-   Introduce the use of pipes
+-   Indexing with the select function from dplyr
+-   Conditional indexing of data with the filter function from dplyr
+
+------------------------------------------------------------------------
+
+# What is the tidyverse?
+
+![image credit: Analytics Vidhya](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/tidyverse.jpeg?raw=true)
+
+The tidyverse is a collection of R packages that are designed for data science. These packages share design, syntax, and philosophy. These packages cover the import of data (`readr` and `haven`), manipulation and transformation of data (`dplyr`, `tidyr`, `stringr`, `purrr`, `forcats`, and `lubridate`), visualisation (`ggplot` and it's extensions), and analysis (`tidymodels`).
+
+Essentially, the tidyverse makes data science in R less painless, improving your experience of R and data science, especially in the data cleaning and wrangling stages.
+
+# What is tidy data?
+
+The tidyverse has a focus on working with tidy data, or making data tidy, ready for visualisation and analysis. So what does tidy data mean?
+
+When your data is tidy, *each column is a variable*, *each row is an observation*, and *each cell is a single observation*, as per our example below:
+
+```{r}
+# tidy data example
+tidy_df <- data.frame(
+  id = 1:6,
+  name = c("floof", "max", "cat", "donut", "merlin", "panda"),
+  colour = c("grey", "black", "orange", "grey", "black", "calico")
+)
+
+tidy_df
+```
+
+Messy data is inconsistent and unique, making it harder to work with, and harder for others to work with. See this example of a messy dataset that would be hard to work with. We would have to split up the animal column to name and colour. In later workshops, we will cover how to deal with messy data.
+
+```{r}
+# example messy data frame
+messy_df <- data.frame(
+  id = c(1,1,2,2,3,3,4,4,5,5,6,6),
+  animal = c("floof", "grey",
+             "max", "black",
+             "cat", "orange",
+             "donut", "grey",
+             "merlin", "black",
+             "panda", "calico")
+)
+
+messy_df
+```
+
+![Image credit: Julie Lowndes and Allison Horst](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/tidydata_2.jpeg?raw=true)
+
+See this excellent article, which has lots of nice images, for a summary :-<https://www.openscapes.org/blog/2020/10/12/tidy-data/>
+
+
+# Package install task
+
+In this workshop we will be using three packages: magrittr, dplyr, and readr.
+
+Using the code chunk below, install all three of these packages. Note that dplyr is large and might take a minute or so to install, we have added the `Ncpus = 6` argument which should speed things up a bit. 
+
+```{r eval=FALSE}
+# your code here
+install.packages("", Ncpus = 6)
+install.packages("", Ncpus = 6)
+install.packages("", Ncpus = 6)
+```
+
+*Also note that you can install the whole tidyverse with install.packages("tidyverse")! This takes a while though, so for this workshop we will just install individual packages.*
+
+# Introduction to pipes
+
+The pipe operator in R comes from the `magrittr` package, using syntax of `%>%`.
+
+The pipe operator is for chaining a sequence of operations together. This has two main advantages: it makes your code more readable, and it saves some typing.
+
+The syntax is `data %>% function`, as shown in the example below. The data gets *piped* into the function.
+
+```{r}
+library(magrittr)
+
+data <- c(4.1 ,1.7, 1.1, 7.5, 1.7)
+
+data %>% mean()
+```
+
+To see the difference between using pipes and not using pipes, look at the following examples.
+
+We are going to calculate a mean of a vector of numbers, round the result, and print it using paste.
+
+```{r}
+# Make some data: 20 randomly selected data points, from 1 to 10
+x <- sample(1:10, 20, replace = TRUE)
+y <- sample(1:10, 20, replace = TRUE)
+
+# without pipe
+y_mean <- mean(y)
+y_mean <- round(y_mean, digits = 2)
+y_mean <- paste("Mean value of y is", y_mean)
+y_mean
+
+# without pipe in one line
+paste("Mean value of y is", round(mean(y), digits = 2))
+```
+
+Now lets have a look at how to do this same set of operations with pipes. The process is as follows: assign x to x_mean, then pipe to x to a mean function, pipe the result of mean to round, finally assign result to paste.
+
+You will notice in the paste function we have used a `.` after the text. This is called a *place-holder*, whereby instead of using the data (like we did above without the pipe) we add a `.` to tell R that is where we want our data to go.
+
+```{r}
+# load in magrittr
+library(magrittr)
+
+# magrittr pipe
+x_mean <- x %>% # assign result at the start
+  mean() %>% 
+  round(digits = 2) %>%
+  paste("Mean value of x is", .) # we use the . as a place holder for a variable (e.g. instead of x)
+
+x_mean
+```
+
+Notice how we assign the result at the start just like we would usually do, then pipe from then on.
+
+It is also worth mentioning that as of version 4.1 of R, base R comes with a native pipe operator. This has just been introduced, and may get more use in examples you'll see online in the future. The syntax uses `|>` as the pipe, and the structure is the same as a magrittr pipe.
+
+*note that the native pipe currently doesn't have a place-holder, so we won't use paste in this example*
+
+```{r}
+# native R pipe
+z <- sample(1:10, 20, replace = TRUE)
+
+z_mean <- z |> 
+  mean() |>
+  round(digits = 2)
+
+z_mean
+```
+
+If the above example doesn't work, it means you have a version of R that is less than 4.1. Run the below code chunk to test out your R version. If it is less than 4.1 you can update it after the workshop.
+
+```{r}
+# test your r version
+R.version.string
+```
+
+We will be using the magrittr pipe (`%>%`) for the rest of this workshop, as it's currently the pipe operator you will come across most in the r world.
+
+## Exercise - using pipes
+
+Using the vector of temperature provided and using magrittr pipes:
+
+1)  Pipe median and paste functions together to get a final result that looks like: *"median temp is 15"*
+2)  Pipe max and paste functions together to get a final result that looks like: *"max temp is 20"*
+
+*hint: don't forget to use the place-holder with paste*
+
+```{r}
+library(magrittr)
+
+temperature <- c(10, 16, 12, 15, 14, 15, 20)
+
+# your code here
+
+
+```
+
+# Introduction to dplyr
+
+Dplyr is a package that is built for data manipulation, using functions that describe what they do. For example, the `select()` function selects columns you want, or don't want, from a data frame.
+
+The dplyr package has a lot of functions built into the package, each has it's own very helpful documentation page with examples - <https://dplyr.tidyverse.org/reference/index.html>
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_wrangling.png?raw=true){width="516"}
+
+Dplyr functions work with and without pipes and you'll see both when searching online. If using a pipe, you call your data then pipe that to a function, such as `data %>% mean()`. If you are not using a pipe, you call your data within the function, such as `mean(data)`.
+
+We will focus on two key dplyr functions for now: `select()` and `filter()`. We will use the messi_career data for the examples. Run the code chunk below to get the data into r and have a look at it.
+
+```{r}
+# create the messi career data
+messi_career <- data.frame(Appearances = c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44),
+                           Goals = c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31),
+                           Season = c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
+            2013,2014,2015,2016,2017,2018,2019),
+                           Club = rep("FC Barcelona", 16),
+                          Age = seq(17, 32),
+                          champLeagueGoal = c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3))
+# view the data
+head(messi_career)
+```
+
+## Select function
+
+The select function subsets columns from a data frame using their name. There are several different ways of using select. Run each of the code chunks below and review the outputs.
+
+First, we can give the names of the columns we want to select.
+
+```{r message=FALSE, warning=FALSE}
+# load dplyr
+library(dplyr)
+
+# select single column
+messi_career %>% select(Goals)
+
+# select all but single column
+messi_career %>% select(-Goals)
+
+# select multiple columns
+messi_career %>% select(Appearances, Goals, Age)
+```
+
+Another method is using a range of columns, known as a slice. Here we are selecting columns from Season to Age, which includes the Club column as well. We can also combine this with the ! (not) operator to exclude those columns.
+
+```{r}
+# select slice (or range) of columns
+messi_career %>% select(Season:Age)
+
+# select slice and other columns
+messi_career %>% select(Appearances:Season, champLeagueGoal)
+
+# negate selection of columns
+messi_career %>% select(!(Season:Age))
+
+# negate selection with slice and extra column (note c() function used)
+messi_career %>% select(!c(Season:Age, champLeagueGoal))
+```
+
+As you can see, `select()` makes it easy to extract columns from your data, and becomes more useful the larger your dataset becomes.
+
+In the examples above we did not assign the result. See the examples below on how to do this.
+
+```{r}
+# assign result to subset
+messi_sub <- messi_career %>%
+  select(Appearances, Goals, Age)
+
+messi_sub
+
+# The no pipe method
+messi_sub <- select(messi_career, Appearances, Goals, Age)
+```
+
+## Select exercise
+
+For your exercises, you will be using imdb movie data! I've loaded it here in the code for you.
+
+The data has 22 columns, some of which we won't need. We can use `select` to subset our data to keep only what we want.
+
+1)  Run the code currenty in the code chunk to load the libraries and the data, and review the output from `glimpse()`
+2)  Using select with pipes, subset the `imdb_movie` data so you have the following columns: imdb_id through to writer, actors, avg_vote to votes, reviews_from_users to reviews_from_critics. Assign the result to `imdb_sub`
+3)  Use glimpse to review the subsetted data: *data %\>% glimpse()*
+4)  There is a more efficient way of doing this using select. From looking at the examples provided, can you think of a better way of taking out the columns we removed?
+
+*hint: you should be able to fit this into one select call*
+
+```{r message=FALSE, warning=FALSE}
+# load libraries
+library(readr)
+library(dplyr)
+
+# load data
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/IMDb%20movies.csv")
+
+# use glimpse to review data (tidyverse version of str())
+movies_imdb %>% glimpse()
+
+# your code here
+
+```
+
+
+# Filter function
+
+The filter function allows you to subset rows based on conditions, using conditional operators (==, \<=, != etc.). It is similar to the base r `subset()` function which we have used in previous R workshops. The table below is a reminder of the conditional operators you can use.
+
+| Operator   | Meaning                  |
+|------------|--------------------------|
+| `>`        | Greater than             |
+| `>=`       | Greater than or equal to |
+| `<`        | Less than                |
+| `<=`       | Less than or equal to    |
+| `==`       | Equal to                 |
+| `!=`       | Not equal to             |
+| `!X`       | NOT X                    |
+| `X | Y`    | X OR Y                   |
+| `X & Y`    | X AND Y                  |
+| `X %in% Y` | is X in Y                |
+
+Just like when using `select`, you provide the column name you want to apply conditional logic to. If you are piping, you don't need to provide your data as an argument in the function.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_filter.jpeg?raw=true){width="516"}
+
+Run the examples below and review the outputs.
+
+```{r}
+# filter based on one criteria
+messi_career %>% filter(Goals > 50)
+
+# filter then pipe to select
+messi_career %>% filter(Appearances >= 55) %>%
+  select(Season, Age)
+
+# filter on more than one condition
+messi_career %>% filter(Goals > 50 & champLeagueGoal <= 10)
+
+# filter on average
+messi_career %>% filter(Goals > mean(Goals, na.rm = TRUE))
+```
+
+To assign the result to a new data frame (subset) we use the assignment operator at the beginning or the end of our code; here we have just shown the beginning, in the pipes section we show both versions.
+
+```{r}
+# assign result to messi_sub
+messi_sub <- messi_career %>%
+  filter(Appearances <= 40) %>%
+  select(Goals, Age)
+
+# view result
+messi_sub
+```
+
+## Filter exercise
+
+We are going to filter our subsetted (`imdb_sub`) data to find the best rated films from the USA in the year 1989, and create a subset called USA_1989_high.
+
+1)  Pipe from imdb_sub to filter, filtering for country being equal to USA
+2)  Pipe from your country filter to another filter, filtering for year being equal to 1989
+3)  Pipe from your year filter to another filter. Filter for avg_vote to be greater than or equal to 7.5 and reviews_from_critics to be greater than 10
+4)  Make sure to assign your result to USA_1989_high
+5)  Print the result to see the highest rated films, made in the USA, in 1989.
+6)  Do you think you can put this into one filter command using the & operator?
+
+```{r}
+# your code here
+
+```
+
+You might have noticed that the country column has some strings that are split by a comma, e.g. "Germany, Denmark". The == operator will not be able to pick these up. Instead we would use the base R `grepl()` function or `str_detect()` from the `stringr` package. This won't be covered in this workshop, but will be in future workshops. If you are interested, have a look at the stringr package - <https://stringr.tidyverse.org/index.html>.
+
+# Other filtering options with dplyr
+
+Other than conditional subsetting of data using `filter()`, dplyr has other functions we can use to subset our data: `slice`, `sample`, and `distinct.`
+
+The sample functions randomly extract a set number of rows from your data. This is helpful if you want to take a random sample of your dataset. The examples below show the `sample_n()` and `sample_frac()` functions. 
+
+```{r}
+# sample 5 rows
+messi_career %>%
+  sample_n(5)
+
+# sample 25% of your data
+messi_career %>%
+  sample_frac(0.25)
+```
+
+The slice functions are more useful. The basic `slice` function is the equivalent of using numbered indexing in base r `data[1:5, ]`, but is designed to work better in the tidyverse enviroment. 
+```{r}
+# select rows 4, 5, and 6
+messi_career %>%
+  slice(4:6)
+
+# equivalent in base r
+messi_career[4:6, ]
+```
+
+The `slice_max` and `slice_min` functions are much more powerful, and are harder and messier to achieve with normal base r code. They allow you to index the rows that have the max (or min) in a specified column. In the example, we extract the rows that have the top three and bottom three values in the Goals column. 
+```{r}
+# extract rows with top three Goals
+messi_career %>%
+  slice_max(Goals, n = 3)
+
+# this harder and less clear in base r
+head(messi_career[order(messi_career$Goals, decreasing = TRUE), ], 3)
+
+# extract rows with bottom three Goals
+messi_career %>%
+  slice_min(Goals, n = 3)
+```
+
+## Filtering continued exercise
+
+In this exercise you will need to debug my code to get it working. We will filter the imdb_sub data for films over 120 minutes, and in the USA, then extract the top 20 rated films.  
+
+If you get it working your `top_votes_USA` data frame should have 20 rows and 4 columns (title, year, genre and avg_vote) with films such as *The Shawshank Redemption* and *the Godfather*. As a bonus, if you get your code working, the plot at the end of the code will run! 
+
+```{r eval=FALSE}
+# your code here
+top_votes_USA <- imdb_sub %>%
+  filter(duration >= 120 & country = "USA") %>%
+  slicemax(avgvote, n = 20) %>%
+  select(title year, genre, avg_vote)
+
+top_votes_USA
+
+# fun extra, plot the output of your debugging! 
+plot(top_votes_USA$year, top_votes_USA$avg_vote,
+     col = "orange", # point colour
+     pch = 16, # point type
+     cex = 1.5, # point size
+     xlab = "Year",
+     ylab = "Average vote") 
+
+```
+
+# Using select to change column order
+
+It is also helpful to change the order of your columns, and you can use `select` to do this.
+
+If we wanted to move the club column as the first column in our messi_career data, we could do it manually but naming all the columns like the example below.
+
+```{r}
+# manually
+messi_career %>%
+  select(Club, Appearances, Goals, Season, Age, champLeagueGoal)
+```
+
+This could get really messy if you have lots of data. Two helper functions make this much easier: `everything()` and `last_col()`. Everything selects every column not already specified, so is useful if we want to move a column to the first column in the dataset.
+
+```{r}
+# move club to first column
+messi_career %>%
+  select(Club, everything())
+```
+
+Last col calls the last column in your data frame, so we can call `last_col()` to move 'champLeagueGoal' to the first column, then use everything to keep the rest of the columns as they are.
+
+```{r}
+# move last column to first column
+messi_career %>%
+  select(last_col(), everything())
+```
+
+Another option is to use the `relocate()` function. This has the same syntax as select, but has extra functionally for moving columns with the `.after` and `.before` arguments.
+
+By default, relocate will move the column you specify to the first column.
+
+```{r}
+# default moves to first column
+messi_career %>%
+  relocate(Club)
+```
+
+We call `.after` and `.before` like the examples below. We can also move more than one column.
+
+```{r}
+# move club to col after champLeagueGoal
+messi_career %>%
+  relocate(Club, .after = champLeagueGoal)
+
+# move club to col before champLeagueGoal
+messi_career %>%
+  relocate(Club, Goals, .before = champLeagueGoal)
+
+```
+
+## Column ordering exercise
+
+Using the examples above:
+
+1)  Move the `year` column to be the first column in the `imdb_sub` data frame
+2)  Move the `avg_vote` column to be after the `year` column
+
+```{r}
+# your code here
+
+```
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Data%Wrangling%1:%Pipes%and%introduction%to%dplyr&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EkNl1TlFgF9ApLsKSP-lqTUBiMCNlzcqB8pY0W3IJI3WYQ?e=jsowFA>
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge
+
+For this coding challenge we are going to extract all Tolkien (lord of the rings and hobbit) and Harry Potter films from our imdb dataset. We have provided vectors with the titles of these films.
+
+1)  Using the Tolkien and Potter vectors, use the `%in%` operator to filter titles in the imdb dataset that match the Tolkien or Potter vectors.
+2)  Select out the title, year, avg_vote, and duration columns
+3)  Save your subsetted data to a data frame called Tolkien_Potter
+4)  What films in the Tolkien_Potter dataset have a higher than average vote?
+5)  What films in the Tolkien_Potter dataset have a less than average duration in hours?
+
+*hint: for 4 and 5 you can use filter to compare the column to the mean of that column, e.g. filter(data, column \> mean(column))*
+
+```{r}
+Tolkien <- c("The Lord of the Rings: The Fellowship of the Ring", "The Lord of the Rings: The Return of the King",
+           "The Lord of the Rings: The Two Towers", "The Hobbit: An Unexpected Journey",
+           "The Hobbit: The Desolation of Smaug", "The Hobbit: The Battle of the Five Armies")
+
+Potter <- c("Harry Potter and the Sorcerer's Stone", "Harry Potter and the Chamber of Secrets",
+            "Harry Potter and the Prisoner of Azkaban", "Harry Potter and the Goblet of Fire",
+            "Harry Potter and the Order of the Phoenix", "Harry Potter and the Half-Blood Prince",
+            "Harry Potter and the Deathly Hallows: Part 1", "Harry Potter and the Deathly Hallows: Part 2")
+
+# your code here
+
+```
+
+# Individual coding challenge 2 - Select helper functions
+
+So far we have selected just columns we named, but there are other methods we can use. Dplyr has a number of *helper* functions that come with `select()`.
+
+One such example is the `contains()` function, that finds columns that contain the string a string. This is a useful option if you just want to pick out columns that have some similar text in them.
+
+```{r}
+# select by literal string
+messi_career %>% select(contains("Goal"))
+```
+
+Other options are the `starts_with()` or `ends_with()` helpers. You provide a string of what your column either starts with or ends with, and they will be selected.
+
+```{r}
+# columns starting with A
+messi_career %>%
+  select(starts_with("A"))
+
+# columns ending with s
+messi_career %>%
+  select(ends_with("s"))
+
+# columns not starting with A
+messi_career %>%
+  select(!starts_with("A"))
+```
+
+## Select helper exercise
+
+Using the imdb_sub dataset you made in the previous exercises:
+
+1)  Find columns in imdb_sub that contain "vote"
+2)  Find columns in imdb_sub that start with "d"
+3)  Find columns in imdb_sub that end with "e"
+4)  Find columns in imdb_sub that either start with "d" or end with "e" *hint: you can use an or (`|`) statement with select*
+
+```{r}
+# your code here
+
+```

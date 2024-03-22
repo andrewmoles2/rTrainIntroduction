@@ -1,0 +1,695 @@
+---
+title: "R Data Visualistion 2: Box, histogram, and line plots"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Objective of workshop
+
+To create histograms, box, and time series plots using the ggplot2 package. 
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to work with dates in plots, and use histograms and box plots. We will be covering: 
+
+-   How to make box plots with ggplot2
+-   Displaying distributions with histograms
+-   Working with dates with the lubridate package
+-   How to make time series line plots
+-   How to split your data into facet grids
+
+------------------------------------------------------------------------
+
+In this data visualisation workshop we will be building on the concepts learnt in the first workshop, constructing visualisations using the `ggplot2` library. 
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-visualisation-1/images/ggplot2_masterpiece.png?raw=true){width="541"}
+
+We will be using one new package called *lubridate*, a tidyverse package which is designed to make working with dates and times easier; this will help us in making time series visualisations. **Run the the code below to install lubridate**. 
+
+```{r eval=FALSE}
+# install lubridate
+install.packages("lubridate")
+```
+
+Before we start we will need to load the libraries we will be using during this session. **Run the code below to load your libraries**. 
+
+```{r message=FALSE, warning=FALSE}
+# libraries we will be using
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(readr)
+library(janitor)
+library(RColorBrewer)
+```
+
+# Box plots
+
+Box plots are designed to compare the differences of a categorical variable (samples or groups). They do this by displaying the summary statistics of a continuous variable (e.g. numeric) for each categorical variable. 
+
+The summary statistics shown are: 
+
+- The median (middle value)
+- Interquartile range, known as IQR, which has values from 25% to 75% (or 25th to 75th percentile)
+- First quartile, known as Q1, which has a value of 25%
+- Second quartile, known as Q3, which has a value of 75%
+- "minimum" value, calculated as `Q1 - 1.5*IQR`
+- "maximum" value, calculated as `Q3 + 1.5*IQR`
+- Outlier, which are values that fall outside of the maximum or minimum values
+
+We will use data from the Pokémon games again for our examples for box plots, which was web scraped from <https://pokemondb.net/pokedex/all>.
+
+```{r message=FALSE}
+# load and clean names
+pokemon <- read_csv("https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv") %>%
+  clean_names()
+# review data
+pokemon %>%
+  glimpse()
+```
+
+For these examples we will just look at one type of Pokémon, the electric type; the most famous of which is Pikachu! First, we extract just the electric type Pokémon, and make relevant columns factors. 
+
+```{r}
+# select columns to convert to factor
+to_factor <- c("type1", "type2", "generation")
+
+# extract just electric pokemon and make cols factors
+electric_pokemon <- pokemon %>%
+  filter(type1 == "Electric" | type2 == "Electric") %>%
+  mutate(across(all_of(to_factor), factor))
+
+head(electric_pokemon)
+```
+
+To make a box plot in ggplot we use the `geom_boxplot()` geom function. One of our axis variables has to be categorical and the other has to be numeric. In the below example we will use generation (categorical) and total (numeric). 
+
+```{r}
+# generation by total
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot()
+```
+
+From the output we see a few things. First is that each box has a line through the middle which indicates the median; the box itself is our interquartile range. The lines above and below the boxes (known as whiskers) are the maximum and minimum values. The black dots indicate outliers, which have fallen outside our max and min values. 
+
+Just like with scatter and bar plots we can change the colours! You can use either fill or colour arguments with box plots, but fill tends to look better. 
+
+We will use the colour of Pikachu to colour our boxes. We used the pokemon colour picker to get the colour of pikachu: <https://pokepalettes.com/#pikachu>
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652")
+```
+
+Sometimes it is useful to remove the outliers. To do so you add in the `outlier.shape = NA` argument. 
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA)
+```
+
+Displaying outliers is usually a good idea so we will keep them for now, and change the colour and shape of them. To adjust these we use `outlier.colour` and `outlier.shape` argments. We've used the colour of Pikachu's cheeks as the outlier colour and made the shape square. 
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.colour = "#c52018",
+               outlier.shape = 15)
+```
+
+## Box plots exercise 
+
+For the exercises for this workshops we will be using daily COVID data that is collected from most of the countries around the world. 
+
+COVID data is from our world in data, which is stored in a GitHub repository. More information on the data and what each variable means can be found here: <https://github.com/owid/covid-19-data/tree/master/public/data>
+
+```{r}
+# load in covid data and select cases, deaths and vaccines
+covid <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv") %>%
+  select(iso_code:new_deaths_smoothed_per_million, contains("vaccin"),
+         population, median_age, gdp_per_capita)
+
+# have a quick look at the data
+covid %>% glimpse()
+```
+
+For this exercise will we make two box plots from our data looking more at the demographics of each continent (we will look at cases and vaccines later).
+
+Your two box plots should show the following:
+
+- The median age of each continent
+- The gdp per capita for each continent
+- Make sure to change the colour of the boxes and outliers to make it look better! 
+- Try changing the shape and size of your outlier
+
+Hint: you will have to remove the na values from continent before plotting, e.g. `covid %>% filter(!is.na(continent))`
+
+Hint: You can pipe from your filter function straight into ggplot2!
+
+Hint: You can add colours in lots of ways but it can be fun to use a colour picker <http://tristen.ca/hcl-picker/#/hlc/11/1.1/DC7261/D77357>. 
+
+```{r}
+# your code here
+
+
+```
+
+
+# Improving your box plots
+
+The main issue with box plots, in a similar way to bar plots, is they can hide data. We can fix this by adding a scatter plot over the top of the boxes so we can see the full distribution of the data. 
+
+When adding in a scatter plot, we won't need our outliers as the scatter plot will show these for us. We will need to remove them using the `outlier.shape = NA` argument. 
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_point()
+```
+
+Some of our data points are overlapping which makes it a little hard to see all the data. We can fix this by changing the position of our points using the `position = "jitter"` argument. We can also use `geom_jitter()` which is a short hand for `geom_point(position = "jitter")`; we will use `geom_jitter()` going forward as it is less typing. 
+
+```{r}
+# change position in geom_point
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_point(position = "jitter")
+
+# using geom_jitter
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter()
+```
+
+We can also add in a colour grouping to our points to make them more meaningful. We add the colour aesthetic to our `geom_jitter` function. In the example we are colouring our points by if a pokemon is legendary or not. 
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter(aes(colour = legendary))
+```
+
+Finally we can change the colours of our points, which in this case we have done manually. Again, the colours were taken from the pokemon colour picker of pikachu: <https://pokepalettes.com/#pikachu>.
+
+```{r}
+ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter(aes(colour = legendary)) +
+  scale_colour_manual(values = c("#c52018", "#41414a"))
+```
+
+Now we can add a title and save the plot! When saving the plot we have manually adjusted the width of the plot. You can also change the height. 
+
+```{r}
+electric_pokemon_box <- ggplot(electric_pokemon, aes(x = generation, y = total)) +
+  geom_boxplot(fill = "#f6e652", outlier.shape = NA) +
+  geom_jitter(aes(colour = legendary)) +
+  scale_colour_manual(values = c("#c52018", "#41414a")) +
+  labs(title = "Summary of electric pokemon for each generation") +
+  theme_bw()
+
+electric_pokemon_box
+
+ggsave("electric_pokemon_box.png", electric_pokemon_box,
+       width = 5.5)
+```
+
+
+## Improving your box plots exercise
+
+For this exercise we will look at vaccines! We will look at 10 countries to see the difference in vaccine distribution; 5 have low gdp and 5 have high gdp. The data will be pre-prepared for you. We have made a vector with the counties that have high and low gdp. Then we have filtered our covid data by this vector, and made the location a ordered factor.
+
+1) Make a box plot using the *covid_select_countries* data, with x = location and y = total_vaccinations_per_hundred. Be sure to include `geom_jitter()`.
+2) Now improve the look of your box plot! Change the colour of the boxes and the points, make the points more transparent, remove the outliers, change the theme, and flip the co-ordinates. 
+3) Make another box plot the same way but use the people_fully_vaccinated variable as your y axis. 
+4) Give both your box plots a title and change the axis labels (if you want).
+5) Save your plots using `ggsave()`. You will need to assign the plots to a variable first. 
+
+```{r}
+# Make vector with low and high gdp countries
+high_low_gdp <- c("Sierra Leone", "Ethiopia","Yemen", 
+                  "Zambia", "Nepal", "Sweden", "Australia",
+                  "Saudi Arabia", "Germany", "United Kingdom")
+
+# Only include locations in high_low_gdp
+# Make location a factor, ordered by high_low_gdp
+covid_select_countries <- covid %>%
+  filter(location %in% high_low_gdp) %>%
+  mutate(location = factor(location, levels = high_low_gdp))
+
+# your code here
+
+
+```
+
+# Displaying distributions with histograms
+
+Histograms are great for visualising the distribution of numeric data. Histograms have one numerical variable as their input. 
+
+To make a histogram with ggplot we provide a numerical value to our x axis, and use the `geom_histogram()` geom. In the example we are using all the pokemon data and showing the distribution of the total column. 
+```{r}
+ggplot(pokemon, aes(x = total)) +
+  geom_histogram()
+```
+
+We can adjust the size of the *bins* of our plot with two methods, changing the binwidth or selecting the amount of bins. When we talk about bins with histograms it refers to the size of each bar; the larger the bar the more data on the x axis is included. 
+
+The first example uses `binwidth`. The number you provide is directly related to your x axis. In our example we are using the total column which goes up to 754. If we have `binwidth = 8`, then 8 data points will be included in each bin. Run the two examples below with a smaller and larger binwidth to see the results. 
+```{r}
+# summary stats for total column
+summary(pokemon$total)
+
+# binwidth of 8
+ggplot(pokemon, aes(x = total)) +
+  geom_histogram(binwidth = 8) +
+  labs(title = "Small binwidth (8)")
+
+# binwidth of 50
+ggplot(pokemon, aes(x = total)) +
+  geom_histogram(binwidth = 50) +
+  labs(title = "Larger binwidth (50)")
+```
+
+The other method is to select the number of bins to use, using the `bins` argument. The more bins we use, the less data will be contained in each bin. In the example below we have bins with lots of data `bins = 10` and bins with less data `bins = 50`. Which do you think is best?
+
+```{r}
+# using 10 bins
+ggplot(pokemon, aes(x = total)) +
+  geom_histogram(bins = 10) +
+  labs(title = "Less bins = more data in each bin")
+
+# using 50 bins
+ggplot(pokemon, aes(x = total)) +
+  geom_histogram(bins = 50) +
+  labs(title = "More bins = less data in each bin")
+```
+
+It can be helpful to colour your histogram by a categorical variable. This works the same as a box plot, using the `fill` argument. In the example we have filled our histogram by the legendary category. 
+
+```{r}
+ggplot(pokemon, aes(x = total, fill = legendary)) +
+  geom_histogram(binwidth = 20)
+```
+
+Another useful method is to use *facets*, which split up your data by a categorical variable and presents them in a grid like formation. 
+
+There are two techniques in ggplot to make facets, using `facet_grid()` or `facet_wrap()`. To use `facet_grid()` we define if we want to display our data row-wise (`rows = `) or column-wise (`cols = `). When defining which column to split our data by we need to use the `vars()` function. See the two examples below on how to do a row or column facet grid. 
+
+```{r}
+# row-wise display
+ggplot(pokemon, aes(x = total, fill = legendary)) +
+  geom_histogram(binwidth = 20) +
+  facet_grid(rows = vars(legendary)) +
+  labs(title = "Row-wise facet grid")
+
+# column-wise display
+ggplot(pokemon, aes(x = total, fill = legendary)) +
+  geom_histogram(binwidth = 20) +
+  facet_grid(cols = vars(legendary)) +
+  labs(title = "column-wise facet grid")
+```
+
+The other option is `facet_wrap()`, which by default only needs the column you want to split your data by. It does allow extra specification with the `nrow` and `ncol` functions, allowing you to define how many rows and columns to display. 
+
+In the examples below we show the default `facet_wrap`, and how to adjust the column or row specification. We have used the generation column as it has more groups.  
+```{r}
+# default facet_wrap
+ggplot(pokemon, aes(x = total, fill = legendary)) +
+  geom_histogram(binwidth = 20) +
+  facet_wrap(vars(generation)) +
+  labs(title = "Default facet wrap")
+
+# 4 rows
+ggplot(pokemon, aes(x = total, fill = legendary)) +
+  geom_histogram(binwidth = 20) +
+  facet_wrap(vars(generation),
+             nrow = 4) +
+  labs(title = "Facet wrap with 4 rows")
+
+# 4 columns
+ggplot(pokemon, aes(x = total, fill = legendary)) +
+  geom_histogram(binwidth = 20) +
+  facet_wrap(vars(generation),
+             ncol = 4) +
+  labs(title = "Facet wrap with 4 columns")
+```
+
+
+## Displaying distributions exercise
+
+For this exercise we will be making a histogram of using the people_fully_vaccinated_per_hundred column for each continent 
+
+- Make a histogram with people_fully_vaccinated_per_hundred as your x axis
+- Add a fill argment with continent
+- Adjust the `binwidth` or `bins` (e.g. `binwidth = 5` looks good)
+- Using RColourBrewer, adjust the colours used in fill
+
+Hint: you will have to remove the na values from continent before plotting, e.g. `covid %>% filter(!is.na(continent))`
+
+Hint: You can pipe from your filter function straight into ggplot2!
+
+Hint: To change the fill colours you can use `scale_fill_brewer(palette = "a palette")`
+
+Hint: Use `brewer.pal.info` to find RColorBrewer palettes
+
+```{r}
+# your code here
+
+```
+
+
+# Working with the date data type with lubridate
+
+Working with the date data type when programming can be a bit tricky for many reasons. There are different formats, time zones, and the challenge extracting information from the date. Fortunately, the `lubridate` package comes to the rescue! 
+
+There are three types of date data type: date (2010-09-01), time (15:08:52 BST), date-time (2010-09-01 15:08:52 BST). For this workshop we will be focusing on the date type as it is the most common. 
+
+You can find out today's date (more useful than it sounds) or the date and time using the `today()` or `now()` functions. 
+```{r}
+# make sure dplyr and lubridate are loaded
+library(dplyr)
+library(lubridate)
+
+# get today's date
+today()
+# today's date and time
+now()
+
+# make today's date a variable
+today_date <- today()
+```
+
+A great feature of lubridate is extracting the year, month, day, or week day information from your date. We can test it out on today's date. Run the code to see how the output. 
+
+```{r}
+# year
+year(today_date)
+# month
+month(today_date)
+month(today_date, label = TRUE)
+# week
+week(today_date)
+# day
+day(today_date)
+# weekday
+wday(today_date)
+wday(today_date, label = TRUE)
+```
+
+Notice that for the `month` and `wday` functions we have the option to add labels. This can be very useful, making your month or week day outputs more readable. 
+
+For the rest of the examples we will use some randomised made up data containing daily sleep, and step information. Run the code below to see the data. 
+
+*note: to make this data we have used randomisation functions: `sample`, `runif` and `rnorm`, if you are interested look them up to see how they work*
+```{r}
+# make some random data
+df <- data.frame(
+  date = seq(as.Date("2019-01-01"), as.Date("2021-12-01"), by = "days"),
+  hours_sleep = round(rnorm(1066, mean = 9, sd = 1.5)),
+  steps = round(rnorm(1066, mean = 8000, sd = 2000))
+)
+
+head(df)
+```
+
+We can now use the `mutate` function to make a year, month, week, day, and week day column. 
+
+```{r}
+df <- df %>%
+  mutate(year = year(date),
+         month = month(date, label = TRUE),
+         week = week(date),
+         day = day(date),
+         week_day = wday(date, label = TRUE))
+
+head(df)
+
+# see the breakdown of the date
+df[1:2, c("date", "year", "month", "week", "day", "week_day")]
+```
+
+Breaking the date down in this way allows us to do some aggregation of our data by the year, month, week, day, or weekday! In the examples below we have shown year and weekday.
+
+```{r}
+# aggregate by year
+df %>%
+  group_by(year) %>%
+  summarise(avg_sleep = mean(hours_sleep),
+            avg_steps = mean(steps),
+            total_steps = sum(steps))
+
+# aggregate by week day
+df %>%
+  group_by(week_day) %>%
+  summarise(avg_sleep = mean(hours_sleep),
+            avg_steps = mean(steps),
+            total_steps = sum(steps))
+``` 
+
+There are more functions from the lubridate package that we won't be able to cover in this session, so do have a look at the package website for more information - <https://lubridate.tidyverse.org/index.html> - and checkout the R for Data Science chapter on dates - <https://r4ds.had.co.nz/dates-and-times.html>. 
+
+## lubridate exercise
+
+Using the examples above, extract year, month, day, day of week from covid data, and do an aggregation! 
+
+1) Add new columns to your covid data for year, month, week, day and week_day. Try to add labels to month and week_day. 
+2) Aggregate your covid data by year and month to find the mean total cases per million and mean total deaths per million. 
+3) Print out the result. 
+```{r}
+# your code here
+
+# separate date column
+
+
+# make year and month aggregate
+
+```
+
+
+# Time series plots
+
+Time series plots visualise data over a period of time, which can be hourly, daily, weekly, monthly, or yearly. It is a great way to view trends over time. When plotting a time series, the x axis is the date and the y axis is your measure. 
+
+The most simple form of a time series visualisation in R is to use an unedited date variable. Using our example data (`df`) we will visualise how steps have changed each day. 
+```{r}
+# daily time series
+df %>%
+  ggplot(aes(x = date, y = steps)) +
+  geom_line()
+```
+
+As we can see it is pretty variable how many steps are taken each day, as you might expect. There is a lot of data here so it is hard to see any real patterns, it just looks like noise! To solve this we can aggregate our data by the year, the month or the week to see if we can get any more insights. 
+
+For the example data we have it might be interesting to see the average of how many steps are taken on average each month, and to also compare this year on year.
+
+We first aggregate our data, grouping by the month and year columns we made with the lubridate package, find the average steps, and convert the year column into a factor to make plotting easier; month is already a factor. 
+```{r}
+# aggregated time series by month
+monthly_steps <- df %>%
+  group_by(month, year) %>%
+  summarise(avg_steps = mean(steps)) %>%
+  mutate(year = factor(year))
+
+monthly_steps
+```
+
+Now we can make a time series by month! It is often helpful when using `geom_line()` to also pair it with `geom_point()` so we can see each data point clearly as well as seeing the trends with shown by the lines. 
+
+```{r}
+ggplot(monthly_steps,
+       aes(x = month, y = avg_steps)) +
+  geom_line() +
+  geom_point()
+```
+
+That didn't work as expected! As our data is grouped by year and month we need to use the `group = ` argument to tell ggplot we want to connect the months up. 
+
+By adding `group = year` our plot will now look like a time series, run the code to check it out. 
+
+```{r}
+ggplot(monthly_steps,
+       aes(x = month, y = avg_steps,
+           group = year)) +
+  geom_line() +
+  geom_point()
+```
+
+It would also be helpful to see what year each line represents. We add the `colour = year` argument in as well to show this. 
+
+```{r}
+ggplot(monthly_steps,
+       aes(x = month, y = avg_steps,
+           group = year, colour = year)) +
+  geom_line() +
+  geom_point()
+```
+
+Our plot is still looking a little busy so we can use facets to split our data by year. We've used `facet_wrap` here with 3 rows. 
+
+```{r}
+ggplot(monthly_steps,
+       aes(x = month, y = avg_steps,
+           group = year, colour = year)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(vars(year), nrow = 3)
+```
+
+Finally, we can make a few final adjustments and we have a nice visualisation that shows average step count per month for the year 2019 to 2021. Below is a list of all the additions make to change the look of the plot:
+
+- Changed the size of the lines and the points with the `size = ` argument
+- Added a title and changed the axis names
+- Added a colour scale from the RColorBrewer package
+- Changed the theme to dark and changed the font to Avenir
+- Adjusted the y axis limits
+
+```{r}
+step_count <- ggplot(monthly_steps,
+       aes(x = month, y = avg_steps,
+           group = year, colour = year)) +
+  geom_line(size = 2.5) +
+  geom_point(size = 3) +
+  facet_wrap(vars(year), nrow = 3) +
+  labs(title = "Average step count per month for the year 2019 to 2021",
+       x = "Month", y = "Average steps (mean)",
+       colour = "Year") +
+  scale_colour_brewer(palette = "Pastel2") +
+  theme_dark(base_family = "Avenir") +
+  scale_y_continuous(limits = c(7000, 9000)) 
+
+step_count
+
+ggsave("step_count.png", step_count, width = 9)
+```
+
+## Time series plots exercise
+
+For this exercise we will be looking at the vaccine roll out for United Kingdom, India, Nepal, Israel, Germany, and Australia. Each country has had slightly different roll outs, with Israel being the fastest. We will be looking at the week by week roll out for 2021. 
+
+Data preparation: 
+
+1) Make a vector called *sel_country* that includes United Kingdom, India, Nepal, Israel, Germany, and Australia
+2) Filter your covid data to include only locations that are in your sel_country vector, and filter for the year to be equal to 2021. Assign your filtered data to a variable called *weekly_vax.* 
+3) Aggregate your *weekly_vax* data by week and location to find the mean of the `people_vaccinated_per_hundred` column. Assign the result back to *weekly_vax*
+4) Make the week and location columns of *weekly_vax* factors
+ 
+Plotting:
+
+Using your *weekly_vax* data you have just prepared:
+
+1) Make a time series plot with week as your x axis and your aggregation of the `people_vaccinated_per_hundred` column as your y axis. 
+2) Colour and group your data by location. 
+3) Make any aesthetic changes you think will make the plot better based on what we have covered so far, such as adding titles, changing colours, or adding facets (`facet_grid()` or `facet_wrap()`).
+4) Assign your final plot to a variable and save it! 
+
+Hint: if your x axis is looking squashed or cramped, try adding in `scale_x_discrete(guide = guide_axis(n.dodge = 2))` 
+
+```{r}
+# your code here
+
+
+```
+
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Data%Visualisation%2:%Box,%histogram,%and%line%plots&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElY-IfwxgndLuw_RBLPjRH4BrrAk8kPi5KPGXHZaCZwksA?e=oevNrA>
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge
+
+For the coding challenge we will look at other things you can do with ggplot2 such as making artwork! This is known as generative art, which is produced either in part or completely by automated processes. 
+
+Generative art is a complex topic, but some of the ideas and styles can be done using the aRtsy package, <https://koenderks.github.io/aRtsy/>, which makes generative art more accessible. 
+
+First, you will need to install the aRtsy package. 
+```{r eval=FALSE}
+# install aRtsy
+install.packages("aRtsy")
+```
+
+Then you will need to load it! 
+```{r}
+# load aRtsy
+library(aRtsy)
+```
+
+When making generative art it is a good idea to make it reproducible as we there is a lot of randomisation involved. When randomising in R you need to *set a seed*, which in simple terms means we reproduce our results using the same seed. We use the `set.seed()` function and add in any number. The number is our seed. If we gave someone else our code and our seed they would be able to reproduce or results.
+
+We've given some examples below on making a striped artwork and flow fields. Run the code chunk below, then try changing the seed to see how the results change when you run it again! 
+
+Note: these will take a few moments to run! 
+```{r}
+# set the seed to 1
+set.seed(1)
+
+# make a colour palette from rcolorbrewer
+set1 <- brewer.pal(n = 9, name = "Set1")
+pastel1 <- brewer.pal(n = 9, name = "Pastel1")
+paired <- brewer.pal(n = 12, name = "Paired")
+
+# test out different parameters for stripes
+canvas_stripes(paired, n = 800, H = 5, burnin = 5)
+
+canvas_stripes(pastel1, n = 500, H = 15, burnin = 2)
+
+# Test out different parameters for flow fields
+canvas_flow(set1, background = "#fafafa", lines = 800, lwd = 0.30,
+            iterations = 80, stepmax = 0.15)
+
+pastel_flow <- canvas_flow(pastel1, background = "black", lines = 2000, lwd = 0.15,
+            iterations = 30, stepmax = 0.10)
+
+pastel_flow
+
+# save pastel_flow
+saveCanvas(pastel_flow, "pastel_flow.png")
+```
+
+Have a go yourself at making some generative art in R! Try out the following functions from aRtsy, changing the parameters to adjust the visualisation. 
+
+- `canvas_flow()` <https://koenderks.github.io/aRtsy/reference/canvas_flow.html>
+- `canvas_stripes()` <https://koenderks.github.io/aRtsy/reference/canvas_stripes.html>
+- `canvas_watercolors()` <https://koenderks.github.io/aRtsy/reference/canvas_watercolors.html>
+
+Don't forget to save any of your artwork you like using the `saveCanvas()` function. 
+```{r}
+set.seed(1)
+
+# your code here
+
+
+```
+
+
+------------------------------------------------------------------------
+
+# Recommened resources to continue your data visualiation learning
+
+The ggplot2 book is an excellent resource with lots of examples and exercises to have a go at <https://ggplot2-book.org/>. 
+
+Cedric Scherer writes blogs and tutorials on ggplot2 on his website. Some of his content is really great and worth looking through. Below are two of his tutorials to get you started:
+
+- <https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/>
+- <https://www.cedricscherer.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/>
+
+Georgios Karamanis is a data visualisation designer and makes some amazing visualisations using R! It's worth browsing his website for inspiration <https://karaman.is/> or following him on twitter <https://twitter.com/geokaramanis>.
+
+For ideas about what to do with your data have a look at the R graph gallery <https://www.r-graph-gallery.com/>. 
+
+Recommended watching for opinionated (and accurate) views on data visualisation
+
+* Video: <https://www.rstudio.com/resources/rstudioconf-2020/the-glamour-of-graphics/>
+* Slides: <https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#0>
+

@@ -1,0 +1,589 @@
+---
+title: "R Data Wrangling 2: Data wrangling with dplyr continued"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Objective of workshop
+
+To manipulate and create new columns using the mutate function from dplyr, as well as cleaning column names.
+
+# What this workshop will cover
+
+In this workshop, the aim is to cover how to perform data wrangling tasks on columns using dplyr. We will be covering:
+
+-  Data manipulation with mutate from dplyr
+-  Renaming columns 
+-  Cleaning up column names with janitor
+-  Vectorised if statements with case_when
+
+------------------------------------------------------------------------
+
+# The mutate function
+
+The mutate function is from the dplyr library, and is for making, modifying, or deleting columns in your dataset. Similar to what we have done in previous sessions, mutate allows you to make a new column from a calculation you have made.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-data-wrangling-1/images/dplyr_mutate.png?raw=true){width="516"}
+
+The main difference between using mutate and making new columns in base R, is that mutate is smarter. You can create a new column based on a new column you have just made within mutate, which you can't do in base R. Lets look at some examples with our messi data we used in the last session.
+
+In our previous workshops, we calculated Messi's goals per game (goals/appearances). We can do this with mutate. Notice the syntax, we give the name we want to call our new column first, then =, then what we want to do (e.g. a calculation);  `mutate(new_column = x/y)`.
+
+*note: when loading dplyr you also load the magrittr library for piping*
+```{r message=FALSE, warning=FALSE}
+# load dplyr
+library(dplyr)
+
+# create the messi career data
+messi_career <- data.frame(Appearances = c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44),
+                           Goals = c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31),
+                           Season = c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
+            2013,2014,2015,2016,2017,2018,2019),
+                           Club = rep("FC Barcelona", 16),
+                          Age = seq(17, 32),
+                          champLeagueGoal = c(0,1,1,6,9,8,12,14,8,8,10,6,11,6,12,3))
+# view the data
+head(messi_career)
+
+# calculate the goal to appearance ratio
+messi_career %>%
+  mutate(goal_ratio = Goals/Appearances)
+```
+
+The new column, goal_ratio in this case, will automatically be added to the end of your data frame. This is the same behaviour you will see when using base R. This behaviour can be altered if you want, but we won't have time to cover it here. 
+
+What makes `mutate()` powerful, is the ability to do multiple calculations in one statement, as well as using newly made columns. See the below example which will help to understand this. We will use goal_ratio to find out the difference between goal_ratio and the average goal ratio for each row (or season).
+
+```{r}
+# calculate goal ratio and diff from mean
+messi_career <- messi_career %>%
+  mutate(
+    goal_ratio = round(Goals/Appearances, digits = 2),
+    diff_avg_goal_ratio = goal_ratio - (mean(Goals) / mean(Appearances)))
+
+# print result
+messi_career
+```
+
+We can then pipe this result to `filter()`, which allows us to see which seasons Messi has a goal ratio above his average goal ratio.
+
+```{r}
+messi_career %>%
+  mutate(
+    goal_ratio = round(Goals/Appearances, digits = 2),
+    diff_avg_goal_ratio = goal_ratio - (mean(Goals) / mean(Appearances))) %>%
+  filter(diff_avg_goal_ratio > 0)
+```
+
+## Mutate exercise 1
+
+We will be using the imdb movies dataset again for this workshop. Use the code below to load in the data.  
+
+```{r message=FALSE, warning=FALSE}
+# load libraries
+library(readr)
+library(dplyr)
+
+# load data
+movies_imdb <- read_csv("https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-data-wrangling-1/data/IMDb%20movies.csv")
+
+# use glimpse to review data (tidyverse version of str())
+movies_imdb %>% glimpse()
+```
+
+Lets pretend we are interested in the difference between the number of user reviews and critic reviews for each film in our movies_imdb dataset. We can use mutate to explore this difference a bit further.
+
+1)  Pipe your movies_imdb data to a `mutate()` function. Make a new column called `user_critic_ratio`, and divide `reviews_from_users` by `reviews_from_critics`. Wrap the result in a `round()` function, rounding by two digits
+2)  Now pipe to a `filter()` function, filtering country to be USA and year to be 1989
+2)  Now pipe to a `select()` function, selecting the title, avg_vote and user_critic_ratio columns
+3)  Now pipe to a `slice_max` function, extracting rows that had the top 10 avg_rating
+
+You should get a data frame returned that has films including: The Abyss, Dead Poets Society, Do the Right Thing, and Glory.
+
+```{r}
+# your code here
+
+
+```
+
+We can see we get more user reviews than critic reviews, which makes sense; for example, the The Abyss has 4 user reviews for each critic review.
+
+## Mutate exercise 2
+
+In our second mutate exercise, you will need to de-bug the code to get it running! You may need to re-order some elements of the code as well as checking for other errors. 
+
+We are filtering the movies_imdb data for films that are: 
+
+* From the USA before the year 1990
+* Have a duration less than 120 minutes
+* An average vote greater than 8.5
+
+We will also be using the user_critic_ratio column to make it into a string for easier reading. 
+
+You should end up with a data frame with 6 rows, and 4 columns (title, year, avg_vote, and ratio_string). The final column, ratio_string, should have an output like "Psycho has a user to critic ratio of 5.44". 
+
+```{r eval=FALSE}
+# your code here
+usa_pre90_high <- movies_imdb %%
+  mutate(user_critic_ratio = round(reviews_from_users / reviews_from_critics, digits = 2),
+         ratio_string = paste(title, "has a user to critic ratio of", userCriticRatio)) %>%
+  filter(country == "USA" & year < 1990) 
+  select(title, year, avg_vote, ratio_string) %>%
+  filter(duration < 120 & avg_vote >= 8.5)
+  
+usa_pre90_high
+```
+
+
+# Mutate with the across function
+
+We can take the mutate function further by using the `across()` function. This allows us to perform operations (do something) across multiple columns. This is very useful for doing type conversions in an efficient way.
+
+The across function works in a similar way to the `select()` function, but if you want to pick out a few columns you have to use the `c()` function. See the examples below, where we have selected two columns, or used a slice to select out a few columns that are next to each other.
+
+```{r}
+# perform round (to 1 decimal place) across selected columns
+messi_career %>%
+  mutate(across(c(goal_ratio, diff_avg_goal_ratio), round, digits = 1))
+
+# square root across columns selected with slice
+messi_career %>%
+  mutate(across(1:3, sqrt))
+
+# square root across columns selected with slice (using col names)
+messi_career %>%
+  mutate(across(Appearances:Season, sqrt))
+```
+
+We can also combine the across function with the `where()` or `all_of()` functions to perform conditional mutations.
+
+The `where()` function does conditional matching between the statement you've used and what is in your dataset. In the example we are asking `where()` to look for columns that are the character (string) data type. Then we can perform an operation, such as convert those columns to factors. In this case it is just the Club column that changes. 
+
+```{r}
+# perform conditional operation with where
+messi_career %>%
+  mutate(across(where(is.character), as.factor)) %>%
+  glimpse()
+```
+
+The `all_of()` function looks for matches between the strings you have provided and the column names in your dataset. In our example, we put the Season and Club columns into a vector, then call that vector and convert those columns to a factor.
+
+```{r}
+# change selected variables with all_of
+to_factor <- c("Season", "Club")
+
+messi_career %>%
+  mutate(across(all_of(to_factor), as.factor)) %>%
+  glimpse()
+```
+
+## Across function exercise
+
+Lets go back to our movies_imdb data. We want to extract films from 1990 through to 1995, that are from the USA, and have an avg_vote greater than or equal to 7.5. We also want all our variables that are currently characters to be factors, and want the year column to also be a factor.
+
+1)  Using the movies_imdb data, filter for years between and including 1990 and 1995
+2)  Now also filter for the country to be the USA, with an avg_vote greater then or equal to 7.5
+3)  Using mutate, across and where, convert any column that has a character data type to a factor
+4)  Using mutate, convert year to a factor
+5)  Save the result in a data frame called `usa_early90_high`
+6)  Using your new `usa_early90_high` subset, filter for avg_vote greater than or equal to 8.5, then select the title, avg_vote, and year columns. View the result to see the top rated films and what year they were in.
+
+```{r}
+# your code here
+
+
+```
+
+
+# Change column names
+
+Changing column names is a very useful part of data science. Sometimes you'll get a dataset with column names that are not very meaningful, or far too long. There are a few methods for changing column names, with the easiest being the tidyverse solution. 
+
+The first step in changing column names is viewing what the names are! Two functions in R exist for this: `colnames()` and `names()`. They do the same thing...so I prefer `names()` as it is less typing. 
+```{r}
+# view a datasets column names
+names(messi_career)
+```
+
+The non-tidyverse way of changing column names is to use the `names()` function. If you are changing one column you use indexing using `[]`, and multiple columns you use `c(). 
+```{r}
+# Make a data frame
+df <- data.frame(
+  column1 = rep("Hello", 4),
+  column2 = sample(1:10, 4),
+  column3 = seq(1:4),
+  integer = 4:7,
+  factor = factor(c("dog", "cat", "cat", "dog"))
+)
+
+df
+
+# change multiple columns using names
+names(df) <- c("string", "random", "sequence", "integer", "factor")
+names(df)
+
+# using names and number index
+names(df)[1] <- "a_string"
+names(df)
+
+# using logic and names
+names(df)[names(df) == "sequence"] <- "its_a_sequence"
+names(df)
+```
+
+The main issue with these techniques is 1) it can get really messy if you need to rename lots of columns in a larger dataset. 2) I have to rename all my columns if I need to rename more than one column, otherwise it doesn't work! 3) The syntax is a bit messy, especially the last example. 
+
+The `rename()` function from dplyr allows for simple changing of column names with no fuss, and solves these problems. 
+
+The syntax is the same as the `mutate()` function, where we have the name of the column we want to make, then what column we are changing: `data %>% rename(new_column_name = old_column_name)`. 
+
+```{r message=FALSE}
+# load dplyr
+library(dplyr)
+
+# Make a data frame
+df <- data.frame(
+  column1 = rep("Hello", 4),
+  column2 = sample(1:10, 4),
+  column3 = seq(1:4),
+  integer = 4:7,
+  factor = factor(c("dog", "cat", "cat", "dog"))
+)
+
+names(df)
+
+# rename columns that need renaming
+df_new_col <- df %>%
+  rename(string = column1,
+         random = column2,
+         sequence = column3) 
+
+df_new_col
+```
+
+## Rename columns exercise
+
+Let's have a practice renaming some columns in the movies_imdb dataset. 
+
+1) Type in and run `names(movies_imdb)` to get the column names of your dataset. This is a nice way to finding the column names, making it easy to copy and paste the names should you need to
+2) Using the `rename()` function from dplyr, change `reviews_from_users` to `User_reviews` and `reviews_from_critics` to `Critic_reviews`
+3) Save the result back to `movies_imdb`
+4) Type in and run `names(movies_imdb)` again to view the new column names
+
+```{r}
+# your code here
+
+```
+
+
+# Tidy column names with janitor
+
+Sometimes you have a dataset that has messy or ugly column names, which would take some time to tidy up manually. As usual with R there is a package for that situation; which happens more often than you think! 
+
+First, we need to install the `janitor` library. 
+
+```{r eval=FALSE}
+# run to install janitor
+install.packages("janitor")
+```
+
+A simple example is below. We have a data frame with inconsistent column names. We use the `clean_names()` function from janitor to tidy up the column names. 
+
+The output shows the difference between default R behaviour and how janitor has cleaned the names. As you can see the janitor output is consistent and in "snake_case" format. 
+```{r}
+# load janitor
+library(janitor)
+
+# make an example data frame
+messy_cols <- data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+)
+
+# compare default to janitor col names
+data_frame(default = names(messy_cols),
+           janitor = names(clean_names(messy_cols)))
+
+```
+
+The janitor library is designed to be used with the tidyverse, so when loading in data, we can pipe our loaded data straight into the `clean_names()` function form janitor.
+
+```{r}
+# pipe data to clean names
+messy_cols <- data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>% clean_names()
+
+# view col names
+names(messy_cols)
+```
+
+You can change the default style, or case, of `clean_names()` from snake case to another if you need or want to. See some examples below.
+```{r}
+# lower camel case
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>% clean_names(case = "lower_camel")
+
+# title case
+# This is useful for plotting or tables
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>% clean_names(case = "title") 
+
+# all_caps case
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>% clean_names(case = "all_caps") 
+```
+
+A full list of what different cases are available are on this page under the case arguments: <https://rdrr.io/cran/snakecase/man/to_any_case.html>
+
+Finally, you can decide if you want the numbers (if you have any) to be aligned in the left, right, or middle of the column name. By default `clean_names()` puts numbers to the middle/right. To change this behaviour we use the numerals argument and specify left as shown below. 
+
+```{r}
+data.frame(
+  'messyCol *1' = seq(1:5),
+  'messy.col 2' = seq(1:5),
+  'MESSY.COL 3' = seq(1:5),
+  'messy.col (4)' = seq(1:5)
+) %>%
+  clean_names(numerals = "left") 
+```
+
+As a side note, the `janitor` package has loads of other really useful functions which are neatly summarised (with examples) here: <https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html>
+
+## Clean names exercise
+As the movies_imdb data we are using already has cleaned names, we will load in another dataset as an example: the pokemon dataset we have used in previous workshops. 
+
+1)  Load in the `janitor` and `readr` librarys
+2)  Use `read_csv()` to load in the pokemon dataset from this link <"https://raw.githubusercontent.com/andrewmoles2/rTrainIntroduction/main/r-fundamentals-5/data/pokemonGen1.csv">. Call your data pokemon
+3)  Use `read_csv()` to load in the same pokemon dataset from the link, but this time pipe to `clean_names()`. Call this dataset pokemon_cleaned
+4)  Follow the steps in step 3 again, but this time in your `clean_names()` function, change the case used. Call this dataset pokemon_cleaned2
+5)  Now make a data frame to compare your column names from your three loaded datasets. To do this, call a `data.frame()` function. Make your first column `default = names(pokemon)`, second column `cleaned = names(pokemon_cleaned)`, and your last column `cleaned2 = names(pokemon_cleaned_2)`. Run the code to review the output
+
+You should end up with a data frame with 3 columns, each column having slightly different column names from the pokemon data. 
+
+*Different cases available can be found at this link: <https://rdrr.io/cran/snakecase/man/to_any_case.html>*
+```{r message=FALSE}
+# your code here
+
+```
+
+# Conditional logic with case_when
+
+In R fundamentals 6 we covered conditional logic, using the `ifelse()` function to categorise data based on certain conditions. This is a useful skill, as in data analysis you will often need to create new variables from other variables based on conditions. 
+
+For example, if we wanted to add Messi's squad status (if he is a key player or backup) we could use his appearances to generate this.
+
+* Key player: over 50 appearances
+* First team: between 40 and 49 appearances
+* Rotation: between 15 and 39 appearances
+* Backup: less than 15 appearances
+
+To do this with `ifelse()` we would do something like the example below. Notice that it is hard to read exactly what is happening when we have lots of conditions. 
+```{r}
+# ifelse example
+messi_career %>%
+  mutate(squad_status = ifelse(Appearances >= 50,"Key Player",
+                               ifelse(Appearances < 50 & Appearances >=40, "First Team",
+                                      ifelse(Appearances < 40 & Appearances > 15, 
+                                             "Rotation", "Backup")))) %>%
+  select(Appearances, squad_status)
+```
+
+The `case_when()` method is easier to write and read. The syntax is as follows `case_when(condition ~ output_value)` or with example data `case_when(a > b ~ "a is large")`. 
+The `TRUE` at the end is the else, for everything that doesn't match the rest of our conditions. 
+```{r}
+# case_when example
+messi_career %>%
+  mutate(squad_status = case_when(
+    Appearances >= 50 ~ "Key Player",
+    Appearances < 50 & Appearances >=40 ~ "First Team",
+    Appearances < 40 & Appearances > 15 ~ "Rotation",
+    TRUE ~ "Backup"
+  )) %>%
+  select(Appearances, squad_status)
+```
+
+As usual, the dplyr documentation is really helpful if you get stuck: <https://dplyr.tidyverse.org/reference/case_when.html>
+
+## Conditional logic with case_when exercise
+
+Using the `pokemon_cleaned` data from the `janitor` exercise:
+
+1) Create a new column called `speed_tier` using `mutate` and `case_when` that has the following conditions:
+  * pokemon with speeds greater than or equal too 110 are classified as very fast
+  * pokemon with speeds less than 110 and greater than or equal to 90 are classified as fast
+  * pokemon with speeds less than 90 and greater than or equal to 70 are classified as middling
+  * All other pokemon are classified as slow
+2) Check your dataset to make sure the classification has been done correctly. For example, Charizard should be classified as fast. 
+3) Make a table to check your results using the `table()` function. Which type has the most slow pokemon?
+
+*Hint:* a nice way of using the `table()` function is to combine it with the `with()` function, which looks something like: `with(data, table(column_1, column_2))`. This saves you having to use the `$` to call columns. 
+
+```{r}
+# your code here
+
+```
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Data%Wrangling%2:%Data%wrangling%with%dplyr%continued&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ErMphV2T01BNmDCWbkZRu_MBCqLgU46EcfVef7r4yZJ_dQ?e=4hVS7P>
+
+The solutions we be available from a link at the end of the survey.
+
+# Individual coding challenge 1 - Ranking and cumulativate calculations using mutate
+
+It can sometimes be helpful to rank your dataset, using mutate and the `min_rank()` or `percent_rank()` functions allow you to add a new column with a rank based on a important column. Higher rank or percent rank means a better ranking. 
+
+In this example, we want to make a goal ranking column and a percent raking column. We can then use filter to select rankings we are interested in. 
+```{r}
+messi_career <- messi_career %>%
+  mutate(goal_rank = min_rank(Goals),
+         goal_perc_rank = percent_rank(Goals))
+
+# select rankings over 10
+messi_career %>%
+  filter(goal_rank > 10)
+```
+
+Another useful calculation you can do is to do cumulativate calculations, such as cumulativate sum or mean of a useful variable. For example, in our messi_career data it might be interesting to workout  his cumulativate goals, and average cumulativate appearances. We use the `cumsum()` and `cummean()` functions for these calculations. 
+
+*note: cumulativate calculations are work very well with longitudinal data, like we have for Lionel Messi's career goals and appearances*
+
+```{r}
+messi_career %>%
+  mutate(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances)) %>%
+  select(Goals, cumul_goals, Appearances, mean_cumul_app)
+```
+
+## Ranking and cumulativate calculations exercise
+
+Using your usa_early90_high data we just made in the previous exercises:
+
+1)  Use mutate to make a new column called `duration_rank`, using the `min_rank()` function on the duration column
+2)  In the same mutate statement, make a new column called `perc_duration_rank`, using the `percent_rank()` function on the duration column
+3)  In the same mutate statement, make a new column called `avg_cumul_duration`, using the `cummean()` function on duration. 
+4)  Pipe to a filter function, and filter for perc_duration_rank between 0.5 and 0.6
+5)  Use select to extract the following columns: title, year, duration, avg_vote, duration_rank, perc_duration_rank, and avg_cumul_duration. 
+
+```{r}
+# your code here
+
+```
+
+# Individual coding challenge 2 - bringing it all together
+
+In this coding challenge we will try and put together what we have learned in this and previous workshops. 
+
+We will be using data from the pokemon games, making some subsets from that data. If you are curious about the data, have a look at the source here: <https://pokemondb.net/pokedex/all>. 
+
+1)  Make sure you have the following packages loaded: dplyr, readr, janitor
+2)  Load in the pokemon data using the following link: "https://raw.githubusercontent.com/andrewmoles2/webScraping/main/R/data/pokemon.csv". Call your data `pokemon`
+3)  Clean up the column names using janitor. Try and use pipes like we did in the examples earlier in the workshop
+4)  Using mutate, change all data that is a character in `pokemon` to a factor
+5)  In the same mutate, add columns for speed_rank and hp_rank. Use the `min_rank()` function on speed and hp to calculate the rankings
+6)  Pipe to a filter function. Keep only data that has been defined as not legendary (*legendary = FALSE*) and is less than or equal to generation 4. You should end up with the legendary column all being false and generation being 1-4
+7)  Pipe to another filter function, subsetting total to be greater than or equal to 500
+8)  Assign the result of this subset to `pokemon_500`
+9)  Make four different subsets called: slow, fast, high_hp, and low_hp. Pipe your `pokemon_500` data to slice_max or slice_min functions to find the top 10 fastest/slowest pokemon, and the top 10 highest/lowest hp pokemon. For example, `slow <- pokemon_500 %>% slice_min(speed_rank, n = 10)`
+10) Find out which pokemon feature in both the high_hp data and the slow data *hint: use filter and the `%in%` operator*
+11) Find out which pokemon feature in both the fast data and the low_hp data
+12) Bonus: run the code for the barplot (second code chunk). It uses the `pokemon_500` data you made to see which pokemon types have total statistics over 500. The colours represent each pokemon type (grass is green etc.). It won't run if `pokemon_500` has not been made or named differently. 
+
+```{r message=FALSE}
+# your code here
+
+```
+
+Bonus code (see part 12 of coding challenge)
+```{r eval=FALSE}
+# bonus - see a bar plot of your pokemon types
+# make a colour palette of the pokemon types
+colour <- c("#6a8b5a", "#414152", "#5a8bee", 
+            "#f6e652","#ffd5bd", "#b40000", 
+            "#ee8329","#6ab4e6", "#8b6283", "#20b49c", 
+            "#c57341", "#e6e6f6", "#ffffff", 
+            "#a483c5", "#f65273", "#e6d5ac", 
+            "#bdcdc5", "#083962")
+
+# view the colours
+#scales::show_col(colour)
+
+# plot in a bar plot
+barplot(height = table(pokemon_500$type1),
+        col = colour,
+        horiz= TRUE, las= 1, 
+        xlim = c(0, 20),
+        xlab = "Frequency", 
+        main = "Freqency of Pokemon types\n with total greater than 500")
+```
+
+If you are wondering how the colouring works, we are using the factor levels of the type1 column. If you type `levels(pokemon_500$type1)` you'll get a vector with the 18 different factor levels, with Bug being 1 and Dark being 2 and so on. The first element in our colour vector therefore matches up with the first level of the type1 factor, which is bug.
+
+# Individual coding challenge 3 - The transmute function
+
+The `transmute()` function in dplyr works in a similar way to `mutate()`, but it drops all columns *except* those it has just made. 
+
+```{r}
+# use transmutate
+messi_career %>%
+  transmute(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances))
+```
+
+The behaviour of transmute can be helpful in certain situations, but if you really want to keep some columns, you can add them into the transmute statement. For example, in the example below I might want to keep the Goals and Appearances columns for comparison with the cumulativate calculations I've made. 
+
+```{r}
+# keep Goals and Appearances
+messi_career %>%
+  transmute(cumul_goals = cumsum(Goals),
+         mean_cumul_app = cummean(Appearances),
+         Goals, 
+         Appearances)
+```
+
+## Transmute exercise
+
+Let's use transmute to look at the durations of the films in the imdb_movies data. 
+
+1)  Pipe movies_imdb to `transmute()`
+2)  Make a variable called duration_hours, which converts duration to hours *hint: look online for minute to hour conversion*
+3)  In the same `transmute()` make a variable called duration_rank, and use the `min_rank()` function on duration
+4)  Include the year, title, duration, and genre columns. 
+5)  Assign the result to movie_durations
+6)  Using `filter()`, `slice_max()` or `slice_min()`, find out the top 4 and bottom 4 film durations
+
+```{r}
+# your code here
+
+
+```
