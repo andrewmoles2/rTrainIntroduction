@@ -1,0 +1,65 @@
+---
+title: "R_dissertation_2"
+author: "Andrew moles"
+date: "2024-05-07"
+output: html_document
+---
+
+# Setup
+
+##  load libraries 
+
+```{r}
+
+```
+
+## load in dataset
+
+```{r}
+
+```
+
+# clean your data
+
+## fix height and weight columns 
+
+```{r}
+
+```
+
+## make new columns in the dataset with your calculations for each person (BMI, WHR, Blood pressure) 
+
+```{r}
+
+```
+
+## rename NA values in occupation as "unemployed" 
+
+```{r}
+
+```
+
+## add bmi and whr ranges 
+
+```{r}
+
+```
+
+## join data using lsoa information 
+
+```{r}
+
+```
+
+## tidy up columns 
+
+```{r}
+
+```
+
+# write/save data 
+
+```{r}
+
+```
+
