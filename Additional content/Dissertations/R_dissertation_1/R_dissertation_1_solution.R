@@ -27,6 +27,7 @@ family_names <- c("Andrew", "Sam (Mum)", "Jules (Dad)", "Ash", "Robin")
 family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
 family_weights <- c(94, 9.135, 9.6075, 89, 81)
 
+# number index method
 family_heights[2] <- family_heights[2] * 0.3048
 family_heights[5] <- family_heights[5] / 100
 family_weights[2:3] <- family_weights[2:3] * 6.35029318
@@ -34,6 +35,26 @@ family_weights[2:3] <- family_weights[2:3] * 6.35029318
 family_heights
 family_weights
 
+# conditional index method 1 using numeric conditions
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
+
+family_heights[family_heights > 7] <- family_heights[family_heights > 7] / 100
+family_heights[family_heights > 3 & family_heights < 7] <- family_heights[family_heights > 3 & family_heights < 7] * 0.3048
+family_weights[family_weights < 40] <- family_weights[family_weights < 40] * 6.35029318
+
+# conditional index method 2 using names
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
+names(family_heights) <- family_names # add names to the vector
+names(family_weights) <- family_names 
+
+family_heights[names(family_heights) == "Sam (Mum)"] <- family_heights[names(family_heights) == "Sam (Mum)"] * 0.3048
+family_heights[names(family_heights) == "Robin"] <- family_heights[names(family_heights) == "Robin"] / 100
+family_weights[names(family_weights) == "Sam (Mum)" | names(family_weights) == "Jules (Dad)"] <- 
+  family_weights[names(family_weights) == "Sam (Mum)" | names(family_weights) == "Jules (Dad)"] * 6.35029318
+
+# BMI calculation + average
 family_bmi <- family_weights/(family_heights^2)
 avg_bmi <- mean(family_bmi)
 
