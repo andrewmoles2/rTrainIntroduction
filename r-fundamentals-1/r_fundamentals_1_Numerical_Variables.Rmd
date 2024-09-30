@@ -111,23 +111,12 @@ You will have noticed the hashtags (`#`) with text in the above example. These a
 
 ```
 
+
 # Reassigning variables
 
-You can also change the value of a variable you have already assigned. Here we are going to sum our new paycheck with our previous bank balance.
+You can also change the value of a variable you have already assigned. 
 
-*Run this code to test it out:*
-
-```{r}
-# create variables
-BankBalance <- 100
-PayCheck <- 250
-# sum old bank balance and pay check, assigning result to bank balance
-BankBalance <- BankBalance + PayCheck
-# print bank balance
-BankBalance
-```
-
-Note that if you run the `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
+Code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
 
 ```{r}
 # variables
@@ -144,17 +133,26 @@ total
 
 ## Reassigning variables exercise
 
-Try and sum another paycheck of £50 with the bank balance variable.
+In this exercise we are going to sum our new pay check with our previous bank balance to keep up to date with our finances. We will then add some other pay checks and costs to update our bank balance. 
 
-1)  Make a variable called PayCheck2 with a value of 50
-2)  Assign BankBalance, and calculate BankBalance + PayCheck2
+1)  Make a variable called pay_check_2 with a value of 50
+2)  Assign bank_balance, and calculate bank_balance + pay_check_2
 3)  Print the outcome
 4)  You go out for dinner with friends and spend 36.55. Make a variable called dinner with the value of 36.55
-5)  Assign BankBalance, and calculate BankBalance - dinner
+5)  Assign bank_balance, and calculate bank_balance - dinner
 6)  Print the outcome *hint: if this doesn't work run the code chunk with the bank balance variable*
 
 ```{r}
+# create variables
+bank_balance <- 100
+pay_check <- 250
+# sum old bank balance and pay check, assigning result to bank balance
+bank_balance <- bank_balance + pay_check
+# print bank balance
+bank_balance
+
 # your code here
+
 
 ```
 
@@ -198,44 +196,6 @@ overall_grade <- (course1 + course2)/3
 overall_grade
 ```
 
-## Salary calculation exercise
-
-Robin and Charlie are a married couple, one gets paid an hourly rate, and the other has an annual salary. They want to workout how much annual salary they have combined before tax. Out of interest Charlie also wants to know what her hourly rate is before tax.
-
-They used simple calculations using the following formulas:
-
-(number hours worked per week x hourly rate) x number of weeks worked = annual salary 
-(annual salary ÷ number of weeks in a year) ÷ hours worked per week = hourly rate
-
-Re-arrange the code so the calculations run. You should have both the combined salary and Charlie's hourly rate calculations printed.
-
-```{r error=TRUE}
-# Note: Hours worked, salaries and weeks in year can be in any order but need
-# to be above the rest of the code
-
-# weeks in year
-weeksYear <- 52
-
-# Charlies hourly rate
-Charlie_HourlyRate <- (Charlie_annualSalary / weeksYear)/Charlie_hoursPerWeek
-Charlie_HourlyRate
-
-# salaries
-Robin_HourlyRate <- 16.5
-Charlie_annualSalary <- 31800
-
-# Combined salaries
-CombinedSalaries <- Robin_annualSalary + Charlie_annualSalary
-CombinedSalaries
-
-# Robins annual salary
-Robin_annualSalary <- (Robin_hoursPerWeek * Robin_HourlyRate) * Robin_weeksWorking
-
-# hours worked
-Robin_hoursPerWeek <- 25
-Robin_weeksWorking <- 48
-Charlie_hoursPerWeek <- 35
-```
 
 # Final task - Please give us your individual feedback!
 

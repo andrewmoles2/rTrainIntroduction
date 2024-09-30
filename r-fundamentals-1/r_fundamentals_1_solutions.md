@@ -3,7 +3,7 @@ title: "R Fundamentals 1: Numerical Variables"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "01 February, 2024"
+date: "30 September, 2024"
 output: 
   html_document: 
     theme: readable
@@ -35,7 +35,7 @@ The goal of this session is to get started using RStudio, learn how to use varia
 We can use R to do simple or advanced calculations for us. Remember to run the code by pressing the green play button or Ctrl + Enter (or Cmd + Enter on Mac).
 
 
-```r
+``` r
 7 * 6
 ```
 
@@ -43,7 +43,7 @@ We can use R to do simple or advanced calculations for us. Remember to run the c
 ## [1] 42
 ```
 
-```r
+``` r
 5 / (2^2)
 ```
 
@@ -51,7 +51,7 @@ We can use R to do simple or advanced calculations for us. Remember to run the c
 ## [1] 1.25
 ```
 
-```r
+``` r
 (16 - 4) + (1 * 9)
 ```
 
@@ -71,7 +71,7 @@ Use R to work out the following arithmetic:
 6)  The remainder of 55 divided by 2. *hint: look up r's modulus operator*
 
 
-```r
+``` r
 # type your code here
 44 * 26
 ```
@@ -80,7 +80,7 @@ Use R to work out the following arithmetic:
 ## [1] 1144
 ```
 
-```r
+``` r
 9.6 / 1.6
 ```
 
@@ -88,15 +88,15 @@ Use R to work out the following arithmetic:
 ## [1] 6
 ```
 
-```r
-(12 + 4)^2
+``` r
+(12 - 4)^2
 ```
 
 ```
-## [1] 256
+## [1] 64
 ```
 
-```r
+``` r
 (4 * 9)/(5 + 6)
 ```
 
@@ -104,7 +104,7 @@ Use R to work out the following arithmetic:
 ## [1] 3.272727
 ```
 
-```r
+``` r
 (22 / 36) * 100
 ```
 
@@ -112,7 +112,7 @@ Use R to work out the following arithmetic:
 ## [1] 61.11111
 ```
 
-```r
+``` r
 55%%2
 ```
 
@@ -127,14 +127,14 @@ A variable is named storage of information. In our case today we are storing num
 We can assign variables by using `<-`. You should see the variable appear to your right in the global environment once you've run this command (under Values).
 
 
-```r
+``` r
 height <- 155
 ```
 
 We can then print the output of the variable by typing in its name.
 
 
-```r
+``` r
 height
 ```
 
@@ -145,7 +145,7 @@ height
 When calling a variable, be careful to type it exactly (you can also copy it or use code completion to help). The code below will give you an error because we have spelt height incorrectly.
 
 
-```r
+``` r
 hieght
 ```
 
@@ -158,7 +158,7 @@ We can do calculations on variables. We first assign the variables and, then use
 In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is 42 times 92, as this is the data that is stored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
 
 
-```r
+``` r
 # test scores
 Score1 <- 42
 Score2 <- 92
@@ -176,7 +176,7 @@ AveScore
 You will have noticed the hashtags (`#`) with text in the above example. These are called comments. In later R sessions we will use a lot of comments to tell us (and others) what each line or section of code is doing.
 
 
-```r
+``` r
 # this is a comment
 ```
 
@@ -188,7 +188,7 @@ You will have noticed the hashtags (`#`) with text in the above example. These a
 4)  Print your my_height_feet variable
 
 
-```r
+``` r
 # your code here
 my_height <- 195
 my_height
@@ -198,7 +198,7 @@ my_height
 ## [1] 195
 ```
 
-```r
+``` r
 my_height_feet <-  my_height * 0.0328084
 my_height_feet
 ```
@@ -209,29 +209,12 @@ my_height_feet
 
 # Reassigning variables
 
-You can also change the value of a variable you have already assigned. Here we are going to sum our new paycheck with our previous bank balance.
+You can also change the value of a variable you have already assigned. 
 
-*Run this code to test it out:*
-
-
-```r
-# create variables
-BankBalance <- 100
-PayCheck <- 250
-# sum old bank balance and pay check, assigning result to bank balance
-BankBalance <- BankBalance + PayCheck
-# print bank balance
-BankBalance
-```
-
-```
-## [1] 350
-```
-
-Note that if you run the `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
+Code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
 
 
-```r
+``` r
 # variables
 number <- 5
 total <- 0
@@ -244,7 +227,7 @@ total
 ## [1] 5
 ```
 
-```r
+``` r
 total <- total + number
 total
 ```
@@ -253,7 +236,7 @@ total
 ## [1] 10
 ```
 
-```r
+``` r
 total <- total + number
 total
 ```
@@ -264,31 +247,45 @@ total
 
 ## Reassigning variables exercise
 
-Try and sum another paycheck of £50 with the bank balance variable.
+In this exercise we are going to sum our new pay check with our previous bank balance to keep up to date with our finances. We will then add some other pay checks and costs to update our bank balance. 
 
-1)  Make a variable called PayCheck2 with a value of 50
-2)  Assign BankBalance, and calculate BankBalance + PayCheck2
+1)  Make a variable called pay_check_2 with a value of 50
+2)  Assign bank_balance, and calculate bank_balance + pay_check_2
 3)  Print the outcome
 4)  You go out for dinner with friends and spend 36.55. Make a variable called dinner with the value of 36.55
-5)  Assign BankBalance, and calculate BankBalance - dinner
+5)  Assign bank_balance, and calculate bank_balance - dinner
 6)  Print the outcome *hint: if this doesn't work run the code chunk with the bank balance variable*
 
 
-```r
+``` r
+# create variables
+bank_balance <- 100
+pay_check <- 250
+# sum old bank balance and pay check, assigning result to bank balance
+bank_balance <- bank_balance + pay_check
+# print bank balance
+bank_balance
+```
+
+```
+## [1] 350
+```
+
+``` r
 # your code here
-PayCheck2 <- 50
-BankBalance <- BankBalance + PayCheck2
-BankBalance
+pay_check_2 <- 50
+bank_balance <- bank_balance + pay_check_2
+bank_balance
 ```
 
 ```
 ## [1] 400
 ```
 
-```r
+``` r
 dinner <- 36.55
-BankBalance <- BankBalance - dinner
-BankBalance
+bank_balance <- bank_balance - dinner
+bank_balance
 ```
 
 ```
@@ -305,7 +302,7 @@ Use R to work out the body mass index (BMI) of someone who is 79kg, and 1.77m ta
 4)  Add comments on what each line of code is doing
 
 
-```r
+``` r
 # Exercise: BMI calculation
 # assign variables of weight and height
 weight <- 79
@@ -331,7 +328,7 @@ Debug the code below that is finding the weighted average of a student's coursew
 -   naming error
 
 
-```r
+``` r
 # Exercise: weighted average debugging
 exam1 <- 52
 coursework1 <- 82
@@ -365,7 +362,7 @@ They used simple calculations using the following formulas:
 Re-arrange the code so the calculations run. You should have both the combined salary and Charlie's hourly rate calculations printed.
 
 
-```r
+``` r
 # Note: Hours worked, salaries and weeks in year can be in any order but need
 # to be above the rest of the code
 
@@ -421,7 +418,7 @@ Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal 
 6)  Print the total bill and what each friend owes
 
 
-```r
+``` r
 # individual coding challenge
 
 # sum of order and shared food
@@ -445,7 +442,7 @@ TotalBill
 ## [1] 42
 ```
 
-```r
+``` r
 # individual bill
 Roger
 ```
@@ -454,7 +451,7 @@ Roger
 ## [1] 13
 ```
 
-```r
+``` r
 Amal
 ```
 
@@ -462,7 +459,7 @@ Amal
 ## [1] 16.25
 ```
 
-```r
+``` r
 Genevieve
 ```
 

@@ -17,7 +17,7 @@ output:
 
 # Objective of workshop
 
-To work with vectors, a key data type in R, and learn to use built in functions on those vectors. 
+To work with vectors, a key data type in R, and learn to use built-in functions on those vectors. 
 
 # What will this workshop cover?
 
@@ -44,7 +44,7 @@ vect1 <- c(1,6,19,4,9)
 vect1
 ```
 
-We can also combine predefined variables and vectors together to create a new vector.
+We can also combine predefined variables and vectors to create a new vector.
 
 ```{r}
 x <- 30
@@ -78,6 +78,7 @@ As you can see this divides all elements in the vector by 5.
 ```{r}
 # your code here
 
+
 ```
 
 # Functions: what are they and how to use them
@@ -90,9 +91,9 @@ For example:
 
 ```{r}
 # running times (mins)
-runTimes <- c(31, 50, 15, 19, 23, 34, 9)
+run_times <- c(31, 50, 15, 19, 23, 34, 9)
 # mean running time
-aveRun <- mean(runTimes)
+aveRun <- mean(run_times)
 aveRun
 # tidy up result
 aveRun <- round(aveRun, digits = 2)
@@ -112,11 +113,7 @@ We are on a walking exercise plan, where we increase our step count by a five hu
 
 ```{r}
 # your code here
-# steps
 
-# total steps
-
-# median steps
 
 ```
 
@@ -124,22 +121,24 @@ We are on a walking exercise plan, where we increase our step count by a five hu
 
 As well as functions to find averages, we can also use plotting functions. This is helpful to take a quick look at our data, which is often easier to read then just looking at the numbers themselves. Base R provides two useful functions called `hist()` and `plot()`. 
 
-`hist()` makes histograms of vectors. For example, we can use it on our runTimes variable from earlier. 
+`hist()` makes histograms of vectors. Here we can look at running times over a two week period. 
 ```{r}
-hist(runTimes)
+run_times <- c(30.08, 28.63, 28.91, 28.24, 33.10, 29.69, 37.81,
+               27.00, 31.71, 29.59, 26.25, 28.85, 32.04, 31.44)
+hist(run_times)
 ```
 
 `plot()` by default makes scatter plots. Here we make a vector called days and plot it with our running times. We have also added a title using the `main =` parameter. 
 ```{r}
-days <- 1:7
+days <- 1:14
 
-plot(x = days, y = runTimes,
+plot(x = days, y = run_times,
      main = "Running time for each day of week")
 ```
 
 To make a different visualisation we can use the type parameter. Here we make our scatter plot a line plot instead, which makes a bit more sense. 
 ```{r}
-plot(x = days, y = runTimes,
+plot(x = days, y = run_times,
      main = "Running time for each day of week",
      type = "l")
 ```
@@ -159,11 +158,10 @@ Using the `hist()` and `plot()` functions:
 3) Make a scatter plot of `coursework_grades` and `exam_grades`. Add a title such as "Exam vs coursework grades on module x". Is there any pattern at all between coursework grades and exam grades?
 
 ```{r}
-coursework_grades <- c(58, 68, 75, 75, 62, 62, 68, 55, 58, 62, 75, 58, 72, 65, 65)
-exam_grades <- c(80, 68, 63, 54, 42, 51, 41, 67, 53, 72, 69, 53, 70, 68, 51)
+coursework_grades <- c(58, 68, 75, 75, 62, 62, 68, 55, 58, 62, 75, 58, 72, 65, 65, 41, 81, 69)
+exam_grades <- c(80, 68, 63, 54, 42, 51, 41, 67, 53, 72, 69, 53, 70, 68, 51, 55, 72, 68)
 
 # your code here
-
 
 
 ```
@@ -207,9 +205,9 @@ someNumbers[c(1,5,8)]
 
 You've been keeping track of how much coffee you drink each day for a two week period. We want to split this into week 1 and 2. Using the code below follow the following steps:
 
-1)  Find out the mean for weekOne and WeekTwo vectors.
-2)  `mean` doesn't work for weekTwo and gives back `NA`. Print your weekTwo vector to look at the data.
-3)  Check the length of your weekTwo vector by running the `length()` function on the weekTwo vector.
+1)  Find out the mean for week_one and week_two vectors.
+2)  `mean` doesn't work for week_two and gives back `NA`. Print your week_two vector to look at the data.
+3)  Check the length of your week_two vector by running the `length()` function on the week_two vector.
 4)  There are a few ways ways to fix this, try and find at least two different ways.
 
 *hint: the mean() function has an argument called na.rm, type and run ?mean() to look at the help page*
@@ -219,10 +217,11 @@ You've been keeping track of how much coffee you drink each day for a two week p
 coffee <- c(3, 5, 4, 2, 3, 1, 1, 6, 2, 3, 2, 4, 2, 1)
 
 # weeks
-weekOne <- coffee[1:7]
-weekTwo <- coffee[8:15]
+week_one <- coffee[1:7]
+week_two <- coffee[8:15]
 
 # your code here
+
 
 ```
 
@@ -249,20 +248,33 @@ In the first change, we changed the 8th element of the someNumbers data to 50 (i
 
 ## Indexing exercise 2
 
-You decided to track your total monthly expenditures for the year to find out more about your monthly spending. You're interested in your spending per quarter, biggest spending month, and lowest spending month.
+You wanted to calculate bmi health metrics for your family members, and have collected their weights and heights below. We want all heights to be in meters, and all weights to be in kilograms. Robin has used centimetres for height, Sam (Mum) has used feet for height, Sam (Mum) and Jules (Dad) have used stone for weight.
 
-1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506. Each item represents each month, first is January spending, second is February spending etc.
-2)  You realise the spending for some of the months is wrong. January should be 921, August should be 1419, and November should be 703. Use indexing to change the values in myExpenses so they are correct.\
-3)  Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.
-4)  Repeat for quarters 2, 3, and 4.
-5)  Workout the average spending for each quarter. Which had the biggest spending?
-6)  Using the `which.max()` and `which.min()` functions on your myExpenses vector, find out which months had the highest and lowest spending. Assign the result of each to a variable (minSpend, maxSpend).
-7)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector.
+Convert Sam (Mum)'s height from feet to meters. The calculation is feet multiplied by 0.3048.
+
+Convert Robin's height from centimetres to meters. The calculation is centimetres divided by 100.
+
+Convert Sam (Mum) and Jules (Dad)'s weights from stone to kilograms. The calculation is stone multiplied by 6.35029318.
+
+Calculate the bmi for all family names and store in a vector called family_bmi.
+
+Calculate the average bmi of the family members and store in a variable called avg_bmi.
+
+Add the family names to the family_bmi vector. Searching online for creating named vectors should help.
+
+Print both the family_bmi and avg_bmi calculations.
+
 
 ```{r}
-# enter your code here
+family_names <- c("Andrew", "Sam (Mum)", "Jules (Dad)", "Ash", "Robin")
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
+
+# your code here
+
 
 ```
+
 
 # Final task - Please give us your individual feedback!
 

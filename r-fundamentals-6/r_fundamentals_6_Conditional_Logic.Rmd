@@ -37,8 +37,8 @@ In these workshops we have covered numeric, string, and factorised data types. T
 To use boolean in R we capitalise true and false. Run the code below to test this out.
 
 ```{r}
-trueFalse <- c(TRUE, FALSE, TRUE, FALSE)
-class(trueFalse)
+true_false <- c(TRUE, FALSE, TRUE, FALSE)
+class(true_false)
 ```
 
 We can also convert binary into boolean. R will make a 1 true and a 0 false. Run the code below to test this out.
@@ -291,10 +291,9 @@ Will be using the Pokemon dataset again for this exercise.
 
 # The If statement
 
-The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means running a test to determine which operation or output is given, controlling the flow of your code. They work as follows: If statement is true, do this, else do something else.
+The if statement is fundamental to programming. It uses conditional operators and boolean to *control flow*. This means running a test to determine which operation or output is given, controlling the flow of your code. They work as follows: If statement is true, do this, else do something else. 
 
-If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens.
-
+If you doing a test on a variable, you can use the if statement like shown below. Run the code to test it out, and change the variables to see what happens. 
 ```{r}
 # pizza variables
 pizza_price <- 10
@@ -310,33 +309,34 @@ if (bank_balance > pizza_price) {
 }
 ```
 
-If you have a vector with multiple elements you can use the built in `ifelse()` function.
+If you have a vector with multiple elements you can use the built in `ifelse()` function. 
 
-The make up of this function is: `ifelse(condition, outcome if true, outcome if false)`. This function will compare each element for you. `ifelse()` and is generally easier to use than the if statement, and has the same functionally.
-
+The make up of this function is: `ifelse(condition, outcome if true, outcome if false)`. This function will compare each element for you. `ifelse()` and is generally easier to use than the if statement, and has the same functionally. 
 ```{r}
 # pizza variables
-pizza_price <- c(7, 11, 9, 10.5)
+pizza_price <- c(7, 11, 9, 10.5, 10)
 bank_balance <- 10
 
 # ifelse function
 ifelse(bank_balance >= pizza_price, "Yes I can afford pizza!", "No pizza for you")
 ```
 
-We can nest if statements together if we have several different conditions (or else ifs).
+We can nest if statements together if we have several different conditions (or else ifs). 
 
-In this example we are setting a category of low, medium and high from our x column in the df3 data frame. All values less then or equal to 33 are low, any value between 33 and 66 is medium and the rest are high. Run the code to test it out.
-
+This is the same example as above but we have added an extra condition. 
 ```{r}
-# nested if else
-df3$cat <- ifelse(df3$x <= 33, "low",
-                  ifelse(df3$x > 33 & df3$x <= 66, 'medium', 
-                         'high'))
-# view x and cat cols
-df3[, c('x','cat')]
+# pizza variables
+pizza_price <- c(7, 11, 9, 10.5, 10)
+bank_balance <- 10
+
+# ifelse function
+ifelse(bank_balance > pizza_price, "Yes I can afford pizza!",
+       ifelse(bank_balance == pizza_price, "Spend all your money on pizza!",
+              "No pizza for you"))
+
 ```
 
-When nesting if statements like this, *else* becomes the next ifelse statement.
+When nesting if statements like this, *else* becomes the next ifelse statement. 
 
 ## ifelse exercise
 

@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "04 October, 2023"
+date: "30 September, 2024"
 output: 
   html_document: 
     theme: readable
@@ -40,7 +40,7 @@ The first way of making a vector is to add the arguments you want, numbers in th
 Run this code chunk to test it out.
 
 
-```r
+``` r
 vect1 <- c(1,6,19,4,9)
 vect1
 ```
@@ -52,7 +52,7 @@ vect1
 We can also combine predefined variables and vectors to create a new vector.
 
 
-```r
+``` r
 x <- 30
 vect2 <- c(vect1, 22, 7, x)
 vect2
@@ -65,7 +65,7 @@ vect2
 Another way of making a vector is using the colon (`:`), which can be done without the c function. We can tell R to select a sequence of integers from x to y, or 5 through to 10 in our example.
 
 
-```r
+``` r
 vect3 <- 5:10
 vect3
 ```
@@ -77,7 +77,7 @@ vect3
 We can also do some basic calculations on vectors. These occur elementwise (one element at a time).
 
 
-```r
+``` r
 vect3/5
 ```
 
@@ -96,7 +96,7 @@ As you can see this divides all elements in the vector by 5.
 5)  Times x vector by y
 
 
-```r
+``` r
 # your code here
 x <- 8:14
 x <- x + 5
@@ -107,7 +107,7 @@ x
 ## [1] 13 14 15 16 17 18 19
 ```
 
-```r
+``` r
 y <- c(34, 55, 13, 71, 98, 43, 25)
 y <- y - 12
 y
@@ -117,7 +117,7 @@ y
 ## [1] 22 43  1 59 86 31 13
 ```
 
-```r
+``` r
 x * y
 ```
 
@@ -134,11 +134,11 @@ The **function(input)** format is the fundamental way to call and use a function
 For example:
 
 
-```r
+``` r
 # running times (mins)
-runTimes <- c(31, 50, 15, 19, 23, 34, 9)
+run_times <- c(31, 50, 15, 19, 23, 34, 9)
 # mean running time
-aveRun <- mean(runTimes)
+aveRun <- mean(run_times)
 aveRun
 ```
 
@@ -146,7 +146,7 @@ aveRun
 ## [1] 25.85714
 ```
 
-```r
+``` r
 # tidy up result
 aveRun <- round(aveRun, digits = 2)
 aveRun
@@ -168,7 +168,7 @@ We are on a walking exercise plan, where we increase our step count by a five hu
 4)  Comment your code
 
 
-```r
+``` r
 # your code here
 # steps
 steps <- seq(1000, 12000, by = 500)
@@ -180,7 +180,7 @@ sum(steps)
 ## [1] 149500
 ```
 
-```r
+``` r
 # median steps
 median(steps)
 ```
@@ -193,20 +193,22 @@ median(steps)
 
 As well as functions to find averages, we can also use plotting functions. This is helpful to take a quick look at our data, which is often easier to read then just looking at the numbers themselves. Base R provides two useful functions called `hist()` and `plot()`. 
 
-`hist()` makes histograms of vectors. For example, we can use it on our runTimes variable from earlier. 
+`hist()` makes histograms of vectors. Here we can look at running times over a two week period. 
 
-```r
-hist(runTimes)
+``` r
+run_times <- c(30.08, 28.63, 28.91, 28.24, 33.10, 29.69, 37.81,
+               27.00, 31.71, 29.59, 26.25, 28.85, 32.04, 31.44)
+hist(run_times)
 ```
 
 ![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 `plot()` by default makes scatter plots. Here we make a vector called days and plot it with our running times. We have also added a title using the `main =` parameter. 
 
-```r
-days <- 1:7
+``` r
+days <- 1:14
 
-plot(x = days, y = runTimes,
+plot(x = days, y = run_times,
      main = "Running time for each day of week")
 ```
 
@@ -214,8 +216,8 @@ plot(x = days, y = runTimes,
 
 To make a different visualisation we can use the type parameter. Here we make our scatter plot a line plot instead, which makes a bit more sense. 
 
-```r
-plot(x = days, y = runTimes,
+``` r
+plot(x = days, y = run_times,
      main = "Running time for each day of week",
      type = "l")
 ```
@@ -237,9 +239,9 @@ Using the `hist()` and `plot()` functions:
 3) Make a scatter plot of `coursework_grades` and `exam_grades`. Add a title such as "Exam vs coursework grades on module x". Is there any pattern at all between coursework grades and exam grades?
 
 
-```r
-coursework_grades <- c(58, 68, 75, 75, 62, 62, 68, 55, 58, 62, 75, 58, 72, 65, 65)
-exam_grades <- c(80, 68, 63, 54, 42, 51, 41, 67, 53, 72, 69, 53, 70, 68, 51)
+``` r
+coursework_grades <- c(58, 68, 75, 75, 62, 62, 68, 55, 58, 62, 75, 58, 72, 65, 65, 41, 81, 69)
+exam_grades <- c(80, 68, 63, 54, 42, 51, 41, 67, 53, 72, 69, 53, 70, 68, 51, 55, 72, 68)
 
 # your code here
 hist(coursework_grades)
@@ -247,13 +249,13 @@ hist(coursework_grades)
 
 ![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
-```r
+``` r
 hist(exam_grades)
 ```
 
 ![](r_fundamentals_2_solutions_files/figure-html/unnamed-chunk-11-2.png)<!-- -->
 
-```r
+``` r
 plot(x = coursework_grades, y = exam_grades, 
      main = "Exam vs coursework grades on module x")
 ```
@@ -272,7 +274,7 @@ To index in R you use the square brackets `[]` after you type the name of the ve
 Run the example code chunks to see the results:
 
 
-```r
+``` r
 someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
 # indexing the 6th element
 someNumbers[6]
@@ -285,7 +287,7 @@ someNumbers[6]
 Indexing elements 1 to 4
 
 
-```r
+``` r
 someNumbers[1:4]
 ```
 
@@ -296,7 +298,7 @@ someNumbers[1:4]
 Dropping elements 5 to 7
 
 
-```r
+``` r
 someNumbers[-5:-7]
 ```
 
@@ -307,7 +309,7 @@ someNumbers[-5:-7]
 Indexing 1, 5, and 8
 
 
-```r
+``` r
 someNumbers[c(1,5,8)]
 ```
 
@@ -319,49 +321,49 @@ someNumbers[c(1,5,8)]
 
 You've been keeping track of how much coffee you drink each day for a two week period. We want to split this into week 1 and 2. Using the code below follow the following steps:
 
-1)  Find out the mean for weekOne and WeekTwo vectors.
-2)  `mean` doesn't work for weekTwo and gives back `NA`. Print your weekTwo vector to look at the data.
-3)  Check the length of your weekTwo vector by running the `length()` function on the weekTwo vector.
+1)  Find out the mean for week_one and week_two vectors.
+2)  `mean` doesn't work for week_two and gives back `NA`. Print your week_two vector to look at the data.
+3)  Check the length of your week_two vector by running the `length()` function on the week_two vector.
 4)  There are a few ways ways to fix this, try and find at least two different ways.
 
 *hint: the mean() function has an argument called na.rm, type and run ?mean() to look at the help page*
 
 
-```r
+``` r
 # vector with n coffee per day for two weeks
 coffee <- c(3, 5, 4, 2, 3, 1, 1, 6, 2, 3, 2, 4, 2, 1)
 
 # weeks
-weekOne <- coffee[1:7]
-weekTwo <- coffee[8:15]
+week_one <- coffee[1:7]
+week_two <- coffee[8:15]
 
 # your code here
 # mean coffee per week
-mean(weekOne)
+mean(week_one)
 ```
 
 ```
 ## [1] 2.714286
 ```
 
-```r
-mean(weekTwo)
+``` r
+mean(week_two)
 ```
 
 ```
 ## [1] NA
 ```
 
-```r
+``` r
 # fixing week two
-length(weekTwo)
+length(week_one)
 ```
 
 ```
-## [1] 8
+## [1] 7
 ```
 
-```r
+``` r
 length(coffee)/2
 ```
 
@@ -369,32 +371,32 @@ length(coffee)/2
 ## [1] 7
 ```
 
-```r
+``` r
 # option 1
-mean(weekTwo, na.rm = TRUE)
+mean(week_two, na.rm = TRUE)
 ```
 
 ```
 ## [1] 2.857143
 ```
 
-```r
+``` r
 # option 2
-mean(weekTwo[-8])
+mean(week_two[-8])
 ```
 
 ```
 ## [1] 2.857143
 ```
 
-```r
+``` r
 # option 3
-weekTwo <- weekTwo[-8]
-mean(weekTwo)
+weekTwo <- week_two[-8]
+mean(week_two)
 ```
 
 ```
-## [1] 2.857143
+## [1] NA
 ```
 
 # Using indexing to change values
@@ -406,7 +408,7 @@ This is a combination of what we have learned so far, with reassigning data to v
 Run the code below to see the example:
 
 
-```r
+``` r
 someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
 someNumbers
 ```
@@ -415,7 +417,7 @@ someNumbers
 ## [1]  4 26 11 15 18  9  3  1
 ```
 
-```r
+``` r
 # Change one item
 someNumbers[8] <- 50
 someNumbers
@@ -425,7 +427,7 @@ someNumbers
 ## [1]  4 26 11 15 18  9  3 50
 ```
 
-```r
+``` r
 # Change multiple
 someNumbers[1:3] <- c(19, 20, 21)
 someNumbers
@@ -439,71 +441,78 @@ In the first change, we changed the 8th element of the someNumbers data to 50 (i
 
 ## Indexing exercise 2
 
-You decided to track your total monthly expenditures for the year to find out more about your monthly spending. You're interested in your spending per quarter, biggest spending month, and lowest spending month.
+You wanted to calculate bmi health metrics for your family members, and have collected their weights and heights below. We want all heights to be in meters, and all weights to be in kilograms. Robin has used centimetres for height, Sam (Mum) has used feet for height, Sam (Mum) and Jules (Dad) have used stone for weight.
 
-1)  Make a variable called myExpenses with the following data: 976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 and 1506. Each item represents each month, first is January spending, second is February spending etc.
-2)  You realise the spending for some of the months is wrong. January should be 921, August should be 1419, and November should be 703. Use indexing to change the values in myExpenses so they are correct.\
-3)  Using indexing make a vector for the first quarter of the year. Call it Q1 and make sure the first three months are indexed.
-4)  Repeat for quarters 2, 3, and 4.
-5)  Workout the average spending for each quarter. Which had the biggest spending?
-6)  Using the `which.max()` and `which.min()` functions on your myExpenses vector, find out which months had the highest and lowest spending. Assign the result of each to a variable (minSpend, maxSpend).
-7)  Now you know the highest and lowest spending months, put them into a vector together called MaxMin by indexing from the myExpenses vector.
+Convert Sam (Mum)'s height from feet to meters. The calculation is feet multiplied by 0.3048.
+
+Convert Robin's height from centimetres to meters. The calculation is centimetres divided by 100.
+
+Convert Sam (Mum) and Jules (Dad)'s weights from stone to kilograms. The calculation is stone multiplied by 6.35029318.
+
+Calculate the bmi for all family names and store in a vector called family_bmi.
+
+Calculate the average bmi of the family members and store in a variable called avg_bmi.
+
+Add the family names to the family_bmi vector. Searching online for creating named vectors should help.
+
+Print both the family_bmi and avg_bmi calculations.
 
 
-```r
-# enter your code here
-myExpenses <- c(976, 631, 1231, 1120, 1374, 873, 1244, 1398, 989, 1034, 579 ,1506)
-# change jan, aug, and nov
-myExpenses[c(1,8,11)] <- c(921, 1419, 703)
-# spending per quarter
-Q1 <- myExpenses[1:3]
-Q2 <- myExpenses[4:6]
-Q3 <- myExpenses[7:9]
-Q4 <- myExpenses[10:12]
-# mean spend per quarter
-mean(Q1)
-```
 
-```
-## [1] 927.6667
-```
+``` r
+family_names <- c("Andrew", "Sam (Mum)", "Jules (Dad)", "Ash", "Robin")
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
 
-```r
-mean(Q2)
-```
+# your code here
+# number index method
+family_heights[2] <- family_heights[2] * 0.3048
+family_heights[5] <- family_heights[5] / 100
+family_weights[2:3] <- family_weights[2:3] * 6.35029318
 
-```
-## [1] 1122.333
-```
+# conditional index method 1 using numeric conditions
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
 
-```r
-mean(Q3)
-```
+family_heights[family_heights > 7] <- family_heights[family_heights > 7] / 100
+family_heights[family_heights > 3 & family_heights < 7] <- family_heights[family_heights > 3 & family_heights < 7] * 0.3048
+family_weights[family_weights < 40] <- family_weights[family_weights < 40] * 6.35029318
 
-```
-## [1] 1217.333
-```
+# conditional index method 2 using names
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
+names(family_heights) <- family_names # add names to the vector
+names(family_weights) <- family_names 
 
-```r
-mean(Q4)
-```
+family_heights[names(family_heights) == "Sam (Mum)"] <- family_heights[names(family_heights) == "Sam (Mum)"] * 0.3048
+family_heights[names(family_heights) == "Robin"] <- family_heights[names(family_heights) == "Robin"] / 100
+family_weights[names(family_weights) == "Sam (Mum)" | names(family_weights) == "Jules (Dad)"] <- 
+  family_weights[names(family_weights) == "Sam (Mum)" | names(family_weights) == "Jules (Dad)"] * 6.35029318
 
-```
-## [1] 1081
-```
+# calculate bmi and the average bmi
+family_bmi <- family_weights/(family_heights^2)
+avg_bmi <- mean(family_bmi)
 
-```r
-# highest and lowest spending
-minSpend <- which.min(myExpenses)
-maxSpend <- which.max(myExpenses)
-# totals
-MaxMin <- myExpenses[c(minSpend, maxSpend)]
-MaxMin
+# add family names to family_bmi vector
+names(family_bmi) <- family_names
+
+# print outputs
+family_bmi
 ```
 
 ```
-## [1]  631 1506
+##      Andrew   Sam (Mum) Jules (Dad)         Ash       Robin 
+##    24.72058    24.10110    22.40971    24.39626    23.41311
 ```
+
+``` r
+avg_bmi
+```
+
+```
+## [1] 23.80815
+```
+
 
 # Final task - Please give us your individual feedback!
 
@@ -524,7 +533,7 @@ You decide to calculate your commuting times over a weekly period. You decide to
 7)  Test out the following functions on the commute_sort variable: `unique()` and `sort(commute, decreasing = TRUE)`.
 
 
-```r
+``` r
 commute <- c(41, 33, 44, 52, 36, 39)
 # enter your code here
 # replicate
@@ -539,7 +548,7 @@ aveCommute
 ## [1] 40.83
 ```
 
-```r
+``` r
 # sorting
 commute_sort <- sort(commute_est)
 commute_sort
@@ -549,7 +558,7 @@ commute_sort
 ##  [1] 33 33 33 33 36 36 36 36 39 39 39 39 41 41 41 41 44 44 44 44 52 52 52 52
 ```
 
-```r
+``` r
 commute_sort[1:4] <- 37
 # running ave again
 aveCommute <- mean(commute_sort)
@@ -560,7 +569,7 @@ aveCommute
 ## [1] 41.5
 ```
 
-```r
+``` r
 # testing functions
 unique(commute_est)
 ```
@@ -569,7 +578,7 @@ unique(commute_est)
 ## [1] 41 33 44 52 36 39
 ```
 
-```r
+``` r
 sort(commute_est, decreasing = TRUE)
 ```
 
@@ -584,7 +593,7 @@ For this individual coding challenge we will be looking at Lional Messi's season
 The code below has been jumbled up and will not run. Your challenge is to re-order it so it runs correctly. It should print out summary statistics for season goal ratio and age band goal ratios, as well as which year was his most and least prolific, and how many years that took him.
 
 
-```r
+``` r
 # add in appearance, goal and season data
 appearances <- c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44)
 goals <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
@@ -613,7 +622,7 @@ season[which.max(goalRatio)]
 ## [1] 2004
 ```
 
-```r
+``` r
 # which season had the best goal ratio
 season[which.min(goalRatio)]
 ```
@@ -622,7 +631,7 @@ season[which.min(goalRatio)]
 ## [1] 2011
 ```
 
-```r
+``` r
 # summary results
 summary(goalRatio)
 ```
@@ -632,7 +641,7 @@ summary(goalRatio)
 ##   0.820   0.980   1.165   1.860   1.595   9.000
 ```
 
-```r
+``` r
 summary(ageGoalRatio)
 ```
 
@@ -641,7 +650,7 @@ summary(ageGoalRatio)
 ##   1.190   1.195   1.200   2.380   2.975   4.750
 ```
 
-```r
+``` r
 # how many years playing to reach best goal ratio
 season[which.min(goalRatio)] - season[1]
 ```
@@ -650,7 +659,7 @@ season[which.min(goalRatio)] - season[1]
 ## [1] 7
 ```
 
-```r
+``` r
 # print career ratio
 careerGoalRatio
 ```

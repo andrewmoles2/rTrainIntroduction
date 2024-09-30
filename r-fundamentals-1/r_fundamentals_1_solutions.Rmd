@@ -55,7 +55,7 @@ Use R to work out the following arithmetic:
 # type your code here
 44 * 26
 9.6 / 1.6
-(12 + 4)^2
+(12 - 4)^2
 (4 * 9)/(5 + 6)
 (22 / 36) * 100
 55%%2
@@ -122,21 +122,9 @@ my_height_feet
 
 # Reassigning variables
 
-You can also change the value of a variable you have already assigned. Here we are going to sum our new paycheck with our previous bank balance.
+You can also change the value of a variable you have already assigned. 
 
-*Run this code to test it out:*
-
-```{r}
-# create variables
-BankBalance <- 100
-PayCheck <- 250
-# sum old bank balance and pay check, assigning result to bank balance
-BankBalance <- BankBalance + PayCheck
-# print bank balance
-BankBalance
-```
-
-Note that if you run the `BankBalance <- BankBalance + PayCheck` line of code twice you will get a higher bank balance (600 rather than 350). This is because code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
+Code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
 
 ```{r}
 # variables
@@ -153,24 +141,32 @@ total
 
 ## Reassigning variables exercise
 
-Try and sum another paycheck of £50 with the bank balance variable.
+In this exercise we are going to sum our new pay check with our previous bank balance to keep up to date with our finances. We will then add some other pay checks and costs to update our bank balance. 
 
-1)  Make a variable called PayCheck2 with a value of 50
-2)  Assign BankBalance, and calculate BankBalance + PayCheck2
+1)  Make a variable called pay_check_2 with a value of 50
+2)  Assign bank_balance, and calculate bank_balance + pay_check_2
 3)  Print the outcome
 4)  You go out for dinner with friends and spend 36.55. Make a variable called dinner with the value of 36.55
-5)  Assign BankBalance, and calculate BankBalance - dinner
+5)  Assign bank_balance, and calculate bank_balance - dinner
 6)  Print the outcome *hint: if this doesn't work run the code chunk with the bank balance variable*
 
 ```{r}
+# create variables
+bank_balance <- 100
+pay_check <- 250
+# sum old bank balance and pay check, assigning result to bank balance
+bank_balance <- bank_balance + pay_check
+# print bank balance
+bank_balance
+
 # your code here
-PayCheck2 <- 50
-BankBalance <- BankBalance + PayCheck2
-BankBalance
+pay_check_2 <- 50
+bank_balance <- bank_balance + pay_check_2
+bank_balance
 
 dinner <- 36.55
-BankBalance <- BankBalance - dinner
-BankBalance
+bank_balance <- bank_balance - dinner
+bank_balance
 ```
 
 ## Assigning variables exercise 2

@@ -63,10 +63,10 @@ class(age)
 
 ## String indexing exercise
 
-1)  Make a vector called orangeVeg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
-2)  Use the `class()` function to see what data type orangeVeg is
-3)  From orangeVeg select everything but carrot using indexing
-4)  From orangeVeg select just Pumpkin and Butternut Squash using indexing
+1)  Make a vector called orange_veg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
+2)  Use the `class()` function to see what data type orange_veg is
+3)  From orange_veg select everything but carrot using indexing
+4)  From orange_veg select just Pumpkin and Butternut Squash using indexing
 
 ```{r}
 # your code here
@@ -115,9 +115,9 @@ Sometimes the ordering of the factor levels matter. For example, if you had a qu
 Run the below example. Look at the **Levels:* output. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
 
 ```{r}
-iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+ice_cream <- factor(c('slow', 'fast', 'fast', 'fast', 
                      'medium','slow','medium', 'slow'))
-iceCream
+ice_cream
 ```
 
 Factors by default are ordered alphabetically. There are a few ways of changing this, the simplest of which is to include the `levels` argument in the `factor()` function.
@@ -125,10 +125,10 @@ Factors by default are ordered alphabetically. There are a few ways of changing 
 Using our example above we add the *levels* argument after the variables (`factor(variables, levels = )`).
 
 ```{r}
-iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+ice_cream <- factor(c('slow', 'fast', 'fast', 'fast', 
                      'medium','slow','medium', 'slow'), 
                    levels = c('slow','medium','fast'))
-iceCream
+ice_cream
 ```
 
 ## Factor levels task

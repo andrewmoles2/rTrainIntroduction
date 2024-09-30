@@ -38,7 +38,7 @@ Data frames are commonplace in data science and are needed for most types of ana
 
 Fundamentally, a data frame can contain a mix of different data types (e.g. column 1 is string, column 2 is integer, column 3 is a factor), but a single column in a data frame must be of the same type (e.g. integers, strings, etc.).
 
-![Artwork by @allison_horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/tidydata_6.jpg?raw=true){width="40%"}
+![Artwork by @allison_horst](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/85520b8f-4629-4763-8a2a-9ceff27458bf.jpg?h=27c3e74642d8602799d180ff30995d2a){width="80%"}
 
 # Making a data frame manually
 
@@ -53,9 +53,9 @@ int1 <- 1:5
 num1 <- c(4,7,2,9,3)
 fac1 <- factor(c("yes","yes","no","yes","no"))
 # adding them into a data frame
-exampleDat <- data.frame(str1, int1, num1, fac1)
+example_data <- data.frame(str1, int1, num1, fac1)
 # print the result
-exampleDat
+example_data
 ```
 
 Notice how the column names are the same as what you named your vectors. You can rename the columns by adding your column name then equals, then your data like: `data.frame(column name = vector)`. Run the example below.
@@ -67,15 +67,15 @@ int1 <- 1:5
 num1 <- c(4,7,2,9,3)
 fac1 <- factor(c("yes","yes","no","yes","no"))
 # adding them into a data frame
-exampleDat <- data.frame(string = str1, 
+example_data <- data.frame(string = str1, 
               integer = int1, 
               number = num1, 
               factor = fac1)
 # print the result
-exampleDat
+example_data
 ```
 
-*Note: you can also change column names using functions - https://statisticsglobe.com/rename-column-name-in-r-data-frame/*
+*Note: you can also change column names using functions - <https://statisticsglobe.com/rename-column-name-in-r-data-frame/>*
 
 ## Manual data frame exercise
 
@@ -109,42 +109,41 @@ Lets look at the first way using `cbind()`. *It is important to note that the di
 # make an integer
 integer2 <- seq(5,1)
 # bind to the data
-exampleDat <- cbind(exampleDat, integer2)
+example_data <- cbind(example_data, integer2)
 # print result
-exampleDat
+example_data
 ```
 
-The second way, and easiest, is to use the `$`. The dollar sign is a way of indexing columns in a data frame (more on data frame indexing later). We can use this feature to add columns. For example, see the code chunk below for how to index the string column in exampleDat.
+The second way, and easiest, is to use the `$`. The dollar sign is a way of indexing columns in a data frame (more on data frame indexing later). We can use this feature to add columns. For example, see the code chunk below for how to index the string column in example_data.
 
 ```{r}
-exampleDat$string
+example_data$string
 ```
 
 To add a new column, after the `$` we name the column we want to add, in this example string 2, then assign the data we want to it. Run the example below to test this out.
 
 ```{r}
-exampleDat$string2 <- c(rep("Control",2), rep("Experiment", 3))
-exampleDat
+example_data$string2 <- c(rep("Control",2), rep("Experiment", 3))
+example_data
 ```
 
 `transform()` is a really great function and the most flexible of the options. It allows you to assign multiple columns to a data frame.
 
 ```{r}
-exampleDat <- transform(exampleDat, 
+example_data <- transform(example_data, 
                         x = c(0.4, 0.5, 0.1, 0.9, 0.6),
                         y = rep(18, 5))
-exampleDat
+example_data
 ```
-
 
 ## Adding columns exercise
 
 Using the data frame you created in the previous task (`messi_career`):
 
-*   Make a vector called `age`, with integers from 17 to 32.
-*   Make a vector called `champ_league_goal` with the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
-*   Using any of the methods above, add the `age` and `champ_league_goal` vectors to your `messi_career` data frame. 
-*   Print out the result. You should see both the new columns of data you just added.
+-   Make a vector called `age`, with integers from 17 to 32.
+-   Make a vector called `champ_league_goal` with the following data: 0,1,1,6,9,8,12,14,8,8,10,6,11,6,12, and 3.
+-   Using any of the methods above, add the `age` and `champ_league_goal` vectors to your `messi_career` data frame.
+-   Print out the result. You should see both the new columns of data you just added.
 
 ```{r}
 # your code here
@@ -152,7 +151,7 @@ Using the data frame you created in the previous task (`messi_career`):
 
 ```
 
-*Note if you end up with multiple columns of age or champ_league_goal, re-run the code from the Manual data frame exercise to reset your data frame* 
+*Note if you end up with multiple columns of age or champ_league_goal, re-run the code from the Manual data frame exercise to reset your data frame*
 
 # Adding rows to a data frame
 
@@ -171,9 +170,9 @@ newRow <- data.frame(string = "person_6",
                      x = 0.3,
                      y = 18)
 # binding new row to example data
-exampleDat <- rbind(exampleDat, newRow)
+example_data <- rbind(example_data, newRow)
 # print result
-exampleDat
+example_data
 ```
 
 ## Adding rows exercise
@@ -200,7 +199,7 @@ There are several attributes you will want to find out from your data frame. The
 
 Use the following commands on the `messi_career` data: `dim()`, `nrow()`, `ncol()`, `head()`, `tail()`, `summary()`, `str()`, and `View()`.
 
-What do each of the functions do? If you want to find out more about the function try looking it up in the built in help menu. For example, if I wanted to look up the summary function I could do `?summary()`. 
+What do each of the functions do? If you want to find out more about the function try looking it up in the built in help menu. For example, if I wanted to look up the summary function I could do `?summary()`.
 
 ```{r}
 # Your code here
@@ -217,8 +216,8 @@ Data frames have two dimensions in rows and columns, so we need to give indexes 
 If you wanted to select all columns or all rows you can leave the column or row index blank. Run the examples below:
 
 ```{r}
-exampleDat[3, ]
-exampleDat[ ,4:5]
+example_data[3, ]
+example_data[ ,4:5]
 ```
 
 You can see we get the 3rd row of data for the first example. For the second example we get all rows and columns 4 to 5.
@@ -226,7 +225,7 @@ You can see we get the 3rd row of data for the first example. For the second exa
 We can also index the the names of the columns, below we are looking for the column names factor and string2. R will search for the exact match of the string you provide, so it is case sensitive.
 
 ```{r}
-exampleDat[, c("factor", "string2")]
+example_data[, c("factor", "string2")]
 ```
 
 Instead of putting the names we want to index straight into the square brackets, we can make a vector with the names, and use them to index.
@@ -234,12 +233,12 @@ Instead of putting the names we want to index straight into the square brackets,
 ```{r}
 my_index <- c("string", "number")
 
-exampleDat[ , my_index]
+example_data[ , my_index]
 ```
 
 ## Indexing data frames exercise 1
 
-Using the messi_career data, index the columns `Goals` and `Appearances` to print out just those two columns and all the rows. Try to index using the names of the columns. 
+Using the messi_career data, index the columns `Goals` and `Appearances` to print out just those two columns and all the rows. Try to index using the names of the columns.
 
 ```{r}
 # your code here
@@ -249,18 +248,18 @@ Using the messi_career data, index the columns `Goals` and `Appearances` to prin
 
 # Subsetting and calculations with indexing
 
-We can use these ideas to *subset* our data frame. Subsetting is simply selecting a portion of your data to work with. Lets say from our exampleDat data frame we wanted to just use the first three rows and columns integer, number, and integer2. See the example below for how to do this.
+We can use these ideas to *subset* our data frame. Subsetting is simply selecting a portion of your data to work with. Lets say from our example_data data frame we wanted to just use the first three rows and columns integer, number, and integer2. See the example below for how to do this.
 
 ```{r}
-exampleDat2 <- exampleDat[1:3, c("integer","number","integer2")]
-exampleDat2
+example_data2 <- example_data[1:3, c("integer","number","integer2")]
+example_data2
 ```
 
 Another method of indexing is using a function, such as `which.min()` or `which.max()` to index rows. In the below example, we use `which.min()` to find the row with the minimum in the number column, we also selected all columns.
 
 ```{r}
-exampleDat3 <- exampleDat[which.min(exampleDat$number), ]
-exampleDat3
+example_data3 <- example_data[which.min(example_data$number), ]
+example_data3
 ```
 
 This is conditional indexing, which we will cover more in R fundamentals 6 (conditionals and logic).
@@ -273,27 +272,26 @@ In the second example, we do the calculations by using only the `$` operator.
 
 ```{r}
 # add new column and add calculation to it
-exampleDat$calculation <- exampleDat[,"integer"]/exampleDat[,"number"] 
+example_data$calculation <- example_data[,"integer"]/example_data[,"number"] 
 
 # add second column using different indexing technique
-exampleDat$calculation2 <- (exampleDat$integer*exampleDat$integer2)/nrow(exampleDat)
+example_data$calculation2 <- (example_data$integer*example_data$integer2)/nrow(example_data)
 
 # print result
-exampleDat
+example_data
 ```
 
-We can also use `transform()` for this sort of operation. The advantage of `transform()` is you can do multiple column assignments and you do not have to call the data frame each time. 
+We can also use `transform()` for this sort of operation. The advantage of `transform()` is you can do multiple column assignments and you do not have to call the data frame each time.
 
 ```{r}
-transform(exampleDat, 
+transform(example_data, 
           new_calculation = (calculation*calculation2)/2,
           new_string = paste0(string, "_", string2))
 ```
 
-
 ## Indexing data frames exercise 2
 
-We will index the `messi_career` data to do some calculations, subset, and print a nice result. 
+We will index the `messi_career` data to do some calculations, subset, and print a nice result.
 
 1)  Make a new column called goal_ratio and, using indexing, divide Goals by Appearances.
 2)  Make another new column called prop_champ_goal and, using indexing, divide champ_league_goal by Goals and times by 100.
@@ -313,7 +311,7 @@ We will index the `messi_career` data to do some calculations, subset, and print
 
 We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
 
-<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%4:%Data%Frames&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=33hbek>
+[https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%4:%Data%Frames&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=33hbek](https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%4:%Data%Frames&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Eq8J0o5HZ2hEhHyfOK_Y8PoBqeKPeb-zo52bUZkCsSUfwg?e=33hbek){.uri}
 
 # Individual take home challenge
 
@@ -339,23 +337,22 @@ paste(HP_Characters[1,1], "is very", HP_Characters[7,2],
       "and has a power to evil ratio of", round(HP_Characters[7,5],2), sep = "# ")
 ```
 
-
 # Other options
 
-We have covered some of the classic R options for adding columns and indexing data frames. There are two other very useful functions which can make your life easier when using R: `within()` and `with()`. 
+We have covered some of the classic R options for adding columns and indexing data frames. There are two other very useful functions which can make your life easier when using R: `within()` and `with()`.
 
-`with()` is designed to save you writing out your data frame name every time you want to use a column in that data frame. `within()` is similar but allows you to assign a variable in the same way you would with $. 
+`with()` is designed to save you writing out your data frame name every time you want to use a column in that data frame. `within()` is similar but allows you to assign a variable in the same way you would with \$.
+
 ```{r}
-with(exampleDat, integer/number)
-within(exampleDat, calc <- integer/number)
+with(example_data, integer/number)
+within(example_data, calc <- integer/number)
 ```
 
-`with()` is particularly useful when used with functions which do not have a *data* argument such as mean or paste like the examples show below. 
+`with()` is particularly useful when used with functions which do not have a *data* argument such as mean or paste like the examples show below.
+
 ```{r}
-with(exampleDat, mean(calculation))
-with(exampleDat, paste(
+with(example_data, mean(calculation))
+with(example_data, paste(
   "Average number is", mean(number), 
   "and max number is", max(number)))
 ```
-
-
