@@ -1,0 +1,487 @@
+---
+title: "R Fundamentals 2: Vectors, Functions, and Indexing"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "13 August, 2024"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: false
+---
+
+# Objective of workshop
+
+To work with vectors, a key data type in R, and learn to use built-in functions on those vectors. 
+
+# What will this workshop cover?
+
+In this workshop, the aim is to cover some basics of using variables and vectors in R. We will be covering:
+
+-   Vectors
+-   Introduction to functions
+-   Use indexing to extract information from a vector 
+
+------------------------------------------------------------------------
+
+# Vectors
+
+A vector is a set of information contained together in a specific order.
+
+To make a vector you combine variables using the `c()` function (more on functions later); also known as concatenation. To call the `c()` function we use brackets () with the numbers we want separated by a comma.
+
+The first way of making a vector is to add the arguments you want, numbers in this case.
+
+Run this code chunk to test it out.
+
+
+``` r
+vect1 <- c(1,6,19,4,9)
+vect1
+```
+
+```
+## [1]  1  6 19  4  9
+```
+
+We can also combine predefined variables and vectors to create a new vector.
+
+
+``` r
+x <- 30
+vect2 <- c(vect1, 22, 7, x)
+vect2
+```
+
+```
+## [1]  1  6 19  4  9 22  7 30
+```
+
+Another way of making a vector is using the colon (`:`), which can be done without the c function. We can tell R to select a sequence of integers from x to y, or 5 through to 10 in our example.
+
+
+``` r
+vect3 <- 5:10
+vect3
+```
+
+```
+## [1]  5  6  7  8  9 10
+```
+
+We can also do some basic calculations on vectors. These occur elementwise (one element at a time).
+
+
+``` r
+vect3/5
+```
+
+```
+## [1] 1.0 1.2 1.4 1.6 1.8 2.0
+```
+
+As you can see this divides all elements in the vector by 5.
+
+## Vector exercise 1
+
+1)  Make a vector called x with integers from 8 through to 14
+2)  Add (plus) 5 to your x vector (be sure to save as result back to x)
+3)  Make a vector called y with variables 34, 55, 13, 71, 98, 43 and 25
+4)  Take (subtract) 12 from your y vector (be sure to save as result back to y)
+5)  Times x vector by y
+
+
+``` r
+# your code here
+```
+
+# Functions: what are they and how to use them
+
+A function is code organised together to perform a specific task. The function will take in an input, perform a task, then return an output. They are the backbone of R, which comes built in with a wide array of functions.
+
+The **function(input)** format is the fundamental way to call and use a function in R. **function** is the name of the function we are using, **input** is the argument or data we are passing to the function.
+
+For example:
+
+
+``` r
+# running times (mins)
+run_times <- c(31, 50, 15, 19, 23, 34, 9)
+# mean running time
+aveRun <- mean(run_times)
+aveRun
+```
+
+```
+## [1] 25.85714
+```
+
+``` r
+# tidy up result
+aveRun <- round(aveRun, digits = 2)
+aveRun
+```
+
+```
+## [1] 25.86
+```
+
+Here we are using the functions `c()` to concatenate, `mean()` calculates the mean, and `round()` rounds to specific decimal places. Notice with the `round()` function we have `digits = 2`, which tells the function to round to two decimal places; this is called a *argument*.
+
+## Functions exercise
+
+We are on a walking exercise plan, where we increase our step count by a five hundred each day, starting at 1000 steps and ending on 12000.
+
+1)  Make a variable called steps using the `seq()` function that increases steps from 1000 to 12000 by increments of 500
+2)  Calculate the sum of your steps, which is the total steps taken in your exercise plan
+3)  Workout out the median amount of steps we have done on this exercise plan
+4)  Comment your code
+
+
+``` r
+# your code here
+```
+
+# Plotting vectors
+
+As well as functions to find averages, we can also use plotting functions. This is helpful to take a quick look at our data, which is often easier to read then just looking at the numbers themselves. Base R provides two useful functions called `hist()` and `plot()`. 
+
+`hist()` makes histograms of vectors. Here we can look at running times over a two week period. 
+
+``` r
+run_times <- c(30.08, 28.63, 28.91, 28.24, 33.10, 29.69, 37.81,
+               27.00, 31.71, 29.59, 26.25, 28.85, 32.04, 31.44)
+hist(run_times)
+```
+
+![](r_fundamentals_2_Vectors_Functions_Indexing_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+`plot()` by default makes scatter plots. Here we make a vector called days and plot it with our running times. We have also added a title using the `main =` parameter. 
+
+``` r
+days <- 1:14
+
+plot(x = days, y = run_times,
+     main = "Running time for each day of week")
+```
+
+![](r_fundamentals_2_Vectors_Functions_Indexing_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
+To make a different visualisation we can use the type parameter. Here we make our scatter plot a line plot instead, which makes a bit more sense. 
+
+``` r
+plot(x = days, y = run_times,
+     main = "Running time for each day of week",
+     type = "l")
+```
+
+![](r_fundamentals_2_Vectors_Functions_Indexing_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
+Later in the R workshops, R Data Visualisation 1 & 2, we go more into plotting and will be using the popular ggplot2 library. For now though, the base plotting functions are very handy tools. 
+
+## Plotting vectors exercise
+
+You have been asked to review the exam and coursework grades for a module. The lecturer wants to check if the exam or coursework were too easy or hard. If too easy, they would expect more scores greater then 70, if too hard they would expect more scores around 50 or less. 
+
+Each student represents a position in each vector. For example, student 1 has a coursework grade of 58, and an exam grade of 80. 
+
+Using the `hist()` and `plot()` functions:
+
+1) Make a histogram of `coursework_grades`. What do you make of the distribution of grades?
+2) Make a histogram of `exam_grades`. What do you make of the distribution of grades?
+3) Make a scatter plot of `coursework_grades` and `exam_grades`. Add a title such as "Exam vs coursework grades on module x". Is there any pattern at all between coursework grades and exam grades?
+
+
+``` r
+coursework_grades <- c(58, 68, 75, 75, 62, 62, 68, 55, 58, 62, 75, 58, 72, 65, 65, 41, 81, 69)
+exam_grades <- c(80, 68, 63, 54, 42, 51, 41, 67, 53, 72, 69, 53, 70, 68, 51, 55, 72, 68)
+
+# your code here
+```
+
+
+# Indexing vectors
+
+Indexing is a technical term for accessing elements of a vector. Think of it like selecting books from a book shelf. The vector is your book shelf, the index determines the book, or books you pick from the shelf.
+
+![Designed by macrovector / Freepik](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-2/images/6714.jpg?raw=true){width="30%"}
+
+To index in R you use the square brackets `[]` after you type the name of the vector to index from. You then put the numerical position of the elements you want to index in the square brackets. For example, if I wanted to select the first element from my vector I would do something like `data[1]`; data is my data, and 1 is the element I want to index.
+
+Run the example code chunks to see the results:
+
+
+``` r
+someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
+# indexing the 6th element
+someNumbers[6]
+```
+
+```
+## [1] 9
+```
+
+Indexing elements 1 to 4
+
+
+``` r
+someNumbers[1:4]
+```
+
+```
+## [1]  4 26 11 15
+```
+
+Dropping elements 5 to 7
+
+
+``` r
+someNumbers[-5:-7]
+```
+
+```
+## [1]  4 26 11 15  1
+```
+
+Indexing 1, 5, and 8
+
+
+``` r
+someNumbers[c(1,5,8)]
+```
+
+```
+## [1]  4 18  1
+```
+
+## Indexing exercise 1
+
+You've been keeping track of how much coffee you drink each day for a two week period. We want to split this into week 1 and 2. Using the code below follow the following steps:
+
+1)  Find out the mean for week_one and week_two vectors.
+2)  `mean` doesn't work for week_two and gives back `NA`. Print your week_two vector to look at the data.
+3)  Check the length of your week_two vector by running the `length()` function on the week_two vector.
+4)  There are a few ways ways to fix this, try and find at least two different ways.
+
+*hint: the mean() function has an argument called na.rm, type and run ?mean() to look at the help page*
+
+
+``` r
+# vector with n coffee per day for two weeks
+coffee <- c(3, 5, 4, 2, 3, 1, 1, 6, 2, 3, 2, 4, 2, 1)
+
+# weeks
+week_one <- coffee[1:7]
+week_two <- coffee[8:15]
+
+# your code here
+```
+
+# Using indexing to change values
+
+Using indexing you can change the value of an item, or multiple items, in a vector. This is very useful if you spot a data error and want to fix it in the code. We will using similar principles in later sessions.
+
+This is a combination of what we have learned so far, with reassigning data to variables/vectors and indexing. For example, `data[1] <- 5` means we take the first element (or data point) from data, and assign the number 5 as a replacement.
+
+Run the code below to see the example:
+
+
+``` r
+someNumbers <- c(4, 26, 11, 15, 18, 9, 3, 1)
+someNumbers
+```
+
+```
+## [1]  4 26 11 15 18  9  3  1
+```
+
+``` r
+# Change one item
+someNumbers[8] <- 50
+someNumbers
+```
+
+```
+## [1]  4 26 11 15 18  9  3 50
+```
+
+``` r
+# Change multiple
+someNumbers[1:3] <- c(19, 20, 21)
+someNumbers
+```
+
+```
+## [1] 19 20 21 15 18  9  3 50
+```
+
+In the first change, we changed the 8th element of the someNumbers data to 50 (it was 1 previously). In the second change, we changed the first, second and third elements to 19, 20, and 21 (changing from 4, 26, 11).
+
+## Indexing exercise 2
+
+You wanted to calculate bmi health metrics for your family members, and have collected their weights and heights below. We want all heights to be in meters, and all weights to be in kilograms. Robin has used centimetres for height, Sam (Mum) has used feet for height, Sam (Mum) and Jules (Dad) have used stone for weight.
+
+1) Convert Sam (Mum)'s height from feet to meters. The calculation is feet multiplied by 0.0328084.
+
+2) Convert Robin's height from centimetres to meters. The calculation is centimetres divided by 100.
+
+3) Convert Sam (Mum) and Jules (Dad)'s weights from stone to kilograms. The calculation is stone multiplied by 6.35029318. 
+
+4) Calculate the bmi for all family names and store in a vector called family_bmi.
+
+5) Calcuate the average bmi of the family members and store in a variable called avg_bmi.
+
+6) Add the family names to the family_bmi vector. Searching online for creating named vectors should help. 
+
+7) Print both the family_bmi and avg_bmi calculations.
+
+
+
+``` r
+family_names <- c("Andrew", "Sam (Mum)", "Jules (Dad)", "Ash", "Robin")
+family_heights <- c(1.95, 5.09, 1.65, 1.91, 186)
+family_weights <- c(94, 9.135, 9.6075, 89, 81)
+
+# your code here
+```
+
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%2:%Vectors,%Functions,%and%Indexing&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/EmUo-IOFzsxFjPujn5poqp4BKnYT46Eg1qoA5o1fSHr6Lw?e=UGNzwj>
+
+The solutions will be available from a link at the end of the survey.
+
+# Individual coding challenge 1
+
+You decide to calculate your commuting times over a weekly period. You decide to see if you can workout, based off your weekly commute, how much commuting you will do on average this month.
+
+1)  Replicate the commute variable four times using `rep()` and assign to a variable called commute_est.
+2)  Calculate the mean of commute_est and assign to a variable called aveCommute.
+3)  Round the value of aveCommute to two decimal places using `round()` and assign to aveCommute.
+4)  You miss timed your Tuesday commute, it should be 37 instead of 33. To make replacement easier use `sort()` on commute_est, and assign to a variable called commute_sort.
+5)  Replace the 33 values with 37 using indexing in the variable commute_sort.
+6)  Re-calculate and round aveCommute as per instructions two and three.
+7)  Test out the following functions on the commute_sort variable: `unique()` and `sort(commute, decreasing = TRUE)`.
+
+
+``` r
+commute <- c(41, 33, 44, 52, 36, 39)
+# enter your code here
+```
+
+# Individual coding challenge 2
+
+For this individual coding challenge we will be looking at Lional Messi's season appearances and goals from 2004-2020. 
+
+The code below has been jumbled up and will not run. Your challenge is to re-order it so it runs correctly. It should print out summary statistics for season goal ratio and age band goal ratios, as well as which year was his most and least prolific, and how many years that took him. 
+
+
+``` r
+# print career ratio
+careerGoalRatio
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'careerGoalRatio' not found
+```
+
+``` r
+# which season had the worst goal ratio
+season[which.max(goalRatio)]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'season' not found
+```
+
+``` r
+# combine age band ratios to a vector
+ageGoalRatio <- c(round(mean(teenageGoalRatio), digits = 2), 
+              round(mean(twentiesGoalRatio), digits = 2),
+              round(mean(thirtiesGoalRatio), digits = 2))
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'teenageGoalRatio' not found
+```
+
+``` r
+# add in appearance, goal and season data
+appearances <- c(9,25,36,40,51,53,55,60,50,46,57,49,52,54,50,44)
+goals <- c(1,8,17,16,38,47,53,73,60,41,58,41,54,45,51,31)
+season <- c(2004,2005,2006,2007,2008,2009,2010,2011,2012,
+            2013,2014,2015,2016,2017,2018,2019)
+
+# which season had the best goal ratio
+season[which.min(goalRatio)]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+```
+
+``` r
+# goal ratio per age band (teenager, 20's, 30's)
+teenageGoalRatio <- goalRatio[1:3]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+```
+
+``` r
+twentiesGoalRatio <- goalRatio[4:13]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+```
+
+``` r
+thirtiesGoalRatio <- goalRatio[14:16]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+```
+
+``` r
+# summary results
+summary(goalRatio)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+```
+
+``` r
+summary(ageGoalRatio)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'ageGoalRatio' not found
+```
+
+``` r
+# how many years playing to reach best goal ratio
+season[which.min(goalRatio)] - season[1]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+```
+
+``` r
+# work out appearance to goal ratio per season and total career ratio
+goalRatio <- round(appearances/goals, digits = 2)
+careerGoalRatio <- round(sum(appearances)/sum(goals), digits = 2)
+```
+

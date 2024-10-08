@@ -1,0 +1,400 @@
+---
+title: "R Fundamentals 3: Strings, factors, and type conversion"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "13 August, 2024"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: false
+---
+
+# Objective of workshop
+
+To start working with text (strings) and categorical (factors) data in R. 
+
+# What will this workshop cover?
+
+In this workshop, the aim is to cover strings and string manipulation, introduce factors, and type conversion. We will be covering:
+
+-   String variables
+-   Introduction to factors, also known as dummy variables (represent categorical and ordered/un-ordered data)
+-   Converting types of data (strings, factors, integers, and numeric)
+-   String manipulation with Paste
+
+# Strings
+
+So far in our previous sessions we have only been working with numbers and integers. Strings are text based data which R calls **characters**.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-2/images/22895-NUNWT2.jpg?raw=true){width="50%"}
+
+To code a string you need to use quotation marks. You can use either single or double quotes, depending on your preference. When printing the result, R will always use double quotation marks.
+
+
+``` r
+instrument <- "Violin"
+instrument
+```
+
+```
+## [1] "Violin"
+```
+
+``` r
+instruments <- c('Violin', 'Cello', 'Viola')
+instruments
+```
+
+```
+## [1] "Violin" "Cello"  "Viola"
+```
+
+You can use both types of quotation marks in conjunction to add grammar to strings.
+
+
+``` r
+day <- "It's a 'lovely' day"
+day
+```
+
+```
+## [1] "It's a 'lovely' day"
+```
+
+## Is this a string or a number?
+
+You can find out what type data your variable/vector is using the `class()` function.
+
+
+``` r
+name <- 'Claudia'
+class(name)
+```
+
+```
+## [1] "character"
+```
+
+``` r
+age <- 42
+class(age)
+```
+
+```
+## [1] "numeric"
+```
+
+## String indexing exercise
+
+1)  Make a vector called orange_veg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
+2)  Use the `class()` function to see what data type orange_veg is
+3)  From orange_veg select everything but carrot using indexing
+4)  From orange_veg select just Pumpkin and Butternut Squash using indexing
+
+
+``` r
+# your code here
+```
+
+# Introduction to factors
+
+Factors in R are a way to represent and work with categorical data. Categorical data has fixed values, for example, the months of the year (January, February etc.). Factors allow you to do analysis with strings by categorising them, this gives you values you can do an analysis on.
+
+In the examples below we are going to categorise a vector that contains the strings carrot and potato. There are a few different ways to make a factor in R, the primary function to do this is `factor()`.
+
+
+``` r
+veg <- c("carrot", "potato", "carrot", "carrot", "potato", "carrot")
+veg <- factor(veg)
+veg
+```
+
+```
+## [1] carrot potato carrot carrot potato carrot
+## Levels: carrot potato
+```
+
+We created the vector then made it into a factor. We can also just add the values straight into `factor()`.
+
+
+``` r
+veg <- factor(c("carrot", "potato", "potato", "potato", "potato", "carrot"))
+veg
+```
+
+```
+## [1] carrot potato potato potato potato carrot
+## Levels: carrot potato
+```
+
+To interpret the output, the first line shows all the variables in the veg vector, the second line (*levels:*) gives you the categories. In this case we have two: carrot and potato. This is helpful as it tells us that in the vector veg, the two categories we have are potatoes or carrots; these categories are represented as levels in the output.
+
+Why make strings into factors? Other than being easier to work with, factors help you to avoid typos (will give error) and can be sorted in helpful and meaningful ways which is particularly helpful when visualising data.
+
+## Factors exercise
+
+In this debugging exercise, get the below code to run to make the fruit vector a factor. There are three errors in the code. Run the code and use the printed error message to help you find the errors.
+
+
+``` r
+fruit <- Factor(c('apple' 'pear', 'grape', 'apple', 'banana', grape))
+fruit
+```
+
+```
+## Error: <text>:1:27: unexpected string constant
+## 1: fruit <- Factor(c('apple' 'pear'
+##                               ^
+```
+
+
+# Ordering factors
+
+Sometimes the ordering of the factor levels matter. For example, if you had a question on how fast someone eats ice cream with the possible answers of *slow, medium, and fast*, the order is important. This order reflects how the output will be printed or arranged in a figure, a table, or your analysis output.
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-3/images/dog_order.jpg?raw=true){width="50%"}
+
+Run the below example. Look at the **Levels:* output. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
+
+
+``` r
+ice_cream <- factor(c('slow', 'fast', 'fast', 'fast', 
+                     'medium','slow','medium', 'slow'))
+ice_cream
+```
+
+```
+## [1] slow   fast   fast   fast   medium slow   medium slow  
+## Levels: fast medium slow
+```
+
+Factors by default are ordered alphabetically. There are a few ways of changing this, the simplest of which is to include the `levels` argument in the `factor()` function.
+
+Using our example above we add the *levels* argument after the variables (`factor(variables, levels = )`).
+
+
+``` r
+ice_cream <- factor(c('slow', 'fast', 'fast', 'fast', 
+                     'medium','slow','medium', 'slow'), 
+                   levels = c('slow','medium','fast'))
+ice_cream
+```
+
+```
+## [1] slow   fast   fast   fast   medium slow   medium slow  
+## Levels: slow medium fast
+```
+
+## Factor levels task
+
+1)  Make the sizes vector below into a factor, making sure to put the sizes in the following order: low, medium, high.
+2)  Print the newly factorised sizes vector to see the outcome
+3)  Now try and reverse the factor order to: high, medium, low and save the variable
+4)  Print the reversed variable
+
+
+``` r
+sizes <- c('high', 'low', 'medium', 'low', 'high')
+
+# your code here
+```
+
+# Type conversions
+
+In the workshops so far we have covered several types of data including strings, numeric, integer, and factors. Sometimes when working with data it is necessary to convert the type of data so you can work with it in a different way.
+
+For example, here we will convert numbers to characters using the `as.character()` function. Notice after conversion the speech marks around each number indicating it is a character. The most common type conversion functions are: `as.numeric()`, `as.integer()`, `as.factor()`, `as.character()`.
+
+A simple example of why type conversion is useful is when a number is accidentally coded as a string. In order to do calculations on that data you need to convert it.
+
+
+``` r
+# numbers as characters
+numbers <- c("1", "2", "3", "4", "5", "6", "7")
+numbers
+```
+
+```
+## [1] "1" "2" "3" "4" "5" "6" "7"
+```
+
+``` r
+# calculate sum (doesn't work)
+sum(numbers)
+```
+
+```
+## Error in sum(numbers): invalid 'type' (character) of argument
+```
+
+``` r
+# convert to numeric and try sum again
+numbers <- as.numeric(numbers)
+numbers
+```
+
+```
+## [1] 1 2 3 4 5 6 7
+```
+
+``` r
+sum(numbers)
+```
+
+```
+## [1] 28
+```
+
+## Type conversion exercise
+
+Using the `meditation_time` variable defined below:
+
+1)  Use the mean function on the `meditation_time` variable
+2)  Why did it not work?
+3)  Which function do you need to change the `meditation_time` vector to be numeric?
+4)  Once you've changed `meditation_time` to numeric, run mean on it again
+
+
+``` r
+meditation_time <- c(10, 17, 5, 16, '8', 22, 9)
+
+# your code here
+```
+
+The syntax for type conversions in R always start with `as.` then whatever you're converting to, such as `numeric`.
+
+# Basic string manipulation
+
+R comes with several useful functions for manipulating strings such as `paste()` and `paste0()`.
+
+The paste functions are useful for producing nice outputs for reports or an analysis. They concatenate strings and variables to make outputs more readable. They are also really helpful to creating data, or making reproducible examples of data.
+
+The most basic use of paste is just adding strings to the function to combine them into one string.
+
+
+``` r
+# printing strings hello and world
+paste("hello",  "world")
+```
+
+```
+## [1] "hello world"
+```
+
+``` r
+# Making a string variable more readable
+Name <- "Rose"
+my_name <- paste("My name is", Name)
+my_name
+```
+
+```
+## [1] "My name is Rose"
+```
+
+The paste functions are really useful when you need to make strings from existing data, or programmatically make strings, which are reasonably common tasks. 
+
+## Paste exercise
+
+For help with these exercises you might need to Google something like *paste & paste0 R functions examples*.
+
+1) Write a nice message to your self that includes your name and the time of day (morning, afternoon, or evening). Make sure to use the name and time of day variables, changing them to your own name. You should get a result that is something like: "Good Evening, Andrew. Have a great day."
+
+
+``` r
+# write a message to yourself
+name <- ""
+time_of_day <- ""
+
+# your code here
+```
+
+2) You need to make a string variable that is sequential. Using `paste0()` or `paste()` create a string variable with the result that is: "order_1" "order_2" "order_3" "order_4" "order_5". 
+
+
+``` r
+# your code here
+# make a variable
+```
+
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%3:%Strings,%Factors,%and%Type%Conversion&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/ElrN79ulZINElxjPz6Tx4VMBo1NWK7TEaket80nhJMPUwg?e=vwpRWp>
+
+# Individual take home challenge 1
+
+Type conversion can be helpful with questionnaire data. In this example you've taken a questionnaire on how much you agree to certain topics with the following scale: Disagree, Undecided, Agree.
+
+1)  Make a vector called `survey` with the following amount of responses: agree times 5, undecided times 3, disagree times 2. hint: use the `rep()` function.
+2)  Make the survey vector into a factor, with the order levels disagree to agree. You should get *Levels: disagree undecided agree*.
+3)  Convert the survey factor to an integer. Now your factor levels will have values; 1 for disagree to 3 for agree.
+4)  Make a variable called aveSurvey and calculate the mean response.
+5)  Using `paste()` or `paste0()` print the following statement using your aveSurvey variable: "My average agreement was 2.3 out of 3".
+
+
+``` r
+# your code here
+```
+
+# Individual take home challenge 2
+
+In this challenge try to get the code below to run. It has been jumbled up so needs to be re-ordered. The code calculates your weekly wine consumption. When it runs it will print out the following statement *"This week I drank on average 1.71 glasses of wine, 5 red and 2 white"*.
+
+
+``` r
+# sum how much red and white wine where drunk
+red <- sum(table(typeWine[grep('red',typeWine)]))
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'typeWine' not found
+```
+
+``` r
+white <- sum(table(typeWine[grep('white',typeWine)]))
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'typeWine' not found
+```
+
+``` r
+# calculate the average wine, rounding the result to two decimal places
+meanWine <- round(mean(amountWine), digits = 2) 
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'amountWine' not found
+```
+
+``` r
+# type of wine drunk
+typeWine <- factor(c('red', 'red', 'red', 'white', 'white', 'red', 'red'))
+
+# print a nice result of your weekly wine consumption
+paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " red and ", white, " white")
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'meanWine' not found
+```
+
+``` r
+# total of small glasses you drank
+
+amountWine <- c(1, 1, 2, 1, 3, 1, 3)
+```
+
+*Note:* here we have used the `grep()` and `table()` functions so you can see how they can be used. They will be covered in later sessions. `grep()` is searching the type wine variable for either the string 'red' or 'white'. `table()` does a count on the number of each level of a factor; test out table() on the `typeWine` variable to see what it does. try `?grep()` and `?table()` to look at the documentation for them. 
+
+
+

@@ -1,0 +1,324 @@
+---
+title: "R Fundamentals 1: Numerical Variables"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "13 August, 2024"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: yes
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: false
+---
+
+# Objective of workshop
+
+To get acquainted with R and RStudio, and do calculations using R.
+
+# What will this workshop cover?
+
+The goal of this session is to get started using RStudio, learn how to use variables and solve basic calculations in R. We will cover:
+
+-   Introduction to RStudio
+-   Using R as a calculator
+-   Assigning variables
+-   Numerical variables
+
+------------------------------------------------------------------------
+
+# Using R as a calculator
+
+We can use R to do simple or advanced calculations for us. Remember to run the code by pressing the green play button or Ctrl + Enter (or Cmd + Enter on Mac).
+
+
+``` r
+7 * 6
+```
+
+```
+## [1] 42
+```
+
+``` r
+5 / (2^2)
+```
+
+```
+## [1] 1.25
+```
+
+``` r
+(16 - 4) + (1 * 9)
+```
+
+```
+## [1] 21
+```
+
+## R as calculator exercise
+
+Use R to work out the following arithmetic:
+
+1)  44 multiplied by 26
+2)  Divide 9.6 by 1.6
+3)  12 minus 4 to the power of 3. *Hint: use brackets (x-y)^z*
+4)  4 multiplied by 9 divided by the sum of 5 and 6
+5)  Divide 22 by 36 and multiply the result by 100
+6)  The remainder of 55 divided by 2. *hint: look up r's modulus operator*
+
+
+``` r
+# type your code here
+```
+
+# Assigning variables
+
+A variable is named storage of information. In our case today we are storing numbers.
+
+We can assign variables by using `<-`. You should see the variable appear to your right in the global environment once you've run this command (under Values).
+
+
+``` r
+height <- 155
+```
+
+We can then print the output of the variable by typing in its name.
+
+
+``` r
+height
+```
+
+```
+## [1] 155
+```
+
+When calling a variable, be careful to type it exactly (you can also copy it or use code completion to help). The code below will give you an error because we have spelt height incorrectly.
+
+
+``` r
+hieght
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'hieght' not found
+```
+
+We can do calculations on variables. We first assign the variables and, then use them in the calculation.
+
+In the example below, Score1 is 42, Score2 is 92 and so on. If we calculate `Score1 * Score2` what is really happening is 42 times 92, as this is the data that is stored in those variables. Run the code, and review the output as well as the variables we have made in the global environment (top right panel in RStudio).
+
+
+``` r
+# test scores
+Score1 <- 42
+Score2 <- 92
+Score3 <- 68
+# average score calculation
+AveScore <- (Score1+Score2+Score3)/3
+# print average score
+AveScore
+```
+
+```
+## [1] 67.33333
+```
+
+You will have noticed the hashtags (`#`) with text in the above example. These are called comments. In later R sessions we will use a lot of comments to tell us (and others) what each line or section of code is doing.
+
+
+``` r
+# this is a comment
+```
+
+## Assigning variables exercise 1
+
+1)  Make a variable called my_height, and assign your height in cm (this can be an estimate if you are not sure)
+2)  Print the output of my_height
+3)  Convert your height in cm to feet. Make a new variable called my_height_feet, and assign the calculation of your height in cm to feet. *hint: there are 0.0328084 feet in 1 cm*
+4)  Print your my_height_feet variable
+
+
+``` r
+# your code here
+```
+
+
+# Reassigning variables
+
+You can also change the value of a variable you have already assigned. 
+
+Code works sequentially in R and the order you run commands matters. See the example below on what happens if we repeat adding numbers to a total.
+
+
+``` r
+# variables
+number <- 5
+total <- 0
+# adding number to total
+total <- total + number
+total
+```
+
+```
+## [1] 5
+```
+
+``` r
+total <- total + number
+total
+```
+
+```
+## [1] 10
+```
+
+``` r
+total <- total + number
+total
+```
+
+```
+## [1] 15
+```
+
+## Reassigning variables exercise
+
+In this exercise we are going to sum our new pay check with our previous bank balance to keep up to date with our finances. We will then add some other pay checks and costs to update our bank balance. 
+
+1)  Make a variable called pay_check_2 with a value of 50
+2)  Assign bank_balance, and calculate bank_balance + pay_check_2
+3)  Print the outcome
+4)  You go out for dinner with friends and spend 36.55. Make a variable called dinner with the value of 36.55
+5)  Assign bank_balance, and calculate bank_balance - dinner
+6)  Print the outcome *hint: if this doesn't work run the code chunk with the bank balance variable*
+
+
+``` r
+# create variables
+bank_balance <- 100
+pay_check <- 250
+# sum old bank balance and pay check, assigning result to bank balance
+bank_balance <- bank_balance + pay_check
+# print bank balance
+bank_balance
+```
+
+```
+## [1] 350
+```
+
+``` r
+# your code here
+```
+
+## Assigning variables exercise 2
+
+Use R to work out the body mass index (BMI) of someone who is 79kg, and 1.77m tall.
+
+1)  Assign the variables of weight and height
+2)  Assign the variable of BMI, and calculate the BMI based of the weight and height variables
+3)  Print the outcome
+4)  Add comments on what each line of code is doing
+
+
+``` r
+# Exercise: BMI calculation
+```
+
+## Overall grade calculation debugging exercise
+
+Debug the code below that is finding the weighted average of a student's coursework and exam scores. You should find three errors:
+
+-   logic (maths) error
+-   syntax error
+-   naming error
+
+
+``` r
+# Exercise: weighted average debugging
+exam1 <- 52
+coursework1 <- 82
+exam2 <- 78
+coursework2 < 48
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'coursework2' not found
+```
+
+``` r
+cw_weight <- 0.4
+ex_weight <- 0.6
+
+course1 <- (exam1 * ex_weight) + (coursework * cw_weight)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'coursework' not found
+```
+
+``` r
+course2 <- (exam2 * ex_weight) + (coursework2 * cw_weight)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'coursework2' not found
+```
+
+``` r
+overall_grade <- (course1 + course2)/3
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'course1' not found
+```
+
+``` r
+overall_grade
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'overall_grade' not found
+```
+
+
+# Final task - Please give us your individual feedback!
+
+We would be grateful if you could take a minute before the end of the workshop so we can get your feedback!
+
+<https://lse.eu.qualtrics.com/jfe/form/SV_6eSrOVWuit28qcS?coursename=R%Fundamentals%1:%Numerical%Variables&topic=R&prog=DS&version=23-24&link=https://lsecloud.sharepoint.com/:f:/s/TEAM_APD-DSL-Digital-Skills-Trainers/Emxx38xoB5FPvabJPeYBPrsBG7sNbQ5NANkCTRnPVPKtbg?e=MCYCbp>
+
+# Individual coding challenge
+
+A take-home coding task for you.
+
+Task: Splitting a Pizza Pilgrims restaurant bill between 3 friends; Roger, Amal and Genevieve.
+
+-   Roger has a Calzone Ripieno (£11), and a San Pellegrino (£2).
+-   Amal has a Bufala (£9), and Birra Moretti (£4.50).
+-   Genevieve has a Portobello Mushroom & Truffle (£10), and water to drink.
+-   Genevieve and Amal also share a Nutella Pizza ring for dessert (£5.5).
+
+![](https://github.com/andrewmoles2/rTrainIntroduction/blob/main/r-fundamentals-1/Images/pizzaP.jpg?raw=true)
+
+1)  Make a variable for each friend that is the sum of their order (e.g. Roger would be 11 + 2)
+2)  Make a variable for the shared food
+3)  Make a variable called TotalBill, and calculate their total bill
+4)  For those that shared food, sum the shared food with their bill
+5)  Comment your code
+6)  Print the total bill and what each friend owes
+
+
+``` r
+# individual coding challenge
+```
+
+# Recommended links
+
+Recommended for more information on the RStudio environment: <https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/>\
+Recommended for more information on using R Markdown: <https://rmarkdown.rstudio.com/lesson-1.html>
