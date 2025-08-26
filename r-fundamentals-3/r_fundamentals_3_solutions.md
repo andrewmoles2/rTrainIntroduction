@@ -3,7 +3,7 @@ title: "R Fundamentals 3: Strings, factors, and type conversion"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "02 February, 2024"
+date: "22 November, 2024"
 output: 
   html_document: 
     theme: readable
@@ -37,7 +37,7 @@ So far in our previous sessions we have only been working with numbers and integ
 To code a string you need to use quotation marks. You can use either single or double quotes, depending on your preference. When printing the result, R will always use double quotation marks.
 
 
-```r
+``` r
 instrument <- "Violin"
 instrument
 ```
@@ -46,7 +46,7 @@ instrument
 ## [1] "Violin"
 ```
 
-```r
+``` r
 instruments <- c('Violin', 'Cello', 'Viola')
 instruments
 ```
@@ -58,7 +58,7 @@ instruments
 You can use both types of quotation marks in conjunction to add grammar to strings.
 
 
-```r
+``` r
 day <- "It's a 'lovely' day"
 day
 ```
@@ -72,7 +72,7 @@ day
 You can find out what type data your variable/vector is using the `class()` function.
 
 
-```r
+``` r
 name <- 'Claudia'
 class(name)
 ```
@@ -81,7 +81,7 @@ class(name)
 ## [1] "character"
 ```
 
-```r
+``` r
 age <- 42
 class(age)
 ```
@@ -92,32 +92,32 @@ class(age)
 
 ## String indexing exercise
 
-1)  Make a vector called orangeVeg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
-2)  Use the `class()` function to see what data type orangeVeg is
-3)  From orangeVeg select everything but carrot using indexing
-4)  From orangeVeg select just Pumpkin and Butternut Squash using indexing
+1)  Make a vector called orange_veg with the following strings: Pumpkin, Carrot, Butternut Squash, Sweet Potato
+2)  Use the `class()` function to see what data type orange_veg is
+3)  From orange_veg select everything but carrot using indexing
+4)  From orange_veg select just Pumpkin and Butternut Squash using indexing
 
 
-```r
+``` r
 # your code here
-orangeVeg <- c('Pumpkin', 'Carrot', 'Butternut Squash', 'Sweet Potato')
-class(orangeVeg)
+orange_veg <- c('Pumpkin', 'Carrot', 'Butternut Squash', 'Sweet Potato')
+class(orange_veg)
 ```
 
 ```
 ## [1] "character"
 ```
 
-```r
-orangeVeg[-2]
+``` r
+orange_veg[-2]
 ```
 
 ```
 ## [1] "Pumpkin"          "Butternut Squash" "Sweet Potato"
 ```
 
-```r
-orangeVeg[c(1,3)]
+``` r
+orange_veg[c(1,3)]
 ```
 
 ```
@@ -131,7 +131,7 @@ Factors in R are a way to represent and work with categorical data. Categorical 
 In the examples below we are going to categorise a vector that contains the strings carrot and potato. There are a few different ways to make a factor in R, the primary function to do this is `factor()`.
 
 
-```r
+``` r
 veg <- c("carrot", "potato", "carrot", "carrot", "potato", "carrot")
 veg <- factor(veg)
 veg
@@ -145,7 +145,7 @@ veg
 We created the vector then made it into a factor. We can also just add the values straight into `factor()`.
 
 
-```r
+``` r
 veg <- factor(c("carrot", "potato", "potato", "potato", "potato", "carrot"))
 veg
 ```
@@ -164,19 +164,19 @@ Why make strings into factors? Other than being easier to work with, factors hel
 In this debugging exercise, get the below code to run to make the fruit vector a factor. There are three errors in the code. Run the code and use the printed error message to help you find the errors.
 
 
-```r
+``` r
 fruit <- Factor(c('apple' 'pear', 'grape', 'apple', 'banana', grape))
 fruit
 ```
 
 ```
-## Error: <text>:1:27: unexpected string constant
+## Error in parse(text = input): <text>:1:27: unexpected string constant
 ## 1: fruit <- Factor(c('apple' 'pear'
 ##                               ^
 ```
 
 
-```r
+``` r
 # solution
 fruit <- factor(c('apple', 'pear', 'grape', 'apple', 'banana', 'grape'))
 fruit
@@ -196,10 +196,10 @@ Sometimes the ordering of the factor levels matter. For example, if you had a qu
 Run the below example. Can you see that the order is the wrong way round? We want slow to be first, then medium, then fast.
 
 
-```r
-iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+``` r
+ice_cream <- factor(c('slow', 'fast', 'fast', 'fast', 
                      'medium','slow','medium', 'slow'))
-iceCream
+ice_cream
 ```
 
 ```
@@ -212,11 +212,11 @@ Factors by default are ordered alphabetically. There are a few ways of changing 
 Using our example above we add the *levels* argument after the variables (`factor(variables, levels = )`).
 
 
-```r
-iceCream <- factor(c('slow', 'fast', 'fast', 'fast', 
+``` r
+ice_cream <- factor(c('slow', 'fast', 'fast', 'fast', 
                      'medium','slow','medium', 'slow'), 
                    levels = c('slow','medium','fast'))
-iceCream
+ice_cream
 ```
 
 ```
@@ -232,7 +232,7 @@ iceCream
 4)  Print the reversed variable
 
 
-```r
+``` r
 sizes <- c('high', 'low', 'medium', 'low', 'high')
 
 # your code here
@@ -245,7 +245,7 @@ sizes
 ## Levels: low medium high
 ```
 
-```r
+``` r
 sizes_reverse <- factor(sizes, levels = c('high','medium','low'))
 sizes_reverse
 ```
@@ -264,7 +264,7 @@ For example, here we will convert numbers to characters using the `as.character(
 A simple example of why type conversion is useful is when a number is accidentally coded as a string. In order to do calculations on that data you need to convert it.
 
 
-```r
+``` r
 # numbers as characters
 numbers <- c("1", "2", "3", "4", "5", "6", "7")
 numbers
@@ -274,7 +274,7 @@ numbers
 ## [1] "1" "2" "3" "4" "5" "6" "7"
 ```
 
-```r
+``` r
 # calculate sum (doesn't work)
 sum(numbers)
 ```
@@ -283,7 +283,7 @@ sum(numbers)
 ## Error in sum(numbers): invalid 'type' (character) of argument
 ```
 
-```r
+``` r
 # convert to numeric and try sum again
 numbers <- as.numeric(numbers)
 numbers
@@ -293,7 +293,7 @@ numbers
 ## [1] 1 2 3 4 5 6 7
 ```
 
-```r
+``` r
 sum(numbers)
 ```
 
@@ -311,7 +311,7 @@ Using the `meditation_time` variable defined below:
 4)  Once you've changed `meditation_time` to numeric, run mean on it again
 
 
-```r
+``` r
 meditation_time <- c(10, 17, 5, 16, '8', 22, 9)
 
 # your code here
@@ -327,7 +327,7 @@ mean(meditation_time)
 ## [1] NA
 ```
 
-```r
+``` r
 meditation_time <- as.numeric(meditation_time)
 mean(meditation_time)
 ```
@@ -347,7 +347,7 @@ The paste functions are useful for producing nice outputs for reports or an anal
 The most basic use of paste is just adding strings to the function to combine them into one string.
 
 
-```r
+``` r
 # printing strings hello and world
 paste("hello",  "world")
 ```
@@ -356,7 +356,7 @@ paste("hello",  "world")
 ## [1] "hello world"
 ```
 
-```r
+``` r
 # Making a string variable more readable
 Name <- "Rose"
 my_name <- paste("My name is", Name)
@@ -376,7 +376,7 @@ For help with these exercises you might need to Google something like *paste & p
 1) Write a nice message to your self that includes your name and the time of day (morning, afternoon, or evening). Make sure to use the name and time of day variables, changing them to your own name. You should get a result that is something like: "Good Evening, Andrew. Have a great day."
 
 
-```r
+``` r
 # write a message to yourself
 name <- "Andrew"
 time_of_day <- "Evening"
@@ -392,7 +392,7 @@ paste0("Good ", time_of_day, ", ", name, ". Have a great day.")
 2) You need to make a string variable that is sequential. Using `paste0()` or `paste()` create a string variable with the result that is: "order_1" "order_2" "order_3" "order_4" "order_5". 
 
 
-```r
+``` r
 # your code here
 # make a variable
 my_order <- paste("order", 1:5, sep = "_")
@@ -421,7 +421,7 @@ Type conversion can be helpful with questionnaire data. In this example you've t
 5)  Using `paste()` or `paste0()` print the following statement using your aveSurvey variable: "My average agreement was 2.3 out of 3".
 
 
-```r
+``` r
 # your code here
 # make survey data
 survey <- c(rep('agree', 5), rep('undecided',3), rep('disagree',2))
@@ -436,7 +436,7 @@ survey
 ## Levels: disagree undecided agree
 ```
 
-```r
+``` r
 # convert to integer
 survey <- as.integer(survey)
 survey # agree is coded as a value of 3
@@ -446,7 +446,7 @@ survey # agree is coded as a value of 3
 ##  [1] 3 3 3 3 3 2 2 2 1 1
 ```
 
-```r
+``` r
 # mean response
 aveSurvey <- mean(survey)
 # output
@@ -462,33 +462,33 @@ paste("My average agreement was", aveSurvey, "out of", max(survey))
 In this challenge try to get the code below to run. It has been jumbled up so needs to be re-ordered. The code calculates your weekly wine consumption. When it runs it will print out the following statement *"This week I drank on average 1.71 glasses of wine, 5 red and 2 white"*.
 
 
-```r
+``` r
 # sum how much red and white wine where drunk
 red <- sum(table(typeWine[grep('red',typeWine)]))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'typeWine' not found
+## Error: object 'typeWine' not found
 ```
 
-```r
+``` r
 white <- sum(table(typeWine[grep('white',typeWine)]))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'typeWine' not found
+## Error: object 'typeWine' not found
 ```
 
-```r
+``` r
 # calculate the average wine, rounding the result to two decimal places
 meanWine <- round(mean(amountWine), digits = 2) 
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'amountWine' not found
+## Error: object 'amountWine' not found
 ```
 
-```r
+``` r
 # type of wine drunk
 typeWine <- factor(c('red', 'red', 'red', 'white', 'white', 'red', 'red'))
 
@@ -497,17 +497,17 @@ paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " r
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'meanWine' not found
+## Error: object 'meanWine' not found
 ```
 
-```r
+``` r
 # total of small glasses you drank
 
 amountWine <- c(1, 1, 2, 1, 3, 1, 3)
 ```
 
 
-```r
+``` r
 # solution! 
 
 # total of small glasses you drank
@@ -537,7 +537,7 @@ paste0("This week I drank on average ", meanWine, " glasses of wine, ", red, " r
 We can combine paste with other functions such as rep or seq to make new vectors. This is really handy if you want or need to make some string based data.
 
 
-```r
+``` r
 # repeat hello 
 hello <- rep(paste("Hello,", "nice to see you"), 3)
 hello
@@ -547,7 +547,7 @@ hello
 ## [1] "Hello, nice to see you" "Hello, nice to see you" "Hello, nice to see you"
 ```
 
-```r
+``` r
 # person id 1 to 5
 person <- paste("person", "id", seq(1:5))
 person
@@ -562,7 +562,7 @@ The `paste()` function has two extra arguments, `sep` and `collapse.` What do se
 Some examples of paste with and without the sep or collapse arguments:
 
 
-```r
+``` r
 # Using sep
 paste("Hi", "there")
 ```
@@ -571,7 +571,7 @@ paste("Hi", "there")
 ## [1] "Hi there"
 ```
 
-```r
+``` r
 paste("Hi", "there", sep = ", ")
 ```
 
@@ -579,7 +579,7 @@ paste("Hi", "there", sep = ", ")
 ## [1] "Hi, there"
 ```
 
-```r
+``` r
 paste("person", "id", seq(1:5), sep = "_")
 ```
 
@@ -587,7 +587,7 @@ paste("person", "id", seq(1:5), sep = "_")
 ## [1] "person_id_1" "person_id_2" "person_id_3" "person_id_4" "person_id_5"
 ```
 
-```r
+``` r
 # using collapse
 trees <- c('Oak', 'Willow', 'Redwood')
 paste(trees)
@@ -597,7 +597,7 @@ paste(trees)
 ## [1] "Oak"     "Willow"  "Redwood"
 ```
 
-```r
+``` r
 paste(trees, collapse = " and ")
 ```
 
@@ -605,7 +605,7 @@ paste(trees, collapse = " and ")
 ## [1] "Oak and Willow and Redwood"
 ```
 
-```r
+``` r
 paste(trees, collapse = ", ")
 ```
 
@@ -616,7 +616,7 @@ paste(trees, collapse = ", ")
 The difference between `paste` and `paste0` is that `paste0` by default has no separation between strings. Run the example below to see the difference.
 
 
-```r
+``` r
 paste("paste", "seperation", seq(1:3))
 ```
 
@@ -624,7 +624,7 @@ paste("paste", "seperation", seq(1:3))
 ## [1] "paste seperation 1" "paste seperation 2" "paste seperation 3"
 ```
 
-```r
+``` r
 paste0("paste", "seperation", seq(1:3))
 ```
 
@@ -632,10 +632,10 @@ paste0("paste", "seperation", seq(1:3))
 ## [1] "pasteseperation1" "pasteseperation2" "pasteseperation3"
 ```
 
-With `paste0` you can add the separation you want after the string instead of as a sep arguement.
+With `paste0` you can add the separation you want after the string instead of as a sep argument.
 
 
-```r
+``` r
 paste0("paste_", "seperation_", seq(1:3))
 ```
 
@@ -646,7 +646,7 @@ paste0("paste_", "seperation_", seq(1:3))
 You can't change the `sep` value for `paste0`, but collapse can be changed.
 
 
-```r
+``` r
 pizzaEaten <- 4
 paste0("This week I ate ", pizzaEaten, " pizzas...")
 ```
@@ -655,7 +655,7 @@ paste0("This week I ate ", pizzaEaten, " pizzas...")
 ## [1] "This week I ate 4 pizzas..."
 ```
 
-```r
+``` r
 paste0(trees, collapse = " & ")
 ```
 

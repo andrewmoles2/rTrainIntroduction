@@ -1,0 +1,18 @@
+---
+title: "R 5: Programming"
+author:
+   - name: Andrew Moles
+     affiliation: Learning Developer, Digital Skills Lab
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    theme: readable
+    highlight: pygments
+    keep_md: no
+    code_download: true
+    toc: true
+    toc_float: 
+      collapsed: true
+---
+
+

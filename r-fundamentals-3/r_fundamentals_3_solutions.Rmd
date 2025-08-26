@@ -354,7 +354,7 @@ paste("paste", "seperation", seq(1:3))
 paste0("paste", "seperation", seq(1:3))
 ```
 
-With `paste0` you can add the separation you want after the string instead of as a sep arguement.
+With `paste0` you can add the separation you want after the string instead of as a sep argument.
 
 ```{r}
 paste0("paste_", "seperation_", seq(1:3))

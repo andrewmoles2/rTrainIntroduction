@@ -3,7 +3,7 @@ title: "R Fundamentals 2: Vectors, Functions, and Indexing"
 author:
    - name: Andrew Moles
      affiliation: Learning Developer, Digital Skills Lab
-date: "13 August, 2024"
+date: "26 August, 2025"
 output: 
   html_document: 
     theme: readable
@@ -326,19 +326,19 @@ In the first change, we changed the 8th element of the someNumbers data to 50 (i
 
 You wanted to calculate bmi health metrics for your family members, and have collected their weights and heights below. We want all heights to be in meters, and all weights to be in kilograms. Robin has used centimetres for height, Sam (Mum) has used feet for height, Sam (Mum) and Jules (Dad) have used stone for weight.
 
-1) Convert Sam (Mum)'s height from feet to meters. The calculation is feet multiplied by 0.0328084.
+Convert Sam (Mum)'s height from feet to meters. The calculation is feet multiplied by 0.3048.
 
-2) Convert Robin's height from centimetres to meters. The calculation is centimetres divided by 100.
+Convert Robin's height from centimetres to meters. The calculation is centimetres divided by 100.
 
-3) Convert Sam (Mum) and Jules (Dad)'s weights from stone to kilograms. The calculation is stone multiplied by 6.35029318. 
+Convert Sam (Mum) and Jules (Dad)'s weights from stone to kilograms. The calculation is stone multiplied by 6.35029318.
 
-4) Calculate the bmi for all family names and store in a vector called family_bmi.
+Calculate the bmi for all family names and store in a vector called family_bmi.
 
-5) Calcuate the average bmi of the family members and store in a variable called avg_bmi.
+Calculate the average bmi of the family members and store in a variable called avg_bmi.
 
-6) Add the family names to the family_bmi vector. Searching online for creating named vectors should help. 
+Add the family names to the family_bmi vector. Searching online for creating named vectors should help.
 
-7) Print both the family_bmi and avg_bmi calculations.
+Print both the family_bmi and avg_bmi calculations.
 
 
 
@@ -350,6 +350,71 @@ family_weights <- c(94, 9.135, 9.6075, 89, 81)
 # your code here
 ```
 
+# Generating data and disributions
+
+R provides built-in functions for data generation/sampling, density/distribution creation, and more. It is useful to generate data in this way as you can test expectations for a proposed analysis or a data simulation for example.
+
+Random sampling can be done using the `sample()` function. The code below will randomly extract 5 numbers from numbers 1 through to 100. 
+
+``` r
+sample(x = 1:100, size = 5)
+```
+
+```
+## [1] 51 49 45 39 46
+```
+
+To make a uniform distribution we use the `runif()` function. You set the minimum and maximum numbers, as well as how many numbers to generate. 
+
+``` r
+runif(n = 5, min = 0, max = 1)
+```
+
+```
+## [1] 0.9022979 0.4885589 0.4389882 0.1570133 0.6764368
+```
+
+To make a normal distribution we use the `rnorm()` function. You set the mean and standard deviation, as well as how many numbers to generate. 
+
+``` r
+rnorm(n = 5, mean = 0, sd = 1)
+```
+
+```
+## [1]  0.2819926 -0.7706484 -1.1532618 -1.5024980 -0.3011960
+```
+
+If we want to reproduce or generate the same random sample/distribution we *set a seed*. We use `set.seed()` for this, just any whole number. Re-run the code below a few times and you will get the same result each time. 
+
+``` r
+set.seed(1234)
+sample(x = 1:100, size = 5)
+```
+
+```
+## [1] 28 80 22  9  5
+```
+
+If you want more information about the different distributions have a look at this help menu: `help(Distributions)`.
+
+## Data generation exercise
+
+We want to generate some data using both uniform and normal distributions to show:
+
+- Days studied in a 30 day period
+- Amount of time studied
+
+1) Create a vector called `days_studied` that samples 15 days in a 30 day period. You should end up with 15 numbers randomly selected from 1 through 15. 
+2) Sort your `days_studied` vector to be in ascending order and assign the result back to the `days_studied` vector. You can use the `sort()` function for this. 
+3) Create a vector called `uniform` that creates a uniform distribution using the `runif()` function. The minimum should be 0 and the maximum should be 60. It should create the same amount of numbers as are in the `days_studied` vector. 
+4) Create a vector called `normal` that created a normal distribution using the `rnorm()` function. the mean should be 30 and the standard deviation should be 15. It should create the same amount of numbers as are in the `days_studied` vector. 
+5) Make a line plot with the `days_studied` vector on the x axis, and the `uniform` vector on the y axis.
+6) Make a line plot with the `days_studied` vector on the x axis, and the `normal` vector on the y axis.
+
+
+``` r
+# your code here
+```
 
 # Final task - Please give us your individual feedback!
 
@@ -390,7 +455,7 @@ careerGoalRatio
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'careerGoalRatio' not found
+## Error: object 'careerGoalRatio' not found
 ```
 
 ``` r
@@ -399,7 +464,7 @@ season[which.max(goalRatio)]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'season' not found
+## Error: object 'season' not found
 ```
 
 ``` r
@@ -410,7 +475,7 @@ ageGoalRatio <- c(round(mean(teenageGoalRatio), digits = 2),
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'teenageGoalRatio' not found
+## Error: object 'teenageGoalRatio' not found
 ```
 
 ``` r
@@ -425,7 +490,7 @@ season[which.min(goalRatio)]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+## Error: object 'goalRatio' not found
 ```
 
 ``` r
@@ -434,7 +499,7 @@ teenageGoalRatio <- goalRatio[1:3]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+## Error: object 'goalRatio' not found
 ```
 
 ``` r
@@ -442,7 +507,7 @@ twentiesGoalRatio <- goalRatio[4:13]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+## Error: object 'goalRatio' not found
 ```
 
 ``` r
@@ -450,7 +515,7 @@ thirtiesGoalRatio <- goalRatio[14:16]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+## Error: object 'goalRatio' not found
 ```
 
 ``` r
@@ -459,7 +524,7 @@ summary(goalRatio)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+## Error: object 'goalRatio' not found
 ```
 
 ``` r
@@ -467,7 +532,7 @@ summary(ageGoalRatio)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'ageGoalRatio' not found
+## Error: object 'ageGoalRatio' not found
 ```
 
 ``` r
@@ -476,7 +541,7 @@ season[which.min(goalRatio)] - season[1]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'goalRatio' not found
+## Error: object 'goalRatio' not found
 ```
 
 ``` r
